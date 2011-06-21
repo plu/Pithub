@@ -2,36 +2,6 @@ use Test::Most;
 
 BEGIN {
     use_ok('Pithub');
-    use_ok('Pithub::API::Gists');
-    use_ok('Pithub::API::Gists::Comments');
-    use_ok('Pithub::API::GitData');
-    use_ok('Pithub::API::GitData::Blobs');
-    use_ok('Pithub::API::GitData::Commits');
-    use_ok('Pithub::API::GitData::References');
-    use_ok('Pithub::API::GitData::Tags');
-    use_ok('Pithub::API::GitData::Trees');
-    use_ok('Pithub::API::Issues');
-    use_ok('Pithub::API::Issues::Comments');
-    use_ok('Pithub::API::Issues::Events');
-    use_ok('Pithub::API::Issues::Labels');
-    use_ok('Pithub::API::Issues::Milestones');
-    use_ok('Pithub::API::Orgs');
-    use_ok('Pithub::API::Orgs::Members');
-    use_ok('Pithub::API::Orgs::Teams');
-    use_ok('Pithub::API::PullRequests');
-    use_ok('Pithub::API::PullRequests::Comments');
-    use_ok('Pithub::API::Repos');
-    use_ok('Pithub::API::Repos::Collaborators');
-    use_ok('Pithub::API::Repos::Commits');
-    use_ok('Pithub::API::Repos::Downloads');
-    use_ok('Pithub::API::Repos::Forks');
-    use_ok('Pithub::API::Repos::Keys');
-    use_ok('Pithub::API::Repos::Watching');
-    use_ok('Pithub::API::Users');
-    use_ok('Pithub::API::Users::Emails');
-    use_ok('Pithub::API::Users::Followers');
-    use_ok('Pithub::API::Users::Keys');
-    use_ok('Pithub::Result');
 }
 
 my $phub = Pithub->new;
@@ -40,56 +10,56 @@ isa_ok $phub, 'Pithub';
 
 my %accessors = (
     gists => {
-        isa       => 'Pithub::API::Gists',
-        accessors => { comments => 'Pithub::API::Gists::Comments' }
+        isa       => 'Pithub::Gists',
+        accessors => { comments => 'Pithub::Gists::Comments' }
     },
     git_data => {
-        isa       => 'Pithub::API::GitData',
+        isa       => 'Pithub::GitData',
         accessors => {
-            blobs      => 'Pithub::API::GitData::Blobs',
-            commits    => 'Pithub::API::GitData::Commits',
-            references => 'Pithub::API::GitData::References',
-            tags       => 'Pithub::API::GitData::Tags',
-            trees      => 'Pithub::API::GitData::Trees',
+            blobs      => 'Pithub::GitData::Blobs',
+            commits    => 'Pithub::GitData::Commits',
+            references => 'Pithub::GitData::References',
+            tags       => 'Pithub::GitData::Tags',
+            trees      => 'Pithub::GitData::Trees',
         }
     },
     issues => {
-        isa       => 'Pithub::API::Issues',
+        isa       => 'Pithub::Issues',
         accessors => {
-            comments   => 'Pithub::API::Issues::Comments',
-            events     => 'Pithub::API::Issues::Events',
-            labels     => 'Pithub::API::Issues::Labels',
-            milestones => 'Pithub::API::Issues::Milestones',
+            comments   => 'Pithub::Issues::Comments',
+            events     => 'Pithub::Issues::Events',
+            labels     => 'Pithub::Issues::Labels',
+            milestones => 'Pithub::Issues::Milestones',
         }
     },
     orgs => {
-        isa       => 'Pithub::API::Orgs',
+        isa       => 'Pithub::Orgs',
         accessors => {
-            members => 'Pithub::API::Orgs::Members',
-            teams   => 'Pithub::API::Orgs::Teams',
+            members => 'Pithub::Orgs::Members',
+            teams   => 'Pithub::Orgs::Teams',
         }
     },
     pull_requests => {
-        isa       => 'Pithub::API::PullRequests',
-        accessors => { comments => 'Pithub::API::PullRequests::Comments' }
+        isa       => 'Pithub::PullRequests',
+        accessors => { comments => 'Pithub::PullRequests::Comments' }
     },
     repos => {
-        isa       => 'Pithub::API::Repos',
+        isa       => 'Pithub::Repos',
         accessors => {
-            collaborators => 'Pithub::API::Repos::Collaborators',
-            commits       => 'Pithub::API::Repos::Commits',
-            downloads     => 'Pithub::API::Repos::Downloads',
-            forks         => 'Pithub::API::Repos::Forks',
-            keys          => 'Pithub::API::Repos::Keys',
-            watching      => 'Pithub::API::Repos::Watching',
+            collaborators => 'Pithub::Repos::Collaborators',
+            commits       => 'Pithub::Repos::Commits',
+            downloads     => 'Pithub::Repos::Downloads',
+            forks         => 'Pithub::Repos::Forks',
+            keys          => 'Pithub::Repos::Keys',
+            watching      => 'Pithub::Repos::Watching',
         }
     },
     users => {
-        isa       => 'Pithub::API::Users',
+        isa       => 'Pithub::Users',
         accessors => {
-            emails    => 'Pithub::API::Users::Emails',
-            followers => 'Pithub::API::Users::Followers',
-            keys      => 'Pithub::API::Users::Keys',
+            emails    => 'Pithub::Users::Emails',
+            followers => 'Pithub::Users::Followers',
+            keys      => 'Pithub::Users::Keys',
         }
     },
 );

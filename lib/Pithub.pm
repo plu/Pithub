@@ -5,6 +5,13 @@ package Pithub;
 use Moose;
 use Class::MOP;
 use namespace::autoclean;
+with 'MooseX::Role::BuildInstanceOf' => { target => '::Gists' };
+with 'MooseX::Role::BuildInstanceOf' => { target => '::GitData' };
+with 'MooseX::Role::BuildInstanceOf' => { target => '::Issues' };
+with 'MooseX::Role::BuildInstanceOf' => { target => '::Orgs' };
+with 'MooseX::Role::BuildInstanceOf' => { target => '::PullRequests' };
+with 'MooseX::Role::BuildInstanceOf' => { target => '::Repos' };
+with 'MooseX::Role::BuildInstanceOf' => { target => '::Users' };
 
 =head1 NAME
 
@@ -56,82 +63,6 @@ Pithub
 
 
 =cut
-
-has 'gists' => (
-    is         => 'ro',
-    isa        => 'Pithub::API::Gists',
-    lazy_build => 1,
-);
-
-has 'git_data' => (
-    is         => 'ro',
-    isa        => 'Pithub::API::GitData',
-    lazy_build => 1,
-);
-
-has 'issues' => (
-    is         => 'ro',
-    isa        => 'Pithub::API::Issues',
-    lazy_build => 1,
-);
-
-has 'orgs' => (
-    is         => 'ro',
-    isa        => 'Pithub::API::Orgs',
-    lazy_build => 1,
-);
-
-has 'pull_requests' => (
-    is         => 'ro',
-    isa        => 'Pithub::API::PullRequests',
-    lazy_build => 1,
-);
-
-has 'repos' => (
-    is         => 'ro',
-    isa        => 'Pithub::API::Repos',
-    lazy_build => 1,
-);
-
-has 'users' => (
-    is         => 'ro',
-    isa        => 'Pithub::API::Users',
-    lazy_build => 1,
-);
-
-sub _build_gists {
-    return shift->_build('Pithub::API::Gists');
-}
-
-sub _build_git_data {
-    return shift->_build('Pithub::API::GitData');
-}
-
-sub _build_issues {
-    return shift->_build('Pithub::API::Issues');
-}
-
-sub _build_orgs {
-    return shift->_build('Pithub::API::Orgs');
-}
-
-sub _build_pull_requests {
-    return shift->_build('Pithub::API::PullRequests');
-}
-
-sub _build_repos {
-    return shift->_build('Pithub::API::Repos');
-}
-
-sub _build_users {
-    return shift->_build('Pithub::API::Users');
-}
-
-sub _build {
-    my ( $self, $class ) = @_;
-    Class::MOP::load_class($class);
-    return $class->new;
-}
 
 __PACKAGE__->meta->make_immutable;
 
