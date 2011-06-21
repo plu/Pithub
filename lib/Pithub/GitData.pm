@@ -10,7 +10,7 @@ with 'MooseX::Role::BuildInstanceOf' => { target => '::Trees' };
 
 =head1 NAME
 
-Pithub::API::GitData
+Pithub::GitData
 
 =cut
 
