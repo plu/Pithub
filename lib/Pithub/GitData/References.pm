@@ -1,7 +1,9 @@
 package Pithub::GitData::References;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,11 +25,15 @@ Create a Reference
 
 Examples:
 
-    my $result = $phub->git_data->references->create({ user => 'plu', repo => 'Pithub', { data => { ref => 'tags/v1.0', sha => 'df21b2660fb6' } } });
+    $result = $p->git_data->references->create( user => 'plu', repo => 'Pithub', { data => { ref => 'tags/v1.0', sha => 'df21b2660fb6' } } );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/git/refs', $args{user}, $args{repo} ), $args{data} );
 }
 
 =head2 get
@@ -44,11 +50,15 @@ Get a Reference
 
 Examples:
 
-    my $result = $phub->git_data->references->get({ user => 'plu', repo => 'Pithub', ref => 'heads/master' });
+    $result = $p->git_data->references->get( user => 'plu', repo => 'Pithub', ref => 'heads/master' );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: ref' unless $args{ref};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/git/refs/%s', $args{user}, $args{repo}, $args{ref} ) );
 }
 
 =head2 list
@@ -77,8 +87,8 @@ tag references, you can call:
 
 Examples:
 
-    my $result = $phub->git_data->references->list({ user => 'plu', repo => 'Pithub' });
-    my $result = $phub->git_data->references->list({ user => 'plu', repo => 'Pithub', ref => 'tags' });
+    $result = $p->git_data->references->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->git_data->references->list( user => 'plu', repo => 'Pithub', ref => 'tags' );
 
 =cut
 
@@ -99,11 +109,16 @@ Update a Reference
 
 Examples:
 
-    my $result = $phub->git_data->references->update({ user => 'plu', repo => 'Pithub', { data => { ref => 'tags/v1.0', sha => 'df21b2660fb6' } } });
+    $result = $p->git_data->references->update( user => 'plu', repo => 'Pithub', ref => 'tags/v1.0', data => { sha => 'df21b2660fb6' } );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: ref' unless $args{ref};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/git/refs/%s', $args{user}, $args{repo}, $args{ref} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

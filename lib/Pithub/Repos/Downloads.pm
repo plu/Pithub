@@ -1,7 +1,9 @@
 package Pithub::Repos::Downloads;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -17,19 +19,20 @@ Pithub::Repos::Downloads
 
 Create a new download
 
-    PUT /repos/:user/:repo/downloads/:id
-
-TODO: what is :id here?
+    POST /repos/:user/:repo/downloads
 
 =back
 
+TODO: Creating downloads is currently not supported!
+
 Examples:
 
-    my $result = $phub->repos->downloads->create({ user => 'plu', 'repo' => 'Pithub', { name => 'some download' } });
+    $result = $p->repos->downloads->create( user => 'plu', repo => 'Pithub', data => { name => 'some download' } );
 
 =cut
 
 sub create {
+    croak 'not supported';
 }
 
 =head2 delete
@@ -46,11 +49,15 @@ Delete a download
 
 Examples:
 
-    my $result = $phub->repos->downloads->delete({ user => 'plu', 'repo' => 'Pithub', download_id => 1 });
+    $result = $p->repos->downloads->delete( user => 'plu', repo => 'Pithub', download_id => 1 );
 
 =cut
 
 sub delete {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: download_id' unless $args{download_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/downloads/%d', $args{user}, $args{repo}, $args{download_id} ) );
 }
 
 =head2 get
@@ -67,11 +74,15 @@ Get a single download
 
 Examples:
 
-    my $result = $phub->repos->downloads->list({ user => 'plu', 'repo' => 'Pithub', download_id => 1 });
+    $result = $p->repos->downloads->get( user => 'plu', repo => 'Pithub', download_id => 1 );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: download_id' unless $args{download_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/downloads/%d', $args{user}, $args{repo}, $args{download_id} ) );
 }
 
 =head2 list
@@ -88,11 +99,14 @@ List downloads for a repository
 
 Examples:
 
-    my $result = $phub->repos->downloads->list({ user => 'plu', 'repo' => 'Pithub' });
+    $result = $p->repos->downloads->list( user => 'plu', repo => 'Pithub' );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/downloads', $args{user}, $args{repo} ) );
 }
 
 __PACKAGE__->meta->make_immutable;

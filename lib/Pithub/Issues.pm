@@ -1,11 +1,14 @@
 package Pithub::Issues;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Events' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Labels' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Milestones' };
+around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
 =head1 NAME
 
@@ -27,7 +30,7 @@ Create an issue
 
 Examples:
 
-    my $result = $phub->issues->create({ user => 'plu', 'repo' => 'Pithub', data => { title => 'bug: foo bar' } });
+    my $result = $p->issues->create( user => 'plu', repo => 'Pithub', data => { title => 'bug: foo bar' } );
 
 =cut
 
@@ -48,7 +51,7 @@ Get a single issue
 
 Examples:
 
-    my $result = $phub->issues->get({ user => 'plu', 'repo' => 'Pithub', issue_id => 1 });
+    my $result = $p->issues->get( user => 'plu', repo => 'Pithub', issue_id => 1 );
 
 =cut
 
@@ -69,7 +72,7 @@ List issues for a repository
 
 Examples:
 
-    my $result = $phub->issues->list({ user => 'plu', 'repo' => 'Pithub' });
+    my $result = $p->issues->list( user => 'plu', repo => 'Pithub' );
 
 =cut
 
@@ -90,7 +93,7 @@ Edit an issue
 
 Examples:
 
-    my $result = $phub->issues->update({ user => 'plu', 'repo' => 'Pithub', issue_id => 1, { title => 'bug bar foo' } });
+    my $result = $p->issues->update( user => 'plu', repo => 'Pithub', issue_id => 1, { title => 'bug bar foo' } );
 
 =cut
 

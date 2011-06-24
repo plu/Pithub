@@ -1,7 +1,9 @@
 package Pithub::Users::Followers;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,11 +25,18 @@ Follow a user
 
 Examples:
 
-    my $result = $phub->users->followers->follow({ user => 'plu' });
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->followers->follow('plu');
+
+    $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
+    $result = $f->follow('plu');
 
 =cut
 
 sub follow {
+    my ( $self, $user ) = @_;
+    croak 'Missing parameter: $user' unless $user;
+    return $self->request( PUT => sprintf( '/user/following/%s', $user ) );
 }
 
 =head2 is_following
@@ -44,11 +53,25 @@ Check if the authenticated user is following another given user
 
 Examples:
 
-    my $result = $phub->users->followers->is_following({ user => 'plu' });
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->followers->is_following('rafl');
+
+    $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
+    $result = $f->is_following('rafl');
+
+    if ( $result->is_success ) {
+        print "plu is following rafl\n";
+    }
+    elsif ( $result->code == 404 ) {
+        print "plu is not following rafl\n";
+    }
 
 =cut
 
 sub is_following {
+    my ( $self, $user ) = @_;
+    croak 'Missing parameter: $user' unless $user;
+    return $self->request( GET => sprintf( '/user/following/%s', $user ) );
 }
 
 =head2 list
@@ -71,12 +94,26 @@ List the authenticated user's followers:
 
 Examples:
 
-    my $result = $phub->users->followers->list({ user => 'plu' });
-    my $result = $phub->users->followers->list;
+    $p = Pithub->new;
+    $result = $p->users->followers->list('plu');
+
+    $f = Pithub::Users::Followers->new;
+    $result = $f->list('plu');
+
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->followers->list;
+
+    $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
+    $result = $f->list;
 
 =cut
 
 sub list {
+    my ( $self, $user ) = @_;
+    if ($user) {
+        return $self->request( GET => sprintf( '/user/%s/followers', $user ) );
+    }
+    return $self->request( GET => '/user/followers' );
 }
 
 =head2 list_following
@@ -99,12 +136,26 @@ List who the authenicated user is following:
 
 Examples:
 
-    my $result = $phub->users->followers->list_following({ user => 'plu' });
-    my $result = $phub->users->followers->list_following;
+    $p = Pithub->new;
+    $result = $p->users->followers->list_following('plu');
+
+    $f = Pithub::Users::Followers->new;
+    $result = $f->list_following('plu');
+
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->followers->list_following;
+
+    $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
+    $result = $f->list_following;
 
 =cut
 
 sub list_following {
+    my ( $self, $user ) = @_;
+    if ($user) {
+        return $self->request( GET => sprintf( '/user/%s/following', $user ) );
+    }
+    return $self->request( GET => '/user/following' );
 }
 
 =head2 unfollow
@@ -121,11 +172,18 @@ Unfollow a user
 
 Examples:
 
-    my $result = $phub->users->followers->unfollow({ user => 'plu' });
+    $p = Pithub->new;
+    $result = $p->users->followers->unfollow('plu');
+
+    $f = Pithub::Users::Followers->new;
+    $result = $f->unfollow('plu');
 
 =cut
 
 sub unfollow {
+    my ( $self, $user ) = @_;
+    croak 'Missing parameter: $user' unless $user;
+    return $self->request( DELETE => sprintf( '/user/following/%s', $user ) );
 }
 
 __PACKAGE__->meta->make_immutable;

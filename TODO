@@ -1,0 +1,24 @@
+* cascade calls to:
+    - user
+    - repo
+    - token
+    - api_uri
+    - skip_request
+  E.g.:
+  my $p = Pithub->new;
+  my $u = $p->users;
+  print $p->token; #undef
+  print $u->token; #undef
+  $p->token('123');
+  print $p->token; #123
+  print $u->token; #123
+
+  Not sure though if that's a good idea.
+  Probably this should only be done if the call
+  was made on the root object, which isa('Pithub').
+
+* read token from gitconfig
+
+* add more docs, especially parameter examples
+
+* verify mandatory parameters on POST/PATCH requests

@@ -1,7 +1,9 @@
 package Pithub::Orgs::Members;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,7 +25,7 @@ Conceal a user's membership
 
 Examples:
 
-    my $result = $phub->orgs->members->conceal({ org => 'CPAN-API', user => 'plu' });
+    my $result = $p->orgs->members->conceal( org => 'CPAN-API', user => 'plu' );
 
 =cut
 
@@ -46,7 +48,7 @@ repositories.
 
 Examples:
 
-    my $result = $phub->orgs->members->delete({ org => 'CPAN-API', user => 'plu' });
+    my $result = $p->orgs->members->delete( org => 'CPAN-API', user => 'plu' );
 
 =cut
 
@@ -67,7 +69,7 @@ Check if a user is a member of an organization
 
 Examples:
 
-    my $result = $phub->orgs->members->is_member({ org => 'CPAN-API', user => 'plu' });
+    my $result = $p->orgs->members->is_member( org => 'CPAN-API', user => 'plu' );
 
 =cut
 
@@ -88,7 +90,7 @@ Get if a user is a public member
 
 Examples:
 
-    my $result = $phub->orgs->members->is_public({ org => 'CPAN-API', user => 'plu' });
+    my $result = $p->orgs->members->is_public( org => 'CPAN-API', user => 'plu' );
 
 =cut
 
@@ -113,7 +115,7 @@ members are returned.
 
 Examples:
 
-    my $result = $phub->orgs->members->list({ org => 'CPAN-API' });
+    my $result = $p->orgs->members->list( org => 'CPAN-API' );
 
 =cut
 
@@ -135,7 +137,7 @@ publicized or not.
 
 Examples:
 
-    my $result = $phub->orgs->members->list_public({ org => 'CPAN-API' });
+    my $result = $p->orgs->members->list_public( org => 'CPAN-API' );
 
 =cut
 
@@ -156,7 +158,7 @@ Publicize a user's membership
 
 Examples:
 
-    my $result = $phub->orgs->members->publicize({ org => 'CPAN-API', user => 'plu' });
+    my $result = $p->orgs->members->publicize( org => 'CPAN-API', user => 'plu' );
 
 =cut
 

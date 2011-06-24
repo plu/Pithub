@@ -1,7 +1,9 @@
 package Pithub::Orgs::Teams;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,7 +25,7 @@ team is associated with.
 
 Examples:
 
-    my $result = $phub->orgs->teams->add_member({ team_id => 1, user => 'plu' });
+    my $result = $p->orgs->teams->add_member( team_id => 1, user => 'plu' );
 
 =cut
 
@@ -43,7 +45,7 @@ an owner of the org that the team is associated with.
 
 Examples:
 
-    my $result = $phub->orgs->teams->add_repo({ team_id => 1, repo => 'some_repo' });
+    my $result = $p->orgs->teams->add_repo( team_id => 1, repo => 'some_repo' );
 
 =cut
 
@@ -63,7 +65,7 @@ owner of the given organization.
 
 Examples:
 
-    my $result = $phub->orgs->teams->create({ org => 'CPAN-API', data => { name => 'some team' } });
+    my $result = $p->orgs->teams->create( org => 'CPAN-API', data => { name => 'some team' } );
 
 =cut
 
@@ -83,7 +85,7 @@ of the org that the team is associated with.
 
 Examples:
 
-    my $result = $phub->orgs->teams->delete({ team_id => 1 });
+    my $result = $p->orgs->teams->delete( team_id => 1 );
 
 =cut
 
@@ -102,7 +104,7 @@ Get team
 
 Examples:
 
-    my $result = $phub->orgs->teams->get({ team_id => 1 });
+    my $result = $p->orgs->teams->get( team_id => 1 );
 
 =cut
 
@@ -121,7 +123,7 @@ Get team repo
 
 Examples:
 
-    my $result = $phub->orgs->teams->get({ team_id => 1, repo => 'some_repo' });
+    my $result = $p->orgs->teams->get( team_id => 1, repo => 'some_repo' );
 
 =cut
 
@@ -141,7 +143,7 @@ user must be a member of the team.
 
 Examples:
 
-    my $result = $phub->orgs->teams->is_member({ team_id => 1, user => 'plu' });
+    my $result = $p->orgs->teams->is_member( team_id => 1, user => 'plu' );
 
 =cut
 
@@ -160,7 +162,7 @@ List teams
 
 Examples:
 
-    my $result = $phub->orgs->teams->list({ org => 'CPAN-API' });
+    my $result = $p->orgs->teams->list( org => 'CPAN-API' );
 
 =cut
 
@@ -180,7 +182,7 @@ a member of the team.
 
 Examples:
 
-    my $result = $phub->orgs->teams->list_members({ team_id => 1 });
+    my $result = $p->orgs->teams->list_members( team_id => 1 );
 
 =cut
 
@@ -199,7 +201,7 @@ List team repos
 
 Examples:
 
-    my $result = $phub->orgs->teams->list_repos({ team_id => 1 });
+    my $result = $p->orgs->teams->list_repos( team_id => 1 );
 
 =cut
 
@@ -221,7 +223,7 @@ it just remove them from the team.
 
 Examples:
 
-    my $result = $phub->orgs->teams->remove_member({ team_id => 1, user => 'plu' });
+    my $result = $p->orgs->teams->remove_member( team_id => 1, user => 'plu' );
 
 =cut
 
@@ -241,7 +243,7 @@ an owner of the org that the team is associated with.
 
 Examples:
 
-    my $result = $phub->orgs->teams->remove_repo({ team_id => 1, repo => 'some_repo' });
+    my $result = $p->orgs->teams->remove_repo( team_id => 1, repo => 'some_repo' );
 
 =cut
 
@@ -261,7 +263,7 @@ of the org that the team is associated with.
 
 Examples:
 
-    my $result = $phub->orgs->teams->update({ team_id => 1, data => { name => 'new team name' } });
+    my $result = $p->orgs->teams->update( team_id => 1, data => { name => 'new team name' } );
 
 =cut
 

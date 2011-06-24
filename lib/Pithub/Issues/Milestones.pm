@@ -1,7 +1,9 @@
 package Pithub::Issues::Milestones;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,7 +25,7 @@ Create a milestone
 
 Examples:
 
-    my $result = $phub->issues->milestones->create({ repo => 'Pithub', user => 'plu', data => { title => 'some milestone' } });
+    my $result = $p->issues->milestones->create( repo => 'Pithub', user => 'plu', data => { title => 'some milestone' } );
 
 =cut
 
@@ -44,7 +46,7 @@ Delete a milestone
 
 Examples:
 
-    my $result = $phub->issues->milestones->delete({ repo => 'Pithub', user => 'plu', milestone_id => 1 });
+    my $result = $p->issues->milestones->delete( repo => 'Pithub', user => 'plu', milestone_id => 1 );
 
 =cut
 
@@ -65,7 +67,7 @@ Get a single milestone
 
 Examples:
 
-    my $result = $phub->issues->milestones->get({ repo => 'Pithub', user => 'plu', milestone_id => 1 });
+    my $result = $p->issues->milestones->get( repo => 'Pithub', user => 'plu', milestone_id => 1 );
 
 =cut
 
@@ -86,7 +88,7 @@ List milestones for an issue
 
 Examples:
 
-    my $result = $phub->issues->milestones->list({ repo => 'Pithub', user => 'plu' });
+    my $result = $p->issues->milestones->list( repo => 'Pithub', user => 'plu' );
 
 =cut
 
@@ -107,7 +109,7 @@ Update a milestone
 
 Examples:
 
-    my $result = $phub->issues->milestones->update({ repo => 'Pithub', user => 'plu', data => { title => 'new title' } });
+    my $result = $p->issues->milestones->update( repo => 'Pithub', user => 'plu', data => { title => 'new title' } );
 
 =cut
 

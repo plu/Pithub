@@ -1,8 +1,11 @@
 package Pithub::Gists;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
+around qr{^merge_.*?_args$} => \&Pithub::Base::_merge_args;
 
 =head1 NAME
 
@@ -24,11 +27,20 @@ Create a gist
 
 Examples:
 
-    my $result = $phub->gists->create({ data => { description => 'foo bar' } });
+    my $result = $p->gists->create(
+        {
+            description => 'the description for this gist',
+            public      => 1,
+            files       => { 'file1.txt' => { content => 'String file content' } }
+        }
+    );
 
 =cut
 
 sub create {
+    my ( $self, $data ) = @_;
+    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
+    return $self->request( POST => '/gists', $data );
 }
 
 =head2 delete
@@ -45,11 +57,14 @@ Delete a gist
 
 Examples:
 
-    my $result = $phub->gists->delete({ gist_id => 784612 });
+    $result = $p->gists->delete(784612);
 
 =cut
 
 sub delete {
+    my ( $self, $gist_id ) = @_;
+    croak 'Missing parameter: $gist_id' unless $gist_id;
+    return $self->request( DELETE => sprintf( '/gists/%d', $gist_id ) );
 }
 
 =head2 fork
@@ -66,11 +81,14 @@ Fork a gist
 
 Examples:
 
-    my $result = $phub->gists->fork({ gist_id => 784612 });
+    $result = $p->gists->fork(784612);
 
 =cut
 
 sub fork {
+    my ( $self, $gist_id ) = @_;
+    croak 'Missing parameter: $gist_id' unless $gist_id;
+    return $self->request( POST => sprintf( '/gists/%d/fork', $gist_id ) );
 }
 
 =head2 get
@@ -87,11 +105,14 @@ Get a single gist
 
 Examples:
 
-    my $result = $phub->gists->get({ gist_id => 784612 });
+    $result = $p->gists->get(784612);
 
 =cut
 
 sub get {
+    my ( $self, $gist_id ) = @_;
+    croak 'Missing parameter: $gist_id' unless $gist_id;
+    return $self->request( GET => sprintf( '/gists/%d', $gist_id ) );
 }
 
 =head2 is_starred
@@ -108,11 +129,14 @@ Check if a gist is starred
 
 Examples:
 
-    my $result = $phub->gists->is_starred({ gist_id => 784612 });
+    $result = $p->gists->is_starred(784612);
 
 =cut
 
 sub is_starred {
+    my ( $self, $gist_id ) = @_;
+    croak 'Missing parameter: $gist_id' unless $gist_id;
+    return $self->request( GET => sprintf( '/gists/%d/star', $gist_id ) );
 }
 
 =head2 list
@@ -127,7 +151,8 @@ List a user’s gists:
 
 =item *
 
-List the authenticated user’s gists or if called anonymously, this will returns all public gists:
+List the authenticated user’s gists or if called anonymously,
+this will returns all public gists:
 
     GET /gists
 
@@ -147,11 +172,33 @@ List the authenticated user’s starred gists:
 
 Examples:
 
-    my $result = $phub->gists->list({ user => 'plu' });
+    # List a user’s gists:
+    $result = $p->gists->list( user => 'plu' );
+
+    # List the authenticated user’s gists or if called anonymously,
+    # this will returns all public gists:
+    $result = $p->gists->list;
+
+    # List the authenticated user’s starred gists:
+    $result = $p->gists->list( starred => 1 );
+
+    # List all public gists:
+    $result = $p->gists->list( public => 1 );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    if ( my $user = $args{user} ) {
+        return $self->request( GET => sprintf( '/users/%s/gists', $user ) );
+    }
+    elsif ( $args{starred} ) {
+        return $self->request( GET => '/gists/starred' );
+    }
+    elsif ( $args{public} ) {
+        return $self->request( GET => '/gists/public' );
+    }
+    return $self->request( GET => '/gists' );
 }
 
 =head2 star
@@ -168,11 +215,14 @@ Star a gist
 
 Examples:
 
-    my $result = $phub->gists->star({ gist_id => 784612 });
+    $result = $p->gists->star(784612);
 
 =cut
 
 sub star {
+    my ( $self, $gist_id ) = @_;
+    croak 'Missing parameter: $gist_id' unless $gist_id;
+    return $self->request( PUT => sprintf( '/gists/%d/star', $gist_id ) );
 }
 
 =head2 unstar
@@ -189,11 +239,14 @@ Unstar a gist
 
 Examples:
 
-    my $result = $phub->gists->unstar({ gist_id => 784612 });
+    $result = $p->gists->unstar(784612);
 
 =cut
 
 sub unstar {
+    my ( $self, $gist_id ) = @_;
+    croak 'Missing parameter: $gist_id' unless $gist_id;
+    return $self->request( DELETE => sprintf( '/gists/%d/star', $gist_id ) );
 }
 
 =head2 update
@@ -210,11 +263,15 @@ Edit a gist
 
 Examples:
 
-    my $result = $phub->gists->update({ gist_id => 784612, data => { description => 'bar foo' } });
+    my $result = $p->gists->update( 784612 => { description => 'bar foo' } );
 
 =cut
 
 sub update {
+    my ( $self, $gist_id, $data ) = @_;
+    croak 'Missing parameter: $gist_id' unless $gist_id;
+    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
+    return $self->request( PATCH => sprintf( '/gists/%d', $gist_id ), $data );
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -1,7 +1,9 @@
 package Pithub::Repos::Collaborators;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,11 +25,15 @@ Add collaborator
 
 Examples:
 
-    my $result = $phub->repos->collaborators->add({ user => 'plu', 'repo' => 'Pithub', collaborator => 'rbo' });
+    $result = $p->repos->collaborators->add( user => 'plu', repo => 'Pithub', collaborator => 'rbo' );
 
 =cut
 
 sub add {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: collaborator' unless $args{collaborator};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PUT => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
 }
 
 =head2 is_collaborator
@@ -44,11 +50,22 @@ Get
 
 Examples:
 
-    my $result = $phub->repos->collaborators->is_collaborator({ user => 'plu', 'repo' => 'Pithub', collaborator => 'rbo' });
+    $result = $p->repos->collaborators->is_collaborator( user => 'plu', repo => 'Pithub', collaborator => 'rbo' );
+
+    if ( $result->is_success ) {
+        print "rbo is added as collaborator to Pithub\n";
+    }
+    elsif ( $result->code == 404 ) {
+        print "rbo is not added as collaborator to Pithub\n";
+    }
 
 =cut
 
 sub is_collaborator {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: collaborator' unless $args{collaborator};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
 }
 
 =head2 list
@@ -65,11 +82,14 @@ List
 
 Examples:
 
-    my $result = $phub->repos->collaborators->list({ user => 'plu', 'repo' => 'Pithub' });
+    $result = $p->repos->collaborators->list( user => 'plu', repo => 'Pithub' );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/collaborators', $args{user}, $args{repo} ) );
 }
 
 =head2 remove
@@ -86,11 +106,15 @@ Remove collaborator
 
 Examples:
 
-    my $result = $phub->repos->collaborators->remove({ user => 'plu', 'repo' => 'Pithub', collaborator => 'rbo' });
+    my $result = $p->repos->collaborators->remove( user => 'plu', repo => 'Pithub', collaborator => 'rbo' );
 
 =cut
 
 sub remove {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: collaborator' unless $args{collaborator};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
 }
 
 __PACKAGE__->meta->make_immutable;

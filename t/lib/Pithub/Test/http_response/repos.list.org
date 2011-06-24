@@ -1,0 +1,142 @@
+HTTP/1.1 200 OK
+Server: nginx/0.7.67
+Date: Fri, 24 Jun 2011 07:28:48 GMT
+Content-Type: application/json
+Connection: keep-alive
+Status: 200 OK
+X-RateLimit-Limit: 5000
+X-RateLimit-Remaining: 4890
+Content-Length: 5140
+
+[
+  {
+    "watchers": 82,
+    "description": "A free, open API for everything you want to know about CPAN",
+    "ssh_url": "git@github.com:CPAN-API/cpan-api.git",
+    "url": "https://api.github.com/repos/CPAN-API/cpan-api",
+    "svn_url": "https://svn.github.com/CPAN-API/cpan-api",
+    "homepage": "http://www.metacpan.org/",
+    "git_url": "git://github.com/CPAN-API/cpan-api.git",
+    "fork": false,
+    "html_url": "https://github.com/CPAN-API/cpan-api",
+    "language": "Perl",
+    "open_issues": 41,
+    "private": false,
+    "size": 144,
+    "owner": {
+      "url": "https://api.github.com/users/CPAN-API",
+      "avatar_url": "https://secure.gravatar.com/avatar/7733efdfa4ceb15dd68fdfff71be56f1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+      "login": "CPAN-API",
+      "id": 460239
+    },
+    "name": "cpan-api",
+    "pushed_at": "2011-06-21T03:35:37Z",
+    "created_at": "2010-10-30T04:43:00Z",
+    "forks": 37,
+    "clone_url": "https://github.com/CPAN-API/cpan-api.git"
+  },
+  {
+    "watchers": 31,
+    "description": "Proof of concept search page for using api.metacpan.org",
+    "ssh_url": "git@github.com:CPAN-API/search-metacpan-org.git",
+    "url": "https://api.github.com/repos/CPAN-API/search-metacpan-org",
+    "svn_url": "https://svn.github.com/CPAN-API/search-metacpan-org",
+    "homepage": "",
+    "git_url": "git://github.com/CPAN-API/search-metacpan-org.git",
+    "fork": false,
+    "html_url": "https://github.com/CPAN-API/search-metacpan-org",
+    "language": "JavaScript",
+    "open_issues": 24,
+    "private": false,
+    "size": 256,
+    "owner": {
+      "url": "https://api.github.com/users/CPAN-API",
+      "avatar_url": "https://secure.gravatar.com/avatar/7733efdfa4ceb15dd68fdfff71be56f1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+      "login": "CPAN-API",
+      "id": 460239
+    },
+    "name": "search-metacpan-org",
+    "pushed_at": "2011-06-07T19:08:09Z",
+    "created_at": "2010-11-04T04:00:59Z",
+    "forks": 5,
+    "clone_url": "https://github.com/CPAN-API/search-metacpan-org.git"
+  },
+  {
+    "watchers": 2,
+    "description": "CPANvote Catalyst server",
+    "ssh_url": "git@github.com:CPAN-API/cpanvote-server.git",
+    "url": "https://api.github.com/repos/CPAN-API/cpanvote-server",
+    "svn_url": "https://svn.github.com/CPAN-API/cpanvote-server",
+    "homepage": "",
+    "git_url": "git://github.com/CPAN-API/cpanvote-server.git",
+    "fork": true,
+    "html_url": "https://github.com/CPAN-API/cpanvote-server",
+    "language": "Perl",
+    "open_issues": 0,
+    "private": false,
+    "size": 572,
+    "owner": {
+      "url": "https://api.github.com/users/CPAN-API",
+      "avatar_url": "https://secure.gravatar.com/avatar/7733efdfa4ceb15dd68fdfff71be56f1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+      "login": "CPAN-API",
+      "id": 460239
+    },
+    "name": "cpanvote-server",
+    "pushed_at": "2011-02-25T01:10:36Z",
+    "created_at": "2011-02-08T01:36:46Z",
+    "forks": 0,
+    "clone_url": "https://github.com/CPAN-API/cpanvote-server.git"
+  },
+  {
+    "watchers": 2,
+    "description": "The database backend of cpanvote",
+    "ssh_url": "git@github.com:CPAN-API/cpanvote-db.git",
+    "url": "https://api.github.com/repos/CPAN-API/cpanvote-db",
+    "svn_url": "https://svn.github.com/CPAN-API/cpanvote-db",
+    "homepage": "",
+    "git_url": "git://github.com/CPAN-API/cpanvote-db.git",
+    "fork": true,
+    "html_url": "https://github.com/CPAN-API/cpanvote-db",
+    "language": "Perl",
+    "open_issues": 0,
+    "private": false,
+    "size": 536,
+    "owner": {
+      "url": "https://api.github.com/users/CPAN-API",
+      "avatar_url": "https://secure.gravatar.com/avatar/7733efdfa4ceb15dd68fdfff71be56f1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+      "login": "CPAN-API",
+      "id": 460239
+    },
+    "name": "cpanvote-db",
+    "pushed_at": "2011-02-13T20:50:43Z",
+    "created_at": "2011-02-08T01:37:11Z",
+    "forks": 0,
+    "clone_url": "https://github.com/CPAN-API/cpanvote-db.git"
+  },
+  {
+    "watchers": 51,
+    "description": "Web interface for MetaCPAN",
+    "ssh_url": "git@github.com:CPAN-API/metacpan-web.git",
+    "url": "https://api.github.com/repos/CPAN-API/metacpan-web",
+    "svn_url": "https://svn.github.com/CPAN-API/metacpan-web",
+    "homepage": "",
+    "git_url": "git://github.com/CPAN-API/metacpan-web.git",
+    "fork": false,
+    "html_url": "https://github.com/CPAN-API/metacpan-web",
+    "language": "Perl",
+    "open_issues": 49,
+    "private": false,
+    "size": 148,
+    "owner": {
+      "url": "https://api.github.com/users/CPAN-API",
+      "avatar_url": "https://secure.gravatar.com/avatar/7733efdfa4ceb15dd68fdfff71be56f1?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-orgs.png",
+      "login": "CPAN-API",
+      "id": 460239
+    },
+    "name": "metacpan-web",
+    "pushed_at": "2011-06-22T14:31:43Z",
+    "created_at": "2011-04-18T14:25:49Z",
+    "forks": 17,
+    "clone_url": "https://github.com/CPAN-API/metacpan-web.git"
+  }
+]

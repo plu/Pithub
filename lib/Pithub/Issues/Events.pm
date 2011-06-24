@@ -1,7 +1,9 @@
 package Pithub::Issues::Events;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,7 +25,7 @@ Get a single event
 
 Examples:
 
-    my $result = $phub->issues->events->get({ repo => 'Pithub', user => 'plu', event_id => 1 });
+    my $result = $p->issues->events->get( repo => 'Pithub', user => 'plu', event_id => 1 );
 
 =cut
 
@@ -50,8 +52,8 @@ List events for a repository
 
 Examples:
 
-    my $result = $phub->issues->events->list({ repo => 'Pithub', user => 'plu', issue_id => 1 });
-    my $result = $phub->issues->events->list({ repo => 'Pithub', user => 'plu' });
+    my $result = $p->issues->events->list( repo => 'Pithub', user => 'plu', issue_id => 1 );
+    my $result = $p->issues->events->list( repo => 'Pithub', user => 'plu' );
 
 =cut
 

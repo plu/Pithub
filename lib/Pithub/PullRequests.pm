@@ -1,8 +1,11 @@
 package Pithub::PullRequests;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
+around qr{^merge_.*?_args$} => \&Pithub::Base::_merge_args;
 
 =head1 NAME
 
@@ -24,11 +27,15 @@ List commits on a pull request
 
 Examples:
 
-    my $result = $phub->pull_requests->commits({ user => 'plu', 'repo' => 'Pithub', pull_request_id => 1 });
+    $result = $p->pull_requests->commits( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
 
 =cut
 
 sub commits {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/commits', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =head2 create
@@ -45,11 +52,24 @@ Create a pull request
 
 Examples:
 
-    my $result = $phub->pull_requests->create({ user => 'plu', 'repo' => 'Pithub', data => { title => 'pull this' } });
+    $result = $p->pull_requests->create(
+        user   => 'plu',
+        repo => 'Pithub',
+        data   => {
+            base  => 'master',
+            body  => 'Please pull this in!',
+            head  => 'octocat:new-feature',
+            title => 'Amazing new feature',
+        }
+    );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/pulls', $args{user}, $args{repo} ), $args{data} );
 }
 
 =head2 files
@@ -66,11 +86,15 @@ List pull requests files
 
 Examples:
 
-    my $result = $phub->pull_requests->files({ user => 'plu', 'repo' => 'Pithub', pull_request_id => 1 });
+    $result = $p->pull_requests->files( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
 
 =cut
 
 sub files {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/files', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =head2 get
@@ -87,11 +111,15 @@ Get a single pull request
 
 Examples:
 
-    my $result = $phub->pull_requests->get({ user => 'plu', 'repo' => 'Pithub', pull_request_id => 1 });
+    $result = $p->pull_requests->get( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =head2 is_merged
@@ -108,11 +136,15 @@ Get if a pull request has been merged
 
 Examples:
 
-    my $result = $phub->pull_requests->is_merged({ user => 'plu', 'repo' => 'Pithub', pull_request_id => 1 });
+    $result = $p->pull_requests->is_merged( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
 
 =cut
 
 sub is_merged {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =head2 list
@@ -129,11 +161,14 @@ List pull requests
 
 Examples:
 
-    my $result = $phub->pull_requests->list({ user => 'plu', 'repo' => 'Pithub' });
+    $result = $p->pull_requests->list( user => 'plu', repo => 'Pithub' );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls', $args{user}, $args{repo} ) );
 }
 
 =head2 merge
@@ -150,11 +185,15 @@ Merge a pull request
 
 Examples:
 
-    my $result = $phub->pull_requests->merge({ user => 'plu', 'repo' => 'Pithub', pull_request_id => 1 });
+    $result = $p->pull_requests->merge( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
 
 =cut
 
 sub merge {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PUT => sprintf( '/repos/%s/%s/pulls/%d/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =head2 update
@@ -171,11 +210,26 @@ Update a pull request
 
 Examples:
 
-    my $result = $phub->pull_requests->update({ user => 'plu', 'repo' => 'Pithub', data => { title => 'pull that' } });
+    $result = $p->pull_requests->update(
+        user            => 'plu',
+        repo            => 'Pithub',
+        pull_request_id => 1,
+        data            => {
+            base  => 'master',
+            body  => 'Please pull this in!',
+            head  => 'octocat:new-feature',
+            title => 'Amazing new feature',
+        }
+    );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/pulls/%d', $args{user}, $args{repo}, $args{pull_request_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

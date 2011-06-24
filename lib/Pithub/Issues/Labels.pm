@@ -1,7 +1,9 @@
 package Pithub::Issues::Labels;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -29,8 +31,8 @@ Add labels to an issue
 
 Examples:
 
-    my $result = $phub->issues->labels->create({ repo => 'Pithub', user => 'plu', data => { name => 'some label' } });
-    my $result = $phub->issues->labels->create({ repo => 'Pithub', user => 'plu', issue_id => 1, data => { name => 'some label' } });
+    my $result = $p->issues->labels->create( repo => 'Pithub', user => 'plu', data => { name => 'some label' } );
+    my $result = $p->issues->labels->create( repo => 'Pithub', user => 'plu', issue_id => 1, data => { name => 'some label' } );
 
 =cut
 
@@ -65,9 +67,9 @@ Remove all labels from an issue
 
 Examples:
 
-    my $result = $phub->issues->labels->delete({ repo => 'Pithub', user => 'plu', label_id => 1 });
-    my $result = $phub->issues->labels->delete({ repo => 'Pithub', user => 'plu', issue_id => 1 });
-    my $result = $phub->issues->labels->delete({ repo => 'Pithub', user => 'plu', issue_id => 1, label_id => 1 });
+    my $result = $p->issues->labels->delete( repo => 'Pithub', user => 'plu', label_id => 1 );
+    my $result = $p->issues->labels->delete( repo => 'Pithub', user => 'plu', issue_id => 1 );
+    my $result = $p->issues->labels->delete( repo => 'Pithub', user => 'plu', issue_id => 1, label_id => 1 );
 
 =cut
 
@@ -94,8 +96,8 @@ Get labels for every issue in a milestone
 
 Examples:
 
-    my $result = $phub->issues->labels->get({ repo => 'Pithub', user => 'plu', label_id => 1 });
-    my $result = $phub->issues->labels->get({ repo => 'Pithub', user => 'plu', milestone_id => 1 });
+    my $result = $p->issues->labels->get( repo => 'Pithub', user => 'plu', label_id => 1 );
+    my $result = $p->issues->labels->get( repo => 'Pithub', user => 'plu', milestone_id => 1 );
 
 =cut
 
@@ -122,8 +124,8 @@ List labels on an issue
 
 Examples:
 
-    my $result = $phub->issues->labels->list({ repo => 'Pithub', user => 'plu' });
-    my $result = $phub->issues->labels->list({ repo => 'Pithub', user => 'plu', issue_id => 1 });
+    my $result = $p->issues->labels->list( repo => 'Pithub', user => 'plu' );
+    my $result = $p->issues->labels->list( repo => 'Pithub', user => 'plu', issue_id => 1 );
 
 =cut
 
@@ -144,7 +146,7 @@ Replace all labels for an issue
 
 Examples:
 
-    my $result = $phub->issues->labels->replace({ repo => 'Pithub', user => 'plu', issue_id => 1, data => { labels => [qw(label1 label2)] } });
+    my $result = $p->issues->labels->replace( repo => 'Pithub', user => 'plu', issue_id => 1, data => { labels => [qw(label1 label2)] } );
 
 =cut
 
@@ -165,7 +167,7 @@ Update a label
 
 Examples:
 
-    my $result = $phub->issues->labels->update({ repo => 'Pithub', user => 'plu', label_id => 1, data => { name => 'other label' } });
+    my $result = $p->issues->labels->update( repo => 'Pithub', user => 'plu', label_id => 1, data => { name => 'other label' } );
 
 =cut
 

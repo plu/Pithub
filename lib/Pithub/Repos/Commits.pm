@@ -1,7 +1,9 @@
 package Pithub::Repos::Commits;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,11 +25,16 @@ Create a commit comment
 
 Examples:
 
-    my $result = $phub->repos->commits->create_comment({ user => 'plu', 'repo' => 'Pithub', sha => 'df21b2660fb6', data => { body => 'some comment' } });
+    $result = $p->repos->commits->create_comment( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6', data => { body => 'some comment' } );
 
 =cut
 
 sub create_comment {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: sha' unless $args{sha};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/commits/%s/comments', $args{user}, $args{repo}, $args{sha} ), $args{data} );
 }
 
 =head2 delete_comment
@@ -44,11 +51,15 @@ Delete a commit comment
 
 Examples:
 
-    my $result = $phub->repos->commits->create_comment({ user => 'plu', 'repo' => 'Pithub', comment_id => 1 });
+    $result = $p->repos->commits->delete_comment( user => 'plu', repo => 'Pithub', comment_id => 1 );
 
 =cut
 
 sub delete_comment {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/comments/%d', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
 =head2 get
@@ -65,11 +76,15 @@ Get a single commit
 
 Examples:
 
-    my $result = $phub->repos->commits->get({ user => 'plu', 'repo' => 'Pithub', sha => 'df21b2660fb6' });
+    my $result = $p->repos->commits->get( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6' );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: sha' unless $args{sha};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/commits/%s', $args{user}, $args{repo}, $args{sha} ) );
 }
 
 =head2 get_comment
@@ -86,11 +101,15 @@ Get a single commit comment
 
 Examples:
 
-    my $result = $phub->repos->commits->get_comment({ user => 'plu', 'repo' => 'Pithub', comment_id => 1 });
+    my $result = $p->repos->commits->get_comment( user => 'plu', repo => 'Pithub', comment_id => 1 );
 
 =cut
 
 sub get_comment {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
 =head2 list
@@ -107,11 +126,14 @@ List commits on a repository
 
 Examples:
 
-    my $result = $phub->repos->commits->list({ user => 'plu', 'repo' => 'Pithub' });
+    my $result = $p->repos->commits->list( user => 'plu', repo => 'Pithub' );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/commits', $args{user}, $args{repo} ) );
 }
 
 =head2 list_comments
@@ -137,12 +159,18 @@ List comments for a single commit
 
 Examples:
 
-    my $result = $phub->repos->commits->list_comments({ user => 'plu', 'repo' => 'Pithub' });
-    my $result = $phub->repos->commits->list_comments({ user => 'plu', 'repo' => 'Pithub', sha => 'df21b2660fb6' });
+    my $result = $p->repos->commits->list_comments( user => 'plu', repo => 'Pithub' );
+    my $result = $p->repos->commits->list_comments( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6' );
 
 =cut
 
 sub list_comments {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    if ( my $sha = $args{sha} ) {
+        return $self->request( GET => sprintf( '/repos/%s/%s/commits/%s/comments', $args{user}, $args{repo}, $sha ) );
+    }
+    return $self->request( GET => sprintf( '/repos/%s/%s/comments', $args{user}, $args{repo} ) );
 }
 
 =head2 update_comment
@@ -159,11 +187,16 @@ Update a commit comment
 
 Examples:
 
-    my $result = $phub->repos->commits->update_comment({ user => 'plu', 'repo' => 'Pithub', comment_id => 1, data => { body => 'updated comment' } });
+    $result = $p->repos->commits->update_comment( user => 'plu', repo => 'Pithub', comment_id => 1, data => { body => 'updated comment' } );
 
 =cut
 
 sub update_comment {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/comments/%s', $args{user}, $args{repo}, $args{comment_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

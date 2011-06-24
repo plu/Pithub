@@ -1,7 +1,9 @@
 package Pithub::Issues::Comments;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,7 +25,7 @@ Create a comment
 
 Examples:
 
-    my $result = $phub->issues->comments->create({ repo => 'Pithub', user => 'plu', issue_id => 1, data => { body => 'some comment' } });
+    my $result = $p->issues->comments->create( repo => 'Pithub', user => 'plu', issue_id => 1, data => { body => 'some comment' } );
 
 =cut
 
@@ -44,7 +46,7 @@ Delete a comment
 
 Examples:
 
-    my $result = $phub->issues->comments->delete({ repo => 'Pithub', user => 'plu', comment_id => 1 });
+    my $result = $p->issues->comments->delete( repo => 'Pithub', user => 'plu', comment_id => 1 );
 
 =cut
 
@@ -65,7 +67,7 @@ Get a single comment
 
 Examples:
 
-    my $result = $phub->issues->comments->get({ repo => 'Pithub', user => 'plu', comment_id => 1 });
+    my $result = $p->issues->comments->get( repo => 'Pithub', user => 'plu', comment_id => 1 );
 
 =cut
 
@@ -86,7 +88,7 @@ List comments on an issue
 
 Examples:
 
-    my $result = $phub->issues->comments->list({ repo => 'Pithub', user => 'plu', issue_id => 1 });
+    my $result = $p->issues->comments->list( repo => 'Pithub', user => 'plu', issue_id => 1 );
 
 =cut
 
@@ -107,7 +109,7 @@ Edit a comment
 
 Examples:
 
-    my $result = $phub->issues->comments->update({ repo => 'Pithub', user => 'plu', comment_id => 1, data => { body => 'some comment' } });
+    my $result = $p->issues->comments->update( repo => 'Pithub', user => 'plu', comment_id => 1, data => { body => 'some comment' } );
 
 =cut
 

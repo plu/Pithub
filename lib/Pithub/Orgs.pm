@@ -1,9 +1,12 @@
 package Pithub::Orgs;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Members' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Teams' };
+around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
 =head1 NAME
 
@@ -25,7 +28,7 @@ Get an organization
 
 Examples:
 
-    my $result = $phub->orgs->get({ org => 'CPAN-API' });
+    my $result = $p->orgs->get( org => 'CPAN-API' );
 
 =cut
 
@@ -52,7 +55,7 @@ List public and private organizations for the authenticated user.
 
 Examples:
 
-    my $result = $phub->orgs->list({ user => 'plu' });
+    my $result = $p->orgs->list( user => 'plu' );
 
 =cut
 
@@ -73,7 +76,7 @@ Edit an organization
 
 Examples:
 
-    my $result = $phub->orgs->update({ org => 'CPAN-API', data => { name => 'cpan-api' } });
+    my $result = $p->orgs->update( org => 'CPAN-API', data => { name => 'cpan-api' } );
 
 =cut
 

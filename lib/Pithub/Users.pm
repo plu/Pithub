@@ -1,10 +1,13 @@
 package Pithub::Users;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Emails' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Followers' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Keys' };
+around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
 =head1 NAME
 
@@ -32,11 +35,26 @@ Get the authenticated user
 
 Examples:
 
-    my $result = $phub->users->get({ user => 'plu' });
+    $p = Pithub->new;
+    $result = $p->users->get('plu');
+
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->get;
+
+    $u = Pithub::Users->new;
+    $result = $u->get('plu');
+
+    $u = Pithub::Users->new( token => 'b3c62c6' );
+    $result = $u->get;
 
 =cut
 
 sub get {
+    my ( $self, $user ) = @_;
+    if ($user) {
+        return $self->request( GET => sprintf( '/users/%s', $user ) );
+    }
+    return $self->request( GET => '/user' );
 }
 
 =head2 update
@@ -53,11 +71,18 @@ Update the authenticated user
 
 Examples:
 
-    my $result = $phub->users->update({ email => 'plu@pqpq.de' });
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->update( { email => 'plu@cpan.org' } );
+
+    $u = Pithub::Users->new( token => 'b3c62c6' );
+    $result = $u->update( { email => 'plu@cpan.org' } );
 
 =cut
 
 sub update {
+    my ( $self, $args ) = @_;
+    croak 'Missing parameter: $data (hashref)' unless ref $args eq 'HASH';
+    return $self->request( PATCH => '/user', $args );
 }
 
 __PACKAGE__->meta->make_immutable;

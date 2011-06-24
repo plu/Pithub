@@ -1,7 +1,9 @@
 package Pithub::Users::Keys;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,11 +25,28 @@ Create a public key
 
 Examples:
 
-    my $result = $phub->users->keys->create({ data => { title => 'some key' } });
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->keys->create(
+        {
+            title => 'plu@localhost',
+            key   => 'ssh-rsa AAA...',
+        }
+    );
+
+    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    $result = $k->create(
+        {
+            title => 'plu@localhost',
+            key   => 'ssh-rsa AAA...',
+        }
+    );
 
 =cut
 
 sub create {
+    my ( $self, $data ) = @_;
+    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
+    return $self->request( POST => '/user/keys', $data );
 }
 
 =head2 delete
@@ -44,11 +63,18 @@ Delete a public key
 
 Examples:
 
-    my $result = $phub->users->keys->delete({ key_id => 1 });
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->keys->delete(123);
+
+    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    $result = $k->delete(123);
 
 =cut
 
 sub delete {
+    my ( $self, $key_id ) = @_;
+    croak 'Missing parameter: $key_id' unless $key_id;
+    return $self->request( DELETE => sprintf( '/user/keys/%d', $key_id ) );
 }
 
 =head2 get
@@ -65,11 +91,18 @@ Get a single public key
 
 Examples:
 
-    my $result = $phub->users->keys->get({ key_id => 1 });
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->keys->get(123);
+
+    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    $result = $k->get(123);
 
 =cut
 
 sub get {
+    my ( $self, $key_id ) = @_;
+    croak 'Missing parameter: $key_id' unless $key_id;
+    return $self->request( GET => sprintf( '/user/keys/%d', $key_id ) );
 }
 
 =head2 list
@@ -86,11 +119,17 @@ List public keys for a user
 
 Examples:
 
-    my $result = $phub->users->keys->list;
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->keys->list;
+
+    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    $result = $k->list;
 
 =cut
 
 sub list {
+    my ($self) = @_;
+    return $self->request( GET => '/user/keys' );
 }
 
 =head2 update
@@ -107,11 +146,29 @@ Update a public key
 
 Examples:
 
-    my $result = $phub->users->keys->update({ data => { title => 'some key' } });
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->keys->update(
+        123 => {
+            title => 'plu@localhost',
+            key   => 'ssh-rsa AAA...',
+        }
+    );
+
+    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    $result = $k->update(
+        123 => {
+            title => 'plu@localhost',
+            key   => 'ssh-rsa AAA...',
+        }
+    );
 
 =cut
 
 sub update {
+    my ( $self, $key_id, $data ) = @_;
+    croak 'Missing parameter: $key_id' unless $key_id;
+    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
+    return $self->request( PATCH => sprintf( '/user/keys/%d', $key_id ), $data );
 }
 
 __PACKAGE__->meta->make_immutable;

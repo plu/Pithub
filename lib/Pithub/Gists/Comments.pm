@@ -1,7 +1,9 @@
 package Pithub::Gists::Comments;
 
 use Moose;
+use Carp qw(croak);
 use namespace::autoclean;
+extends 'Pithub::Base';
 
 =head1 NAME
 
@@ -23,11 +25,15 @@ Create a comment
 
 Examples:
 
-    my $result = $phub->gists->comments->create({ gist_id => 1, data => { body => 'some comment' } });
+    $result = $p->gists->comments->create( gist_id => 1, data => { body => 'some comment' } );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( POST => sprintf( '/gists/%d/comments', $args{gist_id} ), $args{data} );
 }
 
 =head2 delete
@@ -44,11 +50,14 @@ Delete a comment
 
 Examples:
 
-    my $result = $phub->gists->comments->delete({ comment_id => 1 });
+    $result = $p->gists->comments->delete( comment_id => 1 );
 
 =cut
 
 sub delete {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    return $self->request( DELETE => sprintf( '/gists/comments/%d', $args{comment_id} ) );
 }
 
 =head2 get
@@ -65,11 +74,14 @@ Get a single comment
 
 Examples:
 
-    my $result = $phub->gists->comments->get({ comment_id => 1 });
+    $result = $p->gists->comments->get( comment_id => 1 );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    return $self->request( GET => sprintf( '/gists/comments/%d', $args{comment_id} ) );
 }
 
 =head2 list
@@ -86,11 +98,14 @@ List comments on a gist
 
 Examples:
 
-    my $result = $phub->gists->comments->list({ gist_id => 1 });
+    $result = $p->gists->comments->list( gist_id => 1 );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    return $self->request( GET => sprintf( '/gists/%d/comments', $args{gist_id} ) );
 }
 
 =head2 update
@@ -107,11 +122,15 @@ Edit a comment
 
 Examples:
 
-    my $result = $phub->gists->comments->update({ comment_id => 1, data => { body => 'some comment' } });
+    $result = $p->gists->comments->update( comment_id => 1, data => { body => 'some comment' } );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( PATCH => sprintf( '/gists/comments/%d', $args{comment_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

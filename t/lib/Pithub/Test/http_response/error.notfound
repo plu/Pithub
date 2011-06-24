@@ -1,0 +1,13 @@
+HTTP/1.1 404 Not Found
+Server: nginx/0.7.67
+Date: Fri, 24 Jun 2011 04:14:47 GMT
+Content-Type: application/json
+Connection: keep-alive
+Status: 404 Not Found
+X-RateLimit-Limit: 5000
+X-RateLimit-Remaining: 4962
+Content-Length: 29
+
+{
+  "message": "Not Found"
+}
