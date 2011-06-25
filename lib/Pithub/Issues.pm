@@ -99,6 +99,9 @@ Examples:
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues', $args{user}, $args{repo} ) );
 }
 
 =head2 update
