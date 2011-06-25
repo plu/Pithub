@@ -25,7 +25,20 @@ Create a Commit
 
 Examples:
 
-    $result = $p->git_data->commits->create( user => 'plu', repo => 'Pithub', data => { message => 'some message' } );
+    $result = $p->git_data->commits->create(
+        user => 'plu',
+        repo => 'Pithub',
+        data => {
+            author => {
+                date  => '2008-07-09T16:13:30+12:00',
+                email => 'schacon@gmail.com',
+                name  => 'Scott Chacon',
+            },
+            message => 'my commit message',
+            parents => ['7d1b31e74ee336d15cbd21741bc88a537ed063a0'],
+            tree    => '827efc6d56897b048c772eb4087f854f46256132',
+        }
+    );
 
 =cut
 
