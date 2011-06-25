@@ -115,11 +115,28 @@ Edit an issue
 
 Examples:
 
-    my $result = $p->issues->update( user => 'plu', repo => 'Pithub', issue_id => 1, { title => 'bug bar foo' } );
+    my $result = $p->issues->update(
+        user     => 'plu',
+        repo     => 'Pithub',
+        issue_id => 1,
+        data     => {
+            assignee  => 'octocat',
+            body      => "I'm having a problem with this.",
+            labels    => [ 'Label1', 'Label2' ],
+            milestone => 1,
+            state     => 'open',
+            title     => 'Found a bug'
+        }
+    );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: issue_id' unless $args{issue_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/issues/%d', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;
