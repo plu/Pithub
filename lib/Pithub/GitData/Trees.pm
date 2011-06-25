@@ -29,7 +29,14 @@ Examples:
         user => 'plu',
         repo => 'Pithub',
         data => {
-            base_tree => 'df21b2660fb6'
+            tree => [
+                {
+                    path => 'file.pl',
+                    mode => '100644',
+                    type => 'blob',
+                    sha  => '44b4fc6d56897b048c772eb4087f854f46256132',
+                }
+            ]
         }
     );
 
