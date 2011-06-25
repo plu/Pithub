@@ -30,7 +30,7 @@ Create an issue
 
 Examples:
 
-    my $result = $p->issues->create(
+    $result = $p->issues->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -65,7 +65,7 @@ Get a single issue
 
 Examples:
 
-    my $result = $p->issues->get(
+    $result = $p->issues->get(
         user => 'plu',
         repo => 'Pithub',
         issue_id => 1,
@@ -94,7 +94,10 @@ List issues for a repository
 
 Examples:
 
-    my $result = $p->issues->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->issues->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 
@@ -118,7 +121,7 @@ Edit an issue
 
 Examples:
 
-    my $result = $p->issues->update(
+    $result = $p->issues->update(
         user     => 'plu',
         repo     => 'Pithub',
         issue_id => 1,
