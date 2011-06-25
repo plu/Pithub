@@ -32,19 +32,21 @@ call would be unnecessary.
 
 Examples:
 
-    # TODO: verify I got the parameters right, e.g. 'tagger.name' vs
-    # tagger => { name => ... }
+    # TODO: verify I got the parameters right:
+    # 'tagger.name' vs tagger.name
     $result = $p->git_data->tags->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
-            'tagger.date'  => 'TODO',
-            'tagger.email' => 'plu@cpan.org',
-            'tagger.name'  => 'Johannes Plunien',
-            message        => 'Tagged v0.1',
-            object         => '827efc6d56897b048c772eb4087f854f46256132',
-            tag            => 'v0.1',
-            type           => 'commit',
+            tagger => {
+                date  => '2010-04-10T14:10:01-07:00',
+                email => 'plu@cpan.org',
+                name  => 'Johannes Plunien',
+            },
+            message => 'Tagged v0.1',
+            object  => '827efc6d56897b048c772eb4087f854f46256132',
+            tag     => 'v0.1',
+            type    => 'commit',
         }
     );
 
