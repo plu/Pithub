@@ -25,7 +25,14 @@ Create a Reference
 
 Examples:
 
-    $result = $p->git_data->references->create( user => 'plu', repo => 'Pithub', { data => { ref => 'tags/v1.0', sha => 'df21b2660fb6' } } );
+    $result = $p->git_data->references->create(
+        user => 'plu',
+        repo => 'Pithub',
+        data => {
+            ref => 'refs/heads/master',
+            sha => '827efc6d56897b048c772eb4087f854f46256132' .
+        }
+    );
 
 =cut
 
