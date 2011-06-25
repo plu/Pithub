@@ -65,11 +65,19 @@ Get a single issue
 
 Examples:
 
-    my $result = $p->issues->get( user => 'plu', repo => 'Pithub', issue_id => 1 );
+    my $result = $p->issues->get(
+        user => 'plu',
+        repo => 'Pithub',
+        issue_id => 1,
+    );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: issues_id' unless $args{issues_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d', $args{user}, $args{repo}, $args{issues_id} ) );
 }
 
 =head2 list
