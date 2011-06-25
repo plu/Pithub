@@ -21,4 +21,13 @@ throws_ok { $obj->get } qr{Missing key in parameters: sha}, 'No parameters';
     is $http_request->content, '', 'HTTP body';
 }
 
+{
+    my $result = $obj->get( sha => 456, recursive => 1 );
+    is $result->request->method, 'GET', 'HTTP method';
+    is $result->request->uri->path, '/repos/foo/bar/git/trees/456', 'HTTP path';
+    is $result->request->uri->query, 'recursive=1', 'HTTP GET parameters';
+    my $http_request = $result->request->http_request;
+    is $http_request->content, '', 'HTTP body';
+}
+
 done_testing;

@@ -122,7 +122,12 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: sha' unless $args{sha};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/git/trees/%s', $args{user}, $args{repo}, $args{sha} ) );
+    my $path = sprintf( '/repos/%s/%s/git/trees/%s', $args{user}, $args{repo}, $args{sha} );
+    my $options = {};
+    if ( $args{recursive} ) {
+        $options->{query_form} = { recursive => 1 };
+    }
+    return $self->request( GET => $path, undef, $options );
 }
 
 __PACKAGE__->meta->make_immutable;

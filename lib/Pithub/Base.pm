@@ -147,13 +147,17 @@ sub _merge_args {
 }
 
 sub _prepare_request_args {
-    my ( $self, $method, $path, $data ) = @_;
+    my ( $self, $method, $path, $data, $options ) = @_;
 
     croak 'Missing mandatory parameters: $method, $path' if scalar @_ < 3;
     croak "Invalid method: ${method}" unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
 
     my $uri = $self->api_uri->clone;
     $uri->path($path);
+
+    if ( $options && $options->{query_form} ) {
+        $uri->query_form( %{ $options->{query_form} } );
+    }
 
     if ( $self->_token_required( $method, $path ) && !$self->has_token ) {
         croak "Access token required for: ${method} ${path}";
