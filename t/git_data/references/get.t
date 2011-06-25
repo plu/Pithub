@@ -14,9 +14,9 @@ isa_ok $obj, 'Pithub::GitData::References';
 throws_ok { $obj->get } qr{Missing key in parameters: ref}, 'No parameters';
 
 {
-    my $result = $obj->get( ref => 123 );
+    my $result = $obj->get( ref => 'heads/sc/featureA' );
     is $result->request->method, 'GET', 'HTTP method';
-    is $result->request->uri->path, '/repos/foo/bar/git/refs/123', 'HTTP path';
+    is $result->request->uri->path, '/repos/foo/bar/git/refs/heads/sc/featureA', 'HTTP path';
     my $http_request = $result->request->http_request;
     is $http_request->content, '', 'HTTP body';
 }
