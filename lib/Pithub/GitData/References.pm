@@ -34,6 +34,22 @@ Examples:
         }
     );
 
+Parameters in C<< data >> hashref:
+
+=over
+
+=item *
+
+B<ref>: String of the name of the fully qualified reference (ie:
+refs/heads/master). If it doesn’t start with 'refs' and have at
+least two slashes, it will be rejected.
+
+=item *
+
+B<sha>: String of the SHA1 value to set this reference to
+
+=back
+
 =cut
 
 sub create {
@@ -57,7 +73,15 @@ Get a Reference
 
 Examples:
 
-    $result = $p->git_data->references->get( user => 'plu', repo => 'Pithub', ref => 'heads/master' );
+    $result = $p->git_data->references->get(
+        user => 'plu',
+        repo => 'Pithub',
+        ref  => 'heads/master'
+    );
+
+The key B<ref> must be formatted as C<< heads/branch >>, not just
+C<< branch >>. For example, the call to get the data for a branch
+named C<< sc/featureA > would be: C<< heads/sc/featureA >>
 
 =cut
 
@@ -82,6 +106,13 @@ This will return an array of all the references on the system,
 including things like notes and stashes if they exist on the server.
 Anything in the namespace, not just heads and tags, though that
 would be the most common.
+
+Examples:
+
+    $result = $p->git_data->references->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =item *
 
@@ -125,7 +156,32 @@ Update a Reference
 
 Examples:
 
-    $result = $p->git_data->references->update( user => 'plu', repo => 'Pithub', ref => 'tags/v1.0', data => { sha => 'df21b2660fb6' } );
+    $result = $p->git_data->references->update(
+        user => 'plu',
+        repo => 'Pithub',
+        ref  => 'tags/v1.0',
+        data => {
+            force => 1,
+            sha   => 'aa218f56b14c9653891f9e74264a383fa43fefbd',
+        }
+    );
+
+Parameters in C<< data >> hashref:
+
+=over
+
+=item *
+
+B<sha>: String of the SHA1 value to set this reference to
+
+=item *
+
+B<force>: Boolean indicating whether to force the update or to make
+sure the update is a fast-forward update. The default is false, so
+leaving this out or setting it to false will make sure you’re not
+overwriting work.
+
+=back
 
 =cut
 
