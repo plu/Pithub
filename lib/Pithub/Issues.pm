@@ -30,11 +30,25 @@ Create an issue
 
 Examples:
 
-    my $result = $p->issues->create( user => 'plu', repo => 'Pithub', data => { title => 'bug: foo bar' } );
+    my $result = $p->issues->create(
+        user => 'plu',
+        repo => 'Pithub',
+        data => {
+            assignee  => 'octocat',
+            body      => "I'm having a problem with this.",
+            labels    => [ 'Label1', 'Label2' ],
+            milestone => 1,
+            title     => 'Found a bug'
+        }
+    );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/issues', $args{user}, $args{repo} ), $args{data} );
 }
 
 =head2 get
