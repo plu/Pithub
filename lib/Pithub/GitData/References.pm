@@ -94,12 +94,21 @@ tag references, you can call:
 
 Examples:
 
-    $result = $p->git_data->references->list( user => 'plu', repo => 'Pithub' );
-    $result = $p->git_data->references->list( user => 'plu', repo => 'Pithub', ref => 'tags' );
+    $result = $p->git_data->references->list(
+        user => 'plu',
+        repo => 'Pithub',
+        ref  => 'tags',
+    );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    if ( my $ref = $args{ref} ) {
+        return $self->request( GET => sprintf( '/repos/%s/%s/git/refs/%s', $args{user}, $args{repo}, $args{ref} ) );
+    }
+    return $self->request( GET => sprintf( '/repos/%s/%s/git/refs', $args{user}, $args{repo} ) );
 }
 
 =head2 update
