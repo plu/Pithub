@@ -75,9 +75,9 @@ Examples:
 
 sub get {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: issues_id' unless $args{issues_id};
+    croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d', $args{user}, $args{repo}, $args{issues_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
 =head2 list
