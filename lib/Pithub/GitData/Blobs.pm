@@ -25,7 +25,14 @@ Create a Blob
 
 Examples:
 
-    $result = $p->git_data->blobs->create( user => 'plu', repo => 'Pithub', data => { content => 'some blob' } );
+    $result = $p->git_data->blobs->create(
+        user => 'plu',
+        repo => 'Pithub',
+        data => {
+            content  => 'Content of the blob',
+            encoding => 'utf-8',
+        }
+    );
 
 =cut
 
