@@ -182,6 +182,15 @@ Examples:
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    if ( my $milestone_id = $args{milestone_id} ) {
+        return $self->request( GET => sprintf( '/repos/%s/%s/milestones/%d/labels', $args{user}, $args{repo}, $milestone_id ) );
+    }
+    elsif ( my $issue_id = $args{issue_id} ) {
+        return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $issue_id ) );
+    }
+    return $self->request( GET => sprintf( '/repos/%s/%s/labels', $args{user}, $args{repo} ) );
 }
 
 =head2 remove
