@@ -135,6 +135,93 @@ Pithub::Base
 
 =head2 request
 
+This method is the central point: All L<Pithub> are using this method
+for making requests to the Github. If Github adds a new API call that
+is not yet supported, this method can be used directly. It accepts
+following parameters:
+
+=over
+
+=item *
+
+B<$method>: mandatory string, one of the following:
+
+=over
+
+=item *
+
+DELETE
+
+=item *
+
+GET
+
+=item *
+
+PATCH
+
+=item *
+
+POST
+
+=item *
+
+PUT
+
+=back
+
+=item *
+
+B<$path>: mandatory string of the relative path used for making the
+API call.
+
+=item *
+
+B<$data>: optional data reference, usually a reference to an array
+or hash. It must be possible to serialize this using L<JSON::Any>.
+This will be the HTTP request body.
+
+=item *
+
+B<$options>: optional hash reference to set additional options on
+the request. So far only C<< query_form >> is supported.
+
+=back
+
+Usually you should not end up using this method at all. It's only
+available if L<Pithub> is missing anything from the Github v3 API.
+Though here are some examples how to use it:
+
+=item *
+
+Same as L<Pithub::Users/get>:
+
+    $p = Pithub->new;
+    $result = $p->request( GET => '/users/plu' );
+
+Same as L<Pithub::Gists/create>:
+
+    $p      = Pithub->new;
+    $method = 'POST';
+    $path   = '/gists';
+    $data   = {
+        description => 'the description for this gist',
+        public      => 1,
+        files       => { 'file1.txt' => { content => 'String file content' } }
+    };
+    $result = $p->request( $method, $path, $data );
+
+Same as L<Pithub::GitData::Trees/get>:
+
+    $p       = Pithub->new;
+    $method  = 'GET';
+    $path    = '/repos/plu/Pithub/git/trees/aac667c5aaa6e49572894e8c722d0705bb00fab2';
+    $data    = undef;
+    $options = { query_form => { recursive => 1 } };
+    $result  = $p->request( $method, $path, $data, $options );
+
+This method always returns a L<Pithub::Result> object.
+
 =cut
 
 sub request {
