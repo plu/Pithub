@@ -152,9 +152,15 @@ sub _merge_args {
         api_uri      => $self->api_uri,
         skip_request => $self->skip_request,
     );
-    $args{repo}  = $self->repo  if $self->has_repo;
-    $args{token} = $self->token if $self->has_token;
-    $args{user}  = $self->user  if $self->has_user;
+    if ( $self->has_repo ) {
+        $args{repo} = $self->repo;
+    }
+    if ( $self->has_token ) {
+        $args{token} = $self->token;
+    }
+    if ( $self->has_user ) {
+        $args{user} = $self->user;
+    }
     return ( %args, @args );
 }
 
