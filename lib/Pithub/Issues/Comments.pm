@@ -25,11 +25,21 @@ Create a comment
 
 Examples:
 
-    my $result = $p->issues->comments->create( repo => 'Pithub', user => 'plu', issue_id => 1, data => { body => 'some comment' } );
+    $result = $p->issues->comments->create(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+        data     => { body => 'some comment' }
+    );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: issue_id' unless $args{issue_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/issues/%d/comments', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 =head2 delete
