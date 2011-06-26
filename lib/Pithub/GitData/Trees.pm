@@ -132,7 +132,10 @@ sub get {
     my $path = sprintf( '/repos/%s/%s/git/trees/%s', $args{user}, $args{repo}, $args{sha} );
     my $options = {};
     if ( $args{recursive} ) {
-        $options->{query_form} = { recursive => 1 };
+        $options->{prepare_uri} = sub {
+            my ($uri) = @_;
+            $uri->query_form( recursive => 1 );
+        };
     }
     return $self->request( GET => $path, undef, $options );
 }

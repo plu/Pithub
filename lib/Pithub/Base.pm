@@ -184,7 +184,8 @@ This will be the HTTP request body.
 =item *
 
 B<$options>: optional hash reference to set additional options on
-the request. So far only C<< query_form >> is supported.
+the request. So far only C<< prepare_uri >> is supported. See more
+about that in the examples below.
 
 =back
 
@@ -217,8 +218,13 @@ Same as L<Pithub::GitData::Trees/get>:
     $method  = 'GET';
     $path    = '/repos/plu/Pithub/git/trees/aac667c5aaa6e49572894e8c722d0705bb00fab2';
     $data    = undef;
-    $options = { query_form => { recursive => 1 } };
-    $result  = $p->request( $method, $path, $data, $options );
+    $options = {
+        prepare_uri => sub {
+            my ($uri) = @_;
+            $uri->query_form( recursive => 1 );
+        },
+    };
+    $result = $p->request( $method, $path, $data, $options );
 
 This method always returns a L<Pithub::Result> object.
 
@@ -263,8 +269,10 @@ sub _prepare_request_args {
     my $uri = $self->api_uri->clone;
     $uri->path($path);
 
-    if ( $options && $options->{query_form} ) {
-        $uri->query_form( %{ $options->{query_form} } );
+    if ($options) {
+        croak 'The parameter $options must be a hashref' unless ref $options eq 'HASH';
+        croak 'The key prepare_uri in the $options hashref must be a coderef' if $options->{prepare_uri} && ref $options->{prepare_uri} ne 'CODE';
+        $options->{prepare_uri}->($uri) if $options->{prepare_uri};
     }
 
     if ( $self->_token_required( $method, $path ) && !$self->has_token ) {

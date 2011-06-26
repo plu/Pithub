@@ -110,6 +110,16 @@ my %accessors = (
     throws_ok { $base->request( xxx => '/bar' ) } qr{Invalid method: xxx}, 'Not a valid HTTP method';
     lives_ok { $base->request( GET => 'bar' ) } 'Correct parameters do not throw an exception';
 
+    throws_ok { $base->request( GET => '/bar', undef, [] ) }
+    qr{The parameter \$options must be a hashref},
+      '$options must be a hashref';
+
+    throws_ok { $base->request( GET => '/bar', undef, { prepare_uri => 1 } ) }
+    qr{The key prepare_uri in the \$options hashref must be a coderef},
+      'prepare_uri must be a coderef';
+
+    lives_ok { $base->request( GET => 'bar', undef, {} ) } 'Empty options hashref';
+
     my $result       = $base->request( GET => '/bar' );
     my $response     = $result->response;
     my $request      = $response->request;
