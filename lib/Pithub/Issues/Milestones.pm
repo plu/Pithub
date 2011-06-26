@@ -88,11 +88,19 @@ Get a single milestone
 
 Examples:
 
-    my $result = $p->issues->milestones->get( repo => 'Pithub', user => 'plu', milestone_id => 1 );
+    $result = $p->issues->milestones->get(
+        repo => 'Pithub',
+        user => 'plu',
+        milestone_id => 1,
+    );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: milestone_id' unless $args{milestone_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/milestones/%d', $args{user}, $args{repo}, $args{milestone_id} ) );
 }
 
 =head2 list
