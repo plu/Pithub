@@ -52,11 +52,18 @@ an owner of the org that the team is associated with.
 
 Examples:
 
-    my $result = $p->orgs->teams->add_repo( team_id => 1, repo => 'some_repo' );
+    $result = $p->orgs->teams->add_repo(
+        team_id => 1,
+        repo    => 'some_repo',
+    );
 
 =cut
 
 sub add_repo {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    croak 'Missing key in parameters: repo'    unless $args{repo};
+    return $self->request( PUT => sprintf( '/teams/%d/repos/%s', $args{team_id}, $args{repo} ) );
 }
 
 =head2 create
