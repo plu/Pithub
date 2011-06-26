@@ -67,11 +67,19 @@ Get a single comment
 
 Examples:
 
-    my $result = $p->issues->comments->get( repo => 'Pithub', user => 'plu', comment_id => 1 );
+    $result = $p->issues->comments->get(
+        repo       => 'Pithub',
+        user       => 'plu',
+        comment_id => 1,
+    );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/comments/%d', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
 =head2 list
