@@ -160,14 +160,4 @@ my %accessors = (
     is $result->ratelimit_remaining, 4962, 'Accessor to X-RateLimit-Remaining header';
 }
 
-{
-    my $base = Pithub::Base->new;
-    my $result = $base->request( GET => '/' );
-
-    is $result->code,        200,  'HTTP status is 200';
-    is $result->success,     1,    'Successful';
-    is $result->raw_content, '{}', 'Empty JSON object';
-    eq_or_diff $result->content, {}, 'Empty hashref';
-}
-
 done_testing;
