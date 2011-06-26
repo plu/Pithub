@@ -132,11 +132,14 @@ Get team
 
 Examples:
 
-    my $result = $p->orgs->teams->get( team_id => 1 );
+    $result = $p->orgs->teams->get( team_id => 1 );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    return $self->request( GET => sprintf( '/teams/%d', $args{team_id} ) );
 }
 
 =head2 get_repo
