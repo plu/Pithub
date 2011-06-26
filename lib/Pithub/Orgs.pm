@@ -88,11 +88,25 @@ Edit an organization
 
 Examples:
 
-    my $result = $p->orgs->update( org => 'CPAN-API', data => { name => 'cpan-api' } );
+    $result = $p->orgs->update(
+        org  => 'CPAN-API',
+        data => {
+            billing_email => 'support@github.com',
+            blog          => 'https://github.com/blog',
+            company       => 'GitHub',
+            email         => 'support@github.com',
+            location      => 'San Francisco',
+            name          => 'github',
+        }
+    );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org' unless $args{org};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( PATCH => sprintf( '/orgs/%s', $args{org} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;
