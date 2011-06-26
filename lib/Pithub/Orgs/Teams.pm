@@ -79,11 +79,22 @@ owner of the given organization.
 
 Examples:
 
-    my $result = $p->orgs->teams->create( org => 'CPAN-API', data => { name => 'some team' } );
+    $result = $p->orgs->teams->create(
+        org  => 'CPAN-API',
+        data => {
+            name       => 'new team',
+            permission => 'push',
+            repo_names => ['github/dotfiles']
+        }
+    );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org' unless $args{org};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( POST => sprintf( '/orgs/%s/teams', $args{org} ), $args{data} );
 }
 
 =head2 delete
