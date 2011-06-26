@@ -25,11 +25,19 @@ Get a single event
 
 Examples:
 
-    my $result = $p->issues->events->get( repo => 'Pithub', user => 'plu', event_id => 1 );
+    $result = $p->issues->events->get(
+        repo     => 'Pithub',
+        user     => 'plu',
+        event_id => 1,
+    );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: event_id' unless $args{event_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/events/%d', $args{user}, $args{repo}, $args{event_id} ) );
 }
 
 =head2 list
