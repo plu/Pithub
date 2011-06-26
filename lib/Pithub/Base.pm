@@ -90,6 +90,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^PATCH /repos/[^/]+/[^/]+/comments/.*?$},
     qr{^PATCH /repos/[^/]+/[^/]+/git/refs/.*?$},
     qr{^PATCH /repos/[^/]+/[^/]+/issues/.*?$},
+    qr{^PATCH /repos/[^/]+/[^/]+/issues/comments/.*?$},
     qr{^PATCH /repos/[^/]+/[^/]+/keys/.*?$},
     qr{^PATCH /repos/[^/]+/[^/]+/pulls/.*?$},
     qr{^PATCH /repos/[^/]+/[^/]+/pulls/comments/.*?$},
