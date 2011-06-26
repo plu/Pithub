@@ -28,11 +28,14 @@ Get an organization
 
 Examples:
 
-    my $result = $p->orgs->get( org => 'CPAN-API' );
+    $result = $p->orgs->get( org => 'CPAN-API' );
 
 =cut
 
 sub get {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org' unless $args{org};
+    return $self->request( GET => sprintf( '/orgs/%s', $args{org} ) );
 }
 
 =head2 list
