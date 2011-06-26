@@ -50,6 +50,14 @@ List events for an issue
 
     GET /repos/:user/:repo/issues/:issue_id/events
 
+Examples:
+
+    $result = $p->issues->events->list(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+    );
+
 =item *
 
 List events for a repository
@@ -58,14 +66,20 @@ List events for a repository
 
 =back
 
-Examples:
-
-    my $result = $p->issues->events->list( repo => 'Pithub', user => 'plu', issue_id => 1 );
-    my $result = $p->issues->events->list( repo => 'Pithub', user => 'plu' );
+    $result = $p->issues->events->list(
+        repo => 'Pithub',
+        user => 'plu',
+    );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    if ( my $issue_id = $args{issue_id} ) {
+        return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d/events', $args{user}, $args{repo}, $issue_id ) );
+    }
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/events', $args{user}, $args{repo} ) );
 }
 
 __PACKAGE__->meta->make_immutable;
