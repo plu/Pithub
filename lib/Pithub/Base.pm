@@ -117,6 +117,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^PUT /repos/[^/]+/[^/]+/pulls/[^/]+/merge$},
     qr{^PUT /user/following/.*?$},
     qr{^PUT /user/watched/[^/]+/.*?$},
+    qr{^DELETE /repos/[^/]+/[^/]+/labels/.*?$},
 );
 
 =head1 NAME
