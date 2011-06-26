@@ -143,11 +143,21 @@ Edit a comment
 
 Examples:
 
-    my $result = $p->issues->comments->update( repo => 'Pithub', user => 'plu', comment_id => 1, data => { body => 'some comment' } );
+    $result = $p->issues->comments->update(
+        repo       => 'Pithub',
+        user       => 'plu',
+        comment_id => 1,
+        data       => { body => 'some comment' },
+    );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: comment_id' unless $args{comment_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/issues/comments/%d', $args{user}, $args{repo}, $args{comment_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;
