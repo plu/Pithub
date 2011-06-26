@@ -113,18 +113,11 @@ Get a single label
 
     GET /repos/:user/:repo/labels/:id
 
-=item *
-
-Get labels for every issue in a milestone
-
-    GET /repos/:user/:repo/milestones/:id/labels
-
 =back
 
 Examples:
 
     my $result = $p->issues->labels->get( repo => 'Pithub', user => 'plu', label_id => 1 );
-    my $result = $p->issues->labels->get( repo => 'Pithub', user => 'plu', milestone_id => 1 );
 
 =cut
 
@@ -141,18 +134,42 @@ List all labels for this repository
 
     GET /repos/:user/:repo/labels
 
+Examples:
+
+    $result = $p->issues->labels->list(
+        repo => 'Pithub',
+        user => 'plu'
+    );
+
 =item *
 
 List labels on an issue
 
     GET /repos/:user/:repo/issues/:id/labels
 
-=back
+Examples:
+
+    $result = $p->issues->labels->list(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+    );
+
+=item *
+
+Get labels for every issue in a milestone
+
+    GET /repos/:user/:repo/milestones/:id/labels
 
 Examples:
 
-    my $result = $p->issues->labels->list( repo => 'Pithub', user => 'plu' );
-    my $result = $p->issues->labels->list( repo => 'Pithub', user => 'plu', issue_id => 1 );
+    $result = $p->issues->labels->get(
+        repo         => 'Pithub',
+        user         => 'plu',
+        milestone_id => 1
+    );
+
+=back
 
 =cut
 
