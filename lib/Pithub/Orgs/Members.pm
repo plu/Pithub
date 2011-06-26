@@ -115,11 +115,14 @@ members are returned.
 
 Examples:
 
-    my $result = $p->orgs->members->list( org => 'CPAN-API' );
+    $result = $p->orgs->members->list( org => 'CPAN-API' );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org' unless $args{org};
+    return $self->request( GET => sprintf( '/orgs/%s/members', $args{org} ) );
 }
 
 =head2 list_public
