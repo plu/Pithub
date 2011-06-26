@@ -140,11 +140,14 @@ publicized or not.
 
 Examples:
 
-    my $result = $p->orgs->members->list_public( org => 'CPAN-API' );
+    $result = $p->orgs->members->list_public( org => 'CPAN-API' );
 
 =cut
 
 sub list_public {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org' unless $args{org};
+    return $self->request( GET => sprintf( '/orgs/%s/public_members', $args{org} ) );
 }
 
 =head2 publicize
