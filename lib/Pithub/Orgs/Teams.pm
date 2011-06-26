@@ -181,11 +181,18 @@ user must be a member of the team.
 
 Examples:
 
-    my $result = $p->orgs->teams->is_member( team_id => 1, user => 'plu' );
+    $result = $p->orgs->teams->is_member(
+        team_id => 1,
+        user    => 'plu',
+    );
 
 =cut
 
 sub is_member {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    croak 'Missing key in parameters: user'    unless $args{user};
+    return $self->request( GET => sprintf( '/teams/%d/members/%s', $args{team_id}, $args{user} ) );
 }
 
 =head2 list
