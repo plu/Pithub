@@ -86,25 +86,13 @@ Delete a label
 
 =back
 
-=item *
-
-Remove a label from an issue
-
-    DELETE /repos/:user/:repo/issues/:id/labels/:id
-
-=item *
-
-Remove all labels from an issue
-
-    DELETE /repos/:user/:repo/issues/:id/labels
-
-=back
-
 Examples:
 
-    my $result = $p->issues->labels->delete( repo => 'Pithub', user => 'plu', label_id => 1 );
-    my $result = $p->issues->labels->delete( repo => 'Pithub', user => 'plu', issue_id => 1 );
-    my $result = $p->issues->labels->delete( repo => 'Pithub', user => 'plu', issue_id => 1, label_id => 1 );
+    $result = $p->issues->labels->delete(
+        repo     => 'Pithub',
+        user     => 'plu',
+        label_id => 1,
+    );
 
 =cut
 
@@ -165,6 +153,46 @@ Examples:
 =cut
 
 sub list {
+}
+
+=head2 remove
+
+=over
+
+=item *
+
+Remove a label from an issue
+
+    DELETE /repos/:user/:repo/issues/:id/labels/:id
+
+Examples:
+
+    $result = $p->issues->labels->delete(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+        label_id => 1,
+    );
+
+=item *
+
+Remove all labels from an issue
+
+    DELETE /repos/:user/:repo/issues/:id/labels
+
+Examples:
+
+    $result = $p->issues->labels->delete(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+    );
+
+=back
+
+=cut
+
+sub remove {
 }
 
 =head2 replace
