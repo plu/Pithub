@@ -48,6 +48,10 @@ List all public organizations for a user.
 
     GET /users/:user/orgs
 
+Examples:
+
+    $result = $p->orgs->list( user => 'plu' );
+
 =item *
 
 List public and private organizations for the authenticated user.
@@ -58,11 +62,16 @@ List public and private organizations for the authenticated user.
 
 Examples:
 
-    my $result = $p->orgs->list( user => 'plu' );
+    $result = $p->orgs->list;
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    if ( my $user = $args{user} ) {
+        return $self->request( GET => sprintf( '/users/%s/orgs', $args{user} ) );
+    }
+    return $self->request( GET => '/user/orgs' );
 }
 
 =head2 update
