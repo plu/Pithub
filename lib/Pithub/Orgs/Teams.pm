@@ -331,11 +331,21 @@ of the org that the team is associated with.
 
 Examples:
 
-    my $result = $p->orgs->teams->update( team_id => 1, data => { name => 'new team name' } );
+    $result = $p->orgs->teams->update(
+        team_id => 1,
+        data    => {
+            name       => 'new team name',
+            permission => 'push',
+        }
+    );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( PATCH => sprintf( 'teams/%d', $args{team_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;
