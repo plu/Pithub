@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Server: nginx/1.0.4
+Date: Sun, 26 Jun 2011 18:37:26 GMT
+Content-Type: application/json
+Connection: keep-alive
+Status: 200 OK
+X-RateLimit-Limit: 5000
+X-RateLimit-Remaining: 4970
+Link: <https://api.github.com/users/miyagawa/followers?page=1>; rel="first", <https://api.github.com/users/miyagawa/followers?page=25>; rel="prev"
+Content-Length: 3606
