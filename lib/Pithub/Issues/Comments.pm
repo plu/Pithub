@@ -96,11 +96,19 @@ List comments on an issue
 
 Examples:
 
-    my $result = $p->issues->comments->list( repo => 'Pithub', user => 'plu', issue_id => 1 );
+    $result = $p->issues->comments->list(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+    );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: issue_id' unless $args{issue_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d/comments', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
 =head2 update
