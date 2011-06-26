@@ -154,11 +154,18 @@ Get team repo
 
 Examples:
 
-    my $result = $p->orgs->teams->get( team_id => 1, repo => 'some_repo' );
+    $result = $p->orgs->teams->get_repo(
+        team_id => 1,
+        repo    => 'some_repo',
+    );
 
 =cut
 
 sub get_repo {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    croak 'Missing key in parameters: repo'    unless $args{repo};
+    return $self->request( GET => sprintf( '/teams/%d/repos/%s', $args{team_id}, $args{repo} ) );
 }
 
 =head2 is_member
