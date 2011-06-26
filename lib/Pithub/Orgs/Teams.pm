@@ -110,11 +110,14 @@ of the org that the team is associated with.
 
 Examples:
 
-    my $result = $p->orgs->teams->delete( team_id => 1 );
+    $result = $p->orgs->teams->delete( team_id => 1 );
 
 =cut
 
 sub delete {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    return $self->request( DELETE => sprintf( '/teams/%d', $args{team_id} ) );
 }
 
 =head2 get
