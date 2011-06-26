@@ -68,6 +68,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^DELETE /repos/[^/]+/[^/]+/collaborators/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/comments/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/downloads/.*?$},
+    qr{^DELETE /repos/[^/]+/[^/]+/issues/comments/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/keys/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/pulls/comments/.*?$},
     qr{^DELETE /user/following/.*?$},
