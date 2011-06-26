@@ -11,15 +11,13 @@ Pithub::Issues::Labels
 
 =head1 METHODS
 
-=head2 create
+=head2 add
 
 =over
 
 =item *
 
-Create a label
-
-    POST /repos/:user/:repo/labels
+Add a label to an issue
 
 =item *
 
@@ -31,8 +29,37 @@ Add labels to an issue
 
 Examples:
 
-    my $result = $p->issues->labels->create( repo => 'Pithub', user => 'plu', data => { name => 'some label' } );
-    my $result = $p->issues->labels->create( repo => 'Pithub', user => 'plu', issue_id => 1, data => { name => 'some label' } );
+    $result = $p->issues->labels->create(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+        data     => { name => 'some label' }
+    );
+
+=cut
+
+sub add {
+}
+
+=head2 create
+
+=over
+
+=item *
+
+Create a label
+
+    POST /repos/:user/:repo/labels
+
+=back
+
+Examples:
+
+    $result = $p->issues->labels->create(
+        repo => 'Pithub',
+        user => 'plu',
+        data => { name => 'some label' }
+    );
 
 =cut
 
