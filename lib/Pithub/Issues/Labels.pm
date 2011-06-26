@@ -97,6 +97,10 @@ Examples:
 =cut
 
 sub delete {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: label_id' unless $args{label_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/labels/%d', $args{user}, $args{repo}, $args{label_id} ) );
 }
 
 =head2 get
