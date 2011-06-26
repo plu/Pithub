@@ -86,6 +86,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^GET /repos/[^/]+/[^/]+/keys/.*?$},
     qr{^GET /user/following/.*?$},
     qr{^GET /user/keys/.*?$},
+    qr{^GET /user/orgs$},
     qr{^GET /user/watched$},
     qr{^GET /user/watched/[^/]+/.*?$},
     qr{^PATCH /gists/.*?$},
