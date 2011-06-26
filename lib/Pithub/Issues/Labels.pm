@@ -17,10 +17,6 @@ Pithub::Issues::Labels
 
 =item *
 
-Add a label to an issue
-
-=item *
-
 Add labels to an issue
 
     POST /repos/:user/:repo/issues/:id/labels
@@ -29,16 +25,21 @@ Add labels to an issue
 
 Examples:
 
-    $result = $p->issues->labels->create(
+    $result = $p->issues->labels->add(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
-        data     => { name => 'some label' }
+        data     => ['Label1', 'Label2'],
     );
 
 =cut
 
 sub add {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: issue_id' unless $args{issue_id};
+    croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 =head2 create
