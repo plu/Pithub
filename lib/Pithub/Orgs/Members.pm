@@ -83,11 +83,18 @@ Check if a user is a member of an organization
 
 Examples:
 
-    my $result = $p->orgs->members->is_member( org => 'CPAN-API', user => 'plu' );
+    $result = $p->orgs->members->is_member(
+        org  => 'CPAN-API',
+        user => 'plu',
+    );
 
 =cut
 
 sub is_member {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org'  unless $args{org};
+    croak 'Missing key in parameters: user' unless $args{user};
+    return $self->request( GET => sprintf( '/orgs/%s/members/%s', $args{org}, $args{user} ) );
 }
 
 =head2 is_public
