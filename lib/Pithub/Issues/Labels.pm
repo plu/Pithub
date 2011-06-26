@@ -231,6 +231,13 @@ Examples:
 =cut
 
 sub remove {
+    my ( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    croak 'Missing key in parameters: issue_id' unless $args{issue_id};
+    if ( my $label_id = $args{label_id} ) {
+        return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%d/labels/%d', $args{user}, $args{repo}, $args{issue_id}, $label_id ) );
+    }
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
 =head2 replace
