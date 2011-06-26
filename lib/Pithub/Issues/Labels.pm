@@ -285,11 +285,24 @@ Update a label
 
 Examples:
 
-    my $result = $p->issues->labels->update( repo => 'Pithub', user => 'plu', label_id => 1, data => { name => 'other label' } );
+    $result = $p->issues->labels->update(
+        repo     => 'Pithub',
+        user     => 'plu',
+        label_id => 1,
+        data     => {
+            color => 'FFFFFF',
+            name  => 'API',
+        }
+    );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: label_id' unless $args{label_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/labels/%d', $args{user}, $args{repo}, $args{label_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;
