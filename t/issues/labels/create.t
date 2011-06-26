@@ -21,13 +21,13 @@ ok $obj->token(123), 'Token set';
     my $result = $obj->create(
         data => {
             name  => 'label1',
-            color => '#FFFFFF',
+            color => 'FFFFFF',
         }
     );
     is $result->request->method, 'POST', 'HTTP method';
     is $result->request->uri->path, '/repos/foo/bar/labels', 'HTTP path';
     my $http_request = $result->request->http_request;
-    is $http_request->content, '{"color":"#FFFFFF","name":"label1"}', 'HTTP body';
+    is $http_request->content, '{"color":"FFFFFF","name":"label1"}', 'HTTP body';
 }
 
 done_testing;

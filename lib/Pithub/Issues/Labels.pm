@@ -60,7 +60,7 @@ Examples:
         repo => 'Pithub',
         user => 'plu',
         data => {
-            color => '#FFFFFF',
+            color => 'FFFFFF',
             name  => 'some label',
         }
     );
