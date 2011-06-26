@@ -16,7 +16,7 @@ throws_ok { $obj->list } qr{Access token required for: GET /user/followers}, 'To
 {
     my $result = $obj->list('plu');
     is $result->request->method, 'GET', 'HTTP method';
-    is $result->request->uri->path, '/user/plu/followers', 'HTTP path';
+    is $result->request->uri->path, '/users/plu/followers', 'HTTP path';
 }
 
 {

@@ -111,7 +111,7 @@ Examples:
 sub list {
     my ( $self, $user ) = @_;
     if ($user) {
-        return $self->request( GET => sprintf( '/user/%s/followers', $user ) );
+        return $self->request( GET => sprintf( '/users/%s/followers', $user ) );
     }
     return $self->request( GET => '/user/followers' );
 }
