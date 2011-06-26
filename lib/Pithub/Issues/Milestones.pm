@@ -25,11 +25,24 @@ Create a milestone
 
 Examples:
 
-    my $result = $p->issues->milestones->create( repo => 'Pithub', user => 'plu', data => { title => 'some milestone' } );
+    $result = $p->issues->milestones->create(
+        repo => 'Pithub',
+        user => 'plu',
+        data => {
+            description => 'String',
+            due_on      => 'Time',
+            state       => 'open or closed',
+            title       => 'String'
+        }
+    );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/milestones', $args{user}, $args{repo} ), $args{data} );
 }
 
 =head2 delete
