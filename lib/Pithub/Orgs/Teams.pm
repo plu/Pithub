@@ -252,11 +252,14 @@ List team repos
 
 Examples:
 
-    my $result = $p->orgs->teams->list_repos( team_id => 1 );
+    $result = $p->orgs->teams->list_repos( team_id => 1 );
 
 =cut
 
 sub list_repos {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    return $self->request( GET => sprintf( '/teams/%d/repos', $args{team_id} ) );
 }
 
 =head2 remove_member
