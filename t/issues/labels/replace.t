@@ -11,7 +11,7 @@ my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo =>
 
 isa_ok $obj, 'Pithub::Issues::Labels';
 
-throws_ok { $obj->add } qr{Missing key in parameters: issue_id}, 'No parameters';
+throws_ok { $obj->replace } qr{Missing key in parameters: issue_id}, 'No parameters';
 throws_ok { $obj->replace( issue_id => 1 ) } qr{Missing key in parameters: data \(arrayref\)}, 'No data parameter';
 throws_ok { $obj->replace( issue_id => 1, data => 5 ) } qr{Missing key in parameters: data \(arrayref\)}, 'Wrong data parameter';
 throws_ok { $obj->replace( issue_id => 123, data => [qw(label1 label2)] ); }
