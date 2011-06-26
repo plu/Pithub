@@ -59,12 +59,19 @@ Examples:
     $result = $p->issues->labels->create(
         repo => 'Pithub',
         user => 'plu',
-        data => { name => 'some label' }
+        data => {
+            color => '#FFFFFF',
+            name  => 'some label',
+        }
     );
 
 =cut
 
 sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( POST => sprintf( '/repos/%s/%s/labels', $args{user}, $args{repo} ), $args{data} );
 }
 
 =head2 delete
