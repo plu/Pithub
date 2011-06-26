@@ -59,11 +59,19 @@ Delete a milestone
 
 Examples:
 
-    my $result = $p->issues->milestones->delete( repo => 'Pithub', user => 'plu', milestone_id => 1 );
+    $result = $p->issues->milestones->delete(
+        repo => 'Pithub',
+        user => 'plu',
+        milestone_id => 1,
+    );
 
 =cut
 
 sub delete {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: milestone_id' unless $args{milestone_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/milestones/%d', $args{user}, $args{repo}, $args{milestone_id} ) );
 }
 
 =head2 get
