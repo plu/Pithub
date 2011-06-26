@@ -111,11 +111,18 @@ Get if a user is a public member
 
 Examples:
 
-    my $result = $p->orgs->members->is_public( org => 'CPAN-API', user => 'plu' );
+    $result = $p->orgs->members->is_public(
+        org  => 'CPAN-API',
+        user => 'plu',
+    );
 
 =cut
 
 sub is_public {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org'  unless $args{org};
+    croak 'Missing key in parameters: user' unless $args{user};
+    return $self->request( GET => sprintf( '/orgs/%s/public_members/%s', $args{org}, $args{user} ) );
 }
 
 =head2 list
