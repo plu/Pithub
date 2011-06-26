@@ -207,11 +207,14 @@ List teams
 
 Examples:
 
-    my $result = $p->orgs->teams->list( org => 'CPAN-API' );
+    $result = $p->orgs->teams->list( org => 'CPAN-API' );
 
 =cut
 
 sub list {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org' unless $args{org};
+    return $self->request( GET => sprintf( '/orgs/%s/teams', $args{org} ) );
 }
 
 =head2 list_members
