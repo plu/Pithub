@@ -69,7 +69,10 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^DELETE /repos/[^/]+/[^/]+/comments/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/downloads/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/issues/comments/.*?$},
+    qr{^DELETE /repos/[^/]+/[^/]+/issues/[^/]+/labels$},
+    qr{^DELETE /repos/[^/]+/[^/]+/issues/[^/]+/labels/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/keys/.*?$},
+    qr{^DELETE /repos/[^/]+/[^/]+/labels/.*?$},
     qr{^DELETE /repos/[^/]+/[^/]+/pulls/comments/.*?$},
     qr{^DELETE /user/following/.*?$},
     qr{^DELETE /user/keys/.*?$},
@@ -117,8 +120,6 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^PUT /repos/[^/]+/[^/]+/pulls/[^/]+/merge$},
     qr{^PUT /user/following/.*?$},
     qr{^PUT /user/watched/[^/]+/.*?$},
-    qr{^DELETE /repos/[^/]+/[^/]+/labels/.*?$},
-    qr{^DELETE /repos/[^/]+/[^/]+/issues/[^/]+/labels/.*?$},
 );
 
 =head1 NAME
