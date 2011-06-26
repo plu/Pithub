@@ -254,11 +254,21 @@ Replace all labels for an issue
 
 Examples:
 
-    my $result = $p->issues->labels->replace( repo => 'Pithub', user => 'plu', issue_id => 1, data => { labels => [qw(label1 label2)] } );
+    $result = $p->issues->labels->replace(
+        repo     => 'Pithub',
+        user     => 'plu',
+        issue_id => 1,
+        data     => [qw(label3 label4)],
+    );
 
 =cut
 
 sub replace {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: issue_id' unless $args{issue_id};
+    croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PUT => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 =head2 update
