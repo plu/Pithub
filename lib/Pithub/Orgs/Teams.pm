@@ -230,11 +230,14 @@ a member of the team.
 
 Examples:
 
-    my $result = $p->orgs->teams->list_members( team_id => 1 );
+    $result = $p->orgs->teams->list_members( team_id => 1 );
 
 =cut
 
 sub list_members {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    return $self->request( GET => sprintf( '/teams/%d/members', $args{team_id} ) );
 }
 
 =head2 list_repos
