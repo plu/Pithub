@@ -192,11 +192,18 @@ Publicize a user's membership
 
 Examples:
 
-    my $result = $p->orgs->members->publicize( org => 'CPAN-API', user => 'plu' );
+    $result = $p->orgs->members->publicize(
+        org  => 'CPAN-API',
+        user => 'plu',
+    );
 
 =cut
 
 sub publicize {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: org'  unless $args{org};
+    croak 'Missing key in parameters: user' unless $args{user};
+    return $self->request( PUT => sprintf( '/orgs/%s/public_members/%s', $args{org}, $args{user} ) );
 }
 
 __PACKAGE__->meta->make_immutable;
