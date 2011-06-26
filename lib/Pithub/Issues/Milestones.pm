@@ -144,11 +144,25 @@ Update a milestone
 
 Examples:
 
-    my $result = $p->issues->milestones->update( repo => 'Pithub', user => 'plu', data => { title => 'new title' } );
+    $result = $p->issues->milestones->update(
+        repo => 'Pithub',
+        user => 'plu',
+        data => {
+            description => 'String',
+            due_on      => 'Time',
+            state       => 'open or closed',
+            title       => 'String'
+        }
+    );
 
 =cut
 
 sub update {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: milestone_id' unless $args{milestone_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/milestones/%d', $args{user}, $args{repo}, $args{milestone_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;
