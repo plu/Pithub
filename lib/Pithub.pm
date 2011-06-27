@@ -17,7 +17,7 @@ around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
 =head1 NAME
 
-Pithub
+Pithub - Github v3 API
 
 =head1 SYNOPSIS
 
