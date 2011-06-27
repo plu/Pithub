@@ -34,16 +34,6 @@ sub parse_response {
     return $res;
 }
 
-sub ratelimit {
-    my ($self) = @_;
-    return $self->http_response->header('X-RateLimit-Limit');
-}
-
-sub ratelimit_remaining {
-    my ($self) = @_;
-    return $self->http_response->header('X-RateLimit-Remaining');
-}
-
 __PACKAGE__->meta->make_immutable;
 
 1;

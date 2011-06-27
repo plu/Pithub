@@ -43,12 +43,10 @@ has 'prev_page_uri' => (
 
 has 'response' => (
     handles => {
-        code                => 'code',
-        ratelimit           => 'ratelimit',
-        ratelimit_remaining => 'ratelimit_remaining',
-        raw_content         => 'content',
-        request             => 'request',
-        success             => 'success',
+        code        => 'code',
+        raw_content => 'content',
+        request     => 'request',
+        success     => 'success',
     },
     is       => 'ro',
     isa      => 'Pithub::Response',
@@ -167,6 +165,28 @@ sub prev_page {
     my ($self) = @_;
     return unless $self->prev_page_uri;
     return $self->_paginate( $self->prev_page_uri );
+}
+
+=head2 ratelimit
+
+Returns the value of the C<< X-Ratelimit-Limit >> http header.
+
+=cut
+
+sub ratelimit {
+    my ($self) = @_;
+    return $self->response->http_response->header('X-RateLimit-Limit');
+}
+
+=head2 ratelimit_remaining
+
+Returns the value of the C<< X-Ratelimit-Remaining >> http header.
+
+=cut
+
+sub ratelimit_remaining {
+    my ($self) = @_;
+    return $self->response->http_response->header('X-RateLimit-Remaining');
 }
 
 sub _build_content {
