@@ -39,13 +39,6 @@ has 'token' => (
     required  => 0,
 );
 
-has 'result' => (
-    is        => 'rw',
-    isa       => 'Pithub::Result',
-    predicate => 'has_result',
-    required  => 0,
-);
-
 has 'user' => (
     clearer   => 'clear_user',
     is        => 'rw',
@@ -264,9 +257,10 @@ sub request {
     my %res_args = $self->_prepare_response_args($request);
     my $response = Pithub::Response->new(%res_args);
 
-    $self->result( Pithub::Result->new( response => $response ) );
-
-    return $self->result;
+    return Pithub::Result->new(
+        response => $response,
+        _request => sub { $self->request(@_) },
+    );
 }
 
 sub _merge_args {

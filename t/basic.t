@@ -180,6 +180,11 @@ my %accessors = (
     is $result->prev_page_uri,  undef,                                                     'First page link on first page';
     is $result->next_page_uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'Next page link on first page';
     is $result->last_page_uri,  'https://api.github.com/users/miyagawa/followers?page=26', 'Last page link on first page';
+
+    is $result->first_page, undef, 'We are on first page already';
+    is $result->prev_page,  undef, 'No prev page on the first page';
+    is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2',  'Next page call';
+    is $result->last_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=26', 'Last page call';
 }
 
 {
@@ -192,6 +197,11 @@ my %accessors = (
     is $result->prev_page_uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'First page link no third page';
     is $result->next_page_uri,  'https://api.github.com/users/miyagawa/followers?page=4',  'Next page link no third page';
     is $result->last_page_uri,  'https://api.github.com/users/miyagawa/followers?page=26', 'Last page link no third page';
+
+    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
+    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'Prev page call';
+    is $result->next_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=4',  'Next page call';
+    is $result->last_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=26', 'Last page call';
 }
 
 {
@@ -200,10 +210,10 @@ my %accessors = (
 
     ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.last') ), 'Load response' if $base->skip_request;
 
-    is $result->first_page_uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page link on last page';
-    is $result->prev_page_uri,  'https://api.github.com/users/miyagawa/followers?page=25', 'First page link on last page';
-    is $result->next_page_uri,  undef,                                                     'Next page link on last page';
-    is $result->last_page_uri,  undef,                                                     'Last page link on last page';
+    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
+    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=25', 'Prev page call';
+    is $result->next_page, undef, 'No next page on the last page';
+    is $result->last_page, undef, 'We are on last page already';
 }
 
 done_testing;
