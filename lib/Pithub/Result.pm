@@ -113,7 +113,7 @@ List all followers in order, from the first one on the first
 page to the last one on the last page.
 
     $followers = Pithub->new->users->followers;
-    $result    = $followers->list('rjbs');
+    $result = $followers->list( user => 'rjbs' );
     do {
         if ( $result->success ) {
             foreach my $row ( @{ $result->content } ) {
@@ -150,7 +150,7 @@ List all followers in reverse order, from the last one on the last
 page to the first one on the first page.
 
     $followers = Pithub->new->users->followers;
-    $result    = $followers->list('rjbs')->last_page;    # this makes two requests!
+    $result = $followers->list( user => 'rjbs' )->last_page;    # this makes two requests!
     do {
         if ( $result->success ) {
             foreach my $row ( reverse @{ $result->content } ) {
