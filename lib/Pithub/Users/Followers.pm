@@ -26,17 +26,17 @@ Follow a user
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->followers->follow('plu');
+    $result = $p->users->followers->follow( user => 'plu' );
 
     $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
-    $result = $f->follow('plu');
+    $result = $f->follow( user => 'plu' );
 
 =cut
 
 sub follow {
-    my ( $self, $user ) = @_;
-    croak 'Missing parameter: $user' unless $user;
-    return $self->request( PUT => sprintf( '/user/following/%s', $user ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: user' unless $args{user};
+    return $self->request( PUT => sprintf( '/user/following/%s', $args{user} ) );
 }
 
 =head2 is_following
@@ -54,10 +54,10 @@ Check if the authenticated user is following another given user
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->followers->is_following('rafl');
+    $result = $p->users->followers->is_following( user => 'rafl' );
 
     $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
-    $result = $f->is_following('rafl');
+    $result = $f->is_following( user => 'rafl' );
 
     if ( $result->is_success ) {
         print "plu is following rafl\n";
@@ -69,9 +69,9 @@ Examples:
 =cut
 
 sub is_following {
-    my ( $self, $user ) = @_;
-    croak 'Missing parameter: $user' unless $user;
-    return $self->request( GET => sprintf( '/user/following/%s', $user ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: user' unless $args{user};
+    return $self->request( GET => sprintf( '/user/following/%s', $args{user} ) );
 }
 
 =head2 list
@@ -95,10 +95,10 @@ List the authenticated user's followers:
 Examples:
 
     $p = Pithub->new;
-    $result = $p->users->followers->list('plu');
+    $result = $p->users->followers->list( user => 'plu' );
 
     $f = Pithub::Users::Followers->new;
-    $result = $f->list('plu');
+    $result = $f->list( user => 'plu' );
 
     $p = Pithub->new( token => 'b3c62c6' );
     $result = $p->users->followers->list;
@@ -109,9 +109,9 @@ Examples:
 =cut
 
 sub list {
-    my ( $self, $user ) = @_;
-    if ($user) {
-        return $self->request( GET => sprintf( '/users/%s/followers', $user ) );
+    my ( $self, %args ) = @_;
+    if ( $args{user} ) {
+        return $self->request( GET => sprintf( '/users/%s/followers', $args{user} ) );
     }
     return $self->request( GET => '/user/followers' );
 }
@@ -137,10 +137,10 @@ List who the authenicated user is following:
 Examples:
 
     $p = Pithub->new;
-    $result = $p->users->followers->list_following('plu');
+    $result = $p->users->followers->list_following( user => 'plu' );
 
     $f = Pithub::Users::Followers->new;
-    $result = $f->list_following('plu');
+    $result = $f->list_following( user => 'plu' );
 
     $p = Pithub->new( token => 'b3c62c6' );
     $result = $p->users->followers->list_following;
@@ -151,9 +151,9 @@ Examples:
 =cut
 
 sub list_following {
-    my ( $self, $user ) = @_;
-    if ($user) {
-        return $self->request( GET => sprintf( '/user/%s/following', $user ) );
+    my ( $self, %args ) = @_;
+    if ( $args{user} ) {
+        return $self->request( GET => sprintf( '/user/%s/following', $args{user} ) );
     }
     return $self->request( GET => '/user/following' );
 }
@@ -173,17 +173,17 @@ Unfollow a user
 Examples:
 
     $p = Pithub->new;
-    $result = $p->users->followers->unfollow('plu');
+    $result = $p->users->followers->unfollow( user => 'plu' );
 
     $f = Pithub::Users::Followers->new;
-    $result = $f->unfollow('plu');
+    $result = $f->unfollow( user => 'plu' );
 
 =cut
 
 sub unfollow {
-    my ( $self, $user ) = @_;
-    croak 'Missing parameter: $user' unless $user;
-    return $self->request( DELETE => sprintf( '/user/following/%s', $user ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: user' unless $args{user};
+    return $self->request( DELETE => sprintf( '/user/following/%s', $args{user} ) );
 }
 
 __PACKAGE__->meta->make_immutable;

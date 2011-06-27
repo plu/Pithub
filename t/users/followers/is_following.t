@@ -11,13 +11,13 @@ my $obj = Pithub::Test->create('Pithub::Users::Followers');
 
 isa_ok $obj, 'Pithub::Users::Followers';
 
-throws_ok { $obj->is_following } qr{Missing parameter: \$user}, 'No parameters';
-throws_ok { $obj->is_following('rafl') } qr{Access token required for: GET /user/following/rafl}, 'Token required';
+throws_ok { $obj->is_following } qr{Missing key in parameters: user}, 'No parameters';
+throws_ok { $obj->is_following( user => 'rafl' ) } qr{Access token required for: GET /user/following/rafl}, 'Token required';
 
 ok $obj->token(123), 'Token set';
 
 {
-    my $result = $obj->is_following('rafl');
+    my $result = $obj->is_following( user => 'rafl' );
     is $result->request->method, 'GET', 'HTTP method';
     is $result->request->uri->path, '/user/following/rafl', 'HTTP path';
 

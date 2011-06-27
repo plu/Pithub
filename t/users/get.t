@@ -14,7 +14,7 @@ isa_ok $obj, 'Pithub::Users';
 throws_ok { $obj->get } qr{Access token required for: GET /user }, 'Token required';
 
 {
-    my $result = $obj->get('plu');
+    my $result = $obj->get( user => 'plu' );
     is $result->request->method, 'GET', 'HTTP method';
     is $result->request->uri->path, '/users/plu', 'HTTP path';
 

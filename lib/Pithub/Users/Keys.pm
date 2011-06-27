@@ -27,7 +27,7 @@ Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
     $result = $p->users->keys->create(
-        {
+        data => {
             title => 'plu@localhost',
             key   => 'ssh-rsa AAA...',
         }
@@ -35,7 +35,7 @@ Examples:
 
     $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
     $result = $k->create(
-        {
+        data => {
             title => 'plu@localhost',
             key   => 'ssh-rsa AAA...',
         }
@@ -44,9 +44,9 @@ Examples:
 =cut
 
 sub create {
-    my ( $self, $data ) = @_;
-    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
-    return $self->request( POST => '/user/keys', $data );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( POST => '/user/keys', $args{data} );
 }
 
 =head2 delete
@@ -64,17 +64,17 @@ Delete a public key
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->keys->delete(123);
+    $result = $p->users->keys->delete( key_id => 123 );
 
     $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
-    $result = $k->delete(123);
+    $result = $k->delete( key_id => 123 );
 
 =cut
 
 sub delete {
-    my ( $self, $key_id ) = @_;
-    croak 'Missing parameter: $key_id' unless $key_id;
-    return $self->request( DELETE => sprintf( '/user/keys/%d', $key_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: key_id' unless $args{key_id};
+    return $self->request( DELETE => sprintf( '/user/keys/%d', $args{key_id} ) );
 }
 
 =head2 get
@@ -92,17 +92,17 @@ Get a single public key
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->keys->get(123);
+    $result = $p->users->keys->get( key_id => 123 );
 
     $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
-    $result = $k->get(123);
+    $result = $k->get( key_id => 123 );
 
 =cut
 
 sub get {
-    my ( $self, $key_id ) = @_;
-    croak 'Missing parameter: $key_id' unless $key_id;
-    return $self->request( GET => sprintf( '/user/keys/%d', $key_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: key_id' unless $args{key_id};
+    return $self->request( GET => sprintf( '/user/keys/%d', $args{key_id} ) );
 }
 
 =head2 list
@@ -148,7 +148,8 @@ Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
     $result = $p->users->keys->update(
-        123 => {
+        key_id => 123,
+        data => {
             title => 'plu@localhost',
             key   => 'ssh-rsa AAA...',
         }
@@ -156,7 +157,8 @@ Examples:
 
     $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
     $result = $k->update(
-        123 => {
+        key_id => 123,
+        data => {
             title => 'plu@localhost',
             key   => 'ssh-rsa AAA...',
         }
@@ -165,10 +167,10 @@ Examples:
 =cut
 
 sub update {
-    my ( $self, $key_id, $data ) = @_;
-    croak 'Missing parameter: $key_id' unless $key_id;
-    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
-    return $self->request( PATCH => sprintf( '/user/keys/%d', $key_id ), $data );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: key_id' unless $args{key_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( PATCH => sprintf( '/user/keys/%d', $args{key_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

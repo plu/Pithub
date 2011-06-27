@@ -11,13 +11,13 @@ my $obj = Pithub::Test->create('Pithub::Users::Emails');
 
 isa_ok $obj, 'Pithub::Users::Emails';
 
-throws_ok { $obj->add } qr{Missing parameter: \$email \(string or arrayref\)}, 'No parameters';
-throws_ok { $obj->add('xxx') } qr{Access token required for: POST /user/emails}, 'Token required';
+throws_ok { $obj->add( data => 123 ) } qr{Missing key in parameters: data \(arrayref\)}, 'No parameters';
+throws_ok { $obj->add( data => ['xxx'] ) } qr{Access token required for: POST /user/emails}, 'Token required';
 
 ok $obj->token(123), 'Token set';
 
 {
-    my $result = $obj->add('foo@bar.com');
+    my $result = $obj->add( data => ['foo@bar.com'] );
     is $result->request->method, 'POST', 'HTTP method';
     is $result->request->uri->path, '/user/emails', 'HTTP path';
     my $http_request = $result->request->http_request;
@@ -25,7 +25,7 @@ ok $obj->token(123), 'Token set';
 }
 
 {
-    my $result = $obj->add( [ 'foo@bar.com', 'bar@foo.com' ] );
+    my $result = $obj->add( data => [ 'foo@bar.com', 'bar@foo.com' ] );
     is $result->request->method, 'POST', 'HTTP method';
     is $result->request->uri->path, '/user/emails', 'HTTP path';
     my $http_request = $result->request->http_request;

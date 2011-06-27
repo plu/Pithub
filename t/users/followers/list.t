@@ -14,7 +14,7 @@ isa_ok $obj, 'Pithub::Users::Followers';
 throws_ok { $obj->list } qr{Access token required for: GET /user/followers}, 'Token required';
 
 {
-    my $result = $obj->list('plu');
+    my $result = $obj->list( user => 'plu' );
     is $result->request->method, 'GET', 'HTTP method';
     is $result->request->uri->path, '/users/plu/followers', 'HTTP path';
 }

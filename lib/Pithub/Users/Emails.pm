@@ -25,21 +25,20 @@ Add email address(es)
 
 Examples:
 
-    $p      = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->emails->add('plu@cpan.org');
-    $result = $p->users->emails->add( [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->emails->add( data => ['plu@cpan.org'] );
+    $result = $p->users->emails->add( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
 
-    $e      = Pithub::Users::Emails->new( token => 'b3c62c6' );
-    $result = $e->add('plu@cpan.org');
-    $result = $e->add( [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+    $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
+    $result = $e->add( data => ['plu@cpan.org'] );
+    $result = $e->add( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
 
 =cut
 
 sub add {
-    my ( $self, $email ) = @_;
-    croak 'Missing parameter: $email (string or arrayref)' unless $email;
-    $email = [$email] unless ref $email eq 'ARRAY';
-    return $self->request( POST => '/user/emails', $email );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
+    return $self->request( POST => '/user/emails', $args{data} );
 }
 
 =head2 delete
@@ -56,21 +55,20 @@ Delete email address(es)
 
 Examples:
 
-    $p      = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->emails->delete('plu@cpan.org');
-    $result = $p->users->emails->delete( [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+    $p = Pithub->new( token => 'b3c62c6' );
+    $result = $p->users->emails->delete( data => ['plu@cpan.org'] );
+    $result = $p->users->emails->delete( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
 
-    $e      = Pithub::Users::Emails->new( token => 'b3c62c6' );
-    $result = $e->delete('plu@cpan.org');
-    $result = $e->delete( [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+    $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
+    $result = $e->delete( data => ['plu@cpan.org'] );
+    $result = $e->delete( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
 
 =cut
 
 sub delete {
-    my ( $self, $email ) = @_;
-    croak 'Missing parameter: $email (string or arrayref)' unless $email;
-    $email = [$email] unless ref $email eq 'ARRAY';
-    return $self->request( DELETE => '/user/emails', $email );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
+    return $self->request( DELETE => '/user/emails', $args{data} );
 }
 
 =head2 list
