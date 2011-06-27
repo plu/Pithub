@@ -8,6 +8,29 @@ use Pithub::Response;
 use Pithub::Result;
 use namespace::autoclean;
 
+=head1 NAME
+
+Pithub::Base
+
+All L<Pithub/MODULES> inherit from L<Pithub::Base>, even L<Pithub>
+itself. So all attributes listed here can either be set in the
+constructor or via the setter on the objects.
+
+=head1 ATTRIBUTES
+
+=head2 api_uri
+
+Defaults to L<https://api.github.com>.
+
+Examples:
+
+    $users = Pithub::Users->new( api_uri => 'https://api-foo.github.com' );
+
+    $users = Pithub::Users->new;
+    $users->api_uri('https://api-foo.github.com');
+
+=cut
+
 has 'api_uri' => (
     coerce   => 1,
     default  => 'https://api.github.com',
@@ -15,6 +38,32 @@ has 'api_uri' => (
     isa      => Uri,
     required => 1,
 );
+
+=head2 repo
+
+This can be set as a default repo to use for API calls that require
+the repo parameter to be set.
+
+Examples:
+
+    $c = Pithub::Repos::Collaborators->new( repo => 'Pithub' );
+    $result = $c->list( user => 'plu' );
+
+There are two helper methods:
+
+=over
+
+=item *
+
+B<clear_repo>: reset the repo attribute
+
+=item *
+
+B<has_repo>: check if the repo attribute is set
+
+=back
+
+=cut
 
 has 'repo' => (
     clearer   => 'clear_repo',
@@ -24,12 +73,40 @@ has 'repo' => (
     required  => 0,
 );
 
+=head2 skip_request
+
+Mainly used by tests. But it might be useful to build another library
+on top of L<Pithub>.
+
+Examples:
+
+    $c = Pithub::Repos::Collaborators->new( skip_request => 1 );
+
+    # This will not make any request at all!
+    $result = $c->list( user => 'plu' );
+
+    # This will return the HTTP::Request object that has been created
+    # for this particular API call
+    $http_request = $c->request->http_request;
+
+=cut
+
 has 'skip_request' => (
     default  => 0,
     is       => 'rw',
     isa      => 'Bool',
     required => 1,
 );
+
+=head2 token
+
+If the OAuth token is set, L<Pithub> will sent it via an HTTP header
+on each API request. Currently the basic authentication method is
+not supported.
+
+See also: L<http://developer.github.com/v3/oauth/>
+
+=cut
 
 has 'token' => (
     clearer   => 'clear_token',
@@ -38,6 +115,39 @@ has 'token' => (
     predicate => 'has_token',
     required  => 0,
 );
+
+=head2 user
+
+This can be set as a default user to use for API calls that require
+the user parameter to be set.
+
+Examples:
+
+    $c = Pithub::Repos::Collaborators->new( user => 'plu' );
+    $result = $c->list( repo => 'Pithub' );
+
+There are two helper methods:
+
+=over
+
+=item *
+
+B<clear_user>: reset the user attribute
+
+=item *
+
+B<has_user>: check if the user attribute is set
+
+=back
+
+It might makes sense to use this together with the repo attribute:
+
+    $c = Pithub::Repos::Commits->new( user => 'plu', repo => 'Pithub' );
+    $result = $c->list;
+    $result = $c->list_comments;
+    $reuslt = $c->get('6b6127383666e8ecb41ec20a669e4f0552772363');
+
+=cut
 
 has 'user' => (
     clearer   => 'clear_user',
@@ -145,10 +255,6 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^PUT /user/following/.*?$},
     qr{^PUT /user/watched/[^/]+/.*?$},
 );
-
-=head1 NAME
-
-Pithub::Base
 
 =head1 METHODS
 
