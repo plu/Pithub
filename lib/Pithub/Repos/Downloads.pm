@@ -27,7 +27,11 @@ TODO: Creating downloads is currently not supported!
 
 Examples:
 
-    $result = $p->repos->downloads->create( user => 'plu', repo => 'Pithub', data => { name => 'some download' } );
+    $result = $p->repos->downloads->create(
+        user => 'plu',
+        repo => 'Pithub',
+        data => { name => 'some download' },
+    );
 
 =cut
 
@@ -49,7 +53,11 @@ Delete a download
 
 Examples:
 
-    $result = $p->repos->downloads->delete( user => 'plu', repo => 'Pithub', download_id => 1 );
+    $result = $p->repos->downloads->delete(
+        user        => 'plu',
+        repo        => 'Pithub',
+        download_id => 1,
+    );
 
 =cut
 
@@ -74,7 +82,11 @@ Get a single download
 
 Examples:
 
-    $result = $p->repos->downloads->get( user => 'plu', repo => 'Pithub', download_id => 1 );
+    $result = $p->repos->downloads->get(
+        user        => 'plu',
+        repo        => 'Pithub',
+        download_id => 1,
+    );
 
 =cut
 
@@ -99,7 +111,10 @@ List downloads for a repository
 
 Examples:
 
-    $result = $p->repos->downloads->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->downloads->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 

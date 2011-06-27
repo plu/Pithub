@@ -57,7 +57,11 @@ Get a Blob
 
 Examples:
 
-    $result = $p->git_data->blobs->get( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6' );
+    $result = $p->git_data->blobs->get(
+        user => 'plu',
+        repo => 'Pithub',
+        sha  => 'df21b2660fb6',
+    );
 
 =cut
 

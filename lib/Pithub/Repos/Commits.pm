@@ -25,7 +25,12 @@ Create a commit comment
 
 Examples:
 
-    $result = $p->repos->commits->create_comment( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6', data => { body => 'some comment' } );
+    $result = $p->repos->commits->create_comment(
+        user => 'plu',
+        repo => 'Pithub',
+        sha  => 'df21b2660fb6',
+        data => { body => 'some comment' },
+    );
 
 =cut
 
@@ -51,7 +56,11 @@ Delete a commit comment
 
 Examples:
 
-    $result = $p->repos->commits->delete_comment( user => 'plu', repo => 'Pithub', comment_id => 1 );
+    $result = $p->repos->commits->delete_comment(
+        user       => 'plu',
+        repo       => 'Pithub',
+        comment_id => 1,
+    );
 
 =cut
 
@@ -76,7 +85,11 @@ Get a single commit
 
 Examples:
 
-    my $result = $p->repos->commits->get( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6' );
+    $result = $p->repos->commits->get(
+        user => 'plu',
+        repo => 'Pithub',
+        sha  => 'df21b2660fb6',
+    );
 
 =cut
 
@@ -101,7 +114,11 @@ Get a single commit comment
 
 Examples:
 
-    my $result = $p->repos->commits->get_comment( user => 'plu', repo => 'Pithub', comment_id => 1 );
+    $result = $p->repos->commits->get_comment(
+        user       => 'plu',
+        repo       => 'Pithub',
+        comment_id => 1,
+    );
 
 =cut
 
@@ -126,7 +143,10 @@ List commits on a repository
 
 Examples:
 
-    my $result = $p->repos->commits->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->commits->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 
@@ -149,6 +169,13 @@ about the use of mimes types in the API here. TODO: Link github API
 
     GET /repos/:user/:repo/comments
 
+Examples:
+
+    $result = $p->repos->commits->list_comments(
+        user => 'plu',
+        repo => 'Pithub',
+    );
+
 =item *
 
 List comments for a single commit
@@ -159,8 +186,11 @@ List comments for a single commit
 
 Examples:
 
-    my $result = $p->repos->commits->list_comments( user => 'plu', repo => 'Pithub' );
-    my $result = $p->repos->commits->list_comments( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6' );
+    $result = $p->repos->commits->list_comments(
+        user => 'plu',
+        repo => 'Pithub',
+        sha  => 'df21b2660fb6',
+    );
 
 =cut
 
@@ -187,7 +217,12 @@ Update a commit comment
 
 Examples:
 
-    $result = $p->repos->commits->update_comment( user => 'plu', repo => 'Pithub', comment_id => 1, data => { body => 'updated comment' } );
+    $result = $p->repos->commits->update_comment(
+        user       => 'plu',
+        repo       => 'Pithub',
+        comment_id => 1,
+        data       => { body => 'updated comment' },
+    );
 
 =cut
 

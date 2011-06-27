@@ -25,7 +25,14 @@ Create
 
 Examples:
 
-    $result = $p->repos->keys->create( user => 'plu', repo => 'Pithub', data => { title => 'some key', key => 'ssh-rsa AAA...', } );
+    $result = $p->repos->keys->create(
+        user => 'plu',
+        repo => 'Pithub',
+        data => {
+            title => 'some key',
+            key   => 'ssh-rsa AAA...',
+        },
+    );
 
 =cut
 
@@ -50,7 +57,11 @@ Delete
 
 Examples:
 
-    my $result = $p->repos->keys->delete( user => 'plu', repo => 'Pithub', key_id => 1 );
+    $result = $p->repos->keys->delete(
+        user   => 'plu',
+        repo   => 'Pithub',
+        key_id => 1,
+    );
 
 =cut
 
@@ -75,7 +86,11 @@ Get
 
 Examples:
 
-    my $result = $p->repos->keys->get( user => 'plu', repo => 'Pithub', key_id => 1 );
+    $result = $p->repos->keys->get(
+        user   => 'plu',
+        repo   => 'Pithub',
+        key_id => 1,
+    );
 
 =cut
 
@@ -100,7 +115,10 @@ List
 
 Examples:
 
-    $result = $p->repos->keys->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->keys->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 
@@ -124,7 +142,12 @@ Edit
 
 Examples:
 
-    $result = $p->repos->keys->update( user => 'plu', repo => 'Pithub', key_id => 1, data => { title => 'some new title' } );
+    $result = $p->repos->keys->update(
+        user   => 'plu',
+        repo   => 'Pithub',
+        key_id => 1,
+        data   => { title => 'some new title' },
+    );
 
 =cut
 

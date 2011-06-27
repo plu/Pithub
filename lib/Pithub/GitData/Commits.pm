@@ -63,7 +63,11 @@ Get a Commit
 
 Examples:
 
-    $result = $p->git_data->commits->get( user => 'plu', repo => 'Pithub', sha => 'df21b2660fb6' );
+    $result = $p->git_data->commits->get(
+        user => 'plu',
+        repo => 'Pithub',
+        sha  => 'df21b2660fb6',
+    );
 
 =cut
 

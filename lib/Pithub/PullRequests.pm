@@ -27,7 +27,11 @@ List commits on a pull request
 
 Examples:
 
-    $result = $p->pull_requests->commits( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
+    $result = $p->pull_requests->commits(
+        user            => 'plu',
+        repo            => 'Pithub',
+        pull_request_id => 1
+    );
 
 =cut
 
@@ -86,7 +90,11 @@ List pull requests files
 
 Examples:
 
-    $result = $p->pull_requests->files( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
+    $result = $p->pull_requests->files(
+        user            => 'plu',
+        repo            => 'Pithub',
+        pull_request_id => 1,
+    );
 
 =cut
 
@@ -111,7 +119,11 @@ Get a single pull request
 
 Examples:
 
-    $result = $p->pull_requests->get( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
+    $result = $p->pull_requests->get(
+        user            => 'plu',
+        repo            => 'Pithub',
+        pull_request_id => 1,
+    );
 
 =cut
 
@@ -136,7 +148,11 @@ Get if a pull request has been merged
 
 Examples:
 
-    $result = $p->pull_requests->is_merged( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
+    $result = $p->pull_requests->is_merged(
+        user            => 'plu',
+        repo            => 'Pithub',
+        pull_request_id => 1,
+    );
 
 =cut
 
@@ -161,7 +177,10 @@ List pull requests
 
 Examples:
 
-    $result = $p->pull_requests->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->pull_requests->list(
+        user => 'plu',
+        repo => 'Pithub'
+    );
 
 =cut
 
@@ -185,7 +204,11 @@ Merge a pull request
 
 Examples:
 
-    $result = $p->pull_requests->merge( user => 'plu', repo => 'Pithub', pull_request_id => 1 );
+    $result = $p->pull_requests->merge(
+        user            => 'plu',
+        repo            => 'Pithub',
+        pull_request_id => 1,
+    );
 
 =cut
 

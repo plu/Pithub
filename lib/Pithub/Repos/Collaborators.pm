@@ -25,7 +25,11 @@ Add collaborator
 
 Examples:
 
-    $result = $p->repos->collaborators->add( user => 'plu', repo => 'Pithub', collaborator => 'rbo' );
+    $result = $p->repos->collaborators->add(
+        user         => 'plu',
+        repo         => 'Pithub',
+        collaborator => 'rbo',
+    );
 
 =cut
 
@@ -50,7 +54,11 @@ Get
 
 Examples:
 
-    $result = $p->repos->collaborators->is_collaborator( user => 'plu', repo => 'Pithub', collaborator => 'rbo' );
+    $result = $p->repos->collaborators->is_collaborator(
+        user         => 'plu',
+        repo         => 'Pithub',
+        collaborator => 'rbo',
+    );
 
     if ( $result->is_success ) {
         print "rbo is added as collaborator to Pithub\n";
@@ -82,7 +90,10 @@ List
 
 Examples:
 
-    $result = $p->repos->collaborators->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->collaborators->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 
@@ -106,7 +117,11 @@ Remove collaborator
 
 Examples:
 
-    my $result = $p->repos->collaborators->remove( user => 'plu', repo => 'Pithub', collaborator => 'rbo' );
+    my $result = $p->repos->collaborators->remove(
+        user         => 'plu',
+        repo         => 'Pithub',
+        collaborator => 'rbo',
+    );
 
 =cut
 

@@ -25,7 +25,10 @@ Check if you are watching a repo
 
 Examples:
 
-    $result = $p->repos->watching->is_watching( repo => 'Pithub', user => 'plu' );
+    $result = $p->repos->watching->is_watching(
+        repo => 'Pithub',
+        user => 'plu',
+    );
 
 =cut
 
@@ -45,18 +48,21 @@ List repos being watched by a user
 
     GET /users/:user/watched
 
+Examples:
+
+    $result = $p->repos->watching->list_repos( user => 'plu' );
+
 =item *
 
 List repos being watched by the authenticated user
 
     GET /user/watched
 
-=back
-
 Examples:
 
-    $result = $p->repos->watching->list_repos( user => 'plu' );
     $result = $p->repos->watching->list_repos;
+
+=back
 
 =cut
 
@@ -82,7 +88,10 @@ List watchers
 
 Examples:
 
-    $result = $p->repos->watching->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->watching->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 
@@ -106,7 +115,10 @@ Watch a repo
 
 Examples:
 
-    $result = $p->repos->watching->start_watching( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->watching->start_watching(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 
@@ -130,7 +142,10 @@ Stop watching a repo
 
 Examples:
 
-    $result = $p->repos->watching->stop_watching( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->watching->stop_watching(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 

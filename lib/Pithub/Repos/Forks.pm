@@ -25,8 +25,16 @@ Create a fork for the authenicated user.
 
 Examples:
 
-    $result = $p->repos->forks->create( user => 'plu', repo => 'Pithub' );
-    $result = $p->repos->forks->create( user => 'plu', repo => 'Pithub', org => 'CPAN-API' );
+    $result = $p->repos->forks->create(
+        user => 'plu',
+        repo => 'Pithub',
+    );
+
+    $result = $p->repos->forks->create(
+        user => 'plu',
+        repo => 'Pithub',
+        org  => 'CPAN-API',
+    );
 
 =cut
 
@@ -53,7 +61,10 @@ List forks
 
 Examples:
 
-    $result = $p->repos->forks->list( user => 'plu', repo => 'Pithub' );
+    $result = $p->repos->forks->list(
+        user => 'plu',
+        repo => 'Pithub',
+    );
 
 =cut
 

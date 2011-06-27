@@ -61,7 +61,11 @@ Delete a comment
 
 Examples:
 
-    $result = $p->pull_requests->comments->delete( repo => 'Pithub', user => 'plu', comment_id => 1 );
+    $result = $p->pull_requests->comments->delete(
+        repo       => 'Pithub',
+        user       => 'plu',
+        comment_id => 1,
+    );
 
 =cut
 
@@ -86,7 +90,11 @@ Get a single comment
 
 Examples:
 
-    $result = $p->pull_requests->comments->get( repo => 'Pithub', user => 'plu', comment_id => 1 );
+    $result = $p->pull_requests->comments->get(
+        repo       => 'Pithub',
+        user       => 'plu',
+        comment_id => 1,
+    );
 
 =cut
 
@@ -111,7 +119,11 @@ List comments on a pull request
 
 Examples:
 
-    $result = $p->pull_requests->comments->list( repo => 'Pithub', user => 'plu', pull_request_id => 1 );
+    $result = $p->pull_requests->comments->list(
+        repo            => 'Pithub',
+        user            => 'plu',
+        pull_request_id => 1,
+    );
 
 =cut
 
@@ -136,7 +148,12 @@ Edit a comment
 
 Examples:
 
-    $result = $p->pull_requests->comments->update( repo => 'Pithub', user => 'plu', comment_id => 1, data => { body => 'some updated comment' } );
+    $result = $p->pull_requests->comments->update(
+        repo       => 'Pithub',
+        user       => 'plu',
+        comment_id => 1,
+        data       => { body => 'some updated comment' },
+    );
 
 =cut
 
