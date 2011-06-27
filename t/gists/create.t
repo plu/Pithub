@@ -11,11 +11,11 @@ my $obj = Pithub::Test->create('Pithub::Gists');
 
 isa_ok $obj, 'Pithub::Gists';
 
-throws_ok { $obj->create } qr{Missing parameter: \$data \(hashref\)}, 'No data parameter';
+throws_ok { $obj->create } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
 
 {
     my $result = $obj->create(
-        {
+        data => {
             description => 'the description for this gist',
             public      => 1,
             files       => { 'file1.txt' => { content => 'String file content' } }

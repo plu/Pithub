@@ -11,10 +11,10 @@ my $obj = Pithub::Test->create('Pithub::Gists');
 
 isa_ok $obj, 'Pithub::Gists';
 
-throws_ok { $obj->fork } qr{Missing parameter: \$gist_id}, 'No parameter';
+throws_ok { $obj->fork } qr{Missing key in parameters: gist_id}, 'No parameter';
 
 {
-    my $result = $obj->fork(123);
+    my $result = $obj->fork( gist_id => 123 );
     is $result->request->method, 'POST', 'HTTP method';
     is $result->request->uri->path, '/gists/123/fork', 'HTTP path';
     my $http_request = $result->request->http_request;

@@ -28,7 +28,7 @@ Create a gist
 Examples:
 
     my $result = $p->gists->create(
-        {
+        data => {
             description => 'the description for this gist',
             public      => 1,
             files       => { 'file1.txt' => { content => 'String file content' } }
@@ -38,9 +38,9 @@ Examples:
 =cut
 
 sub create {
-    my ( $self, $data ) = @_;
-    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
-    return $self->request( POST => '/gists', $data );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( POST => '/gists', $args{data} );
 }
 
 =head2 delete
@@ -57,14 +57,14 @@ Delete a gist
 
 Examples:
 
-    $result = $p->gists->delete(784612);
+    $result = $p->gists->delete( gist_id => 784612 );
 
 =cut
 
 sub delete {
-    my ( $self, $gist_id ) = @_;
-    croak 'Missing parameter: $gist_id' unless $gist_id;
-    return $self->request( DELETE => sprintf( '/gists/%d', $gist_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    return $self->request( DELETE => sprintf( '/gists/%d', $args{gist_id} ) );
 }
 
 =head2 fork
@@ -81,14 +81,14 @@ Fork a gist
 
 Examples:
 
-    $result = $p->gists->fork(784612);
+    $result = $p->gists->fork( gist_id => 784612 );
 
 =cut
 
 sub fork {
-    my ( $self, $gist_id ) = @_;
-    croak 'Missing parameter: $gist_id' unless $gist_id;
-    return $self->request( POST => sprintf( '/gists/%d/fork', $gist_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    return $self->request( POST => sprintf( '/gists/%d/fork', $args{gist_id} ) );
 }
 
 =head2 get
@@ -105,14 +105,14 @@ Get a single gist
 
 Examples:
 
-    $result = $p->gists->get(784612);
+    $result = $p->gists->get( gist_id => 784612 );
 
 =cut
 
 sub get {
-    my ( $self, $gist_id ) = @_;
-    croak 'Missing parameter: $gist_id' unless $gist_id;
-    return $self->request( GET => sprintf( '/gists/%d', $gist_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    return $self->request( GET => sprintf( '/gists/%d', $args{gist_id} ) );
 }
 
 =head2 is_starred
@@ -129,14 +129,14 @@ Check if a gist is starred
 
 Examples:
 
-    $result = $p->gists->is_starred(784612);
+    $result = $p->gists->is_starred( gist_id => 784612 );
 
 =cut
 
 sub is_starred {
-    my ( $self, $gist_id ) = @_;
-    croak 'Missing parameter: $gist_id' unless $gist_id;
-    return $self->request( GET => sprintf( '/gists/%d/star', $gist_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    return $self->request( GET => sprintf( '/gists/%d/star', $args{gist_id} ) );
 }
 
 =head2 list
@@ -215,14 +215,14 @@ Star a gist
 
 Examples:
 
-    $result = $p->gists->star(784612);
+    $result = $p->gists->star( gist_id => 784612 );
 
 =cut
 
 sub star {
-    my ( $self, $gist_id ) = @_;
-    croak 'Missing parameter: $gist_id' unless $gist_id;
-    return $self->request( PUT => sprintf( '/gists/%d/star', $gist_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    return $self->request( PUT => sprintf( '/gists/%d/star', $args{gist_id} ) );
 }
 
 =head2 unstar
@@ -239,14 +239,14 @@ Unstar a gist
 
 Examples:
 
-    $result = $p->gists->unstar(784612);
+    $result = $p->gists->unstar( gist_id => 784612 );
 
 =cut
 
 sub unstar {
-    my ( $self, $gist_id ) = @_;
-    croak 'Missing parameter: $gist_id' unless $gist_id;
-    return $self->request( DELETE => sprintf( '/gists/%d/star', $gist_id ) );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    return $self->request( DELETE => sprintf( '/gists/%d/star', $args{gist_id} ) );
 }
 
 =head2 update
@@ -263,15 +263,18 @@ Edit a gist
 
 Examples:
 
-    my $result = $p->gists->update( 784612 => { description => 'bar foo' } );
+    my $result = $p->gists->update(
+        gist_id => 784612,
+        data    => { description => 'bar foo' }
+    );
 
 =cut
 
 sub update {
-    my ( $self, $gist_id, $data ) = @_;
-    croak 'Missing parameter: $gist_id' unless $gist_id;
-    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
-    return $self->request( PATCH => sprintf( '/gists/%d', $gist_id ), $data );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: gist_id' unless $args{gist_id};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    return $self->request( PATCH => sprintf( '/gists/%d', $args{gist_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;
