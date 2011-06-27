@@ -2,6 +2,7 @@ package Pithub::Base;
 
 use Moose;
 use Carp qw(croak);
+use LWP::UserAgent;
 use MooseX::Types::URI qw(Uri);
 use Pithub::Request;
 use Pithub::Response;
@@ -114,6 +115,19 @@ has 'token' => (
     isa       => 'Str',
     predicate => 'has_token',
     required  => 0,
+);
+
+=head2 ua
+
+By default a L<LWP::UserAgent> object, but it can be anything that
+implements the same interface.
+
+=cut
+
+has 'ua' => (
+    is         => 'ro',
+    isa        => 'LWP::UserAgent',
+    lazy_build => 1,
 );
 
 =head2 user
@@ -369,6 +383,11 @@ sub request {
     );
 }
 
+sub _build_ua {
+    my ($self) = @_;
+    return LWP::UserAgent->new;
+}
+
 sub _merge_args {
     my ( $orig, $self ) = @_;
     my @args = $self->$orig;
@@ -410,6 +429,7 @@ sub _prepare_request_args {
     my %args = (
         uri    => $uri,
         method => $method,
+        ua     => $self->ua,
     );
 
     $args{data}  = $data        if defined $data;

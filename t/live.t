@@ -4,13 +4,13 @@ use Pithub::Test;
 use Test::Most;
 
 BEGIN {
-    use_ok('Pithub::Base');
+    use_ok('Pithub');
 }
 
 SKIP: {
     skip 'Set PITHUB_TEST_LIVE to true to run this test', 4 unless $ENV{PITHUB_TEST_LIVE};
 
-    my $base = Pithub::Base->new;
+    my $base = Pithub->new;
     my $result = $base->request( GET => '/' );
 
     is $result->code,        200,  'HTTP status is 200';
