@@ -42,6 +42,15 @@ Pithub
     $result = Pithub::Repos->new( user => 'plu', repo => 'Pithub' )->get;
     print Dumper $result->content;
 
+=head1 WARNING
+
+L<Pithub> as well as the
+L<Github v3 API|http://developer.github.com/v3/> are still under
+development. So there might be things broken on both sides. Besides
+that it's possible that the API will change. This applies to
+L<Pithub> itself as well as the
+L<Github v3 API|http://developer.github.com/v3/>.
+
 =head1 MODULES
 
 There are different ways of using Pithub library. You can either
