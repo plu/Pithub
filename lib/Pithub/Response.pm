@@ -8,6 +8,12 @@ use namespace::autoclean;
 
 Pithub::Response
 
+=head1 ATTRIBUTES
+
+=head2 request
+
+The L<Pithub::Request> object.
+
 =cut
 
 has 'request' => (
@@ -15,6 +21,29 @@ has 'request' => (
     isa      => 'Pithub::Request',
     required => 1,
 );
+
+=head2 http_response
+
+The L<HTTP::Response> object. There are following delegate methods
+installed for convenience:
+
+=over
+
+=item *
+
+B<code>: http_response->code
+
+=item *
+
+B<content>: http_response->content
+
+=item *
+
+B<success>: http_response->is_cuess
+
+=back
+
+=cut
 
 has 'http_response' => (
     handles => {
@@ -26,6 +55,14 @@ has 'http_response' => (
     isa      => 'HTTP::Response',
     required => 0,
 );
+
+=head1 METHODS
+
+=head2 parse_response
+
+Utility method.
+
+=cut
 
 sub parse_response {
     my ( $self, $str ) = @_;

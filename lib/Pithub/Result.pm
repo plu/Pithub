@@ -9,6 +9,13 @@ use namespace::autoclean;
 
 Pithub::Result
 
+=head1 ATTRIBUTES
+
+=head2 content
+
+The decoded JSON response. May be an arrayref or hashref, depending
+on the API call.
+
 =cut
 
 has 'content' => (
@@ -17,11 +24,25 @@ has 'content' => (
     lazy_build => 1,
 );
 
+=head2 first_page_uri
+
+The extracted value from the C<< Link >> header for the first page.
+This can return undef.
+
+=cut
+
 has 'first_page_uri' => (
     is         => 'ro',
     isa        => 'Str|Undef',
     lazy_build => 1,
 );
+
+=head2 last_page_uri
+
+The extracted value from the C<< Link >> header for the last page.
+This can return undef.
+
+=cut
 
 has 'last_page_uri' => (
     is         => 'ro',
@@ -29,17 +50,58 @@ has 'last_page_uri' => (
     lazy_build => 1,
 );
 
+=head2 next_page_uri
+
+The extracted value from the C<< Link >> header for the next page.
+This can return undef.
+
+=cut
+
 has 'next_page_uri' => (
     is         => 'ro',
     isa        => 'Str|Undef',
     lazy_build => 1,
 );
 
+=head2 prev_page_uri
+
+The extracted value from the C<< Link >> header for the previous
+page. This can return undef.
+
+=cut
+
 has 'prev_page_uri' => (
     is         => 'ro',
     isa        => 'Str|Undef',
     lazy_build => 1,
 );
+
+=head2 response
+
+The L<Pithub::Response> object. There are following delegate methods
+installed for convenience:
+
+=over
+
+=item *
+
+B<code>: response->code
+
+=item *
+
+B<raw_content>: response->content
+
+=item *
+
+B<request>: response->request
+
+=item *
+
+B<success>: response->success
+
+=back
+
+=cut
 
 has 'response' => (
     handles => {
