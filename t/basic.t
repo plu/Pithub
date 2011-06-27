@@ -216,4 +216,16 @@ my %accessors = (
     is $result->last_page, undef, 'We are on last page already';
 }
 
+{
+    my $base = Pithub::Base->new( skip_request => 1 );
+    my $result = $base->request( GET => '/foo' );
+
+    ok $result->response->parse_response( Pithub::Test->get_response('header.link.missing') ), 'Load response' if $base->skip_request;
+
+    is $result->first_page, undef, 'First page call';
+    is $result->prev_page,  undef, 'Prev page call';
+    is $result->next_page,  undef, 'No next page on the last page';
+    is $result->last_page,  undef, 'We are on last page already';
+}
+
 done_testing;
