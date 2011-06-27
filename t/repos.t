@@ -440,4 +440,87 @@ BEGIN {
     }
 }
 
+# Pithub::Repos::Watching->is_watching
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Watching', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Watching';
+
+    throws_ok { $obj->is_watching } qr{Access token required for: GET /user/watched/foo/bar}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->is_watching;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/user/watched/foo/bar', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Watching->list_repos
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Watching', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Watching';
+
+    throws_ok { $obj->list_repos } qr{Access token required for: GET /user/watched}, 'Token required';
+
+    {
+        my $result = $obj->list_repos( user => 'bla' );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/users/bla/watched', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '', 'HTTP body';
+    }
+
+    {
+        ok $obj->token(123), 'Token set';
+        my $result = $obj->list_repos;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/user/watched', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Watching->start_watching
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Watching', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Watching';
+
+    throws_ok { $obj->start_watching } qr{Access token required for: PUT /user/watched/foo/bar}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->start_watching;
+        is $result->request->method, 'PUT', 'HTTP method';
+        is $result->request->uri->path, '/user/watched/foo/bar', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Watching->stop_watching
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Watching', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Watching';
+
+    throws_ok { $obj->stop_watching } qr{Access token required for: DELETE /user/watched/foo/bar}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->stop_watching;
+        is $result->request->method, 'DELETE', 'HTTP method';
+        is $result->request->uri->path, '/user/watched/foo/bar', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
 done_testing;
