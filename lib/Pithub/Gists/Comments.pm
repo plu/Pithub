@@ -25,7 +25,10 @@ Create a comment
 
 Examples:
 
-    $result = $p->gists->comments->create( gist_id => 1, data => { body => 'some comment' } );
+    $result = $p->gists->comments->create(
+        gist_id => 1,
+        data    => { body => 'some comment' },
+    );
 
 =cut
 
@@ -122,7 +125,10 @@ Edit a comment
 
 Examples:
 
-    $result = $p->gists->comments->update( comment_id => 1, data => { body => 'some comment' } );
+    $result = $p->gists->comments->update(
+        comment_id => 1,
+        data       => { body => 'some comment' }
+    );
 
 =cut
 
