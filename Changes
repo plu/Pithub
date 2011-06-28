@@ -1,0 +1,7 @@
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
+          - minor POD changes
+
+0.01000   2011-06-27 12:36:44 Asia/Dubai
+          - first release
