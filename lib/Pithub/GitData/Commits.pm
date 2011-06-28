@@ -17,8 +17,6 @@ Create a Commit
 
     POST /repos/:user/:repo/git/commits
 
-=back
-
 Examples:
 
     $result = $p->git_data->commits->create(
@@ -35,6 +33,8 @@ Examples:
             tree    => '827efc6d56897b048c772eb4087f854f46256132',
         }
     );
+
+=back
 
 =cut
 
@@ -55,8 +55,6 @@ Get a Commit
 
     GET /repos/:user/:repo/git/commits/:sha
 
-=back
-
 Examples:
 
     $result = $p->git_data->commits->get(
@@ -64,6 +62,8 @@ Examples:
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
     );
+
+=back
 
 =cut
 

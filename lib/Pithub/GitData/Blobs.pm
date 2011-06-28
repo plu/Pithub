@@ -17,8 +17,6 @@ Create a Blob
 
     POST /repos/:user/:repo/git/blobs
 
-=back
-
 Examples:
 
     $result = $p->git_data->blobs->create(
@@ -29,6 +27,8 @@ Examples:
             encoding => 'utf-8',
         }
     );
+
+=back
 
 =cut
 
@@ -49,8 +49,6 @@ Get a Blob
 
     GET /repos/:user/:repo/git/blobs/:sha
 
-=back
-
 Examples:
 
     $result = $p->git_data->blobs->get(
@@ -58,6 +56,8 @@ Examples:
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
     );
+
+=back
 
 =cut
 

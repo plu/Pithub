@@ -17,8 +17,6 @@ Create a milestone
 
     POST /repos/:user/:repo/milestones
 
-=back
-
 Examples:
 
     $result = $p->issues->milestones->create(
@@ -31,6 +29,8 @@ Examples:
             title       => 'String'
         }
     );
+
+=back
 
 =cut
 
@@ -51,8 +51,6 @@ Delete a milestone
 
     DELETE /repos/:user/:repo/milestones/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->milestones->delete(
@@ -60,6 +58,8 @@ Examples:
         user => 'plu',
         milestone_id => 1,
     );
+
+=back
 
 =cut
 
@@ -80,8 +80,6 @@ Get a single milestone
 
     GET /repos/:user/:repo/milestones/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->milestones->get(
@@ -89,6 +87,8 @@ Examples:
         user => 'plu',
         milestone_id => 1,
     );
+
+=back
 
 =cut
 
@@ -109,14 +109,14 @@ List milestones for an issue
 
     GET /repos/:user/:repo/milestones
 
-=back
-
 Examples:
 
     $result = $p->issues->milestones->list(
         repo => 'Pithub',
         user => 'plu',
     );
+
+=back
 
 =cut
 
@@ -136,8 +136,6 @@ Update a milestone
 
     PATCH /repos/:user/:repo/milestones/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->milestones->update(
@@ -150,6 +148,8 @@ Examples:
             title       => 'String'
         }
     );
+
+=back
 
 =cut
 

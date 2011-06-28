@@ -17,8 +17,6 @@ Get a single event
 
     GET /repos/:user/:repo/issues/events/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->events->get(
@@ -26,6 +24,8 @@ Examples:
         user     => 'plu',
         event_id => 1,
     );
+
+=back
 
 =cut
 
@@ -60,12 +60,14 @@ List events for a repository
 
     GET /repos/:user/:repo/issues/events
 
-=back
+Examples:
 
     $result = $p->issues->events->list(
         repo => 'Pithub',
         user => 'plu',
     );
+
+=back
 
 =cut
 

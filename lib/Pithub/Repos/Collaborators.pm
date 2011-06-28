@@ -17,8 +17,6 @@ Add collaborator
 
     PUT /repos/:user/:repo/collaborators/:user
 
-=back
-
 Examples:
 
     $result = $p->repos->collaborators->add(
@@ -26,6 +24,8 @@ Examples:
         repo         => 'Pithub',
         collaborator => 'rbo',
     );
+
+=back
 
 =cut
 
@@ -46,8 +46,6 @@ Get
 
     GET /repos/:user/:repo/collaborators/:user
 
-=back
-
 Examples:
 
     $result = $p->repos->collaborators->is_collaborator(
@@ -62,6 +60,8 @@ Examples:
     elsif ( $result->code == 404 ) {
         print "rbo is not added as collaborator to Pithub\n";
     }
+
+=back
 
 =cut
 
@@ -82,14 +82,14 @@ List
 
     GET /repos/:user/:repo/collaborators
 
-=back
-
 Examples:
 
     $result = $p->repos->collaborators->list(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 
@@ -109,8 +109,6 @@ Remove collaborator
 
     DELETE /repos/:user/:repo/collaborators/:user
 
-=back
-
 Examples:
 
     $result = $p->repos->collaborators->remove(
@@ -118,6 +116,8 @@ Examples:
         repo         => 'Pithub',
         collaborator => 'rbo',
     );
+
+=back
 
 =cut
 

@@ -24,8 +24,6 @@ call would be unnecessary.
 
     POST /repos/:user/:repo/git/tags
 
-=back
-
 Examples:
 
     # TODO: verify I got the parameters right:
@@ -45,6 +43,8 @@ Examples:
             type    => 'commit',
         }
     );
+
+=back
 
 Parameters in C<< data >> hashref:
 
@@ -102,8 +102,6 @@ Get a Tag
 
     GET /repos/:user/:repo/git/tags/:sha
 
-=back
-
 Examples:
 
     $result = $p->git_data->tags->get(
@@ -111,6 +109,8 @@ Examples:
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
     );
+
+=back
 
 =cut
 

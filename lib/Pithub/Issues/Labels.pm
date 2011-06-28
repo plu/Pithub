@@ -17,8 +17,6 @@ Add labels to an issue
 
     POST /repos/:user/:repo/issues/:id/labels
 
-=back
-
 Examples:
 
     $result = $p->issues->labels->add(
@@ -27,6 +25,8 @@ Examples:
         issue_id => 1,
         data     => ['Label1', 'Label2'],
     );
+
+=back
 
 =cut
 
@@ -48,8 +48,6 @@ Create a label
 
     POST /repos/:user/:repo/labels
 
-=back
-
 Examples:
 
     $result = $p->issues->labels->create(
@@ -60,6 +58,8 @@ Examples:
             name  => 'some label',
         }
     );
+
+=back
 
 =cut
 
@@ -80,8 +80,6 @@ Delete a label
 
     DELETE /repos/:user/:repo/labels/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->labels->delete(
@@ -89,6 +87,8 @@ Examples:
         user     => 'plu',
         label_id => 1,
     );
+
+=back
 
 =cut
 
@@ -109,8 +109,6 @@ Get a single label
 
     GET /repos/:user/:repo/labels/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->labels->get(
@@ -118,6 +116,8 @@ Examples:
         user => 'plu',
         label_id => 1,
     );
+
+=back
 
 =cut
 
@@ -246,8 +246,6 @@ Replace all labels for an issue
 
     PUT /repos/:user/:repo/issues/:id/labels
 
-=back
-
 Examples:
 
     $result = $p->issues->labels->replace(
@@ -256,6 +254,8 @@ Examples:
         issue_id => 1,
         data     => [qw(label3 label4)],
     );
+
+=back
 
 =cut
 
@@ -277,8 +277,6 @@ Update a label
 
     PATCH /repos/:user/:repo/labels/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->labels->update(
@@ -290,6 +288,8 @@ Examples:
             name  => 'API',
         }
     );
+
+=back
 
 =cut
 

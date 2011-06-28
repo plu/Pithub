@@ -17,14 +17,14 @@ team is associated with.
 
     PUT /teams/:id/members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->add_member(
         team_id => 1,
         user    => 'plu',
     );
+
+=back
 
 =cut
 
@@ -44,14 +44,14 @@ an owner of the org that the team is associated with.
 
     PUT /teams/:id/repos/:repo
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->add_repo(
         team_id => 1,
         repo    => 'some_repo',
     );
+
+=back
 
 =cut
 
@@ -71,8 +71,6 @@ owner of the given organization.
 
     POST /orgs/:org/teams
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->create(
@@ -83,6 +81,8 @@ Examples:
             repo_names => ['github/dotfiles']
         }
     );
+
+=back
 
 =cut
 
@@ -102,11 +102,11 @@ of the org that the team is associated with.
 
     DELETE /teams/:id
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->delete( team_id => 1 );
+
+=back
 
 =cut
 
@@ -124,11 +124,11 @@ Get team
 
     GET /teams/:id
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->get( team_id => 1 );
+
+=back
 
 =cut
 
@@ -146,14 +146,14 @@ Get team repo
 
     GET /teams/:id/repos/:repo
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->get_repo(
         team_id => 1,
         repo    => 'some_repo',
     );
+
+=back
 
 =cut
 
@@ -173,14 +173,14 @@ user must be a member of the team.
 
     GET /teams/:id/members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->is_member(
         team_id => 1,
         user    => 'plu',
     );
+
+=back
 
 =cut
 
@@ -199,11 +199,11 @@ List teams
 
     GET /orgs/:org/teams
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->list( org => 'CPAN-API' );
+
+=back
 
 =cut
 
@@ -222,11 +222,11 @@ a member of the team.
 
     GET /teams/:id/members
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->list_members( team_id => 1 );
+
+=back
 
 =cut
 
@@ -244,11 +244,11 @@ List team repos
 
     GET /teams/:id/repos
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->list_repos( team_id => 1 );
+
+=back
 
 =cut
 
@@ -269,14 +269,14 @@ it just remove them from the team.
 
     DELETE /teams/:id/members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->remove_member(
         team_id => 1,
         user    => 'plu',
     );
+
+=back
 
 =cut
 
@@ -296,14 +296,14 @@ an owner of the org that the team is associated with.
 
     DELETE /teams/:id/repos/:repo
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->remove_repo(
         team_id => 1,
         repo    => 'some_repo',
     );
+
+=back
 
 =cut
 
@@ -323,8 +323,6 @@ of the org that the team is associated with.
 
     PATCH /teams/:id
 
-=back
-
 Examples:
 
     $result = $p->orgs->teams->update(
@@ -334,6 +332,8 @@ Examples:
             permission => 'push',
         }
     );
+
+=back
 
 =cut
 

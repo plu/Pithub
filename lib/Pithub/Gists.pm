@@ -19,8 +19,6 @@ Create a gist
 
     POST /gists
 
-=back
-
 Examples:
 
     $result = $p->gists->create(
@@ -30,6 +28,8 @@ Examples:
             files       => { 'file1.txt' => { content => 'String file content' } }
         }
     );
+
+=back
 
 =cut
 
@@ -49,11 +49,11 @@ Delete a gist
 
     DELETE /gists/:id
 
-=back
-
 Examples:
 
     $result = $p->gists->delete( gist_id => 784612 );
+
+=back
 
 =cut
 
@@ -73,11 +73,11 @@ Fork a gist
 
     POST /gists/:id/fork
 
-=back
-
 Examples:
 
     $result = $p->gists->fork( gist_id => 784612 );
+
+=back
 
 =cut
 
@@ -97,11 +97,11 @@ Get a single gist
 
     GET /gists/:id
 
-=back
-
 Examples:
 
     $result = $p->gists->get( gist_id => 784612 );
+
+=back
 
 =cut
 
@@ -121,11 +121,11 @@ Check if a gist is starred
 
     GET /gists/:id/star
 
-=back
-
 Examples:
 
     $result = $p->gists->is_starred( gist_id => 784612 );
+
+=back
 
 =cut
 
@@ -145,6 +145,10 @@ List a user’s gists:
 
     GET /users/:user/gists
 
+Examples:
+
+    $result = $p->gists->list( user => 'plu' );
+
 =item *
 
 List the authenticated user’s gists or if called anonymously,
@@ -152,11 +156,19 @@ this will returns all public gists:
 
     GET /gists
 
+Examples:
+
+    $result = $p->gists->list;
+
 =item *
 
 List all public gists:
 
     GET /gists/public
+
+Examples:
+
+    $result = $p->gists->list( public => 1 );
 
 =item *
 
@@ -168,18 +180,7 @@ List the authenticated user’s starred gists:
 
 Examples:
 
-    # List a user’s gists:
-    $result = $p->gists->list( user => 'plu' );
-
-    # List the authenticated user’s gists or if called anonymously,
-    # this will returns all public gists:
-    $result = $p->gists->list;
-
-    # List the authenticated user’s starred gists:
     $result = $p->gists->list( starred => 1 );
-
-    # List all public gists:
-    $result = $p->gists->list( public => 1 );
 
 =cut
 
@@ -207,11 +208,11 @@ Star a gist
 
     PUT /gists/:id/star
 
-=back
-
 Examples:
 
     $result = $p->gists->star( gist_id => 784612 );
+
+=back
 
 =cut
 
@@ -231,11 +232,11 @@ Unstar a gist
 
     DELETE /gists/:id/star
 
-=back
-
 Examples:
 
     $result = $p->gists->unstar( gist_id => 784612 );
+
+=back
 
 =cut
 
@@ -255,14 +256,14 @@ Edit a gist
 
     PATCH /gists/:id
 
-=back
-
 Examples:
 
     $result = $p->gists->update(
         gist_id => 784612,
         data    => { description => 'bar foo' }
     );
+
+=back
 
 =cut
 

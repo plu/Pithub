@@ -17,8 +17,6 @@ Create a public key
 
     POST /user/keys
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -36,6 +34,8 @@ Examples:
             key   => 'ssh-rsa AAA...',
         }
     );
+
+=back
 
 =cut
 
@@ -55,8 +55,6 @@ Delete a public key
 
     DELETE /user/keys/:id
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -64,6 +62,8 @@ Examples:
 
     $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
     $result = $k->delete( key_id => 123 );
+
+=back
 
 =cut
 
@@ -83,8 +83,6 @@ Get a single public key
 
     GET /user/keys/:id
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -92,6 +90,8 @@ Examples:
 
     $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
     $result = $k->get( key_id => 123 );
+
+=back
 
 =cut
 
@@ -111,8 +111,6 @@ List public keys for a user
 
     GET /user/keys
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -120,6 +118,8 @@ Examples:
 
     $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
     $result = $k->list;
+
+=back
 
 =cut
 
@@ -137,8 +137,6 @@ sub list {
 Update a public key
 
     PATCH /user/keys/:id
-
-=back
 
 Examples:
 
@@ -159,6 +157,8 @@ Examples:
             key   => 'ssh-rsa AAA...',
         }
     );
+
+=back
 
 =cut
 

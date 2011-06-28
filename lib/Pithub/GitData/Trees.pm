@@ -17,8 +17,6 @@ Create a Tree
 
     POST /repos/:user/:repo/git/trees
 
-=back
-
 Examples:
 
     $result = $p->git_data->trees->create(
@@ -35,6 +33,8 @@ Examples:
             ]
         }
     );
+
+=back
 
 Parameters in C<< data >> hashref:
 
@@ -110,7 +110,7 @@ Get a Tree Recursively
 
     GET /repos/:user/:repo/git/trees/:sha?recursive=1
 
-=back
+Examples:
 
     $result = $p->git_data->trees->get(
         user      => 'plu',
@@ -118,6 +118,8 @@ Get a Tree Recursively
         sha       => 'df21b2660fb6',
         recursive => 1,
     );
+
+=back
 
 =cut
 

@@ -17,8 +17,6 @@ Add email address(es)
 
     POST /user/emails
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -28,6 +26,8 @@ Examples:
     $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
     $result = $e->add( data => ['plu@cpan.org'] );
     $result = $e->add( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+
+=back
 
 =cut
 
@@ -47,8 +47,6 @@ Delete email address(es)
 
     DELETE /user/emails
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -58,6 +56,8 @@ Examples:
     $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
     $result = $e->delete( data => ['plu@cpan.org'] );
     $result = $e->delete( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+
+=back
 
 =cut
 
@@ -77,8 +77,6 @@ List email addresses for a user
 
     GET /user/emails
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -86,6 +84,8 @@ Examples:
 
     $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
     $result = $e->list;
+
+=back
 
 =cut
 

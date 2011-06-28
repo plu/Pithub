@@ -17,8 +17,6 @@ Create
 
     POST /repos/:user/:repo/keys
 
-=back
-
 Examples:
 
     $result = $p->repos->keys->create(
@@ -29,6 +27,8 @@ Examples:
             key   => 'ssh-rsa AAA...',
         },
     );
+
+=back
 
 =cut
 
@@ -49,8 +49,6 @@ Delete
 
     DELETE /repos/:user/:repo/keys/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->keys->delete(
@@ -58,6 +56,8 @@ Examples:
         repo   => 'Pithub',
         key_id => 1,
     );
+
+=back
 
 =cut
 
@@ -78,8 +78,6 @@ Get
 
     GET /repos/:user/:repo/keys/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->keys->get(
@@ -87,6 +85,8 @@ Examples:
         repo   => 'Pithub',
         key_id => 1,
     );
+
+=back
 
 =cut
 
@@ -107,14 +107,14 @@ List
 
     GET /repos/:user/:repo/keys
 
-=back
-
 Examples:
 
     $result = $p->repos->keys->list(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 
@@ -134,8 +134,6 @@ Edit
 
     PATCH /repos/:user/:repo/keys/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->keys->update(
@@ -144,6 +142,8 @@ Examples:
         key_id => 1,
         data   => { title => 'some new title' },
     );
+
+=back
 
 =cut
 

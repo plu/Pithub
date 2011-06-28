@@ -19,8 +19,6 @@ List commits on a pull request
 
     GET /repos/:user/:repo/pulls/:id/commits
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->commits(
@@ -28,6 +26,8 @@ Examples:
         repo            => 'Pithub',
         pull_request_id => 1
     );
+
+=back
 
 =cut
 
@@ -48,8 +48,6 @@ Create a pull request
 
     POST /repos/:user/:repo/pulls
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->create(
@@ -62,6 +60,8 @@ Examples:
             title => 'Amazing new feature',
         }
     );
+
+=back
 
 =cut
 
@@ -82,8 +82,6 @@ List pull requests files
 
     GET /repos/:user/:repo/pulls/:id/files
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->files(
@@ -91,6 +89,8 @@ Examples:
         repo            => 'Pithub',
         pull_request_id => 1,
     );
+
+=back
 
 =cut
 
@@ -111,8 +111,6 @@ Get a single pull request
 
     GET /repos/:user/:repo/pulls/:id
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->get(
@@ -120,6 +118,8 @@ Examples:
         repo            => 'Pithub',
         pull_request_id => 1,
     );
+
+=back
 
 =cut
 
@@ -140,8 +140,6 @@ Get if a pull request has been merged
 
     GET /repos/:user/:repo/pulls/:id/merge
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->is_merged(
@@ -149,6 +147,8 @@ Examples:
         repo            => 'Pithub',
         pull_request_id => 1,
     );
+
+=back
 
 =cut
 
@@ -169,14 +169,14 @@ List pull requests
 
     GET /repos/:user/:repo/pulls
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->list(
         user => 'plu',
         repo => 'Pithub'
     );
+
+=back
 
 =cut
 
@@ -196,8 +196,6 @@ Merge a pull request
 
     PUT /repos/:user/:repo/pulls/:id/merge
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->merge(
@@ -205,6 +203,8 @@ Examples:
         repo            => 'Pithub',
         pull_request_id => 1,
     );
+
+=back
 
 =cut
 
@@ -225,8 +225,6 @@ Update a pull request
 
     PATCH /repos/:user/:repo/pulls/:id
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->update(
@@ -240,6 +238,8 @@ Examples:
             title => 'Amazing new feature',
         }
     );
+
+=back
 
 =cut
 

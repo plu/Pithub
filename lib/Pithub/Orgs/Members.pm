@@ -17,14 +17,14 @@ Conceal a user's membership
 
     DELETE /orgs/:org/public_members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->members->conceal(
         org  => 'CPAN-API',
         user => 'plu',
     );
+
+=back
 
 =cut
 
@@ -47,14 +47,14 @@ repositories.
 
     DELETE /orgs/:org/members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->members->delete(
         org  => 'CPAN-API',
         user => 'plu',
     );
+
+=back
 
 =cut
 
@@ -75,14 +75,14 @@ Check if a user is a member of an organization
 
     GET /orgs/:org/members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->members->is_member(
         org  => 'CPAN-API',
         user => 'plu',
     );
+
+=back
 
 =cut
 
@@ -103,14 +103,14 @@ Get if a user is a public member
 
     GET /orgs/:org/public_members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->members->is_public(
         org  => 'CPAN-API',
         user => 'plu',
     );
+
+=back
 
 =cut
 
@@ -135,11 +135,11 @@ members are returned.
 
     GET /orgs/:org/members
 
-=back
-
 Examples:
 
     $result = $p->orgs->members->list( org => 'CPAN-API' );
+
+=back
 
 =cut
 
@@ -160,11 +160,11 @@ publicized or not.
 
     GET /orgs/:org/public_members
 
-=back
-
 Examples:
 
     $result = $p->orgs->members->list_public( org => 'CPAN-API' );
+
+=back
 
 =cut
 
@@ -184,14 +184,14 @@ Publicize a user's membership
 
     PUT /orgs/:org/public_members/:user
 
-=back
-
 Examples:
 
     $result = $p->orgs->members->publicize(
         org  => 'CPAN-API',
         user => 'plu',
     );
+
+=back
 
 =cut
 

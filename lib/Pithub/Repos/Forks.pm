@@ -17,8 +17,6 @@ Create a fork for the authenicated user.
 
     POST /repos/:user/:repo/forks
 
-=back
-
 Examples:
 
     $result = $p->repos->forks->create(
@@ -31,6 +29,8 @@ Examples:
         repo => 'Pithub',
         org  => 'CPAN-API',
     );
+
+=back
 
 =cut
 
@@ -53,14 +53,14 @@ List forks
 
     GET /repos/:user/:repo/forks
 
-=back
-
 Examples:
 
     $result = $p->repos->forks->list(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 

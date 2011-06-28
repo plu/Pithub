@@ -22,8 +22,6 @@ Create an issue
 
     POST /repos/:user/:repo/issues
 
-=back
-
 Examples:
 
     $result = $p->issues->create(
@@ -37,6 +35,8 @@ Examples:
             title     => 'Found a bug'
         }
     );
+
+=back
 
 =cut
 
@@ -57,8 +57,6 @@ Get a single issue
 
     GET /repos/:user/:repo/issues/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->get(
@@ -66,6 +64,8 @@ Examples:
         repo => 'Pithub',
         issue_id => 1,
     );
+
+=back
 
 =cut
 
@@ -86,14 +86,14 @@ List issues for a repository
 
     GET /repos/:user/:repo/issues
 
-=back
-
 Examples:
 
     $result = $p->issues->list(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 
@@ -113,8 +113,6 @@ Edit an issue
 
     PATCH /repos/:user/:repo/issues/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->update(
@@ -130,6 +128,8 @@ Examples:
             title     => 'Found a bug'
         }
     );
+
+=back
 
 =cut
 

@@ -17,8 +17,6 @@ Create a comment
 
     POST /repos/:user/:repo/pulls/:id/comments
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->comments->create(
@@ -32,6 +30,8 @@ Examples:
             position  => 4,
         }
     );
+
+=back
 
 =cut
 
@@ -53,8 +53,6 @@ Delete a comment
 
     DELETE /repos/:user/:repo/pulls/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->comments->delete(
@@ -62,6 +60,8 @@ Examples:
         user       => 'plu',
         comment_id => 1,
     );
+
+=back
 
 =cut
 
@@ -82,8 +82,6 @@ Get a single comment
 
     GET /repos/:user/:repo/pulls/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->comments->get(
@@ -91,6 +89,8 @@ Examples:
         user       => 'plu',
         comment_id => 1,
     );
+
+=back
 
 =cut
 
@@ -111,8 +111,6 @@ List comments on a pull request
 
     GET /repos/:user/:repo/pulls/:id/comments
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->comments->list(
@@ -120,6 +118,8 @@ Examples:
         user            => 'plu',
         pull_request_id => 1,
     );
+
+=back
 
 =cut
 
@@ -140,8 +140,6 @@ Edit a comment
 
     PATCH /repos/:user/:repo/pulls/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->pull_requests->comments->update(
@@ -150,6 +148,8 @@ Examples:
         comment_id => 1,
         data       => { body => 'some updated comment' },
     );
+
+=back
 
 =cut
 

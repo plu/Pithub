@@ -17,14 +17,14 @@ Check if you are watching a repo
 
     GET /user/watched/:user/:repo
 
-=back
-
 Examples:
 
     $result = $p->repos->watching->is_watching(
         repo => 'Pithub',
         user => 'plu',
     );
+
+=back
 
 =cut
 
@@ -80,14 +80,14 @@ List watchers
 
     GET /repos/:user/:repo/watchers
 
-=back
-
 Examples:
 
     $result = $p->repos->watching->list(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 
@@ -107,14 +107,14 @@ Watch a repo
 
     PUT /user/watched/:user/:repo
 
-=back
-
 Examples:
 
     $result = $p->repos->watching->start_watching(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 
@@ -134,14 +134,14 @@ Stop watching a repo
 
     DELETE /user/watched/:user/:repo
 
-=back
-
 Examples:
 
     $result = $p->repos->watching->stop_watching(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 

@@ -17,8 +17,6 @@ Follow a user
 
     PUT /user/following/:user
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -26,6 +24,8 @@ Examples:
 
     $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
     $result = $f->follow( user => 'plu' );
+
+=back
 
 =cut
 
@@ -45,8 +45,6 @@ Check if the authenticated user is following another given user
 
     GET /user/following/:user
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -61,6 +59,8 @@ Examples:
     elsif ( $result->code == 404 ) {
         print "plu is not following rafl\n";
     }
+
+=back
 
 =cut
 
@@ -86,8 +86,6 @@ List the authenticated user's followers:
 
     GET /user/followers
 
-=back
-
 Examples:
 
     $p = Pithub->new;
@@ -101,6 +99,8 @@ Examples:
 
     $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
     $result = $f->list;
+
+=back
 
 =cut
 
@@ -128,8 +128,6 @@ List who the authenicated user is following:
 
     GET /user/following
 
-=back
-
 Examples:
 
     $p = Pithub->new;
@@ -143,6 +141,8 @@ Examples:
 
     $f = Pithub::Users::Followers->new( token => 'b3c62c6' );
     $result = $f->list_following;
+
+=back
 
 =cut
 
@@ -164,8 +164,6 @@ Unfollow a user
 
     DELETE /user/following/:user
 
-=back
-
 Examples:
 
     $p = Pithub->new;
@@ -173,6 +171,8 @@ Examples:
 
     $f = Pithub::Users::Followers->new;
     $result = $f->unfollow( user => 'plu' );
+
+=back
 
 =cut
 

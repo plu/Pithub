@@ -17,10 +17,6 @@ Create a new download
 
     POST /repos/:user/:repo/downloads
 
-=back
-
-TODO: Creating downloads is currently not supported!
-
 Examples:
 
     $result = $p->repos->downloads->create(
@@ -28,6 +24,10 @@ Examples:
         repo => 'Pithub',
         data => { name => 'some download' },
     );
+
+=back
+
+TODO: Creating downloads is currently not supported!
 
 =cut
 
@@ -45,8 +45,6 @@ Delete a download
 
     DELETE /repos/:user/:repo/downloads/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->downloads->delete(
@@ -54,6 +52,8 @@ Examples:
         repo        => 'Pithub',
         download_id => 1,
     );
+
+=back
 
 =cut
 
@@ -74,8 +74,6 @@ Get a single download
 
     GET /repos/:user/:repo/downloads/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->downloads->get(
@@ -83,6 +81,8 @@ Examples:
         repo        => 'Pithub',
         download_id => 1,
     );
+
+=back
 
 =cut
 
@@ -103,14 +103,14 @@ List downloads for a repository
 
     GET /repos/:user/:repo/downloads
 
-=back
-
 Examples:
 
     $result = $p->repos->downloads->list(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 

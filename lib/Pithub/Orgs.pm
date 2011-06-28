@@ -20,11 +20,11 @@ Get an organization
 
     GET /orgs/:org
 
-=back
-
 Examples:
 
     $result = $p->orgs->get( org => 'CPAN-API' );
+
+=back
 
 =cut
 
@@ -54,11 +54,11 @@ List public and private organizations for the authenticated user.
 
     GET /user/orgs
 
-=back
-
 Examples:
 
     $result = $p->orgs->list;
+
+=back
 
 =cut
 
@@ -80,8 +80,6 @@ Edit an organization
 
     PATCH /orgs/:org
 
-=back
-
 Examples:
 
     $result = $p->orgs->update(
@@ -95,6 +93,8 @@ Examples:
             name          => 'github',
         }
     );
+
+=back
 
 =cut
 

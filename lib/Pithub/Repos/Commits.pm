@@ -17,8 +17,6 @@ Create a commit comment
 
     POST /repos/:user/:repo/commits/:sha/comments
 
-=back
-
 Examples:
 
     $result = $p->repos->commits->create_comment(
@@ -27,6 +25,8 @@ Examples:
         sha  => 'df21b2660fb6',
         data => { body => 'some comment' },
     );
+
+=back
 
 =cut
 
@@ -48,8 +48,6 @@ Delete a commit comment
 
     DELETE /repos/:user/:repo/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->commits->delete_comment(
@@ -57,6 +55,8 @@ Examples:
         repo       => 'Pithub',
         comment_id => 1,
     );
+
+=back
 
 =cut
 
@@ -77,8 +77,6 @@ Get a single commit
 
     GET /repos/:user/:repo/commits/:sha
 
-=back
-
 Examples:
 
     $result = $p->repos->commits->get(
@@ -86,6 +84,8 @@ Examples:
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
     );
+
+=back
 
 =cut
 
@@ -106,8 +106,6 @@ Get a single commit comment
 
     GET /repos/:user/:repo/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->commits->get_comment(
@@ -115,6 +113,8 @@ Examples:
         repo       => 'Pithub',
         comment_id => 1,
     );
+
+=back
 
 =cut
 
@@ -135,14 +135,14 @@ List commits on a repository
 
     GET /repos/:user/:repo/commits
 
-=back
-
 Examples:
 
     $result = $p->repos->commits->list(
         user => 'plu',
         repo => 'Pithub',
     );
+
+=back
 
 =cut
 
@@ -178,8 +178,6 @@ List comments for a single commit
 
     GET /repos/:user/:repo/commits/:sha/comments
 
-=back
-
 Examples:
 
     $result = $p->repos->commits->list_comments(
@@ -187,6 +185,8 @@ Examples:
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
     );
+
+=back
 
 =cut
 
@@ -209,8 +209,6 @@ Update a commit comment
 
     PATCH /repos/:user/:repo/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->repos->commits->update_comment(
@@ -219,6 +217,8 @@ Examples:
         comment_id => 1,
         data       => { body => 'updated comment' },
     );
+
+=back
 
 =cut
 

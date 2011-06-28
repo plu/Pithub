@@ -17,14 +17,14 @@ Create a comment
 
     POST /gists/:gist_id/comments
 
-=back
-
 Examples:
 
     $result = $p->gists->comments->create(
         gist_id => 1,
         data    => { body => 'some comment' },
     );
+
+=back
 
 =cut
 
@@ -45,11 +45,11 @@ Delete a comment
 
     DELETE /gists/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->gists->comments->delete( comment_id => 1 );
+
+=back
 
 =cut
 
@@ -69,11 +69,11 @@ Get a single comment
 
     GET /gists/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->gists->comments->get( comment_id => 1 );
+
+=back
 
 =cut
 
@@ -93,11 +93,11 @@ List comments on a gist
 
     GET /gists/:gist_id/comments
 
-=back
-
 Examples:
 
     $result = $p->gists->comments->list( gist_id => 1 );
+
+=back
 
 =cut
 
@@ -117,14 +117,14 @@ Edit a comment
 
     PATCH /gists/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->gists->comments->update(
         comment_id => 1,
         data       => { body => 'some comment' }
     );
+
+=back
 
 =cut
 

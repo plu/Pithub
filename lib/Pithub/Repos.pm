@@ -24,8 +24,6 @@ List Branches
 
     GET /repos/:user/:repo/branches
 
-=back
-
 Examples:
 
     $p      = Pithub->new;
@@ -46,6 +44,8 @@ Examples:
     $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
     $result = $r->repos->branches;
 
+=back
+
 =cut
 
 sub branches {
@@ -63,8 +63,6 @@ sub branches {
 List contributors
 
     GET /repos/:user/:repo/contributors
-
-=back
 
 Examples:
 
@@ -86,6 +84,8 @@ Examples:
     $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
     $result = $r->repos->contributors;
 
+=back
+
 =cut
 
 sub contributors {
@@ -104,6 +104,10 @@ Create a new repository for the authenticated user.
 
     POST /user/repos
 
+Examples:
+
+    $result = $p->repos->create( { name => 'some-repo' } );
+
 =item *
 
 Create a new repository in this organization. The authenticated user
@@ -111,16 +115,11 @@ must be a member of this organization.
 
     POST /orgs/:org/repos
 
-=back
-
 Examples:
 
-    # create a repo for the authenticated user
-    $result = $p->repos->create( { name => 'some-repo' } );
-
-    # create a repo for an organization (the authenticated user must
-    # belong to this organization)
     $result = $p->repos->create( 'CPAN-API' => { name => 'some-repo' } );
+
+=back
 
 =cut
 
@@ -148,8 +147,6 @@ Get a repo
 
     GET /repos/:user/:repo
 
-=back
-
 Examples:
 
     $p      = Pithub->new;
@@ -170,6 +167,8 @@ Examples:
     $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
     $result = $r->repos->get;
 
+=back
+
 =cut
 
 sub get {
@@ -187,8 +186,6 @@ sub get {
 List languages
 
     GET /repos/:user/:repo/languages
-
-=back
 
 Examples:
 
@@ -209,6 +206,8 @@ Examples:
 
     $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
     $result = $r->repos->languages;
+
+=back
 
 =cut
 
@@ -240,13 +239,13 @@ List repositories for the specified org.
 
     GET /orgs/:org/repos
 
-=back
-
 Examples:
 
     $result = $p->repos->list( user => 'plu' );
     $result = $p->repos->list( org => 'CPAN-API' );
     $result = $p->repos->list;
+
+=back
 
 =cut
 
@@ -273,8 +272,6 @@ List Tags
 
     GET /repos/:user/:repo/tags
 
-=back
-
 Examples:
 
     $p      = Pithub->new;
@@ -295,6 +292,8 @@ Examples:
     $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
     $result = $r->repos->tags;
 
+=back
+
 =cut
 
 sub tags {
@@ -312,8 +311,6 @@ sub tags {
 List Teams
 
     GET /repos/:user/:repo/teams
-
-=back
 
 Examples:
 
@@ -335,6 +332,8 @@ Examples:
     $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
     $result = $r->repos->teams;
 
+=back
+
 =cut
 
 sub teams {
@@ -353,12 +352,12 @@ Edit
 
     PATCH /repos/:user/:repo
 
-=back
-
 Examples:
 
     # update a repo for the authenticated user
     $result = $p->repos->update( Pithub => { description => 'Github API v3' } );
+
+=back
 
 =cut
 

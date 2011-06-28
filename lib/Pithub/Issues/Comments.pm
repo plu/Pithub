@@ -17,8 +17,6 @@ Create a comment
 
     POST /repos/:user/:repo/issues/:id/comments
 
-=back
-
 Examples:
 
     $result = $p->issues->comments->create(
@@ -27,6 +25,8 @@ Examples:
         issue_id => 1,
         data     => { body => 'some comment' }
     );
+
+=back
 
 =cut
 
@@ -48,8 +48,6 @@ Delete a comment
 
     DELETE /repos/:user/:repo/issues/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->comments->delete(
@@ -57,6 +55,8 @@ Examples:
         user       => 'plu',
         comment_id => 1,
     );
+
+=back
 
 =cut
 
@@ -77,8 +77,6 @@ Get a single comment
 
     GET /repos/:user/:repo/issues/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->comments->get(
@@ -86,6 +84,8 @@ Examples:
         user       => 'plu',
         comment_id => 1,
     );
+
+=back
 
 =cut
 
@@ -106,8 +106,6 @@ List comments on an issue
 
     GET /repos/:user/:repo/issues/:id/comments
 
-=back
-
 Examples:
 
     $result = $p->issues->comments->list(
@@ -115,6 +113,8 @@ Examples:
         user     => 'plu',
         issue_id => 1,
     );
+
+=back
 
 =cut
 
@@ -135,8 +135,6 @@ Edit a comment
 
     PATCH /repos/:user/:repo/issues/comments/:id
 
-=back
-
 Examples:
 
     $result = $p->issues->comments->update(
@@ -145,6 +143,8 @@ Examples:
         comment_id => 1,
         data       => { body => 'some comment' },
     );
+
+=back
 
 =cut
 
