@@ -376,6 +376,50 @@ Cg==
     # Pithub::Users::Keys->get
     # Pithub::Users::Keys->list
     # Pithub::Users::Keys->update
+
+    # Pagination + per_page
+    {
+        my $g = Pithub::Gists->new( per_page => 2 );
+
+        my @seen = ();
+
+        my $test = sub {
+            my ( $row, $seen ) = @_;
+            my $id = $row->{id};
+            ok $id, "Pithub::Gists->list found gist id ${id}";
+            is grep( $_ eq $id, @seen ), $seen, "Pithub::Gists->list we did not see id ${id} yet";
+            push @seen, $id;
+        };
+
+        my $result = $g->list( public => 1 );
+        is $result->success, 1, 'Pithub::Gists->list successful';
+        is scalar( @{ $result->content } ), 2, 'The per_page setting was successful';
+
+        foreach my $page ( 1 .. 2 ) {
+            foreach my $row ( @{ $result->content } ) {
+                $test->( $row, 0 );
+            }
+            $result = $result->next_page unless $page == 2;
+        }
+
+        # Browse to the last page and see if we can get some gist id's there
+        $result = $result->last_page;
+        foreach my $row ( @{ $result->content } ) {
+            $test->( $row, 0 );
+        }
+
+        # Browse to the previous page and see if we can get some gist id's there
+        $result = $result->prev_page;
+        foreach my $row ( @{ $result->content } ) {
+            $test->( $row, 0 );
+        }
+
+        # Browse to the first page and see if we can get some gist id's there
+        $result = $result->first_page;
+        foreach my $row ( @{ $result->content } ) {
+            $test->( $row, 1 );    # we saw those gists already!
+        }
+    }
 }
 
 done_testing;
