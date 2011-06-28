@@ -239,4 +239,10 @@ my %accessors = (
     is $result->get_page(1), undef, 'No page 1';
 }
 
+{
+    my $base = Pithub::Base->new( skip_request => 1, jsonp_callback => 'foo' );
+    my $result = $base->request( GET => '/foo' );
+    is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
+}
+
 done_testing;

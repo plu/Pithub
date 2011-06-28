@@ -38,6 +38,68 @@ has 'api_uri' => (
     required => 1,
 );
 
+=attr jsonp_callback
+
+If you want to use the response directly in JavaScript for example,
+Github supports setting a JSONP callback parameter.
+
+See also: L<http://developer.github.com/v3/#json-p-callbacks>.
+
+Examples:
+
+    $p = Pithub->new( jsonp_callback => 'loadGithubData' );
+    $result = $p->users->get( user => 'plu' );
+    print $result->raw_content;
+
+The result will look like this:
+
+    loadGithubData({
+        "meta": {
+            "status": 200,
+            "X-RateLimit-Limit": "5000",
+            "X-RateLimit-Remaining": "4661"
+        },
+        "data": {
+            "type": "User",
+            "location": "Dubai",
+            "url": "https://api.github.com/users/plu",
+            "login": "plu",
+            "name": "Johannes Plunien",
+            ...
+        }
+    })
+
+B<Be careful:> The L<content|Pithub::Result/content> method will
+try to decode the JSON into a Perl data structure. This is not
+possible if the C<< jsonp_callback >> is set:
+
+    Runtime error: malformed JSON string, neither array, object, number, string or atom,
+    at character offset 0 (before "loadGithubData( ...
+
+There are two helper methods:
+
+=over
+
+=item *
+
+B<clear_jsonp_callback>: reset the jsonp_callback attribute
+
+=item *
+
+B<has_jsonp_callback>: check if the jsonp_callback attribute is set
+
+=back
+
+=cut
+
+has 'jsonp_callback' => (
+    clearer   => 'clear_jsonp_callback',
+    is        => 'rw',
+    isa       => 'Str',
+    predicate => 'has_jsonp_callback',
+    required  => 0,
+);
+
 =attr per_page
 
 By default undef, so it defaults to Github's default. See also:
@@ -444,6 +506,9 @@ sub _merge_args {
     if ( $self->has_per_page ) {
         $args{per_page} = $self->per_page;
     }
+    if ( $self->has_jsonp_callback ) {
+        $args{jsonp_callback} = $self->jsonp_callback;
+    }
     return ( %args, @args );
 }
 
@@ -458,6 +523,10 @@ sub _prepare_request_args {
 
     if ( $self->has_per_page ) {
         $uri->query_form( $uri->query_form, per_page => $self->per_page );
+    }
+
+    if ( $self->has_jsonp_callback ) {
+        $uri->query_form( $uri->query_form, callback => $self->jsonp_callback );
     }
 
     if ($options) {
