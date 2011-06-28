@@ -125,7 +125,7 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: label_id' unless $args{label_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/labels/%d', $args{user}, $args{repo}, $args{label_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label_id} ) );
 }
 
 =method list

@@ -334,9 +334,9 @@ BEGIN {
     throws_ok { $obj->get } qr{Missing key in parameters: label_id}, 'No parameters';
 
     {
-        my $result = $obj->get( label_id => 123 );
+        my $result = $obj->get( label_id => 'bug' );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/labels/123', 'HTTP path';
+        is $result->request->uri->path, '/repos/foo/bar/labels/bug', 'HTTP path';
         my $http_request = $result->request->http_request;
         is $http_request->content, '', 'HTTP body';
     }
