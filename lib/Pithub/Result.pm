@@ -1,17 +1,13 @@
 package Pithub::Result;
 
+# ABSTRACT: Github v3 result object
+
 use Moose;
 use JSON::Any;
 use URI;
 use namespace::autoclean;
 
-=head1 NAME
-
-Pithub::Result
-
-=head1 ATTRIBUTES
-
-=head2 content
+=attr content
 
 The decoded JSON response. May be an arrayref or hashref, depending
 on the API call.
@@ -24,7 +20,7 @@ has 'content' => (
     lazy_build => 1,
 );
 
-=head2 first_page_uri
+=attr first_page_uri
 
 The extracted value from the C<< Link >> header for the first page.
 This can return undef.
@@ -37,7 +33,7 @@ has 'first_page_uri' => (
     lazy_build => 1,
 );
 
-=head2 last_page_uri
+=attr last_page_uri
 
 The extracted value from the C<< Link >> header for the last page.
 This can return undef.
@@ -50,7 +46,7 @@ has 'last_page_uri' => (
     lazy_build => 1,
 );
 
-=head2 next_page_uri
+=attr next_page_uri
 
 The extracted value from the C<< Link >> header for the next page.
 This can return undef.
@@ -63,7 +59,7 @@ has 'next_page_uri' => (
     lazy_build => 1,
 );
 
-=head2 prev_page_uri
+=attr prev_page_uri
 
 The extracted value from the C<< Link >> header for the previous
 page. This can return undef.
@@ -76,7 +72,7 @@ has 'prev_page_uri' => (
     lazy_build => 1,
 );
 
-=head2 response
+=attr response
 
 The L<Pithub::Response> object. There are following delegate methods
 installed for convenience:
@@ -128,9 +124,7 @@ has '_json' => (
     lazy_build => 1,
 );
 
-=head1 METHODS
-
-=head2 first_page
+=method first_page
 
 Get the L<Pithub::Result> of the first page. Returns undef if there
 is no first page (if you're on the first page already or if there
@@ -144,7 +138,7 @@ sub first_page {
     return $self->_paginate( $self->first_page_uri );
 }
 
-=head2 last_page
+=method last_page
 
 Get the L<Pithub::Result> of the last page. Returns undef if there
 is no last page (if you're on the last page already or if there
@@ -158,7 +152,7 @@ sub last_page {
     return $self->_paginate( $self->last_page_uri );
 }
 
-=head2 next_page
+=method next_page
 
 Get the L<Pithub::Result> of the next page. Returns undef if there
 is no next page (there's only one page at all).
@@ -195,7 +189,7 @@ sub next_page {
     return $self->_paginate( $self->next_page_uri );
 }
 
-=head2 prev_page
+=method prev_page
 
 Get the L<Pithub::Result> of the previous page. Returns undef if there
 is no previous page (you're on the first page).
@@ -229,7 +223,7 @@ sub prev_page {
     return $self->_paginate( $self->prev_page_uri );
 }
 
-=head2 ratelimit
+=method ratelimit
 
 Returns the value of the C<< X-Ratelimit-Limit >> http header.
 
@@ -240,7 +234,7 @@ sub ratelimit {
     return $self->response->http_response->header('X-RateLimit-Limit');
 }
 
-=head2 ratelimit_remaining
+=method ratelimit_remaining
 
 Returns the value of the C<< X-Ratelimit-Remaining >> http header.
 

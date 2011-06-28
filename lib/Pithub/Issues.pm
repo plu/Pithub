@@ -1,5 +1,7 @@
 package Pithub::Issues;
 
+# ABSTRACT: Github v3 Issues API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
@@ -10,13 +12,7 @@ with 'MooseX::Role::BuildInstanceOf' => { target => '::Labels' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Milestones' };
 around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
-=head1 NAME
-
-Pithub::Issues
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -51,7 +47,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/issues', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -80,7 +76,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -107,7 +103,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/issues', $args{user}, $args{repo} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

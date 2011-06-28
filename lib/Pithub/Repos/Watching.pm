@@ -1,17 +1,13 @@
 package Pithub::Repos::Watching;
 
+# ABSTRACT: Github v3 Repo Watching API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Repos::Watching
-
-=head1 METHODS
-
-=head2 is_watching
+=method is_watching
 
 =over
 
@@ -38,7 +34,7 @@ sub is_watching {
     return $self->request( GET => sprintf( '/user/watched/%s/%s', $args{user}, $args{repo} ) );
 }
 
-=head2 list_repos
+=method list_repos
 
 =over
 
@@ -74,7 +70,7 @@ sub list_repos {
     return $self->request( GET => '/user/watched' );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -101,7 +97,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/watchers', $args{user}, $args{repo} ) );
 }
 
-=head2 start_watching
+=method start_watching
 
 =over
 
@@ -128,7 +124,7 @@ sub start_watching {
     return $self->request( PUT => sprintf( '/user/watched/%s/%s', $args{user}, $args{repo} ) );
 }
 
-=head2 stop_watching
+=method stop_watching
 
 =over
 

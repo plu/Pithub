@@ -1,17 +1,13 @@
 package Pithub::GitData::Commits;
 
+# ABSTRACT: Github v3 Git Data Commits API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::GitData::Commits
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -49,7 +45,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/git/commits', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 get
+=method get
 
 =over
 

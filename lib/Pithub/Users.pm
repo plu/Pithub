@@ -1,5 +1,7 @@
 package Pithub::Users;
 
+# ABSTRACT: Github v3 Users API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
@@ -9,13 +11,7 @@ with 'MooseX::Role::BuildInstanceOf' => { target => '::Followers' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Keys' };
 around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
-=head1 NAME
-
-Pithub::Users
-
-=head1 METHODS
-
-=head2 get
+=method get
 
 =over
 
@@ -57,7 +53,7 @@ sub get {
     return $self->request( GET => '/user' );
 }
 
-=head2 update
+=method update
 
 =over
 

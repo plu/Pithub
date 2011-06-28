@@ -15,10 +15,6 @@ with 'MooseX::Role::BuildInstanceOf' => { target => '::Repos' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Users' };
 around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
-=head1 NAME
-
-Pithub - Github v3 API
-
 =head1 SYNOPSIS
 
     use Pithub;

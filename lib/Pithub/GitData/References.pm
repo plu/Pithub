@@ -1,17 +1,13 @@
 package Pithub::GitData::References;
 
+# ABSTRACT: Github v3 Git Data References API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::GitData::References
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -59,7 +55,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/git/refs', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -92,7 +88,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/git/refs/%s', $args{user}, $args{repo}, $args{ref} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -142,7 +138,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/git/refs', $args{user}, $args{repo} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

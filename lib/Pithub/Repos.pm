@@ -1,5 +1,7 @@
 package Pithub::Repos;
 
+# ABSTRACT: Github v3 Repos API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
@@ -12,13 +14,7 @@ with 'MooseX::Role::BuildInstanceOf' => { target => '::Keys' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Watching' };
 around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
-=head1 NAME
-
-Pithub::Repos
-
-=head1 METHODS
-
-=head2 branches
+=method branches
 
 =over
 
@@ -58,7 +54,7 @@ sub branches {
     return $self->request( GET => sprintf( '/repos/%s/%s/branches', $args{user}, $args{repo} ) );
 }
 
-=head2 contributors
+=method contributors
 
 =over
 
@@ -98,7 +94,7 @@ sub contributors {
     return $self->request( GET => sprintf( '/repos/%s/%s/contributors', $args{user}, $args{repo} ) );
 }
 
-=head2 create
+=method create
 
 =over
 
@@ -142,7 +138,7 @@ sub create {
     }
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -182,7 +178,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s', $args{user}, $args{repo} ) );
 }
 
-=head2 languages
+=method languages
 
 =over
 
@@ -222,7 +218,7 @@ sub languages {
     return $self->request( GET => sprintf( '/repos/%s/%s/languages', $args{user}, $args{repo} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -267,7 +263,7 @@ sub list {
     }
 }
 
-=head2 tags
+=method tags
 
 =over
 
@@ -307,7 +303,7 @@ sub tags {
     return $self->request( GET => sprintf( '/repos/%s/%s/tags', $args{user}, $args{repo} ) );
 }
 
-=head2 teams
+=method teams
 
 =over
 
@@ -347,7 +343,7 @@ sub teams {
     return $self->request( GET => sprintf( '/repos/%s/%s/teams', $args{user}, $args{repo} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

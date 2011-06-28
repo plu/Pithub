@@ -1,17 +1,13 @@
 package Pithub::Repos::Collaborators;
 
+# ABSTRACT: Github v3 Repo Collaborators API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Repos::Collaborators
-
-=head1 METHODS
-
-=head2 add
+=method add
 
 =over
 
@@ -40,7 +36,7 @@ sub add {
     return $self->request( PUT => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
 }
 
-=head2 is_collaborator
+=method is_collaborator
 
 =over
 
@@ -76,7 +72,7 @@ sub is_collaborator {
     return $self->request( GET => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -103,7 +99,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/collaborators', $args{user}, $args{repo} ) );
 }
 
-=head2 remove
+=method remove
 
 =over
 
@@ -117,7 +113,7 @@ Remove collaborator
 
 Examples:
 
-    my $result = $p->repos->collaborators->remove(
+    $result = $p->repos->collaborators->remove(
         user         => 'plu',
         repo         => 'Pithub',
         collaborator => 'rbo',

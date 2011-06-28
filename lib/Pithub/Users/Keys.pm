@@ -1,17 +1,13 @@
 package Pithub::Users::Keys;
 
+# ABSTRACT: Github v3 User Keys API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Users::Keys
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -49,7 +45,7 @@ sub create {
     return $self->request( POST => '/user/keys', $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -77,7 +73,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/user/keys/%d', $args{key_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -105,7 +101,7 @@ sub get {
     return $self->request( GET => sprintf( '/user/keys/%d', $args{key_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -132,7 +128,7 @@ sub list {
     return $self->request( GET => '/user/keys' );
 }
 
-=head2 update
+=method update
 
 =over
 

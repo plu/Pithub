@@ -1,17 +1,13 @@
 package Pithub::Repos::Keys;
 
+# ABSTRACT: Github v3 Repo Keys API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Repos::Keys
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -43,7 +39,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/keys', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -72,7 +68,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/repos/%s/%s/keys/%d', $args{user}, $args{repo}, $args{key_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -101,7 +97,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/keys/%d', $args{user}, $args{repo}, $args{key_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -128,7 +124,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/keys', $args{user}, $args{repo} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

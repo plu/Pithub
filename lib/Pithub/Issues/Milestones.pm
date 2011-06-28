@@ -1,17 +1,13 @@
 package Pithub::Issues::Milestones;
 
+# ABSTRACT: Github v3 Issue Milestones API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Issues::Milestones
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -45,7 +41,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/milestones', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -74,7 +70,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/repos/%s/%s/milestones/%d', $args{user}, $args{repo}, $args{milestone_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -103,7 +99,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/milestones/%d', $args{user}, $args{repo}, $args{milestone_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -130,7 +126,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/milestones', $args{user}, $args{repo} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

@@ -1,17 +1,13 @@
 package Pithub::Users::Followers;
 
+# ABSTRACT: Github v3 User Followers API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Users::Followers
-
-=head1 METHODS
-
-=head2 follow
+=method follow
 
 =over
 
@@ -39,7 +35,7 @@ sub follow {
     return $self->request( PUT => sprintf( '/user/following/%s', $args{user} ) );
 }
 
-=head2 is_following
+=method is_following
 
 =over
 
@@ -74,7 +70,7 @@ sub is_following {
     return $self->request( GET => sprintf( '/user/following/%s', $args{user} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -116,7 +112,7 @@ sub list {
     return $self->request( GET => '/user/followers' );
 }
 
-=head2 list_following
+=method list_following
 
 =over
 
@@ -158,7 +154,7 @@ sub list_following {
     return $self->request( GET => '/user/following' );
 }
 
-=head2 unfollow
+=method unfollow
 
 =over
 

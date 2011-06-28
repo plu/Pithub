@@ -1,17 +1,13 @@
 package Pithub::Issues::Labels;
 
+# ABSTRACT: Github v3 Issue Labels API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Issues::Labels
-
-=head1 METHODS
-
-=head2 add
+=method add
 
 =over
 
@@ -42,7 +38,7 @@ sub add {
     return $self->request( POST => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
-=head2 create
+=method create
 
 =over
 
@@ -74,7 +70,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/labels', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -103,7 +99,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/repos/%s/%s/labels/%d', $args{user}, $args{repo}, $args{label_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -132,7 +128,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/labels/%d', $args{user}, $args{repo}, $args{label_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -193,7 +189,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/labels', $args{user}, $args{repo} ) );
 }
 
-=head2 remove
+=method remove
 
 =over
 
@@ -240,7 +236,7 @@ sub remove {
     return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
-=head2 replace
+=method replace
 
 =over
 
@@ -271,7 +267,7 @@ sub replace {
     return $self->request( PUT => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
-=head2 update
+=method update
 
 =over
 

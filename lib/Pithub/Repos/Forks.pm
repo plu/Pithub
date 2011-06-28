@@ -1,17 +1,13 @@
 package Pithub::Repos::Forks;
 
+# ABSTRACT: Github v3 Repo Forks API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Repos::Forks
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -47,7 +43,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/forks', $args{user}, $args{repo} ) );
 }
 
-=head2 list
+=method list
 
 =over
 

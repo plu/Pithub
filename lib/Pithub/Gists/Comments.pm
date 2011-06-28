@@ -1,17 +1,13 @@
 package Pithub::Gists::Comments;
 
+# ABSTRACT: Github v3 Gist Comments API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Gists::Comments
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -39,7 +35,7 @@ sub create {
     return $self->request( POST => sprintf( '/gists/%d/comments', $args{gist_id} ), $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -63,7 +59,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/gists/comments/%d', $args{comment_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -87,7 +83,7 @@ sub get {
     return $self->request( GET => sprintf( '/gists/comments/%d', $args{comment_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -111,7 +107,7 @@ sub list {
     return $self->request( GET => sprintf( '/gists/%d/comments', $args{gist_id} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

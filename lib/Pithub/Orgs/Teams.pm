@@ -1,17 +1,13 @@
 package Pithub::Orgs::Teams;
 
+# ABSTRACT: Github v3 Org Teams API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Orgs::Teams
-
-=head1 METHODS
-
-=head2 add_member
+=method add_member
 
 =over
 
@@ -39,7 +35,7 @@ sub add_member {
     return $self->request( PUT => sprintf( '/teams/%d/members/%s', $args{team_id}, $args{user} ) );
 }
 
-=head2 add_repo
+=method add_repo
 
 =over
 
@@ -66,7 +62,7 @@ sub add_repo {
     return $self->request( PUT => sprintf( '/teams/%d/repos/%s', $args{team_id}, $args{repo} ) );
 }
 
-=head2 create
+=method create
 
 =over
 
@@ -97,7 +93,7 @@ sub create {
     return $self->request( POST => sprintf( '/orgs/%s/teams', $args{org} ), $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -120,7 +116,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/teams/%d', $args{team_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -142,7 +138,7 @@ sub get {
     return $self->request( GET => sprintf( '/teams/%d', $args{team_id} ) );
 }
 
-=head2 get_repo
+=method get_repo
 
 =over
 
@@ -168,7 +164,7 @@ sub get_repo {
     return $self->request( GET => sprintf( '/teams/%d/repos/%s', $args{team_id}, $args{repo} ) );
 }
 
-=head2 is_member
+=method is_member
 
 =over
 
@@ -195,7 +191,7 @@ sub is_member {
     return $self->request( GET => sprintf( '/teams/%d/members/%s', $args{team_id}, $args{user} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -217,7 +213,7 @@ sub list {
     return $self->request( GET => sprintf( '/orgs/%s/teams', $args{org} ) );
 }
 
-=head2 list_members
+=method list_members
 
 =over
 
@@ -240,7 +236,7 @@ sub list_members {
     return $self->request( GET => sprintf( '/teams/%d/members', $args{team_id} ) );
 }
 
-=head2 list_repos
+=method list_repos
 
 =over
 
@@ -262,7 +258,7 @@ sub list_repos {
     return $self->request( GET => sprintf( '/teams/%d/repos', $args{team_id} ) );
 }
 
-=head2 remove_member
+=method remove_member
 
 =over
 
@@ -291,7 +287,7 @@ sub remove_member {
     return $self->request( DELETE => sprintf( '/teams/%d/members/%s', $args{team_id}, $args{user} ) );
 }
 
-=head2 remove_repo
+=method remove_repo
 
 =over
 
@@ -318,7 +314,7 @@ sub remove_repo {
     return $self->request( DELETE => sprintf( '/teams/%d/repos/%s', $args{team_id}, $args{repo} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

@@ -1,17 +1,13 @@
 package Pithub::Repos::Commits;
 
+# ABSTRACT: Github v3 Repo Commits API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Repos::Commits
-
-=head1 METHODS
-
-=head2 create_comment
+=method create_comment
 
 =over
 
@@ -42,7 +38,7 @@ sub create_comment {
     return $self->request( POST => sprintf( '/repos/%s/%s/commits/%s/comments', $args{user}, $args{repo}, $args{sha} ), $args{data} );
 }
 
-=head2 delete_comment
+=method delete_comment
 
 =over
 
@@ -71,7 +67,7 @@ sub delete_comment {
     return $self->request( DELETE => sprintf( '/repos/%s/%s/comments/%d', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -100,7 +96,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/commits/%s', $args{user}, $args{repo}, $args{sha} ) );
 }
 
-=head2 get_comment
+=method get_comment
 
 =over
 
@@ -129,7 +125,7 @@ sub get_comment {
     return $self->request( GET => sprintf( '/repos/%s/%s/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -156,7 +152,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/commits', $args{user}, $args{repo} ) );
 }
 
-=head2 list_comments
+=method list_comments
 
 =over
 
@@ -203,7 +199,7 @@ sub list_comments {
     return $self->request( GET => sprintf( '/repos/%s/%s/comments', $args{user}, $args{repo} ) );
 }
 
-=head2 update_comment
+=method update_comment
 
 =over
 

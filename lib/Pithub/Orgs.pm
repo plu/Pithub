@@ -1,5 +1,7 @@
 package Pithub::Orgs;
 
+# ABSTRACT: Github v3 Orgs API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
@@ -8,13 +10,7 @@ with 'MooseX::Role::BuildInstanceOf' => { target => '::Members' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Teams' };
 around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
-=head1 NAME
-
-Pithub::Orgs
-
-=head1 METHODS
-
-=head2 get
+=method get
 
 =over
 
@@ -38,7 +34,7 @@ sub get {
     return $self->request( GET => sprintf( '/orgs/%s', $args{org} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -74,7 +70,7 @@ sub list {
     return $self->request( GET => '/user/orgs' );
 }
 
-=head2 update
+=method update
 
 =over
 

@@ -1,5 +1,7 @@
 package Pithub::Request;
 
+# ABSTRACT: Github v3 request object
+
 use Moose;
 use MooseX::Types::URI qw(Uri);
 use HTTP::Headers;
@@ -8,13 +10,7 @@ use JSON::Any;
 use URI;
 use namespace::autoclean;
 
-=head1 NAME
-
-Pithub::Request
-
-=head1 ATTRIBUTES
-
-=head2 data
+=attr data
 
 The request data. It will be JSON encoded later and set in the
 L<HTTP::Request> body.
@@ -28,7 +24,7 @@ has 'data' => (
     required  => 0,
 );
 
-=head2 http_request
+=attr http_request
 
 The L<HTTP::Request> object.
 
@@ -40,7 +36,7 @@ has 'http_request' => (
     lazy_build => 1,
 );
 
-=head2 method
+=attr method
 
 The HTTP method (GET, POST, PUT, DELETE, ...).
 
@@ -52,7 +48,7 @@ has 'method' => (
     required => 1,
 );
 
-=head2 token
+=attr token
 
 OAuth access token. If this is set, the authentication header is
 added to the L</http_request> object.
@@ -67,7 +63,7 @@ has 'token' => (
     required  => 0,
 );
 
-=head2 ua
+=attr ua
 
 The LWP user agent. This is set from L<Pithub> or any other module
 you are using. So you can exchange it by another module which
@@ -87,7 +83,7 @@ has 'ua' => (
     required => 1,
 );
 
-=head2 uri
+=attr uri
 
 An L<URI> object containing everything necessary to make that
 particular API call, besides the body (see L</data for that>).
@@ -131,9 +127,7 @@ sub _build_http_request {
     return $request;
 }
 
-=head1 METHODS
-
-=head2 send
+=method send
 
 Send the HTTP request. It's just a oneliner actually:
 

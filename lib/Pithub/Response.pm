@@ -1,16 +1,12 @@
 package Pithub::Response;
 
+# ABSTRACT: Github v3 response object
+
 use Moose;
 use HTTP::Response;
 use namespace::autoclean;
 
-=head1 NAME
-
-Pithub::Response
-
-=head1 ATTRIBUTES
-
-=head2 request
+=attr request
 
 The L<Pithub::Request> object.
 
@@ -22,7 +18,7 @@ has 'request' => (
     required => 1,
 );
 
-=head2 http_response
+=attr http_response
 
 The L<HTTP::Response> object. There are following delegate methods
 installed for convenience:
@@ -56,9 +52,7 @@ has 'http_response' => (
     required => 0,
 );
 
-=head1 METHODS
-
-=head2 parse_response
+=method parse_response
 
 Utility method.
 

@@ -1,5 +1,7 @@
 package Pithub::PullRequests;
 
+# ABSTRACT: Github v3 Pull Requests API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
@@ -7,13 +9,7 @@ extends 'Pithub::Base';
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
 around qr{^merge_.*?_args$} => \&Pithub::Base::_merge_args;
 
-=head1 NAME
-
-Pithub::PullRequests
-
-=head1 METHODS
-
-=head2 commits
+=method commits
 
 =over
 
@@ -42,7 +38,7 @@ sub commits {
     return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/commits', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
-=head2 create
+=method create
 
 =over
 
@@ -76,7 +72,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/pulls', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 files
+=method files
 
 =over
 
@@ -105,7 +101,7 @@ sub files {
     return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/files', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -134,7 +130,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
-=head2 is_merged
+=method is_merged
 
 =over
 
@@ -163,7 +159,7 @@ sub is_merged {
     return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -190,7 +186,7 @@ sub list {
     return $self->request( GET => sprintf( '/repos/%s/%s/pulls', $args{user}, $args{repo} ) );
 }
 
-=head2 merge
+=method merge
 
 =over
 
@@ -219,7 +215,7 @@ sub merge {
     return $self->request( PUT => sprintf( '/repos/%s/%s/pulls/%d/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
-=head2 update
+=method update
 
 =over
 

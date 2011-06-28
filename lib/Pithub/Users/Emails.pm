@@ -1,17 +1,13 @@
 package Pithub::Users::Emails;
 
+# ABSTRACT: Github v3 User Emails API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Users::Emails
-
-=head1 METHODS
-
-=head2 add
+=method add
 
 =over
 
@@ -41,7 +37,7 @@ sub add {
     return $self->request( POST => '/user/emails', $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -71,7 +67,7 @@ sub delete {
     return $self->request( DELETE => '/user/emails', $args{data} );
 }
 
-=head2 list
+=method list
 
 =over
 

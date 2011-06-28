@@ -1,5 +1,7 @@
 package Pithub::Base;
 
+# ABSTRACT: Github v3 base class for all Pithub modules
+
 use Moose;
 use Carp qw(croak);
 use LWP::UserAgent;
@@ -9,17 +11,13 @@ use Pithub::Response;
 use Pithub::Result;
 use namespace::autoclean;
 
-=head1 NAME
-
-Pithub::Base
+=head1 DESCRIPTION
 
 All L<Pithub/MODULES> inherit from L<Pithub::Base>, even L<Pithub>
 itself. So all attributes listed here can either be set in the
 constructor or via the setter on the objects.
 
-=head1 ATTRIBUTES
-
-=head2 api_uri
+=attr api_uri
 
 Defaults to L<https://api.github.com>.
 
@@ -40,7 +38,7 @@ has 'api_uri' => (
     required => 1,
 );
 
-=head2 repo
+=attr repo
 
 This can be set as a default repo to use for API calls that require
 the repo parameter to be set.
@@ -74,7 +72,7 @@ has 'repo' => (
     required  => 0,
 );
 
-=head2 skip_request
+=attr skip_request
 
 Mainly used by tests. But it might be useful to build another library
 on top of L<Pithub>.
@@ -99,7 +97,7 @@ has 'skip_request' => (
     required => 1,
 );
 
-=head2 token
+=attr token
 
 If the OAuth token is set, L<Pithub> will sent it via an HTTP header
 on each API request. Currently the basic authentication method is
@@ -117,7 +115,7 @@ has 'token' => (
     required  => 0,
 );
 
-=head2 ua
+=attr ua
 
 By default a L<LWP::UserAgent> object, but it can be anything that
 implements the same interface.
@@ -130,7 +128,7 @@ has 'ua' => (
     lazy_build => 1,
 );
 
-=head2 user
+=attr user
 
 This can be set as a default user to use for API calls that require
 the user parameter to be set.
@@ -270,9 +268,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^PUT /user/watched/[^/]+/.*?$},
 );
 
-=head1 METHODS
-
-=head2 request
+=method request
 
 This method is the central point: All L<Pithub> are using this method
 for making requests to the Github. If Github adds a new API call that

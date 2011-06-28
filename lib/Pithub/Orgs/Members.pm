@@ -1,17 +1,13 @@
 package Pithub::Orgs::Members;
 
+# ABSTRACT: Github v3 Org Members API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Orgs::Members
-
-=head1 METHODS
-
-=head2 conceal
+=method conceal
 
 =over
 
@@ -39,7 +35,7 @@ sub conceal {
     return $self->request( DELETE => sprintf( '/orgs/%s/public_members/%s', $args{org}, $args{user} ) );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -69,7 +65,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/orgs/%s/members/%s', $args{org}, $args{user} ) );
 }
 
-=head2 is_member
+=method is_member
 
 =over
 
@@ -97,7 +93,7 @@ sub is_member {
     return $self->request( GET => sprintf( '/orgs/%s/members/%s', $args{org}, $args{user} ) );
 }
 
-=head2 is_public
+=method is_public
 
 =over
 
@@ -125,7 +121,7 @@ sub is_public {
     return $self->request( GET => sprintf( '/orgs/%s/public_members/%s', $args{org}, $args{user} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -153,7 +149,7 @@ sub list {
     return $self->request( GET => sprintf( '/orgs/%s/members', $args{org} ) );
 }
 
-=head2 list_public
+=method list_public
 
 =over
 
@@ -178,7 +174,7 @@ sub list_public {
     return $self->request( GET => sprintf( '/orgs/%s/public_members', $args{org} ) );
 }
 
-=head2 publicize
+=method publicize
 
 =over
 

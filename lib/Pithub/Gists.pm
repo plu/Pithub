@@ -1,5 +1,7 @@
 package Pithub::Gists;
 
+# ABSTRACT: Github v3 Gists API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
@@ -7,13 +9,7 @@ extends 'Pithub::Base';
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
 around qr{^merge_.*?_args$} => \&Pithub::Base::_merge_args;
 
-=head1 NAME
-
-Pithub::Gists
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -27,7 +23,7 @@ Create a gist
 
 Examples:
 
-    my $result = $p->gists->create(
+    $result = $p->gists->create(
         data => {
             description => 'the description for this gist',
             public      => 1,
@@ -43,7 +39,7 @@ sub create {
     return $self->request( POST => '/gists', $args{data} );
 }
 
-=head2 delete
+=method delete
 
 =over
 
@@ -67,7 +63,7 @@ sub delete {
     return $self->request( DELETE => sprintf( '/gists/%d', $args{gist_id} ) );
 }
 
-=head2 fork
+=method fork
 
 =over
 
@@ -91,7 +87,7 @@ sub fork {
     return $self->request( POST => sprintf( '/gists/%d/fork', $args{gist_id} ) );
 }
 
-=head2 get
+=method get
 
 =over
 
@@ -115,7 +111,7 @@ sub get {
     return $self->request( GET => sprintf( '/gists/%d', $args{gist_id} ) );
 }
 
-=head2 is_starred
+=method is_starred
 
 =over
 
@@ -139,7 +135,7 @@ sub is_starred {
     return $self->request( GET => sprintf( '/gists/%d/star', $args{gist_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 
@@ -201,7 +197,7 @@ sub list {
     return $self->request( GET => '/gists' );
 }
 
-=head2 star
+=method star
 
 =over
 
@@ -225,7 +221,7 @@ sub star {
     return $self->request( PUT => sprintf( '/gists/%d/star', $args{gist_id} ) );
 }
 
-=head2 unstar
+=method unstar
 
 =over
 
@@ -249,7 +245,7 @@ sub unstar {
     return $self->request( DELETE => sprintf( '/gists/%d/star', $args{gist_id} ) );
 }
 
-=head2 update
+=method update
 
 =over
 
@@ -263,7 +259,7 @@ Edit a gist
 
 Examples:
 
-    my $result = $p->gists->update(
+    $result = $p->gists->update(
         gist_id => 784612,
         data    => { description => 'bar foo' }
     );

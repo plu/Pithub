@@ -1,17 +1,13 @@
 package Pithub::Issues::Events;
 
+# ABSTRACT: Github v3 Issue Events API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::Issues::Events
-
-=head1 METHODS
-
-=head2 get
+=method get
 
 =over
 
@@ -40,7 +36,7 @@ sub get {
     return $self->request( GET => sprintf( '/repos/%s/%s/issues/events/%d', $args{user}, $args{repo}, $args{event_id} ) );
 }
 
-=head2 list
+=method list
 
 =over
 

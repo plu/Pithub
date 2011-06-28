@@ -1,17 +1,13 @@
 package Pithub::GitData::Trees;
 
+# ABSTRACT: Github v3 Git Data Trees API
+
 use Moose;
 use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
-=head1 NAME
-
-Pithub::GitData::Trees
-
-=head1 METHODS
-
-=head2 create
+=method create
 
 =over
 
@@ -90,7 +86,7 @@ sub create {
     return $self->request( POST => sprintf( '/repos/%s/%s/git/trees', $args{user}, $args{repo} ), $args{data} );
 }
 
-=head2 get
+=method get
 
 =over
 
