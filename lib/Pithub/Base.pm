@@ -38,6 +38,42 @@ has 'api_uri' => (
     required => 1,
 );
 
+=attr per_page
+
+By default undef, so it defaults to Github's default. See also:
+L<http://developer.github.com/v3/#pagination>.
+
+Examples:
+
+    $users = Pithub::Users->new( per_page => 100 );
+
+    $users = Pithub::Users->new;
+    $users->per_page(100);
+
+There are two helper methods:
+
+=over
+
+=item *
+
+B<clear_per_page>: reset the per_page attribute
+
+=item *
+
+B<has_per_page>: check if the per_page attribute is set
+
+=back
+
+=cut
+
+has 'per_page' => (
+    clearer   => 'clear_per_page',
+    is        => 'rw',
+    isa       => 'Int',
+    predicate => 'has_per_page',
+    required  => 0,
+);
+
 =attr repo
 
 This can be set as a default repo to use for API calls that require
@@ -356,10 +392,15 @@ Same as L<Pithub::GitData::Trees/get>:
     $options = {
         prepare_uri => sub {
             my ($uri) = @_;
-            $uri->query_form( recursive => 1 );
+            $uri->query_form( $uri->query_form, recursive => 1 );
         },
     };
     $result = $p->request( $method, $path, $data, $options );
+
+Always be careful using C<< prepare_uri >> and C<< query_form >>. If
+the option L</per_page> is set, you might override the pagination
+parameter. That's the reason for this construct:
+C<< $uri->query_form( $uri->query_form, recursive => 1 ); >>
 
 This method always returns a L<Pithub::Result> object.
 
@@ -400,6 +441,9 @@ sub _merge_args {
     if ( $self->has_user ) {
         $args{user} = $self->user;
     }
+    if ( $self->has_per_page ) {
+        $args{per_page} = $self->per_page;
+    }
     return ( %args, @args );
 }
 
@@ -411,6 +455,10 @@ sub _prepare_request_args {
 
     my $uri = $self->api_uri->clone;
     $uri->path($path);
+
+    if ( $self->has_per_page ) {
+        $uri->query_form( $uri->query_form, per_page => $self->per_page );
+    }
 
     if ($options) {
         croak 'The parameter $options must be a hashref' unless ref $options eq 'HASH';

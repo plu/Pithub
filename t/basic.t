@@ -211,17 +211,17 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1 );
+    my $base = Pithub::Base->new( skip_request => 1, per_page => 42, );
     my $result = $base->request( GET => '/foo' );
 
     ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.last') ), 'Load response' if $base->skip_request;
 
-    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
-    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=25', 'Prev page call';
+    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?per_page=42&page=1',  'First page call';
+    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?per_page=42&page=25', 'Prev page call';
     is $result->next_page, undef, 'No next page on the last page';
     is $result->last_page, undef, 'We are on last page already';
 
-    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42',
+    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?per_page=42&page=42',
       'URI for get_page is generated, no matter if it exists or not';
 }
 

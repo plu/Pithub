@@ -2,6 +2,7 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
           - implement $result->getpage(n)
+          - add per_age parameter/attribute
 
 0.01001   2011-06-28 08:59:16 Asia/Dubai
           - minor POD changes
