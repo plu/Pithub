@@ -35,7 +35,7 @@ sub add {
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( POST => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
+    return $self->request( POST => sprintf( '/repos/%s/%s/issues/%s/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 =method create
@@ -96,7 +96,7 @@ sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: label_id' unless $args{label_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/labels/%d', $args{user}, $args{repo}, $args{label_id} ) );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label_id} ) );
 }
 
 =method get
@@ -181,10 +181,10 @@ sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
     if ( my $milestone_id = $args{milestone_id} ) {
-        return $self->request( GET => sprintf( '/repos/%s/%s/milestones/%d/labels', $args{user}, $args{repo}, $milestone_id ) );
+        return $self->request( GET => sprintf( '/repos/%s/%s/milestones/%s/labels', $args{user}, $args{repo}, $milestone_id ) );
     }
     elsif ( my $issue_id = $args{issue_id} ) {
-        return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $issue_id ) );
+        return $self->request( GET => sprintf( '/repos/%s/%s/issues/%s/labels', $args{user}, $args{repo}, $issue_id ) );
     }
     return $self->request( GET => sprintf( '/repos/%s/%s/labels', $args{user}, $args{repo} ) );
 }
@@ -231,9 +231,9 @@ sub remove {
     $self->_validate_user_repo_args( \%args );
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     if ( my $label_id = $args{label_id} ) {
-        return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%d/labels/%d', $args{user}, $args{repo}, $args{issue_id}, $label_id ) );
+        return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%s/labels/%s', $args{user}, $args{repo}, $args{issue_id}, $label_id ) );
     }
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ) );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%s/labels', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
 =method replace
@@ -264,7 +264,7 @@ sub replace {
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PUT => sprintf( '/repos/%s/%s/issues/%d/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
+    return $self->request( PUT => sprintf( '/repos/%s/%s/issues/%s/labels', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 =method update
@@ -298,7 +298,7 @@ sub update {
     croak 'Missing key in parameters: label_id' unless $args{label_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/labels/%d', $args{user}, $args{repo}, $args{label_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

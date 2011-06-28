@@ -35,7 +35,7 @@ sub commits {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/commits', $args{user}, $args{repo}, $args{pull_request_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%s/commits', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =method create
@@ -98,7 +98,7 @@ sub files {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/files', $args{user}, $args{repo}, $args{pull_request_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%s/files', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =method get
@@ -127,7 +127,7 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d', $args{user}, $args{repo}, $args{pull_request_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%s', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =method is_merged
@@ -156,7 +156,7 @@ sub is_merged {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%d/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%s/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =method list
@@ -212,7 +212,7 @@ sub merge {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PUT => sprintf( '/repos/%s/%s/pulls/%d/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
+    return $self->request( PUT => sprintf( '/repos/%s/%s/pulls/%s/merge', $args{user}, $args{repo}, $args{pull_request_id} ) );
 }
 
 =method update
@@ -248,7 +248,7 @@ sub update {
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/pulls/%d', $args{user}, $args{repo}, $args{pull_request_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/pulls/%s', $args{user}, $args{repo}, $args{pull_request_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

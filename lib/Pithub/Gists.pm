@@ -60,7 +60,7 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( DELETE => sprintf( '/gists/%d', $args{gist_id} ) );
+    return $self->request( DELETE => sprintf( '/gists/%s', $args{gist_id} ) );
 }
 
 =method fork
@@ -84,7 +84,7 @@ Examples:
 sub fork {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( POST => sprintf( '/gists/%d/fork', $args{gist_id} ) );
+    return $self->request( POST => sprintf( '/gists/%s/fork', $args{gist_id} ) );
 }
 
 =method get
@@ -108,7 +108,7 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( GET => sprintf( '/gists/%d', $args{gist_id} ) );
+    return $self->request( GET => sprintf( '/gists/%s', $args{gist_id} ) );
 }
 
 =method is_starred
@@ -132,7 +132,7 @@ Examples:
 sub is_starred {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( GET => sprintf( '/gists/%d/star', $args{gist_id} ) );
+    return $self->request( GET => sprintf( '/gists/%s/star', $args{gist_id} ) );
 }
 
 =method list
@@ -219,7 +219,7 @@ Examples:
 sub star {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( PUT => sprintf( '/gists/%d/star', $args{gist_id} ) );
+    return $self->request( PUT => sprintf( '/gists/%s/star', $args{gist_id} ) );
 }
 
 =method unstar
@@ -243,7 +243,7 @@ Examples:
 sub unstar {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( DELETE => sprintf( '/gists/%d/star', $args{gist_id} ) );
+    return $self->request( DELETE => sprintf( '/gists/%s/star', $args{gist_id} ) );
 }
 
 =method update
@@ -271,7 +271,7 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => sprintf( '/gists/%d', $args{gist_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/gists/%s', $args{gist_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

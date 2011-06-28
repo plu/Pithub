@@ -64,7 +64,7 @@ sub delete_comment {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/comments/%d', $args{user}, $args{repo}, $args{comment_id} ) );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
 =method get

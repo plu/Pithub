@@ -32,7 +32,7 @@ sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( POST => sprintf( '/gists/%d/comments', $args{gist_id} ), $args{data} );
+    return $self->request( POST => sprintf( '/gists/%s/comments', $args{gist_id} ), $args{data} );
 }
 
 =method delete
@@ -56,7 +56,7 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
-    return $self->request( DELETE => sprintf( '/gists/comments/%d', $args{comment_id} ) );
+    return $self->request( DELETE => sprintf( '/gists/comments/%s', $args{comment_id} ) );
 }
 
 =method get
@@ -80,7 +80,7 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
-    return $self->request( GET => sprintf( '/gists/comments/%d', $args{comment_id} ) );
+    return $self->request( GET => sprintf( '/gists/comments/%s', $args{comment_id} ) );
 }
 
 =method list
@@ -104,7 +104,7 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( GET => sprintf( '/gists/%d/comments', $args{gist_id} ) );
+    return $self->request( GET => sprintf( '/gists/%s/comments', $args{gist_id} ) );
 }
 
 =method update
@@ -132,7 +132,7 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => sprintf( '/gists/comments/%d', $args{comment_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/gists/comments/%s', $args{comment_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

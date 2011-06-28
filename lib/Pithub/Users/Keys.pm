@@ -70,7 +70,7 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: key_id' unless $args{key_id};
-    return $self->request( DELETE => sprintf( '/user/keys/%d', $args{key_id} ) );
+    return $self->request( DELETE => sprintf( '/user/keys/%s', $args{key_id} ) );
 }
 
 =method get
@@ -98,7 +98,7 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: key_id' unless $args{key_id};
-    return $self->request( GET => sprintf( '/user/keys/%d', $args{key_id} ) );
+    return $self->request( GET => sprintf( '/user/keys/%s', $args{key_id} ) );
 }
 
 =method list
@@ -166,7 +166,7 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: key_id' unless $args{key_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => sprintf( '/user/keys/%d', $args{key_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/user/keys/%s', $args{key_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -73,7 +73,7 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d', $args{user}, $args{repo}, $args{issue_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%s', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
 =method list
@@ -138,7 +138,7 @@ sub update {
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/issues/%d', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/issues/%s', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

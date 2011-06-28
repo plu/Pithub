@@ -33,7 +33,7 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: event_id' unless $args{event_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/events/%d', $args{user}, $args{repo}, $args{event_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/events/%s', $args{user}, $args{repo}, $args{event_id} ) );
 }
 
 =method list
@@ -75,7 +75,7 @@ sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
     if ( my $issue_id = $args{issue_id} ) {
-        return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d/events', $args{user}, $args{repo}, $issue_id ) );
+        return $self->request( GET => sprintf( '/repos/%s/%s/issues/%s/events', $args{user}, $args{repo}, $issue_id ) );
     }
     return $self->request( GET => sprintf( '/repos/%s/%s/issues/events', $args{user}, $args{repo} ) );
 }

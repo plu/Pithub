@@ -35,7 +35,7 @@ sub create {
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( POST => sprintf( '/repos/%s/%s/issues/%d/comments', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
+    return $self->request( POST => sprintf( '/repos/%s/%s/issues/%s/comments', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
 }
 
 =method delete
@@ -64,7 +64,7 @@ sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/comments/%d', $args{user}, $args{repo}, $args{comment_id} ) );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
 =method get
@@ -93,7 +93,7 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/comments/%d', $args{user}, $args{repo}, $args{comment_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
 }
 
 =method list
@@ -122,7 +122,7 @@ sub list {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%d/comments', $args{user}, $args{repo}, $args{issue_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%s/comments', $args{user}, $args{repo}, $args{issue_id} ) );
 }
 
 =method update
@@ -153,7 +153,7 @@ sub update {
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/issues/comments/%d', $args{user}, $args{repo}, $args{comment_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/issues/comments/%s', $args{user}, $args{repo}, $args{comment_id} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

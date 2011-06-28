@@ -61,7 +61,7 @@ sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: download_id' unless $args{download_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/downloads/%d', $args{user}, $args{repo}, $args{download_id} ) );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/downloads/%s', $args{user}, $args{repo}, $args{download_id} ) );
 }
 
 =method get
@@ -90,7 +90,7 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: download_id' unless $args{download_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/downloads/%d', $args{user}, $args{repo}, $args{download_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/downloads/%s', $args{user}, $args{repo}, $args{download_id} ) );
 }
 
 =method list
