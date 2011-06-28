@@ -138,6 +138,37 @@ sub first_page {
     return $self->_paginate( $self->first_page_uri );
 }
 
+=method get_page
+
+Get the L<Pithub::Result> for a specific page. The parameter is not
+validated, if you hit a page that does not exist, the Github API will
+tell you so. If there is only one page, this method will return
+undef, no matter which page you ask for, even for page 1.
+
+=cut
+
+sub get_page {
+    my ( $self, $page ) = @_;
+
+    # First we need to get an URI we can work with and replace
+    # the page GET parameter properly with the given value. If
+    # we cannot get the first or last page URI, then there is
+    # only one page.
+    my $uri_str = $self->first_page_uri || $self->last_page_uri;
+    return unless $uri_str;
+
+    my $uri   = URI->new($uri_str);
+    my %query = $uri->query_form;
+
+    $query{page} = $page;
+
+    my $options = {
+        prepare_uri => sub { shift->query_form(%query) }
+    };
+
+    return $self->_request->( GET => $uri->path, undef, $options );
+}
+
 =method last_page
 
 Get the L<Pithub::Result> of the last page. Returns undef if there

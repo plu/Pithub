@@ -185,6 +185,9 @@ my %accessors = (
     is $result->prev_page,  undef, 'No prev page on the first page';
     is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2',  'Next page call';
     is $result->last_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=26', 'Last page call';
+
+    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42',
+      'URI for get_page is generated, no matter if it exists or not';
 }
 
 {
@@ -202,6 +205,9 @@ my %accessors = (
     is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'Prev page call';
     is $result->next_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=4',  'Next page call';
     is $result->last_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=26', 'Last page call';
+
+    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42',
+      'URI for get_page is generated, no matter if it exists or not';
 }
 
 {
@@ -214,6 +220,9 @@ my %accessors = (
     is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=25', 'Prev page call';
     is $result->next_page, undef, 'No next page on the last page';
     is $result->last_page, undef, 'We are on last page already';
+
+    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42',
+      'URI for get_page is generated, no matter if it exists or not';
 }
 
 {
@@ -226,6 +235,8 @@ my %accessors = (
     is $result->prev_page,  undef, 'Prev page call';
     is $result->next_page,  undef, 'No next page on the last page';
     is $result->last_page,  undef, 'We are on last page already';
+
+    is $result->get_page(1), undef, 'No page 1';
 }
 
 done_testing;
