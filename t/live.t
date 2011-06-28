@@ -275,7 +275,38 @@ Cg==
     # Pithub::Issues::Labels->create
     # Pithub::Issues::Labels->delete
     # Pithub::Issues::Labels->get
+    {
+        my $result = $p->issues->labels->list( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Issues::Labels->list successful';
+        eq_or_diff $result->content,
+          [
+            {
+                'color' => 'e10c02',
+                'name'  => 'Bug',
+                'url'   => 'https://api.github.com/repos/plu/Pithub/labels/Bug'
+            },
+            {
+                'color' => '02e10c',
+                'name'  => 'Feature',
+                'url'   => 'https://api.github.com/repos/plu/Pithub/labels/Feature'
+            }
+          ],
+          'Pithub::Issues::Labels->list content';
+    }
+
     # Pithub::Issues::Labels->list
+    {
+        my $result = $p->issues->labels->get( user => 'plu', repo => 'Pithub', label_id => 'Bug' );
+        is $result->success, 1, 'Pithub::Issues::Labels->get successful';
+        eq_or_diff $result->content,
+          {
+            'color' => 'e10c02',
+            'name'  => 'Bug',
+            'url'   => 'https://api.github.com/repos/plu/Pithub/labels/Bug'
+          },
+          'Pithub::Issues::Labels->get content';
+    }
+
     # Pithub::Issues::Labels->remove
     # Pithub::Issues::Labels->replace
     # Pithub::Issues::Labels->update
