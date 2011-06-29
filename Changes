@@ -5,6 +5,7 @@ Revision history for {{$dist->name}}
           - add per_age parameter/attribute
           - be less restrictive building api urls using sprintf
           - implement jsonp_callback
+          - implement $result->iterator
 
 0.01001   2011-06-28 08:59:16 Asia/Dubai
           - minor POD changes

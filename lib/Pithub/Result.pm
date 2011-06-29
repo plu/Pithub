@@ -3,9 +3,24 @@ package Pithub::Result;
 # ABSTRACT: Github v3 result object
 
 use Moose;
+use Array::Iterator;
 use JSON::Any;
 use URI;
 use namespace::autoclean;
+
+=attr iterator
+
+Returns an instance of L<Array::Iterator> containing the decoded
+JSON L</content>. Even if there was only a one row arrayref or
+a hashref returned, this will contain an one element array.
+
+=cut
+
+has 'iterator' => (
+    is         => 'ro',
+    isa        => 'Array::Iterator',
+    lazy_build => 1,
+);
 
 =attr content
 
@@ -289,6 +304,13 @@ sub _build_content {
 
 sub _build_first_page_uri {
     return shift->_get_link_header('first');
+}
+
+sub _build_iterator {
+    my ($self) = @_;
+    my $content = $self->content;
+    $content = [$content] unless ref $content eq 'ARRAY';
+    return Array::Iterator->new($content);
 }
 
 sub _build_last_page_uri {

@@ -245,4 +245,45 @@ my %accessors = (
     is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
 }
 
+{
+    my $p = Pithub->new( skip_request => 1 );
+    my $result = $p->request( GET => '/foo' );
+
+    ok $result->response->parse_response( Pithub::Test->get_response('repos.list.org') ), 'Load response' if $p->skip_request;
+
+    my $iterator = $result->iterator;
+    isa_ok $iterator, 'Array::Iterator';
+
+    is $iterator->getLength, 5, 'There are three records in the array';
+
+    my @expectations = (
+        'https://github.com/CPAN-API/cpan-api',        'https://github.com/CPAN-API/search-metacpan-org',
+        'https://github.com/CPAN-API/cpanvote-server', 'https://github.com/CPAN-API/cpanvote-db',
+        'https://github.com/CPAN-API/metacpan-web',
+    );
+
+    while ( my $row = $iterator->getNext ) {
+        is $row->{html_url}, shift(@expectations), 'Iterator next';
+    }
+
+    is scalar(@expectations), 0, 'Consumed all rows';
+}
+
+{
+    my $p = Pithub->new( skip_request => 1 );
+    my $result = $p->request( GET => '/foo' );
+
+    ok $result->response->parse_response( Pithub::Test->get_response('users.get.noauth') ), 'Load response' if $p->skip_request;
+
+    my $iterator = $result->iterator;
+    isa_ok $iterator, 'Array::Iterator';
+
+    is $iterator->getLength, 1, 'There is one record in the array';
+
+    my $row = $iterator->getNext;
+    is $row->{id}, 31597, 'Row data found';
+
+    is $iterator->hasNext, 0, 'There is only one record';
+}
+
 done_testing;
