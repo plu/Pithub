@@ -234,7 +234,7 @@ implements the same interface.
 
 has 'ua' => (
     is         => 'ro',
-    isa        => 'LWP::UserAgent',
+    isa        => 'Object',
     lazy_build => 1,
 );
 
