@@ -8,6 +8,47 @@ use JSON::Any;
 use URI;
 use namespace::autoclean;
 
+=attr auto_pagination
+
+If you set this to true and use the L</next> method to iterate
+over the result rows, it will call automatically L</next_page>
+for you until you got all the results. Be careful using this
+feature, if there are 100 pages, this will make 100 API calls.
+By default it's off. Instead of setting it per L<Pithub::Result>
+you can also set it directly on any of the L<Pithub> API objects.
+
+Examples:
+
+    $r = Pithub::Repos->new;
+    $result = $r->list( user => 'rjbs' );
+
+    # This would just show the first 30 by default
+    while ( my $row = $result->next ) {
+        printf "%s: %s\n", $row->{name}, $row->{description};
+    }
+
+    # Let's do the same thing using auto_pagination to fetch all
+    $result = $r->list( user => 'rjbs' );
+    $result->auto_pagination(1);
+    while ( my $row = $result->next ) {
+        printf "%s: %s\n", $row->{name}, $row->{description};
+    }
+
+    # Turn auto_pagination on for all L<Pithub::Result> objects
+    $p = Pithub::Repos->new( auto_pagination => 1 );
+    $result = $r->list( user => 'rjbs' );
+    while ( my $row = $result->next ) {
+        printf "%s: %s\n", $row->{name}, $row->{description};
+    }
+
+=cut
+
+has 'auto_pagination' => (
+    default => 0,
+    is      => 'rw',
+    isa     => 'Bool',
+);
+
 =attr content
 
 The decoded JSON response. May be an arrayref or hashref, depending
@@ -216,6 +257,14 @@ sub next {
     my ($self) = @_;
     my $row = $self->_iterator->getNext;
     return $row if $row;
+    if ( $self->auto_pagination ) {
+        my $result = $self->next_page;
+        return unless $result;
+        $self->_reset;
+        $self->{response} = $result->response;
+        return $self->_iterator->getNext;
+    }
+    return;
 }
 
 =method next_page
@@ -368,6 +417,17 @@ sub _paginate {
         },
     };
     return $self->_request->( GET => $uri->path, undef, $options );
+}
+
+sub _reset {
+    my ($self) = @_;
+    $self->clear_content;
+    $self->clear_first_page_uri;
+    $self->clear_last_page_uri;
+    $self->clear_next_page_uri;
+    $self->clear_prev_page_uri;
+    $self->_clear_iterator;
+    delete $self->{_get_link_header};
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -17,6 +17,18 @@ All L<Pithub/MODULES> inherit from L<Pithub::Base>, even L<Pithub>
 itself. So all attributes listed here can either be set in the
 constructor or via the setter on the objects.
 
+=attr auto_pagination
+
+See also: L<Pithub::Result/auto_pagination>.
+
+=cut
+
+has 'auto_pagination' => (
+    default => 0,
+    is      => 'rw',
+    isa     => 'Bool',
+);
+
 =attr api_uri
 
 Defaults to L<https://api.github.com>.
@@ -477,8 +489,9 @@ sub request {
     my $response = Pithub::Response->new(%res_args);
 
     return Pithub::Result->new(
-        response => $response,
-        _request => sub { $self->request(@_) },
+        auto_pagination => $self->auto_pagination,
+        response        => $response,
+        _request        => sub { $self->request(@_) },
     );
 }
 
