@@ -86,7 +86,7 @@ has 'ua' => (
 =attr uri
 
 An L<URI> object containing everything necessary to make that
-particular API call, besides the body (see L</data for that>).
+particular API call, besides the body (see L</data> for that).
 
 =cut
 
