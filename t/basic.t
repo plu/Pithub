@@ -5,7 +5,6 @@ use Test::Most;
 
 BEGIN {
     use_ok('Pithub');
-    use_ok('Pithub::Base');
 }
 
 my %accessors = (
@@ -102,25 +101,25 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1 );
+    my $p = Pithub->new( skip_request => 1 );
 
-    isa_ok $base, 'Pithub::Base';
+    isa_ok $p, 'Pithub';
 
-    throws_ok { $base->request } qr{Missing mandatory parameters: \$method, \$path}, 'Not given any parameters';
-    throws_ok { $base->request( xxx => '/bar' ) } qr{Invalid method: xxx}, 'Not a valid HTTP method';
-    lives_ok { $base->request( GET => 'bar' ) } 'Correct parameters do not throw an exception';
+    throws_ok { $p->request } qr{Missing mandatory parameters: \$method, \$path}, 'Not given any parameters';
+    throws_ok { $p->request( xxx => '/bar' ) } qr{Invalid method: xxx}, 'Not a valid HTTP method';
+    lives_ok { $p->request( GET => 'bar' ) } 'Correct parameters do not throw an exception';
 
-    throws_ok { $base->request( GET => '/bar', undef, [] ) }
+    throws_ok { $p->request( GET => '/bar', undef, [] ) }
     qr{The parameter \$options must be a hashref},
       '$options must be a hashref';
 
-    throws_ok { $base->request( GET => '/bar', undef, { prepare_uri => 1 } ) }
+    throws_ok { $p->request( GET => '/bar', undef, { prepare_uri => 1 } ) }
     qr{The key prepare_uri in the \$options hashref must be a coderef},
       'prepare_uri must be a coderef';
 
-    lives_ok { $base->request( GET => 'bar', undef, {} ) } 'Empty options hashref';
+    lives_ok { $p->request( GET => 'bar', undef, {} ) } 'Empty options hashref';
 
-    my $result       = $base->request( GET => '/bar' );
+    my $result       = $p->request( GET => '/bar' );
     my $response     = $result->response;
     my $request      = $response->request;
     my $http_request = $request->http_request;
@@ -141,22 +140,22 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1 );
-    $base->token('123');
-    my $request = $base->request( POST => '/foo', { some => 'data' } )->request;
+    my $p = Pithub->new( skip_request => 1 );
+    $p->token('123');
+    my $request = $p->request( POST => '/foo', { some => 'data' } )->request;
     eq_or_diff $request->data, { some => 'data' }, 'The data hashref was set in the request object';
     is $request->http_request->header('Authorization'), 'token 123', 'Authorization header was set in the HTTP::Request object';
-    ok $base->clear_token, 'Access token clearer';
-    is $base->token, undef, 'No token set anymore';
-    $request = $base->request( POST => '/foo', { some => 'data' } )->request;
+    ok $p->clear_token, 'Access token clearer';
+    is $p->token, undef, 'No token set anymore';
+    $request = $p->request( POST => '/foo', { some => 'data' } )->request;
     is $request->http_request->header('Authorization'), undef, 'Authorization header was not set in the HTTP::Request object';
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1 );
-    my $result = $base->request( GET => '/foo' );
+    my $p = Pithub->new( skip_request => 1 );
+    my $result = $p->request( GET => '/foo' );
 
-    ok $result->response->parse_response( Pithub::Test->get_response('error.notfound') ), 'Load response' if $base->skip_request;
+    ok $result->response->parse_response( Pithub::Test->get_response('error.notfound') ), 'Load response' if $p->skip_request;
 
     is $result->code,    404, 'HTTP status is 404';
     is $result->success, '',  'Unsuccessful response';
@@ -171,10 +170,10 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1 );
-    my $result = $base->request( GET => '/foo' );
+    my $p = Pithub->new( skip_request => 1 );
+    my $result = $p->request( GET => '/foo' );
 
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.first') ), 'Load response' if $base->skip_request;
+    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.first') ), 'Load response' if $p->skip_request;
 
     is $result->first_page_uri, undef,                                                     'First page link on first page';
     is $result->prev_page_uri,  undef,                                                     'First page link on first page';
@@ -191,10 +190,10 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1 );
-    my $result = $base->request( GET => '/foo' );
+    my $p = Pithub->new( skip_request => 1 );
+    my $result = $p->request( GET => '/foo' );
 
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.third') ), 'Load response' if $base->skip_request;
+    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.third') ), 'Load response' if $p->skip_request;
 
     is $result->first_page_uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page link on third page';
     is $result->prev_page_uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'First page link no third page';
@@ -211,10 +210,10 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1, per_page => 42, );
-    my $result = $base->request( GET => '/foo' );
+    my $p = Pithub->new( skip_request => 1, per_page => 42, );
+    my $result = $p->request( GET => '/foo' );
 
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.last') ), 'Load response' if $base->skip_request;
+    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.last') ), 'Load response' if $p->skip_request;
 
     is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?per_page=42&page=1',  'First page call';
     is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?per_page=42&page=25', 'Prev page call';
@@ -226,10 +225,10 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1 );
-    my $result = $base->request( GET => '/foo' );
+    my $p = Pithub->new( skip_request => 1 );
+    my $result = $p->request( GET => '/foo' );
 
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.missing') ), 'Load response' if $base->skip_request;
+    ok $result->response->parse_response( Pithub::Test->get_response('header.link.missing') ), 'Load response' if $p->skip_request;
 
     is $result->first_page, undef, 'First page call';
     is $result->prev_page,  undef, 'Prev page call';
@@ -240,8 +239,8 @@ my %accessors = (
 }
 
 {
-    my $base = Pithub::Base->new( skip_request => 1, jsonp_callback => 'foo' );
-    my $result = $base->request( GET => '/foo' );
+    my $p = Pithub->new( skip_request => 1, jsonp_callback => 'foo' );
+    my $result = $p->request( GET => '/foo' );
     is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
 }
 
