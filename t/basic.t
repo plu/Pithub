@@ -218,7 +218,7 @@ my %accessors = (
     my $p = Pithub->new( ua => Pithub::Test::UA->new, per_page => 1 );
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
-    is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2&per_page=1',  'Next page call';
+    is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2&per_page=1',   'Next page call';
     is $result->last_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=769&per_page=1', 'Last page call';
     is $result->prev_page,  undef, 'No prev page on the first page';
     is $result->first_page, undef, 'We are on first page already';
@@ -270,6 +270,27 @@ my %accessors = (
     is $row->{id}, 31597, 'Row data found';
 
     is $result->next, undef, 'There is only one record';
+}
+
+{
+    my $p = Pithub->new( ua => Pithub::Test::UA->new, per_page => 15 );
+    my $result = $p->users->followers->list( user => 'plu' );
+    $result->auto_pagination(1);
+    my @followers = ();
+    while ( my $row = $result->next ) {
+        push @followers, $row;
+    }
+    is scalar(@followers), 54, 'Automatically paginate through four pages';
+}
+
+{
+    my $p = Pithub->new( ua => Pithub::Test::UA->new, per_page => 15, auto_pagination => 1 );
+    my $result = $p->users->followers->list( user => 'plu' );
+    my @followers = ();
+    while ( my $row = $result->next ) {
+        push @followers, $row;
+    }
+    is scalar(@followers), 54, 'Automatically paginate through four pages';
 }
 
 done_testing;

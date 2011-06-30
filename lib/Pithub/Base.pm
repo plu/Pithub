@@ -482,8 +482,9 @@ sub _merge_args {
     my ( $orig, $self ) = @_;
     my @args = $self->$orig;
     my %args = (
-        api_uri => $self->api_uri,
-        ua      => $self->ua,
+        api_uri         => $self->api_uri,
+        auto_pagination => $self->auto_pagination,
+        ua              => $self->ua,
     );
     if ( $self->has_repo ) {
         $args{repo} = $self->repo;

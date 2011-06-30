@@ -400,7 +400,8 @@ sub _build__json {
 sub _get_link_header {
     my ( $self, $type ) = @_;
     return $self->{_get_link_header}{$type} if $self->{_get_link_header}{$type};
-    my $link = $self->response->http_response->header('Link') or return;
+    my $link = $self->response->http_response->header('Link');
+    return unless $link;
     foreach my $item ( split /,/, $link ) {
         my @result = $item =~ /<([^>]+)>; rel="([^"]+)"/g;
         $self->{_get_link_header}{ $result[1] } = $result[0];
