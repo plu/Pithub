@@ -280,13 +280,14 @@ Examples:
 =item *
 
 List all followers in order, from the first one on the first
-page to the last one on the last page.
+page to the last one on the last page. See also
+L</auto_pagination>.
 
     $followers = Pithub->new->users->followers;
     $result = $followers->list( user => 'rjbs' );
     do {
         if ( $result->success ) {
-            foreach my $row ( @{ $result->content } ) {
+            while ( my $row = $result->next ) {
                 printf "%s\n", $row->{login};
             }
         }
@@ -317,13 +318,14 @@ Examples:
 =item *
 
 List all followers in reverse order, from the last one on the last
-page to the first one on the first page.
+page to the first one on the first page. See also
+L</auto_pagination>.
 
     $followers = Pithub->new->users->followers;
     $result = $followers->list( user => 'rjbs' )->last_page;    # this makes two requests!
     do {
         if ( $result->success ) {
-            foreach my $row ( reverse @{ $result->content } ) {
+            while ( my $row = $result->next ) {
                 printf "%s\n", $row->{login};
             }
         }
