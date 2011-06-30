@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01002   2011-06-30 17:05:58 Asia/Dubai
           - implement $result->getpage(n)
           - add per_age parameter/attribute
           - be less restrictive building api urls using sprintf
