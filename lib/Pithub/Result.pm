@@ -8,20 +8,6 @@ use JSON::Any;
 use URI;
 use namespace::autoclean;
 
-=attr iterator
-
-Returns an instance of L<Array::Iterator> containing the decoded
-JSON L</content>. Even if there was only a one row arrayref or
-a hashref returned, this will contain an one element array.
-
-=cut
-
-has 'iterator' => (
-    is         => 'ro',
-    isa        => 'Array::Iterator',
-    lazy_build => 1,
-);
-
 =attr content
 
 The decoded JSON response. May be an arrayref or hashref, depending
@@ -133,6 +119,13 @@ has '_request' => (
     required => 1,
 );
 
+# required for next
+has '_iterator' => (
+    is         => 'ro',
+    isa        => 'Array::Iterator',
+    lazy_build => 1,
+);
+
 has '_json' => (
     is         => 'ro',
     isa        => 'JSON::Any',
@@ -199,6 +192,30 @@ sub last_page {
     my ($self) = @_;
     return unless $self->last_page_uri;
     return $self->_paginate( $self->last_page_uri );
+}
+
+=method next
+
+Most of the results returned by the Github API calls are arrayrefs
+of hashrefs. The data structures can be retrieved directly by
+calling L</content>. Besides that it's possible to iterate over
+the results using this method.
+
+Examples:
+
+    $r = Pithub::Repos->new;
+    $result = $r->list( user => 'rjbs' );
+
+    while ( my $row = $result->next ) {
+        printf "%s: %s\n", $row->{name}, $row->{description};
+    }
+
+=cut
+
+sub next {
+    my ($self) = @_;
+    my $row = $self->_iterator->getNext;
+    return $row if $row;
 }
 
 =method next_page
@@ -306,7 +323,7 @@ sub _build_first_page_uri {
     return shift->_get_link_header('first');
 }
 
-sub _build_iterator {
+sub _build__iterator {
     my ($self) = @_;
     my $content = $self->content;
     $content = [$content] unless ref $content eq 'ARRAY';
