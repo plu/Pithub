@@ -66,8 +66,6 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/users/plu/repos', 'HTTP path';
 
-        ok $result->response->parse_response( Pithub::Test->get_response('repos.list.user') ), 'Load response' if $obj->skip_request;
-
         is $result->code,    200, 'HTTP status';
         is $result->success, 1,   'Successful';
 
@@ -81,8 +79,6 @@ BEGIN {
         my $result = $obj->list( org => 'CPAN-API' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/orgs/CPAN-API/repos', 'HTTP path';
-
-        ok $result->response->parse_response( Pithub::Test->get_response('repos.list.org') ), 'Load response' if $obj->skip_request;
 
         is $result->code,    200, 'HTTP status is 200';
         is $result->success, 1,   'Successful';

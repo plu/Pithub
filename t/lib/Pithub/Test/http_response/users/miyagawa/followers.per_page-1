@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+Server: nginx/1.0.4
+Date: Thu, 30 Jun 2011 12:03:06 GMT
+Content-Type: application/json
+Connection: keep-alive
+Status: 200 OK
+X-RateLimit-Limit: 5000
+X-RateLimit-Remaining: 4993
+Link: <https://api.github.com/users/miyagawa/followers?page=2&per_page=1>; rel="next", <https://api.github.com/users/miyagawa/followers?page=769&per_page=1>; rel="last"
+Content-Length: 273
+
+[
+  {
+    "url": "https://api.github.com/users/naoya",
+    "avatar_url": "https://secure.gravatar.com/avatar/b4afc7d853d7f1cb6a253d3c7183c05a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "naoya",
+    "id": 8991
+  }
+]

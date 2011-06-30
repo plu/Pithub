@@ -52,19 +52,6 @@ has 'http_response' => (
     required => 0,
 );
 
-=method parse_response
-
-Utility method.
-
-=cut
-
-sub parse_response {
-    my ( $self, $str ) = @_;
-    my $res = HTTP::Response->parse($str);
-    $self->http_response($res);
-    return $res;
-}
-
 __PACKAGE__->meta->make_immutable;
 
 1;

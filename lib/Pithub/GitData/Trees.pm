@@ -132,7 +132,8 @@ sub get {
     if ( $args{recursive} ) {
         $options->{prepare_uri} = sub {
             my ($uri) = @_;
-            $uri->query_form( $uri->query_form, recursive => 1 );
+            my %query = ( $uri->query_form, recursive => 1 );
+            $uri->query_form(%query);
         };
     }
     return $self->request( GET => $path, undef, $options );

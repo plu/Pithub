@@ -1,0 +1,127 @@
+HTTP/1.1 200 OK
+Server: nginx/1.0.4
+Date: Thu, 30 Jun 2011 11:42:46 GMT
+Content-Type: application/json
+Connection: keep-alive
+Status: 200 OK
+X-RateLimit-Limit: 5000
+X-RateLimit-Remaining: 4995
+Link: <https://api.github.com/users/miyagawa/followers?page=1>; rel="first", <https://api.github.com/users/miyagawa/followers?page=25>; rel="prev"
+Content-Length: 5260
+
+[
+  {
+    "url": "https://api.github.com/users/wata",
+    "avatar_url": "https://secure.gravatar.com/avatar/78f337c7bec2e54f6f41e21f4bf71ee9?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "wata",
+    "id": 519695
+  },
+  {
+    "url": "https://api.github.com/users/Angelia2041",
+    "avatar_url": "https://secure.gravatar.com/avatar/a2d59a658de50368dbd57ea826ad985d?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "Angelia2041",
+    "id": 234744
+  },
+  {
+    "url": "https://api.github.com/users/jberger",
+    "avatar_url": "https://secure.gravatar.com/avatar/cc767569f5863a7c261991ee5b23f147?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "jberger",
+    "id": 735765
+  },
+  {
+    "url": "https://api.github.com/users/wolverian",
+    "avatar_url": "https://secure.gravatar.com/avatar/a87982e94405e64404b2e48479f70604?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "wolverian",
+    "id": 42124
+  },
+  {
+    "url": "https://api.github.com/users/benvanstaveren",
+    "avatar_url": "https://secure.gravatar.com/avatar/4e07aff599df78e2838d93bcd0b16a93?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "benvanstaveren",
+    "id": 274836
+  },
+  {
+    "url": "https://api.github.com/users/cybersiddhu",
+    "avatar_url": "https://secure.gravatar.com/avatar/a9a174a5f6160c01f6cff41a7eb8a220?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "cybersiddhu",
+    "id": 48740
+  },
+  {
+    "url": "https://api.github.com/users/olegwtf",
+    "avatar_url": "https://secure.gravatar.com/avatar/42ce55db02194eba4cb77a620a3f1774?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "olegwtf",
+    "id": 722138
+  },
+  {
+    "url": "https://api.github.com/users/spadin",
+    "avatar_url": "https://secure.gravatar.com/avatar/b2214599720c63e7714e17faf14ccb66?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "spadin",
+    "id": 21626
+  },
+  {
+    "url": "https://api.github.com/users/camelmasa",
+    "avatar_url": "https://secure.gravatar.com/avatar/fb1b5190cdff1bc48be2644362ee8b12?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "camelmasa",
+    "id": 189824
+  },
+  {
+    "url": "https://api.github.com/users/cond",
+    "avatar_url": "https://secure.gravatar.com/avatar/9001d49e8e280cbdc35a6fd217db6332?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "cond",
+    "id": 511613
+  },
+  {
+    "url": "https://api.github.com/users/yko",
+    "avatar_url": "https://secure.gravatar.com/avatar/a6f8c3d0bcea9fcf4ab0a67ce38c7e90?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "yko",
+    "id": 177497
+  },
+  {
+    "url": "https://api.github.com/users/Shinpeim",
+    "avatar_url": "https://secure.gravatar.com/avatar/40904a1ca8c4244163c67c677737f8ca?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "Shinpeim",
+    "id": 876988
+  },
+  {
+    "url": "https://api.github.com/users/benkolera",
+    "avatar_url": "https://secure.gravatar.com/avatar/a3a40b5b547344370d45ad0f805b4d81?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "benkolera",
+    "id": 159197
+  },
+  {
+    "url": "https://api.github.com/users/tetu1225",
+    "avatar_url": "https://secure.gravatar.com/avatar/11c9656001063fe04e9d0a347bcd3e1b?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "tetu1225",
+    "id": 731471
+  },
+  {
+    "url": "https://api.github.com/users/Kivutar",
+    "avatar_url": "https://secure.gravatar.com/avatar/429a2a9fc4560fd8f5482e7541b1ffdd?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "Kivutar",
+    "id": 442722
+  },
+  {
+    "url": "https://api.github.com/users/reezer",
+    "avatar_url": "https://secure.gravatar.com/avatar/3d8f95f51401a52705432b7d3986f99a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "reezer",
+    "id": 653995
+  },
+  {
+    "url": "https://api.github.com/users/dha",
+    "avatar_url": "https://secure.gravatar.com/avatar/e42baff4499a1d49c8a806feb0c8eee4?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "dha",
+    "id": 97890
+  },
+  {
+    "url": "https://api.github.com/users/mcanlas",
+    "avatar_url": "https://secure.gravatar.com/avatar/f13af12d1c3ed9cc7d39381305df90c0?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "mcanlas",
+    "id": 881934
+  },
+  {
+    "url": "https://api.github.com/users/lungching",
+    "avatar_url": "https://secure.gravatar.com/avatar/671cdc9143758468b0c702bbc840f831?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "login": "lungching",
+    "id": 60586
+  }
+]

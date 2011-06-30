@@ -1,6 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use Pithub::Test;
+use Pithub::Test::UA;
 use Test::Most;
 
 BEGIN {
@@ -101,7 +102,7 @@ my %accessors = (
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
 
     isa_ok $p, 'Pithub';
 
@@ -140,7 +141,7 @@ my %accessors = (
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
     $p->token('123');
     my $request = $p->request( POST => '/foo', { some => 'data' } )->request;
     eq_or_diff $request->data, { some => 'data' }, 'The data hashref was set in the request object';
@@ -152,10 +153,8 @@ my %accessors = (
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
-    my $result = $p->request( GET => '/foo' );
-
-    ok $result->response->parse_response( Pithub::Test->get_response('error.notfound') ), 'Load response' if $p->skip_request;
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $result = $p->request( GET => '/error/notfound' );
 
     is $result->code,    404, 'HTTP status is 404';
     is $result->success, '',  'Unsuccessful response';
@@ -170,10 +169,8 @@ my %accessors = (
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
-    my $result = $p->request( GET => '/foo' );
-
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.first') ), 'Load response' if $p->skip_request;
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $result = $p->users->followers->list( user => 'miyagawa' );
 
     is $result->first_page_uri, undef,                                                     'First page link on first page';
     is $result->prev_page_uri,  undef,                                                     'First page link on first page';
@@ -190,10 +187,8 @@ my %accessors = (
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
-    my $result = $p->request( GET => '/foo' );
-
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.third') ), 'Load response' if $p->skip_request;
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(3);
 
     is $result->first_page_uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page link on third page';
     is $result->prev_page_uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'First page link no third page';
@@ -204,31 +199,37 @@ my %accessors = (
     is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'Prev page call';
     is $result->next_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=4',  'Next page call';
     is $result->last_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=26', 'Last page call';
+}
+
+{
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(26);
+
+    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
+    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=25', 'Prev page call';
+    is $result->next_page, undef, 'No next page on the last page';
+    is $result->last_page, undef, 'We are on last page already';
 
     is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42',
       'URI for get_page is generated, no matter if it exists or not';
 }
 
 {
-    my $p = Pithub->new( skip_request => 1, per_page => 42, );
-    my $result = $p->request( GET => '/foo' );
+    my $p = Pithub->new( ua => Pithub::Test::UA->new, per_page => 1 );
+    my $result = $p->users->followers->list( user => 'miyagawa' );
 
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.page.last') ), 'Load response' if $p->skip_request;
+    is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2&per_page=1',  'Next page call';
+    is $result->last_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=769&per_page=1', 'Last page call';
+    is $result->prev_page,  undef, 'No prev page on the first page';
+    is $result->first_page, undef, 'We are on first page already';
 
-    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?per_page=42&page=1',  'First page call';
-    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?per_page=42&page=25', 'Prev page call';
-    is $result->next_page, undef, 'No next page on the last page';
-    is $result->last_page, undef, 'We are on last page already';
-
-    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?per_page=42&page=42',
+    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42&per_page=1',
       'URI for get_page is generated, no matter if it exists or not';
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
-    my $result = $p->request( GET => '/foo' );
-
-    ok $result->response->parse_response( Pithub::Test->get_response('header.link.missing') ), 'Load response' if $p->skip_request;
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $result = $p->users->get( user => 'plu' );
 
     is $result->first_page, undef, 'First page call';
     is $result->prev_page,  undef, 'Prev page call';
@@ -239,16 +240,14 @@ my %accessors = (
 }
 
 {
-    my $p = Pithub->new( skip_request => 1, jsonp_callback => 'foo' );
+    my $p = Pithub->new( ua => Pithub::Test::UA->new, jsonp_callback => 'foo' );
     my $result = $p->request( GET => '/foo' );
     is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
-    my $result = $p->request( GET => '/foo' );
-
-    ok $result->response->parse_response( Pithub::Test->get_response('repos.list.org') ), 'Load response' if $p->skip_request;
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $result = $p->request( GET => '/orgs/CPAN-API/repos' );
 
     my @expectations = (
         'https://github.com/CPAN-API/cpan-api',        'https://github.com/CPAN-API/search-metacpan-org',
@@ -264,10 +263,8 @@ my %accessors = (
 }
 
 {
-    my $p = Pithub->new( skip_request => 1 );
-    my $result = $p->request( GET => '/foo' );
-
-    ok $result->response->parse_response( Pithub::Test->get_response('users.get.noauth') ), 'Load response' if $p->skip_request;
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $result = $p->request( GET => '/users/plu' );
 
     my $row = $result->next;
     is $row->{id}, 31597, 'Row data found';

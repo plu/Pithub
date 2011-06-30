@@ -182,31 +182,6 @@ has 'repo' => (
     required  => 0,
 );
 
-=attr skip_request
-
-Mainly used by tests. But it might be useful to build another library
-on top of L<Pithub>.
-
-Examples:
-
-    $c = Pithub::Repos::Collaborators->new( skip_request => 1 );
-
-    # This will not make any request at all!
-    $result = $c->list( user => 'plu' );
-
-    # This will return the HTTP::Request object that has been created
-    # for this particular API call
-    $http_request = $c->request->http_request;
-
-=cut
-
-has 'skip_request' => (
-    default  => 0,
-    is       => 'rw',
-    isa      => 'Bool',
-    required => 1,
-);
-
 =attr token
 
 If the OAuth token is set, L<Pithub> will sent it via an HTTP header
@@ -466,7 +441,8 @@ Same as L<Pithub::GitData::Trees/get>:
     $options = {
         prepare_uri => sub {
             my ($uri) = @_;
-            $uri->query_form( $uri->query_form, recursive => 1 );
+            my %query = ( $uri->query_form, recursive => 1 );
+            $uri->query_form(%query);
         },
     };
     $result = $p->request( $method, $path, $data, $options );
@@ -474,7 +450,9 @@ Same as L<Pithub::GitData::Trees/get>:
 Always be careful using C<< prepare_uri >> and C<< query_form >>. If
 the option L</per_page> is set, you might override the pagination
 parameter. That's the reason for this construct:
-C<< $uri->query_form( $uri->query_form, recursive => 1 ); >>
+
+    my %query = ( $uri->query_form, recursive => 1 );
+    $uri->query_form(%query);
 
 This method always returns a L<Pithub::Result> object.
 
@@ -504,8 +482,8 @@ sub _merge_args {
     my ( $orig, $self ) = @_;
     my @args = $self->$orig;
     my %args = (
-        api_uri      => $self->api_uri,
-        skip_request => $self->skip_request,
+        api_uri => $self->api_uri,
+        ua      => $self->ua,
     );
     if ( $self->has_repo ) {
         $args{repo} = $self->repo;
@@ -535,11 +513,13 @@ sub _prepare_request_args {
     $uri->path($path);
 
     if ( $self->has_per_page ) {
-        $uri->query_form( $uri->query_form, per_page => $self->per_page );
+        my %query = ( $uri->query_form, per_page => $self->per_page );
+        $uri->query_form(%query);
     }
 
     if ( $self->has_jsonp_callback ) {
-        $uri->query_form( $uri->query_form, callback => $self->jsonp_callback );
+        my %query = ( $uri->query_form, callback => $self->jsonp_callback );
+        $uri->query_form(%query);
     }
 
     if ($options) {
@@ -567,9 +547,7 @@ sub _prepare_request_args {
 sub _prepare_response_args {
     my ( $self, $request ) = @_;
     my %args = ( request => $request );
-    unless ( $self->skip_request ) {
-        $args{http_response} = $request->send;
-    }
+    $args{http_response} = $request->send;
     return %args;
 }
 

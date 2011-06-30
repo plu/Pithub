@@ -23,8 +23,6 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/users/plu', 'HTTP path';
 
-        ok $result->response->parse_response( Pithub::Test->get_response('users.get.noauth') ), 'Load response' if $obj->skip_request;
-
         is $result->code,    200, 'HTTP status';
         is $result->success, 1,   'Successful';
 
@@ -176,8 +174,6 @@ BEGIN {
         my $result = $obj->is_following( user => 'rafl' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/user/following/rafl', 'HTTP path';
-
-        ok $result->response->parse_response( Pithub::Test->get_response('users.followers.is_following.success') ), 'Load response' if $obj->skip_request;
 
         is $result->code,        204, 'HTTP status';
         is $result->success,     1,   'Successful';

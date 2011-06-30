@@ -214,7 +214,8 @@ sub get_page {
     my $options = {
         prepare_uri => sub {
             my ($u) = @_;
-            $u->query_form( $u->query_form, %query );
+            %query = ( $u->query_form, %query );
+            $u->query_form(%query);
         },
     };
 
@@ -413,7 +414,8 @@ sub _paginate {
     my $options = {
         prepare_uri => sub {
             my ($u) = @_;
-            $u->query_form( $u->query_form, $uri->query_form );
+            my %query = ( $u->query_form, $uri->query_form );
+            $u->query_form(%query);
         },
     };
     return $self->_request->( GET => $uri->path, undef, $options );
