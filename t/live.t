@@ -314,11 +314,34 @@ Cg==
     # Pithub::Issues::Milestones->create
     # Pithub::Issues::Milestones->delete
     # Pithub::Issues::Milestones->get
+
     # Pithub::Issues::Milestones->list
+    {
+        my $result = $p->issues->milestones->list( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Issues::Milestones->list successful';
+        ok scalar( @{ $result->content } ) > 0, 'Pithub::Issues::Milestones->list has some rows';
+    }
+
     # Pithub::Issues::Milestones->update
 
     # Pithub::Orgs->get
+    {
+        my $result = $p->orgs->get( org => 'CPAN-API' );
+        is $result->success, 1, 'Pithub::Orgs->get successful';
+        is $result->content->{type},  'Organization', 'Pithub::Orgs->get: Attribute type';
+        is $result->content->{login}, 'CPAN-API',     'Pithub::Orgs->get: Attribute login';
+        is $result->content->{name},  'CPAN API',     'Pithub::Orgs->get: Attribute name';
+        is $result->content->{id},    460239,         'Pithub::Orgs->get: Attribute id';
+    }
+
     # Pithub::Orgs->list
+    {
+        my $result = $p->orgs->list( user => 'plu' );
+        is $result->success, 1, 'Pithub::Orgs->list successful';
+        is $result->content->[0]{login}, 'CPAN-API', 'Pithub::Orgs->get: Attribute login';
+        is $result->content->[0]{id},    460239,     'Pithub::Orgs->get: Attribute id';
+    }
+
     # Pithub::Orgs->update
 
     # Pithub::Orgs::Members->conceal
@@ -326,7 +349,18 @@ Cg==
     # Pithub::Orgs::Members->is_member
     # Pithub::Orgs::Members->is_public
     # Pithub::Orgs::Members->list
+
     # Pithub::Orgs::Members->list_public
+    {
+        my $result = $p->orgs->members->list_public( org => 'CPAN-API' );
+        is $result->success, 1, 'Pithub::Orgs::Members->list_public successful';
+        ok scalar( @{ $result->content } ) > 0, 'Pithub::Orgs::Members->list_public has some rows';
+        while ( my $row = $result->next ) {
+            ok $row->{id},    "Pithub::Orgs::Members->list_public: Attribute id ($row->{id})";
+            ok $row->{login}, "Pithub::Orgs::Members->list_public: Attribute login ($row->{login})";
+        }
+    }
+
     # Pithub::Orgs::Members->publicize
 
     # Pithub::Orgs::Teams->add_member
@@ -348,6 +382,7 @@ Cg==
     # Pithub::PullRequests->files
     # Pithub::PullRequests->get
     # Pithub::PullRequests->is_merged
+    # Pithub::PullRequests->list
     # Pithub::PullRequests->merge
     # Pithub::PullRequests->update
 
@@ -416,9 +451,10 @@ Cg==
 
         my $test = sub {
             my ( $row, $seen ) = @_;
+            my $verb = $seen ? 'did' : 'did not';
             my $id = $row->{id};
             ok $id, "Pithub::Gists->list found gist id ${id}";
-            is grep( $_ eq $id, @seen ), $seen, "Pithub::Gists->list we did not see id ${id} yet";
+            is grep( $_ eq $id, @seen ), $seen, "Pithub::Gists->list we ${verb} see id ${id}";
             push @seen, $id;
         };
 
@@ -427,7 +463,7 @@ Cg==
         is scalar( @{ $result->content } ), 2, 'The per_page setting was successful';
 
         foreach my $page ( 1 .. 2 ) {
-            foreach my $row ( @{ $result->content } ) {
+            while ( my $row = $result->next ) {
                 $test->( $row, 0 );
             }
             $result = $result->next_page unless $page == 2;
@@ -435,19 +471,19 @@ Cg==
 
         # Browse to the last page and see if we can get some gist id's there
         $result = $result->last_page;
-        foreach my $row ( @{ $result->content } ) {
+        while ( my $row = $result->next ) {
             $test->( $row, 0 );
         }
 
         # Browse to the previous page and see if we can get some gist id's there
         $result = $result->prev_page;
-        foreach my $row ( @{ $result->content } ) {
+        while ( my $row = $result->next ) {
             $test->( $row, 0 );
         }
 
         # Browse to the first page and see if we can get some gist id's there
         $result = $result->first_page;
-        foreach my $row ( @{ $result->content } ) {
+        while ( my $row = $result->next ) {
             $test->( $row, 1 );    # we saw those gists already!
         }
     }
