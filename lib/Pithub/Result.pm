@@ -176,13 +176,15 @@ has '_json' => (
 =method count
 
 Returns the count of the elements in L</content>. If the result is
-not an arrayref but a hashref, it will still return C<< 1 >>.
+not an arrayref but a hashref, it will still return C<< 1 >>. Some
+calls return an empty hashref, for those calls it returns C<< 0 >>.
 
 =cut
 
 sub count {
     my ($self) = @_;
     return 0 unless $self->success;
+    return 0 if ref $self->content eq 'HASH' && scalar keys %{ $self->content } == 0;
     return $self->_iterator->getLength;
 }
 

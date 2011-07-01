@@ -178,6 +178,7 @@ BEGIN {
         is $result->code,        204, 'HTTP status';
         is $result->success,     1,   'Successful';
         is $result->raw_content, '',  'HTTP body is empty';
+        is $result->count,       0,   'Empty HTTP body return zero';
         eq_or_diff $result->content, {}, 'Empty HTTP body generates empty hashref';
     }
 }
