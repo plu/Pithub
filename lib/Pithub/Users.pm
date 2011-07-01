@@ -21,27 +21,29 @@ Get a single user
 
     GET /users/:user
 
+Examples:
+
+    $p = Pithub->new;
+    $result = $p->users->get( user => 'plu');
+
+    $u = Pithub::Users->new;
+    $result = $u->get( user => 'plu');
+
 =item *
 
 Get the authenticated user
 
     GET /user
 
-=back
-
 Examples:
-
-    $p = Pithub->new;
-    $result = $p->users->get( user => 'plu');
 
     $p = Pithub->new( token => 'b3c62c6' );
     $result = $p->users->get;
 
-    $u = Pithub::Users->new;
-    $result = $u->get( user => 'plu');
-
     $u = Pithub::Users->new( token => 'b3c62c6' );
     $result = $u->get;
+
+=back
 
 =cut
 
@@ -63,8 +65,6 @@ Update the authenticated user
 
     PATCH /user
 
-=back
-
 Examples:
 
     $p = Pithub->new( token => 'b3c62c6' );
@@ -72,6 +72,8 @@ Examples:
 
     $u = Pithub::Users->new( token => 'b3c62c6' );
     $result = $u->update( data => { email => 'plu@cpan.org' } );
+
+=back
 
 =cut
 
