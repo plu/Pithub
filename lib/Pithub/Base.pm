@@ -530,7 +530,7 @@ sub _prepare_request_args {
     }
 
     if ( $self->_token_required( $method, $path ) && !$self->has_token ) {
-        croak "Access token required for: ${method} ${path}";
+        croak sprintf "Access token required for: %s %s (%s)", $method, $path, $uri;
     }
 
     my %args = (
