@@ -42,7 +42,7 @@ SKIP: {
     {
         my $result = $p->gists->list( public => 1 );
         is $result->success, 1, 'Pithub::Gists->list successful';
-        foreach my $row ( @{ $result->content } ) {
+        while ( my $row = $result->next ) {
             ok $row->{id}, "Pithub::Gists->list has id: $row->{id}";
             like $row->{url}, qr{https://api.github.com/gists/\d+$}, "Pithub::Gists->list has url: $row->{url}";
         }
@@ -60,7 +60,7 @@ SKIP: {
     {
         my $result = $p->gists->comments->list( gist_id => 1 );
         is $result->success, 1, 'Pithub::Gists::Comments->list successful';
-        foreach my $row ( @{ $result->content } ) {
+        while ( my $row = $result->next ) {
             ok $row->{id}, "Pithub::Gists::Comments->list has id: $row->{id}";
             like $row->{url}, qr{https://api.github.com/gists/comments/\d+$}, "Pithub::Gists::Comments->list has url: $row->{url}";
         }
@@ -319,7 +319,7 @@ Cg==
     {
         my $result = $p->issues->milestones->list( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Issues::Milestones->list successful';
-        ok scalar( @{ $result->content } ) > 0, 'Pithub::Issues::Milestones->list has some rows';
+        ok $result->count > 0, 'Pithub::Issues::Milestones->list has some rows';
     }
 
     # Pithub::Issues::Milestones->update
@@ -354,7 +354,7 @@ Cg==
     {
         my $result = $p->orgs->members->list_public( org => 'CPAN-API' );
         is $result->success, 1, 'Pithub::Orgs::Members->list_public successful';
-        ok scalar( @{ $result->content } ) > 0, 'Pithub::Orgs::Members->list_public has some rows';
+        ok $result->count > 0, 'Pithub::Orgs::Members->list_public has some rows';
         while ( my $row = $result->next ) {
             ok $row->{id},    "Pithub::Orgs::Members->list_public: Attribute id ($row->{id})";
             ok $row->{login}, "Pithub::Orgs::Members->list_public: Attribute login ($row->{login})";
@@ -460,7 +460,7 @@ Cg==
 
         my $result = $g->list( public => 1 );
         is $result->success, 1, 'Pithub::Gists->list successful';
-        is scalar( @{ $result->content } ), 2, 'The per_page setting was successful';
+        is $result->count,   2, 'The per_page setting was successful';
 
         foreach my $page ( 1 .. 2 ) {
             while ( my $row = $result->next ) {
