@@ -313,13 +313,20 @@ Cg==
 
     # Pithub::Issues::Milestones->create
     # Pithub::Issues::Milestones->delete
+
     # Pithub::Issues::Milestones->get
+    {
+        my $result = $p->issues->milestones->get( user => 'plu', repo => 'Pithub', milestone_id => 1 );
+        is $result->success, 1, 'Pithub::Issues::Milestones->get successful';
+        is $result->content->{creator}{login}, 'plu', 'Pithub::Issues::Milestones->get: Attribute creator.login';
+    }
 
     # Pithub::Issues::Milestones->list
     {
         my $result = $p->issues->milestones->list( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Issues::Milestones->list successful';
         ok $result->count > 0, 'Pithub::Issues::Milestones->list has some rows';
+        is $result->content->[0]{creator}{login}, 'plu', 'Pithub::Issues::Milestones->list: Attribute creator.login';
     }
 
     # Pithub::Issues::Milestones->update
@@ -392,34 +399,184 @@ Cg==
     # Pithub::PullRequests::Comments->list
     # Pithub::PullRequests::Comments->update
 
+    # Pithub::Repos->branches
+    {
+        my $result = $p->repos->branches( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Repos->branches successful';
+        ok $result->count > 0, 'Pithub::Repos->branches has some rows';
+        is $result->content->[0]{name}, 'master', 'Pithub::Repos->branches: Attribute name'
+    }
+
+    # Pithub::Repos->contributors
     # Pithub::Repos->create
+
     # Pithub::Repos->get
+    {
+        my $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Repos->get successful';
+        is $result->content->{name}, 'Pithub', 'Pithub::Repos->get: Attribute name';
+        is $result->content->{owner}{login}, 'plu', 'Pithub::Repos->get: Attribute owner.login';
+    }
+
+    # Pithub::Repos->languages
+
     # Pithub::Repos->list
+    {
+        my $result = $p->repos->list( user => 'plu' );
+        is $result->success, 1, 'Pithub::Repos->list successful';
+        ok $result->count > 0, 'Pithub::Repos->list has some rows';
+        while ( my $row = $result->next ) {
+            ok $row->{name}, "Pithub::Repos->list: Attribute name ($row->{name})";
+        }
+    }
+
+    # Pithub::Repos->tags
+    {
+        my $result = $p->repos->tags( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Repos->tags successful';
+        ok $result->count > 0, 'Pithub::Repos->tags has some rows';
+        my @tags = splice @{ $result->content }, 0, 2;
+        eq_or_diff \@tags,
+          [
+            {
+                'commit' => {
+                    'sha' => '1c5230f42d6d3e376162591f223fc4130d671937',
+                    'url' => 'https://api.github.com/repos/plu/Pithub/commits/1c5230f42d6d3e376162591f223fc4130d671937'
+                },
+                'name'        => 'v0.01000',
+                'tarball_url' => 'https://github.com/plu/Pithub/tarball/v0.01000',
+                'zipball_url' => 'https://github.com/plu/Pithub/zipball/v0.01000'
+            },
+            {
+                'commit' => {
+                    'sha' => '09da9bff13167ca9940ff6540a7e7dcc936ca25e',
+                    'url' => 'https://api.github.com/repos/plu/Pithub/commits/09da9bff13167ca9940ff6540a7e7dcc936ca25e'
+                },
+                'name'        => 'v0.01001',
+                'tarball_url' => 'https://github.com/plu/Pithub/tarball/v0.01001',
+                'zipball_url' => 'https://github.com/plu/Pithub/zipball/v0.01001'
+            }
+          ],
+          'Pithub::Repos->tags content';
+    }
+
+    # Pithub::Repos->teams
     # Pithub::Repos->update
 
     # Pithub::Repos::Collaborators->add
     # Pithub::Repos::Collaborators->is_collaborator
+    # Pithub::Repos::Collaborators->list
     # Pithub::Repos::Collaborators->remove
 
     # Pithub::Repos::Commits->create_comment
     # Pithub::Repos::Commits->delete_comment
+
     # Pithub::Repos::Commits->get
+    {
+        my $result = $p->repos->commits->get( user => 'plu', repo => 'Pithub', sha => '7e351527f62acaaeadc69acf2b80c38e48214df8' );
+        is $result->success, 1, 'Pithub::Repos::Commits->get successful';
+        eq_or_diff $result->content,
+          {
+            'author' => {
+                'avatar_url' =>
+'https://secure.gravatar.com/avatar/cacc359ee20d3423087f957241cffd2b?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png',
+                'id'    => 31597,
+                'login' => 'plu',
+                'url'   => 'https://api.github.com/users/plu'
+            },
+            'commit' => {
+                'author' => {
+                    'date'  => '2011-06-30T22:37:12-07:00',
+                    'email' => 'plu@pqpq.de',
+                    'name'  => 'Johannes Plunien'
+                },
+                'committer' => {
+                    'date'  => '2011-06-30T22:37:12-07:00',
+                    'email' => 'plu@pqpq.de',
+                    'name'  => 'Johannes Plunien'
+                },
+                'message' => 'Implement Pithub::Result->count.',
+                'tree'    => {
+                    'sha' => '7e6152aa778dd2b92c0f41c4ba243ad7482d46ab',
+                    'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7e6152aa778dd2b92c0f41c4ba243ad7482d46ab'
+                },
+                'url' => 'https://api.github.com/repos/plu/Pithub/git/commits/7e351527f62acaaeadc69acf2b80c38e48214df8'
+            },
+            'committer' => {
+                'avatar_url' =>
+'https://secure.gravatar.com/avatar/cacc359ee20d3423087f957241cffd2b?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png',
+                'id'    => 31597,
+                'login' => 'plu',
+                'url'   => 'https://api.github.com/users/plu'
+            },
+            'files' => [
+                {
+                    'additions' => 2,
+                    'deletions' => 0,
+                    'filename'  => 'Changes',
+                    'total'     => 2
+                },
+                {
+                    'additions' => 13,
+                    'deletions' => 0,
+                    'filename'  => 'lib/Pithub/Result.pm',
+                    'total'     => 13
+                },
+                {
+                    'additions' => 4,
+                    'deletions' => 0,
+                    'filename'  => 't/basic.t',
+                    'total'     => 4
+                }
+            ],
+            'parents' => [
+                {
+                    'sha' => '5d7b8b5bc630643ac32f8172228a126229c2fc2c',
+                    'url' => 'https://api.github.com/repos/plu/Pithub/commits/5d7b8b5bc630643ac32f8172228a126229c2fc2c'
+                }
+            ],
+            'sha'   => '7e351527f62acaaeadc69acf2b80c38e48214df8',
+            'stats' => {
+                'additions' => 19,
+                'deletions' => 0,
+                'total'     => 19
+            },
+            'url' => 'https://api.github.com/repos/plu/Pithub/commits/7e351527f62acaaeadc69acf2b80c38e48214df8'
+          },
+          'Pithub::Repos::Commits->get content';
+    }
+
     # Pithub::Repos::Commits->get_comment
+
+    # Pithub::Repos::Commits->list
+    {
+        my $result = $p->repos->commits->list( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Repos::Commits->list successful';
+        ok $result->count > 0, 'Pithub::Repos::Commits->list has some rows';
+        while ( my $row = $result->next ) {
+            ok $row->{sha}, "Pithub::Repos::Commits->list: Attribute sha ($row->{sha})";
+        }
+    }
+
     # Pithub::Repos::Commits->list_comments
     # Pithub::Repos::Commits->update_comment
 
     # Pithub::Repos::Downloads->create
     # Pithub::Repos::Downloads->delete
     # Pithub::Repos::Downloads->get
+    # Pithub::Repos::Downloads->list
 
     # Pithub::Repos::Forks->create
+    # Pithub::Repos::Forks->list
 
     # Pithub::Repos::Keys->create
     # Pithub::Repos::Keys->delete
     # Pithub::Repos::Keys->get
+    # Pithub::Repos::Keys->list
     # Pithub::Repos::Keys->update
 
     # Pithub::Repos::Watching->is_watching
+    # Pithub::Repos::Watching->list
     # Pithub::Repos::Watching->list_repos
     # Pithub::Repos::Watching->start_watching
     # Pithub::Repos::Watching->stop_watching
