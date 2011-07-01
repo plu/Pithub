@@ -408,6 +408,12 @@ Cg==
     }
 
     # Pithub::Repos->contributors
+    {
+        my $result = $p->repos->contributors( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Repos->contributors successful';
+        is $result->content->[0]{login}, 'plu', 'Pithub::Repos->contributors: Attribute login'
+    }
+
     # Pithub::Repos->create
 
     # Pithub::Repos->get
@@ -419,6 +425,11 @@ Cg==
     }
 
     # Pithub::Repos->languages
+    {
+        my $result = $p->repos->languages( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Repos->languages successful';
+        like $result->content->{Perl}, qr{^\d+$}, 'Pithub::Repos->languages: Attribute Perl';
+    }
 
     # Pithub::Repos->list
     {
