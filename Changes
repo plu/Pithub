@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - add some more tests to live.t
+          - implement $result->count
 
 0.01002   2011-06-30 17:05:58 Asia/Dubai
           - implement $result->getpage(n)

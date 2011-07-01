@@ -166,12 +166,15 @@ my %accessors = (
 
     is $result->ratelimit,           5000, 'Accessor to X-RateLimit-Limit header';
     is $result->ratelimit_remaining, 4962, 'Accessor to X-RateLimit-Remaining header';
+
+    is $result->count, 0, 'Count accessor';
 }
 
 {
     my $p = Pithub->new( ua => Pithub::Test::UA->new );
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
+    is $result->count,          30,                                                        'Count accessor';
     is $result->first_page_uri, undef,                                                     'First page link on first page';
     is $result->prev_page_uri,  undef,                                                     'First page link on first page';
     is $result->next_page_uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'Next page link on first page';
@@ -237,6 +240,7 @@ my %accessors = (
     is $result->last_page,  undef, 'We are on last page already';
 
     is $result->get_page(1), undef, 'No page 1';
+    is $result->count, 1, 'Count accessor';
 }
 
 {

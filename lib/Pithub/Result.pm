@@ -173,6 +173,19 @@ has '_json' => (
     lazy_build => 1,
 );
 
+=method count
+
+Returns the count of the elements in L</content>. If the result is
+not an arrayref but a hashref, it will still return C<< 1 >>.
+
+=cut
+
+sub count {
+    my ($self) = @_;
+    return 0 unless $self->success;
+    return $self->_iterator->getLength;
+}
+
 =method first_page
 
 Get the L<Pithub::Result> of the first page. Returns undef if there
