@@ -158,7 +158,10 @@ sub upload {
     croak 'Missing key in parameters: result (Pithub::Result object)' unless ref $args{result} eq 'Pithub::Result';
     croak 'Missing key in parameters: file' unless $args{file};
     my $result = $args{result}->content;
-    my %data   = (
+    foreach my $key (qw(path acl name accesskeyid policy signature mime_type)) {
+        croak "Missing key in Pithub::Result content: ${key}" unless grep $_ eq $key, keys %$result;
+    }
+    my %data = (
         Content_Type => 'form-data',
         Content      => [
             'key'                   => $result->{path},

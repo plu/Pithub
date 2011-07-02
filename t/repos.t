@@ -370,6 +370,9 @@ BEGIN {
 
     is $request->uri, 'https://github.s3.amazonaws.com/', 'Amazon S3 API URI';
     is $request->method, 'POST', 'HTTP method for Amazon S3 API call';
+
+    delete $result->content->{path};
+    throws_ok { $obj->upload( result => $result, file => __FILE__ ) } qr{Missing key in Pithub::Result content: path}, 'Missing key in Pithub::Result';
 }
 
 # Pithub::Repos::Forks->create
