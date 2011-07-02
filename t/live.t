@@ -587,12 +587,28 @@ Cg==
     # Pithub::Repos::Keys->update
 
     # Pithub::Repos::Watching->is_watching
+
     # Pithub::Repos::Watching->list
+    {
+        my $result = $p->repos->watching->list( user => 'plu', repo => 'Pithub' );
+        is $result->success, 1, 'Pithub::Repos::Watching->list successful';
+        is $result->content->[0]{id},    '31597',            "Pithub::Repos::Watching->list: Attribute id";
+        is $result->content->[0]{login}, 'plu',              "Pithub::Repos::Watching->list: Attribute login";
+    }
+
     # Pithub::Repos::Watching->list_repos
     # Pithub::Repos::Watching->start_watching
     # Pithub::Repos::Watching->stop_watching
 
     # Pithub::Users->get
+    {
+        my $result = $p->users->get( user => 'plu' );
+        is $result->success, 1, 'Pithub::Users->get successful';
+        is $result->content->{id},    '31597',            "Pithub::Users->get: Attribute id";
+        is $result->content->{login}, 'plu',              "Pithub::Users->get: Attribute login";
+        is $result->content->{name},  'Johannes Plunien', "Pithub::Users->get: Attribute name";
+    }
+
     # Pithub::Users->update
 
     # Pithub::Users::Emails->add
