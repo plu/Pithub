@@ -22,5 +22,3 @@
 * add more docs, especially parameter examples
 
 * verify mandatory parameters on POST/PATCH requests
-
-* add tests for Pithub::Repos::Downloads::create/upload

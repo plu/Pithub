@@ -285,6 +285,26 @@ BEGIN {
     my $obj = Pithub::Test->create( 'Pithub::Repos::Downloads', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Repos::Downloads';
+
+    throws_ok { $obj->create( data => 123 ) } qr{Missing key in parameters: data \(hashref\)}, 'No parameters';
+    throws_ok { $obj->create( data => { foo => 'bar' } ) } qr{Access token required for: POST /repos/foo/bar/downloads\s+}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->create(
+            user => 'foo',
+            repo => 'bar',
+            data => {
+                name         => 'new_file.jpg',
+                size         => 114034,
+                description  => 'Latest release',
+                content_type => 'text/plain',
+            },
+        );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/downloads', 'HTTP path';
+    }
 }
 
 # Pithub::Repos::Downloads->delete
@@ -318,6 +338,33 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/downloads/123', 'HTTP path';
     }
+}
+
+# Pithub::Repos::Downloads->upload
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Downloads', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Downloads';
+
+    ok $obj->token(123), 'Token set';
+
+    my $result = $obj->create(
+        user => 'foo',
+        repo => 'bar',
+        data => {
+            name         => 'new_file.jpg',
+            size         => 114034,
+            description  => 'Latest release',
+            content_type => 'text/plain',
+        },
+    );
+
+    throws_ok { $obj->upload( result => 123 ) } qr{Missing key in parameters: result \(Pithub::Result object\)}, 'No parameters';
+    throws_ok { $obj->upload( result => $result ) } qr{Missing key in parameters: file}, 'No file parameter';
+
+    my $response = $obj->upload( result => $result, file => __FILE__ );
+
+    isa_ok $response, 'HTTP::Response';
 }
 
 # Pithub::Repos::Forks->create
