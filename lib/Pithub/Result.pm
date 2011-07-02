@@ -184,7 +184,10 @@ calls return an empty hashref, for those calls it returns C<< 0 >>.
 sub count {
     my ($self) = @_;
     return 0 unless $self->success;
-    return 0 if ref $self->content eq 'HASH' && scalar keys %{ $self->content } == 0;
+    my $content = $self->content;
+    if ( ref $content eq 'HASH' && scalar keys %$content == 0 ) {
+        return 0;
+    }
     return $self->_iterator->getLength;
 }
 
