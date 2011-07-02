@@ -328,6 +328,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^POST /orgs/[^/]+/repos$},
     qr{^POST /orgs/[^/]+/teams$},
     qr{^POST /repos/[^/]+/[^/]+/commits/[^/]+/comments$},
+    qr{^POST /repos/[^/]+/[^/]+/downloads$},
     qr{^POST /repos/[^/]+/[^/]+/forks},
     qr{^POST /repos/[^/]+/[^/]+/git/blobs$},
     qr{^POST /repos/[^/]+/[^/]+/git/commits$},

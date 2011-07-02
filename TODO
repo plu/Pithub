@@ -23,4 +23,4 @@
 
 * verify mandatory parameters on POST/PATCH requests
 
-* implement Pithub::Repos::Downloads::create
+* add tests for Pithub::Repos::Downloads::create/upload

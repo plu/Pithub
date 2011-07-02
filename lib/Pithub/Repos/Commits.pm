@@ -161,7 +161,9 @@ sub list {
 List commit comments for a repository
 
 Commit Comments leverage these custom mime types. You can read more
-about the use of mimes types in the API here. TODO: Link github API
+about the use of mimes types in the API here. See also:
+L<http://developer.github.com/v3/mimes/>.
+
 
     GET /repos/:user/:repo/comments
 

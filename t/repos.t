@@ -285,8 +285,6 @@ BEGIN {
     my $obj = Pithub::Test->create( 'Pithub::Repos::Downloads', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Repos::Downloads';
-
-    throws_ok { $obj->create } qr{not supported}, 'Not supported yet';
 }
 
 # Pithub::Repos::Downloads->delete
