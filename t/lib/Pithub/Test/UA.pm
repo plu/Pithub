@@ -19,7 +19,9 @@ sub request {
         my $res = read_file($path);
         return HTTP::Response->parse($res);
     }
-    return HTTP::Response->new;
+    my $response = HTTP::Response->new;
+    $response->request($request);
+    return $response;
 }
 
 __PACKAGE__->meta->make_immutable;

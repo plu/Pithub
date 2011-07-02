@@ -363,8 +363,13 @@ BEGIN {
     throws_ok { $obj->upload( result => $result ) } qr{Missing key in parameters: file}, 'No file parameter';
 
     my $response = $obj->upload( result => $result, file => __FILE__ );
+    my $request = $response->request;
 
     isa_ok $response, 'HTTP::Response';
+    isa_ok $request,  'HTTP::Request';
+
+    is $request->uri, 'https://github.s3.amazonaws.com/', 'Amazon S3 API URI';
+    is $request->method, 'POST', 'HTTP method for Amazon S3 API call';
 }
 
 # Pithub::Repos::Forks->create
