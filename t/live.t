@@ -26,8 +26,6 @@ SKIP: {
 
     my $p = Pithub->new;
 
-    # Pithub::Gists->create
-    # Pithub::Gists->delete
     # Pithub::Gists->fork
 
     # Pithub::Gists->get
@@ -414,8 +412,6 @@ Cg==
         is $result->content->[0]{login}, 'plu', 'Pithub::Repos->contributors: Attribute login'
     }
 
-    # Pithub::Repos->create
-
     # Pithub::Repos->get
     {
         my $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
@@ -592,8 +588,8 @@ Cg==
     {
         my $result = $p->repos->watching->list( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Repos::Watching->list successful';
-        is $result->content->[0]{id},    '31597',            "Pithub::Repos::Watching->list: Attribute id";
-        is $result->content->[0]{login}, 'plu',              "Pithub::Repos::Watching->list: Attribute login";
+        is $result->content->[0]{id},    '31597', "Pithub::Repos::Watching->list: Attribute id";
+        is $result->content->[0]{login}, 'plu',   "Pithub::Repos::Watching->list: Attribute login";
     }
 
     # Pithub::Repos::Watching->list_repos
@@ -670,6 +666,48 @@ Cg==
         while ( my $row = $result->next ) {
             $test->( $row, 1 );    # we saw those gists already!
         }
+    }
+}
+
+# Following tests require a token and should only be run on a test
+# account since they will cause a lot of activity in that account.
+SKIP: {
+    skip 'Set PITHUB_TEST_TOKEN to true to run this test', 1 unless $ENV{PITHUB_TEST_TOKEN};
+
+    my $p    = Pithub->new( token => $ENV{PITHUB_TEST_TOKEN} );
+    my $repo = 'Pithub-Test';
+    my $user = 'pithub';
+
+    # Pithub::Repos->create
+  SKIP: {
+        skip 'Set PITHUB_TEST_CREATE_REPO to true to run this test', 1 unless $ENV{PITHUB_TEST_CREATE_REPO};
+
+        my $result = $p->repos->create(
+            data => {
+                name        => $repo,
+                description => 'Testing Github v3 API',
+                homepage    => "http://github.com/pithub/Pithub-Test-$$",
+                public      => 1,
+            }
+        );
+        is $result->success, 1,   'Pithub::Repos->create successful';
+        is $result->code,    201, 'Pithub::Repos->create HTTP status';
+    }
+
+    # Pithub::Gists->create
+    # Pithub::Gists->delete
+    {
+        my $create_result = $p->gists->create(
+            data => {
+                description => 'the description for this gist',
+                public      => 1,
+                files       => { 'file1.txt' => { content => 'String file content' } }
+            }
+        );
+        is $create_result->success, 1, 'Pithub::Gists->create successful';
+
+        my $delete_result = $p->gists->delete( gist_id => $create_result->content->{id} );
+        is $delete_result->success, 1, 'Pithub::Gists->delete successful';
     }
 }
 
