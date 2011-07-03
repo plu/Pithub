@@ -29,12 +29,16 @@ BEGIN {
         my $result = $obj->create( data => { foo => 1 } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/repos', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '{"foo":1}', 'HTTP body';
     }
 
     {
-        my $result = $obj->create( org => 'foobarorg', data => { foo => 1 } );
+        my $result = $obj->create( org => 'foobarorg', data => { bar => 1 } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/orgs/foobarorg/repos', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '{"bar":1}', 'HTTP body';
     }
 }
 
@@ -113,6 +117,8 @@ BEGIN {
         my $result = $obj->update( repo => 'foobarorg', data => { foo => 1 } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/user/repos/foobarorg', 'HTTP path';
+        my $http_request = $result->request->http_request;
+        is $http_request->content, '{"foo":1}', 'HTTP body';
     }
 }
 

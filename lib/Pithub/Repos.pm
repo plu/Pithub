@@ -133,7 +133,7 @@ sub create {
         return $self->request( POST => sprintf( '/orgs/%s/repos', $args{org} ), $args{data} );
     }
     else {
-        return $self->request( POST => '/user/repos', $args{user} );
+        return $self->request( POST => '/user/repos', $args{data} );
     }
 }
 
