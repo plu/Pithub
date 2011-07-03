@@ -8,7 +8,7 @@ BEGIN {
 }
 
 SKIP: {
-    skip 'Set PITHUB_TEST_LIVE to true to run this test', 4 unless $ENV{PITHUB_TEST_LIVE};
+    skip 'Set PITHUB_TEST_LIVE to true to run this test', 1 unless $ENV{PITHUB_TEST_LIVE};
 
     my $p = Pithub->new;
     my $result = $p->request( GET => '/' );
@@ -22,7 +22,7 @@ SKIP: {
 # These tests may break very easily because data on Github can and will change, of course.
 # And they also might fail once the ratelimit has been reached.
 SKIP: {
-    skip 'Set PITHUB_TEST_LIVE_DATA to true to run this test', 85 unless $ENV{PITHUB_TEST_LIVE_DATA};
+    skip 'Set PITHUB_TEST_LIVE_DATA to true to run this test', 1 unless $ENV{PITHUB_TEST_LIVE_DATA};
 
     my $p = Pithub->new;
 
