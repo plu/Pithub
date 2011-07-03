@@ -3,7 +3,8 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
           - add some more tests to live.t
           - implement $result->count
-          - implement ::Downloads create and upload
+          - implement Downloads create and upload
+          - change Repos->create and Repos->update interface
 
 0.01002   2011-06-30 17:05:58 Asia/Dubai
           - implement $result->getpage(n)

@@ -106,7 +106,7 @@ Create a new repository for the authenticated user.
 
 Examples:
 
-    $result = $p->repos->create( { name => 'some-repo' } );
+    $result = $p->repos->create( data => { name => 'some-repo' } );
 
 =item *
 
@@ -117,23 +117,23 @@ must be a member of this organization.
 
 Examples:
 
-    $result = $p->repos->create( 'CPAN-API' => { name => 'some-repo' } );
+    $result = $p->repos->create(
+        org  => 'CPAN-API',
+        data => { name => 'some-repo' }
+    );
 
 =back
 
 =cut
 
 sub create {
-    my ( $self, @args ) = @_;
-    if ( scalar @args == 1 ) {
-        return $self->request( POST => '/user/repos', $args[0] );
-    }
-    elsif ( scalar @args == 2 ) {
-        my ( $org, $data ) = @args;
-        return $self->request( POST => sprintf( '/orgs/%s/repos', $org ), $data );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    if ( my $org = $args{org} ) {
+        return $self->request( POST => sprintf( '/orgs/%s/repos', $args{org} ), $args{data} );
     }
     else {
-        croak 'Invalid parameters';
+        return $self->request( POST => '/user/repos', $args{user} );
     }
 }
 
@@ -355,17 +355,20 @@ Edit
 Examples:
 
     # update a repo for the authenticated user
-    $result = $p->repos->update( Pithub => { description => 'Github API v3' } );
+    $result = $p->repos->update(
+        repo => Pithub,
+        data => { description => 'Github API v3' },
+    );
 
 =back
 
 =cut
 
 sub update {
-    my ( $self, $name, $data ) = @_;
-    croak 'Missing parameter: $name' unless $name;
-    croak 'Missing parameter: $data (hashref)' unless ref $data eq 'HASH';
-    return $self->request( PATCH => sprintf( '/user/repos/%s', $name ), $data );
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: repo' unless $args{repo};
+    return $self->request( PATCH => sprintf( '/user/repos/%s', $args{repo} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

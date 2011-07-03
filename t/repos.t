@@ -19,20 +19,20 @@ BEGIN {
 
     isa_ok $obj, 'Pithub::Repos';
 
-    throws_ok { $obj->create } qr{Invalid parameters}, 'No parameters';
-    throws_ok { $obj->create( { foo => 1 } ) } qr{Access token required for: POST /user/repos}, 'Token required';
-    throws_ok { $obj->create( foobarorg => { foo => 1 } ) } qr{Access token required for: POST /orgs/foobarorg/repos}, 'Token required';
+    throws_ok { $obj->create( data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong data parameter';
+    throws_ok { $obj->create( data => { foo => 1 } ) } qr{Access token required for: POST /user/repos}, 'Token required';
+    throws_ok { $obj->create( org => 'foo', data => { foo => 1 } ) } qr{Access token required for: POST /orgs/foo/repos}, 'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
-        my $result = $obj->create( { foo => 1 } );
+        my $result = $obj->create( data => { foo => 1 } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/repos', 'HTTP path';
     }
 
     {
-        my $result = $obj->create( foobarorg => { foo => 1 } );
+        my $result = $obj->create( org => 'foobarorg', data => { foo => 1 } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/orgs/foobarorg/repos', 'HTTP path';
     }
@@ -103,14 +103,14 @@ BEGIN {
 
     isa_ok $obj, 'Pithub::Repos';
 
-    throws_ok { $obj->update } qr{Missing parameter: \$name}, 'No parameters';
-    throws_ok { $obj->update('bar') } qr{Missing parameter: \$data \(hashref\)}, 'Missing data';
-    throws_ok { $obj->update( bar => { foo => 1 } ) } qr{Access token required for: PATCH /user/repos/bar}, 'Token required';
+    throws_ok { $obj->update( data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong data parameter';
+    throws_ok { $obj->update( data => { foo => 'bar' } ) } qr{Missing key in parameters: repo}, 'Missing repo parameter';
+    throws_ok { $obj->update( repo => 'bar', data => { foo => 1 } ) } qr{Access token required for: PATCH /user/repos/bar}, 'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
-        my $result = $obj->update( foobarorg => { foo => 1 } );
+        my $result = $obj->update( repo => 'foobarorg', data => { foo => 1 } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/user/repos/foobarorg', 'HTTP path';
     }
