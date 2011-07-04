@@ -26,8 +26,6 @@ SKIP: {
 
     my $p = Pithub->new;
 
-    # Pithub::Gists->fork
-
     # Pithub::Gists->get
     {
         my $result = $p->gists->get( gist_id => 1 );
@@ -35,7 +33,6 @@ SKIP: {
         is $result->content->{created_at}, '2008-07-15T18:17:13Z', 'Pithub::Gists->get created_at';
     }
 
-    # Pithub::Gists->is_starred
     # Pithub::Gists->list
     {
         my $result = $p->gists->list( public => 1 );
@@ -46,14 +43,6 @@ SKIP: {
         }
     }
 
-    # Pithub::Gists->star
-    # Pithub::Gists->unstar
-    # Pithub::Gists->update
-
-    # Pithub::Gists::Comments->create
-    # Pithub::Gists::Comments->delete
-    # Pithub::Gists::Comments->get
-
     # Pithub::Gists::Comments->list
     {
         my $result = $p->gists->comments->list( gist_id => 1 );
@@ -63,8 +52,6 @@ SKIP: {
             like $row->{url}, qr{https://api.github.com/gists/comments/\d+$}, "Pithub::Gists::Comments->list has url: $row->{url}";
         }
     }
-
-    # Pithub::Gists::Comments->update
 
     # Pithub::GitData::Blobs->create
     # Pithub::GitData::Blobs->get
@@ -254,17 +241,6 @@ Cg==
     }
 
     # Pithub::GitData::Trees->create
-
-    # Pithub::Issues->create
-    # Pithub::Issues->get
-    # Pithub::Issues->list
-    # Pithub::Issues->update
-
-    # Pithub::Issues::Comments->create
-    # Pithub::Issues::Comments->delete
-    # Pithub::Issues::Comments->get
-    # Pithub::Issues::Comments->list
-    # Pithub::Issues::Comments->update
 
     # Pithub::Issues::Events->get
     # Pithub::Issues::Events->list
@@ -674,14 +650,16 @@ Cg==
 SKIP: {
     skip 'Set PITHUB_TEST_TOKEN to true to run this test', 1 unless $ENV{PITHUB_TEST_TOKEN};
 
-    my $p    = Pithub->new( token => $ENV{PITHUB_TEST_TOKEN} );
     my $repo = 'Pithub-Test';
     my $user = 'pithub';
+    my $p    = Pithub->new(
+        user  => $user,
+        repo  => $repo,
+        token => $ENV{PITHUB_TEST_TOKEN}
+    );
 
     # Pithub::Repos->create
-  SKIP: {
-        skip 'Set PITHUB_TEST_CREATE_REPO to true to run this test', 1 unless $ENV{PITHUB_TEST_CREATE_REPO};
-
+    {
         my $result = $p->repos->create(
             data => {
                 name        => $repo,
@@ -690,24 +668,133 @@ SKIP: {
                 public      => 1,
             }
         );
-        is $result->success, 1,   'Pithub::Repos->create successful';
-        is $result->code,    201, 'Pithub::Repos->create HTTP status';
+        ok grep( $_ eq $result->code, qw(201 422) ), 'Pithub::Repos->create HTTP status';
     }
 
-    # Pithub::Gists->create
-    # Pithub::Gists->delete
     {
-        my $create_result = $p->gists->create(
+
+        # Pithub::Gists->create
+        my $gist_id = $p->gists->create(
             data => {
                 description => 'the description for this gist',
                 public      => 1,
                 files       => { 'file1.txt' => { content => 'String file content' } }
             }
-        );
-        is $create_result->success, 1, 'Pithub::Gists->create successful';
+        )->content->{id};
 
-        my $delete_result = $p->gists->delete( gist_id => $create_result->content->{id} );
-        is $delete_result->success, 1, 'Pithub::Gists->delete successful';
+        # Pithub::Gists->is_starred
+        ok !$p->gists->is_starred( gist_id => $gist_id )->success, 'Pithub::Gists->is_starred not successful, gist not starred yet';
+
+        # Pithub::Gists->star
+        ok $p->gists->star( gist_id => $gist_id )->success, 'Pithub::Gists->star successful';
+
+        # Pithub::Gists->is_starred
+        ok $p->gists->is_starred( gist_id => $gist_id )->success, 'Pithub::Gists->is_starred successful, gist is starred now';
+
+        # Pithub::Gists->unstar
+        ok $p->gists->unstar( gist_id => $gist_id )->success, 'Pithub::Gists->unstar successful';
+
+        # Pithub::Gists->is_starred
+        ok !$p->gists->is_starred( gist_id => $gist_id )->success, 'Pithub::Gists->is_starred not successful, gist not starred anymore';
+
+        # Pithub::Gists->get
+        is $p->gists->get( gist_id => $gist_id )->content->{description}, 'the description for this gist', 'Pithub::Gists->get file content';
+
+        # Pithub::Gists->update
+        ok $p->gists->update(
+            gist_id => $gist_id,
+            data    => { description => 'the UPDATED description for this gist' }
+        )->success, 'Pithub::Gists->update successful';
+
+        # Pithub::Gists->get
+        is $p->gists->get( gist_id => $gist_id )->content->{description}, 'the UPDATED description for this gist', 'Pithub::Gists->get file content';
+
+        # Pithub::Gists->delete
+        ok $p->gists->delete( gist_id => $gist_id )->success, 'Pithub::Gists->delete successful';
+
+      TODO: {
+            local $TODO = 'Needs to be fixed by Github';
+            ok !$p->gists->get( gist_id => $gist_id ), 'Pithub::Gists->get not successful after delete';
+        }
+
+        # Pithub::Gists::Comments->create
+        my $comment_id = $p->gists->comments->create( gist_id => $gist_id, data => { body => 'some gist comment' } )->content->{id};
+
+        # Pithub::Gists::Comments->get
+        is $p->gists->comments->get( comment_id => $comment_id )->content->{body}, 'some gist comment', 'Pithub::Gists::Comments->get body';
+
+        # Pithub::Gists::Comments->update
+        ok $p->gists->comments->update( comment_id => $comment_id, data => { body => 'some UPDATED gist comment' } )->success,
+          'Pithub::Gists::Comments->update successful';
+
+        # Pithub::Gists::Comments->get
+        is $p->gists->comments->get( comment_id => $comment_id )->content->{body}, 'some UPDATED gist comment',
+          'Pithub::Gists::Comments->get body after update';
+
+        # Pithub::Gists::Comments->delete
+        ok $p->gists->comments->delete( comment_id => $comment_id )->success, 'Pithub::Gists::Comments->delete successful';
+
+        # Pithub::Gists::Comments->get
+        ok !$p->gists->comments->get( comment_id => $comment_id )->success, 'Pithub::Gists::Comments->get not successful after delete';
+    }
+
+    # Pithub::Gists->fork
+
+    {
+
+        # Pithub::Issues->create
+        my $issue_id = $p->issues->create(
+            data => {
+                body  => 'Your software breaks if you do this and that',
+                title => 'Found a bug',
+            }
+        )->content->{number};
+
+        # Pithub::Issues->get
+        is $p->issues->get( issue_id => $issue_id )->content->{title}, 'Found a bug', 'Pithub::Issues->get title attribute';
+
+        # Pithub::Issues->update
+        ok $p->issues->update(
+            issue_id => $issue_id,
+            data     => {
+                body  => 'Your software breaks if you do this and that',
+                title => 'Found a bug [UPDATED]',
+            }
+        )->success, 'Pithub::Issues->update successful';
+
+        # Pithub::Issues->get
+        is $p->issues->get( issue_id => $issue_id )->content->{title}, 'Found a bug [UPDATED]', 'Pithub::Issues->get updated title attribute';
+
+        # Pithub::Issues->list
+        is $p->issues->list->first->{number}, $issue_id, 'Pithub::Issues->list first item';
+
+        # Pithub::Issues::Comments->create
+        my $comment_id = $p->issues->comments->create(
+            issue_id => $issue_id,
+            data     => { body => 'some comment' }
+        )->content->{id};
+
+        # Pithub::Issues::Comments->get
+        is $p->issues->comments->get( comment_id => $comment_id )->content->{body}, 'some comment', 'Pithub::Issues::Comments->get body attribute';
+
+        # Pithub::Issues::Comments->list
+        is $p->issues->comments->list( issue_id => $issue_id )->first->{body}, 'some comment', 'Pithub::Issues::Comments->list updated attribute';
+
+        # Pithub::Issues::Comments->update
+        ok $p->issues->comments->update(
+            comment_id => $comment_id,
+            data       => { body => 'some UPDATED comment' }
+        )->success, 'Pithub::Issues::Comments->update successful';
+
+        # Pithub::Issues::Comments->get
+        is $p->issues->comments->get( comment_id => $comment_id )->content->{body}, 'some UPDATED comment',
+          'Pithub::Issues::Comments->get updated body attribute';
+
+        # Pithub::Issues::Comments->delete
+        ok $p->issues->comments->delete( comment_id => $comment_id )->success, 'Pithub::Issues::Comments->delete successful';
+
+        # Pithub::Issues::Comments->get
+        ok !$p->issues->comments->get( comment_id => $comment_id )->success, 'Pithub::Issues::Comments->get not successful after delete';
     }
 }
 
