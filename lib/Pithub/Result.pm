@@ -200,7 +200,9 @@ arrayref. If it's a hashref, it returns just that.
 
 sub first {
     my ($self) = @_;
-    return $self->content->[0] if ref $self->content eq 'ARRAY';
+    if ( ref $self->content eq 'ARRAY' ) {
+        return $self->content->[0];
+    }
     return $self->content;
 }
 
