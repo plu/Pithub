@@ -200,10 +200,11 @@ arrayref. If it's a hashref, it returns just that.
 
 sub first {
     my ($self) = @_;
-    if ( ref $self->content eq 'ARRAY' ) {
-        return $self->content->[0];
+    my $content = $self->content;
+    if ( ref $content eq 'ARRAY' ) {
+        return $content->[0];
     }
-    return $self->content;
+    return $content;
 }
 
 =method first_page
