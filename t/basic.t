@@ -138,6 +138,8 @@ my %accessors = (
 
     is $http_request->uri->path, '/bar', 'The HTTP path was set in the HTTP::Request object';
     is $http_request->header('Authorization'), undef, 'Authorization header was not set in the HTTP::Request object';
+
+    is $http_request->header('Content-Length'), 0, 'Content-Length header was set';
 }
 
 {

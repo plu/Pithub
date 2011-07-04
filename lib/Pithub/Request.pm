@@ -124,6 +124,8 @@ sub _build_http_request {
         $request->content($json);
     }
 
+    $request->header( 'Content-Length' => length $request->content );
+
     return $request;
 }
 
