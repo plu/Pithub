@@ -191,6 +191,19 @@ sub count {
     return $self->_iterator->getLength;
 }
 
+=method first
+
+Return the first element from L</content> if L</content> is an
+arrayref. If it's a hashref, it returns just that.
+
+=cut
+
+sub first {
+    my ($self) = @_;
+    return $self->content->[0] if ref $self->content eq 'ARRAY';
+    return $self->content;
+}
+
 =method first_page
 
 Get the L<Pithub::Result> of the first page. Returns undef if there

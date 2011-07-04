@@ -261,6 +261,8 @@ my %accessors = (
         'https://github.com/CPAN-API/metacpan-web',
     );
 
+    is $result->first->{html_url}, $expectations[0], 'Accesor first on an arrayref content';
+
     while ( my $row = $result->next ) {
         is $row->{html_url}, shift(@expectations), 'Iterator next';
     }
@@ -274,6 +276,8 @@ my %accessors = (
 
     my $row = $result->next;
     is $row->{id}, 31597, 'Row data found';
+
+    eq_or_diff $result->first, $row, 'Accessor first on a hashref content';
 
     is $result->next, undef, 'There is only one record';
 }

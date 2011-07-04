@@ -6,6 +6,7 @@ Revision history for {{$dist->name}}
           - implement Downloads create and upload
           - change Repos->create and Repos->update interface
           - set content-length (fix PUT request without body)
+          - implement $result->first
 
 0.01002   2011-06-30 17:05:58 Asia/Dubai
           - implement $result->getpage(n)
