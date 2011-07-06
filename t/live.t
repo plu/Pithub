@@ -660,16 +660,9 @@ SKIP: {
         # Pithub::Gists->get
         is $p->gists->get( gist_id => $gist_id )->content->{description}, 'the UPDATED description for this gist', 'Pithub::Gists->get file content';
 
-        # Pithub::Gists->delete
-        ok $p->gists->delete( gist_id => $gist_id )->success, 'Pithub::Gists->delete successful';
-
-      TODO: {
-            local $TODO = 'Needs to be fixed by Github';
-            ok !$p->gists->get( gist_id => $gist_id ), 'Pithub::Gists->get not successful after delete';
-        }
-
         # Pithub::Gists::Comments->create
         my $comment_id = $p->gists->comments->create( gist_id => $gist_id, data => { body => 'some gist comment' } )->content->{id};
+        like $comment_id, qr{^\d+$}, 'Pithub::Gists::Comments->create returned a comment id';
 
         # Pithub::Gists::Comments->get
         is $p->gists->comments->get( comment_id => $comment_id )->content->{body}, 'some gist comment', 'Pithub::Gists::Comments->get body';
@@ -687,6 +680,12 @@ SKIP: {
 
         # Pithub::Gists::Comments->get
         ok !$p->gists->comments->get( comment_id => $comment_id )->success, 'Pithub::Gists::Comments->get not successful after delete';
+
+        # Pithub::Gists->delete
+        ok $p->gists->delete( gist_id => $gist_id )->success, 'Pithub::Gists->delete successful';
+
+        # Pithub::Gists->get
+        ok !$p->gists->get( gist_id => $gist_id )->success, 'Pithub::Gists->get not successful after delete';
     }
 
     # Pithub::Gists->fork
