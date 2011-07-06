@@ -458,75 +458,26 @@ Cg==
     {
         my $result = $p->repos->commits->get( user => 'plu', repo => 'Pithub', sha => '7e351527f62acaaeadc69acf2b80c38e48214df8' );
         is $result->success, 1, 'Pithub::Repos::Commits->get successful';
-        eq_or_diff $result->content,
+        eq_or_diff $result->content->{commit},
           {
             'author' => {
-                'avatar_url' =>
-'https://secure.gravatar.com/avatar/cacc359ee20d3423087f957241cffd2b?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png',
-                'id'    => 31597,
-                'login' => 'plu',
-                'url'   => 'https://api.github.com/users/plu'
-            },
-            'commit' => {
-                'author' => {
-                    'date'  => '2011-06-30T22:37:12-07:00',
-                    'email' => 'plu@pqpq.de',
-                    'name'  => 'Johannes Plunien'
-                },
-                'committer' => {
-                    'date'  => '2011-06-30T22:37:12-07:00',
-                    'email' => 'plu@pqpq.de',
-                    'name'  => 'Johannes Plunien'
-                },
-                'message' => 'Implement Pithub::Result->count.',
-                'tree'    => {
-                    'sha' => '7e6152aa778dd2b92c0f41c4ba243ad7482d46ab',
-                    'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7e6152aa778dd2b92c0f41c4ba243ad7482d46ab'
-                },
-                'url' => 'https://api.github.com/repos/plu/Pithub/git/commits/7e351527f62acaaeadc69acf2b80c38e48214df8'
+                'date'  => '2011-06-30T22:37:12-07:00',
+                'email' => 'plu@pqpq.de',
+                'name'  => 'Johannes Plunien'
             },
             'committer' => {
-                'avatar_url' =>
-'https://secure.gravatar.com/avatar/cacc359ee20d3423087f957241cffd2b?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png',
-                'id'    => 31597,
-                'login' => 'plu',
-                'url'   => 'https://api.github.com/users/plu'
+                'date'  => '2011-06-30T22:37:12-07:00',
+                'email' => 'plu@pqpq.de',
+                'name'  => 'Johannes Plunien'
             },
-            'files' => [
-                {
-                    'additions' => 2,
-                    'deletions' => 0,
-                    'filename'  => 'Changes',
-                    'total'     => 2
-                },
-                {
-                    'additions' => 13,
-                    'deletions' => 0,
-                    'filename'  => 'lib/Pithub/Result.pm',
-                    'total'     => 13
-                },
-                {
-                    'additions' => 4,
-                    'deletions' => 0,
-                    'filename'  => 't/basic.t',
-                    'total'     => 4
-                }
-            ],
-            'parents' => [
-                {
-                    'sha' => '5d7b8b5bc630643ac32f8172228a126229c2fc2c',
-                    'url' => 'https://api.github.com/repos/plu/Pithub/commits/5d7b8b5bc630643ac32f8172228a126229c2fc2c'
-                }
-            ],
-            'sha'   => '7e351527f62acaaeadc69acf2b80c38e48214df8',
-            'stats' => {
-                'additions' => 19,
-                'deletions' => 0,
-                'total'     => 19
+            'message' => 'Implement Pithub::Result->count.',
+            'tree'    => {
+                'sha' => '7e6152aa778dd2b92c0f41c4ba243ad7482d46ab',
+                'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7e6152aa778dd2b92c0f41c4ba243ad7482d46ab'
             },
-            'url' => 'https://api.github.com/repos/plu/Pithub/commits/7e351527f62acaaeadc69acf2b80c38e48214df8'
+            'url' => 'https://api.github.com/repos/plu/Pithub/git/commits/7e351527f62acaaeadc69acf2b80c38e48214df8'
           },
-          'Pithub::Repos::Commits->get content';
+          'Pithub::Repos::Commits->get commit content';
     }
 
     # Pithub::Repos::Commits->get_comment
