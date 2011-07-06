@@ -53,7 +53,6 @@ SKIP: {
         }
     }
 
-    # Pithub::GitData::Blobs->create
     # Pithub::GitData::Blobs->get
     {
         my $result = $p->git_data->blobs->get( user => 'plu', repo => 'Pithub', sha => '20f946f933a911253e480eb0e9feced1e36dbd45' );
@@ -74,7 +73,6 @@ Cg==
           'Pithub::GitData::Blobs->get content';
     }
 
-    # Pithub::GitData::Commits->create
     # Pithub::GitData::Commits->get
     {
         my $result = $p->git_data->commits->get( user => 'plu', repo => 'Pithub', sha => '20f946f933a911253e480eb0e9feced1e36dbd45' );
@@ -125,8 +123,6 @@ Cg==
           'Pithub::GitData::References->get content';
     }
 
-    # Pithub::GitData::References->create
-
     # Pithub::GitData::References->list
     {
         my $result = $p->git_data->references->list( user => 'plu', repo => 'Pithub', ref => 'tags' );
@@ -155,11 +151,6 @@ Cg==
           ],
           'Pithub::GitData::References->list content';
     }
-
-    # Pithub::GitData::References->update
-
-    # Pithub::GitData::Tags->get
-    # Pithub::GitData::Tags->create
 
     # Pithub::GitData::Trees->get
     {
@@ -240,14 +231,6 @@ Cg==
           'Pithub::GitData::Trees->get content recursive';
     }
 
-    # Pithub::GitData::Trees->create
-
-    # Pithub::Issues::Events->get
-    # Pithub::Issues::Events->list
-
-    # Pithub::Issues::Labels->add
-    # Pithub::Issues::Labels->create
-    # Pithub::Issues::Labels->delete
     # Pithub::Issues::Labels->get
     {
         my $result = $p->issues->labels->list( user => 'plu', repo => 'Pithub' );
@@ -281,13 +264,6 @@ Cg==
           'Pithub::Issues::Labels->get content';
     }
 
-    # Pithub::Issues::Labels->remove
-    # Pithub::Issues::Labels->replace
-    # Pithub::Issues::Labels->update
-
-    # Pithub::Issues::Milestones->create
-    # Pithub::Issues::Milestones->delete
-
     # Pithub::Issues::Milestones->get
     {
         my $result = $p->issues->milestones->get( user => 'plu', repo => 'Pithub', milestone_id => 1 );
@@ -302,8 +278,6 @@ Cg==
         ok $result->count > 0, 'Pithub::Issues::Milestones->list has some rows';
         is $result->content->[0]{creator}{login}, 'plu', 'Pithub::Issues::Milestones->list: Attribute creator.login';
     }
-
-    # Pithub::Issues::Milestones->update
 
     # Pithub::Orgs->get
     {
@@ -323,14 +297,6 @@ Cg==
         is $result->content->[0]{id},    460239,     'Pithub::Orgs->get: Attribute id';
     }
 
-    # Pithub::Orgs->update
-
-    # Pithub::Orgs::Members->conceal
-    # Pithub::Orgs::Members->delete
-    # Pithub::Orgs::Members->is_member
-    # Pithub::Orgs::Members->is_public
-    # Pithub::Orgs::Members->list
-
     # Pithub::Orgs::Members->list_public
     {
         my $result = $p->orgs->members->list_public( org => 'CPAN-API' );
@@ -341,37 +307,6 @@ Cg==
             ok $row->{login}, "Pithub::Orgs::Members->list_public: Attribute login ($row->{login})";
         }
     }
-
-    # Pithub::Orgs::Members->publicize
-
-    # Pithub::Orgs::Teams->add_member
-    # Pithub::Orgs::Teams->add_repo
-    # Pithub::Orgs::Teams->create
-    # Pithub::Orgs::Teams->delete
-    # Pithub::Orgs::Teams->get
-    # Pithub::Orgs::Teams->get_repo
-    # Pithub::Orgs::Teams->is_member
-    # Pithub::Orgs::Teams->list
-    # Pithub::Orgs::Teams->list_members
-    # Pithub::Orgs::Teams->list_repos
-    # Pithub::Orgs::Teams->remove_member
-    # Pithub::Orgs::Teams->remove_repo
-    # Pithub::Orgs::Teams->update
-
-    # Pithub::PullRequests->commits
-    # Pithub::PullRequests->create
-    # Pithub::PullRequests->files
-    # Pithub::PullRequests->get
-    # Pithub::PullRequests->is_merged
-    # Pithub::PullRequests->list
-    # Pithub::PullRequests->merge
-    # Pithub::PullRequests->update
-
-    # Pithub::PullRequests::Comments->create
-    # Pithub::PullRequests::Comments->delete
-    # Pithub::PullRequests::Comments->get
-    # Pithub::PullRequests::Comments->list
-    # Pithub::PullRequests::Comments->update
 
     # Pithub::Repos->branches
     {
@@ -443,17 +378,6 @@ Cg==
           'Pithub::Repos->tags content';
     }
 
-    # Pithub::Repos->teams
-    # Pithub::Repos->update
-
-    # Pithub::Repos::Collaborators->add
-    # Pithub::Repos::Collaborators->is_collaborator
-    # Pithub::Repos::Collaborators->list
-    # Pithub::Repos::Collaborators->remove
-
-    # Pithub::Repos::Commits->create_comment
-    # Pithub::Repos::Commits->delete_comment
-
     # Pithub::Repos::Commits->get
     {
         my $result = $p->repos->commits->get( user => 'plu', repo => 'Pithub', sha => '7e351527f62acaaeadc69acf2b80c38e48214df8' );
@@ -480,8 +404,6 @@ Cg==
           'Pithub::Repos::Commits->get commit content';
     }
 
-    # Pithub::Repos::Commits->get_comment
-
     # Pithub::Repos::Commits->list
     {
         my $result = $p->repos->commits->list( user => 'plu', repo => 'Pithub' );
@@ -492,25 +414,6 @@ Cg==
         }
     }
 
-    # Pithub::Repos::Commits->list_comments
-    # Pithub::Repos::Commits->update_comment
-
-    # Pithub::Repos::Downloads->create
-    # Pithub::Repos::Downloads->delete
-    # Pithub::Repos::Downloads->get
-    # Pithub::Repos::Downloads->list
-
-    # Pithub::Repos::Forks->create
-    # Pithub::Repos::Forks->list
-
-    # Pithub::Repos::Keys->create
-    # Pithub::Repos::Keys->delete
-    # Pithub::Repos::Keys->get
-    # Pithub::Repos::Keys->list
-    # Pithub::Repos::Keys->update
-
-    # Pithub::Repos::Watching->is_watching
-
     # Pithub::Repos::Watching->list
     {
         my $result = $p->repos->watching->list( user => 'plu', repo => 'Pithub' );
@@ -518,10 +421,6 @@ Cg==
         is $result->content->[0]{id},    '31597', "Pithub::Repos::Watching->list: Attribute id";
         is $result->content->[0]{login}, 'plu',   "Pithub::Repos::Watching->list: Attribute login";
     }
-
-    # Pithub::Repos::Watching->list_repos
-    # Pithub::Repos::Watching->start_watching
-    # Pithub::Repos::Watching->stop_watching
 
     # Pithub::Users->get
     {
@@ -531,24 +430,6 @@ Cg==
         is $result->content->{login}, 'plu',              "Pithub::Users->get: Attribute login";
         is $result->content->{name},  'Johannes Plunien', "Pithub::Users->get: Attribute name";
     }
-
-    # Pithub::Users->update
-
-    # Pithub::Users::Emails->add
-    # Pithub::Users::Emails->delete
-    # Pithub::Users::Emails->list
-
-    # Pithub::Users::Followers->follow
-    # Pithub::Users::Followers->is_following
-    # Pithub::Users::Followers->list
-    # Pithub::Users::Followers->list_following
-    # Pithub::Users::Followers->unfollow
-
-    # Pithub::Users::Keys->create
-    # Pithub::Users::Keys->delete
-    # Pithub::Users::Keys->get
-    # Pithub::Users::Keys->list
-    # Pithub::Users::Keys->update
 
     # Pagination + per_page
     {
@@ -746,6 +627,167 @@ SKIP: {
         # Pithub::Issues::Comments->get
         ok !$p->issues->comments->get( comment_id => $comment_id )->success, 'Pithub::Issues::Comments->get not successful after delete';
     }
+
+    {
+
+        # Pithub::Users::Keys->create
+        my $key_id = $p->users->keys->create(
+            data => {
+                title => 'someone@somewhere',
+                key   => "ssh-rsa C0FF33$$",
+            }
+        )->content->{id};
+
+        # Pithub::Users::Keys->get
+        is $p->users->keys->get( key_id => $key_id )->content->{title}, 'someone@somewhere', 'Pithub::Users::Keys->get title attribute';
+
+        # Pithub::Users::Keys->list
+        is $p->users->keys->list->first->{title}, 'someone@somewhere', 'Pithub::Users::Keys->list title attribute';
+
+        # Pithub::Users::Keys->update
+        ok $p->users->keys->update(
+            key_id => $key_id,
+            data   => { title => 'someone@somewhereelse' }
+        )->success, 'Pithub::Users::Keys->update successful';
+
+        # Pithub::Users::Keys->get
+        is $p->users->keys->get( key_id => $key_id )->content->{title}, 'someone@somewhereelse', 'Pithub::Users::Keys->get title attribute after update';
+
+        # Pithub::Users::Keys->delete
+        ok $p->users->keys->delete( key_id => $key_id )->success, 'Pithub::Users::Keys->delete successful';
+
+        # Pithub::Users::Keys->get
+        ok !$p->users->keys->get( key_id => $key_id )->success, 'Pithub::Users::Keys->get not successful after delete';
+    }
+
+    {
+
+        # Pithub::Users::Emails->add
+        ok $p->users->emails->add( data => ['johannes@plunien.com'] )->success, 'Pithub::Users::Emails->add successful';
+
+        # Pithub::Users::Emails->list
+        is $p->users->emails->list->content->[-1], 'johannes@plunien.com', 'Pithub::Users::Emails->list recently added email address';
+
+        # Pithub::Users::Emails->delete
+        ok $p->users->emails->delete( data => ['johannes@plunien.com'] )->success, 'Pithub::Users::Emails->delete successful';
+
+        # Pithub::Users::Emails->list
+        isnt $p->users->emails->list->content->[-1], 'johannes@plunien.com', 'Pithub::Users::Emails->list after delete';
+    }
+
+    {
+
+        # Pithub::Users->update
+        ok $p->users->update( data => { location => "somewhere $$" } )->success, 'Pithub::Users->update successful';
+
+        # Pithub::Users->update
+        is $p->users->get->content->{location}, "somewhere $$", 'Pithub::Users->get location successful after update';
+    }
+
+    # Pithub::GitData::Blobs->create
+
+    # Pithub::GitData::Commits->create
+
+    # Pithub::GitData::References->create
+    # Pithub::GitData::References->update
+
+    # Pithub::GitData::Tags->get
+    # Pithub::GitData::Tags->create
+
+    # Pithub::GitData::Trees->create
+
+    # Pithub::Issues::Events->get
+    # Pithub::Issues::Events->list
+
+    # Pithub::Issues::Labels->add
+    # Pithub::Issues::Labels->create
+    # Pithub::Issues::Labels->delete
+    # Pithub::Issues::Labels->remove
+    # Pithub::Issues::Labels->replace
+    # Pithub::Issues::Labels->update
+
+    # Pithub::Issues::Milestones->create
+    # Pithub::Issues::Milestones->delete
+    # Pithub::Issues::Milestones->update
+
+    # Pithub::Orgs->update
+
+    # Pithub::Orgs::Members->conceal
+    # Pithub::Orgs::Members->delete
+    # Pithub::Orgs::Members->is_member
+    # Pithub::Orgs::Members->is_public
+    # Pithub::Orgs::Members->list
+    # Pithub::Orgs::Members->publicize
+
+    # Pithub::Orgs::Teams->add_member
+    # Pithub::Orgs::Teams->add_repo
+    # Pithub::Orgs::Teams->create
+    # Pithub::Orgs::Teams->delete
+    # Pithub::Orgs::Teams->get
+    # Pithub::Orgs::Teams->get_repo
+    # Pithub::Orgs::Teams->is_member
+    # Pithub::Orgs::Teams->list
+    # Pithub::Orgs::Teams->list_members
+    # Pithub::Orgs::Teams->list_repos
+    # Pithub::Orgs::Teams->remove_member
+    # Pithub::Orgs::Teams->remove_repo
+    # Pithub::Orgs::Teams->update
+
+    # Pithub::PullRequests->commits
+    # Pithub::PullRequests->create
+    # Pithub::PullRequests->files
+    # Pithub::PullRequests->get
+    # Pithub::PullRequests->is_merged
+    # Pithub::PullRequests->list
+    # Pithub::PullRequests->merge
+    # Pithub::PullRequests->update
+
+    # Pithub::PullRequests::Comments->create
+    # Pithub::PullRequests::Comments->delete
+    # Pithub::PullRequests::Comments->get
+    # Pithub::PullRequests::Comments->list
+    # Pithub::PullRequests::Comments->update
+
+    # Pithub::Repos->teams
+    # Pithub::Repos->update
+
+    # Pithub::Repos::Collaborators->add
+    # Pithub::Repos::Collaborators->is_collaborator
+    # Pithub::Repos::Collaborators->list
+    # Pithub::Repos::Collaborators->remove
+
+    # Pithub::Repos::Commits->create_comment
+    # Pithub::Repos::Commits->delete_comment
+    # Pithub::Repos::Commits->get_comment
+
+    # Pithub::Repos::Commits->list_comments
+    # Pithub::Repos::Commits->update_comment
+
+    # Pithub::Repos::Downloads->create
+    # Pithub::Repos::Downloads->delete
+    # Pithub::Repos::Downloads->get
+    # Pithub::Repos::Downloads->list
+
+    # Pithub::Repos::Forks->create
+    # Pithub::Repos::Forks->list
+
+    # Pithub::Repos::Keys->create
+    # Pithub::Repos::Keys->delete
+    # Pithub::Repos::Keys->get
+    # Pithub::Repos::Keys->list
+    # Pithub::Repos::Keys->update
+
+    # Pithub::Repos::Watching->is_watching
+
+    # Pithub::Repos::Watching->list_repos
+    # Pithub::Repos::Watching->start_watching
+    # Pithub::Repos::Watching->stop_watching
+
+    # Pithub::Users::Followers->follow
+    # Pithub::Users::Followers->is_following
+    # Pithub::Users::Followers->list
+    # Pithub::Users::Followers->list_following
+    # Pithub::Users::Followers->unfollow
 }
 
 done_testing;
