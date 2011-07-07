@@ -231,7 +231,7 @@ Cg==
           'Pithub::GitData::Trees->get content recursive';
     }
 
-    # Pithub::Issues::Labels->get
+    # Pithub::Issues::Labels->list
     {
         my $result = $p->issues->labels->list( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Issues::Labels->list successful';
@@ -251,7 +251,7 @@ Cg==
           'Pithub::Issues::Labels->list content';
     }
 
-    # Pithub::Issues::Labels->list
+    # Pithub::Issues::Labels->get
     {
         my $result = $p->issues->labels->get( user => 'plu', repo => 'Pithub', label => 'Bug' );
         is $result->success, 1, 'Pithub::Issues::Labels->get successful';
@@ -626,6 +626,81 @@ SKIP: {
 
         # Pithub::Issues::Comments->get
         ok !$p->issues->comments->get( comment_id => $comment_id )->success, 'Pithub::Issues::Comments->get not successful after delete';
+
+        # Pithub::Issues::Labels->create
+        ok $p->issues->labels->create(
+            data => {
+                color => 'FF0000',
+                name  => "label #$_",
+            }
+          )->success, 'Pithub::Issues::Labels->create successful'
+          for 1 .. 2;
+
+        # Pithub::Issues::Labels->get
+        is $p->issues->labels->get( label => 'label #1' )->content->{color}, 'FF0000', 'Pithub::Issues::Labels->get new label';
+
+        # Pithub::Issues::Labels->update
+        ok $p->issues->labels->update(
+            label => 'label #1',
+            data  => { color => 'C0FF33' }
+        )->success, 'Pithub::Issues::Labels->update successful';
+
+        # Pithub::Issues::Labels->get
+        is $p->issues->labels->get( label => 'label #1' )->content->{color}, 'C0FF33', 'Pithub::Issues::Labels->get updated label';
+
+        # Pithub::Issues::Labels->list
+        is $p->issues->labels->list( issue_id => $issue_id )->count, 0, 'Pithub::Issues::Labels->list no labels attached to the issue yet';
+
+        # Pithub::Issues::Labels->add
+        ok $p->issues->labels->add( issue_id => $issue_id, data => [ 'label #1', 'label #2' ] )->success, 'Pithub::Issues::Labels->add successful';
+
+        # Pithub::Issues::Labels->list
+        is $p->issues->labels->list( issue_id => $issue_id )->count, 2, 'Pithub::Issues::Labels->list one label attached to the issue';
+
+        # Pithub::Issues::Labels->remove
+        ok $p->issues->labels->remove( issue_id => $issue_id, label => 'label #1' )->success, 'Pithub::Issues::Labels->remove successful';
+
+        # Pithub::Issues::Labels->list
+        is $p->issues->labels->list( issue_id => $issue_id )->count, 1, 'Pithub::Issues::Labels->list label removed again';
+
+        # Pithub::Issues::Labels->replace
+        ok $p->issues->labels->replace( issue_id => $issue_id, data => ['label #2'] )->success, 'Pithub::Issues::Labels->replace successful';
+
+        # Pithub::Issues::Labels->list
+        is $p->issues->labels->list( issue_id => $issue_id )->count, 1, 'Pithub::Issues::Labels->list one label';
+        is $p->issues->labels->list( issue_id => $issue_id )->first->{name}, 'label #2', 'Pithub::Issues::Labels->list label got replaced';
+
+        # Pithub::Issues::Labels->remove
+        ok $p->issues->labels->remove( issue_id => $issue_id ), 'Pithub::Issues::Labels->remove all labels';
+
+        # Pithub::Issues::Labels->list
+        is $p->issues->labels->list( issue_id => $issue_id )->count, 0, 'Pithub::Issues::Labels->list no labels left';
+
+        # Pithub::Issues::Labels->delete
+        ok $p->issues->labels->delete( label => "label #$_" )->success, 'Pithub::Issues::Labels->delete successful' for 1 .. 2;
+
+        # Pithub::Issues::Labels->get
+        ok !$p->issues->labels->get( label => "label #$_" )->success, 'Pithub::Issues::Labels->get not successful after delete' for 1 .. 2;
+
+        # Pithub::Issues::Milestones->create
+        my $milestone_id = $p->issues->milestones->create( data => { title => 'some milestone' } )->content->{number};
+        like $milestone_id, qr{^\d+$}, 'Pithub::Issues::Milestones->create returned a milestone number';
+
+        # Pithub::Issues::Milestones->get
+        is $p->issues->milestones->get( milestone_id => $milestone_id )->content->{title}, 'some milestone', 'Pithub::Issues::Milestones->get new milestone';
+
+        # Pithub::Issues::Milestones->update
+        ok $p->issues->milestones->update( milestone_id => $milestone_id, data => { title => 'updated' } )->success,
+          'Pithub::Issues::Milestones->update successful';
+
+        # Pithub::Issues::Milestones->get
+        is $p->issues->milestones->get( milestone_id => $milestone_id )->content->{title}, 'updated', 'Pithub::Issues::Milestones->get updated title';
+
+        # Pithub::Issues::Milestones->delete
+        ok $p->issues->milestones->delete( milestone_id => $milestone_id )->success, 'Pithub::Issues::Milestones->delete successful';
+
+        # Pithub::Issues::Milestones->get
+        ok !$p->issues->milestones->get( milestone_id => $milestone_id )->success, 'Pithub::Issues::Milestones->get not successful after delete';
     }
 
     {
@@ -698,17 +773,6 @@ SKIP: {
 
     # Pithub::Issues::Events->get
     # Pithub::Issues::Events->list
-
-    # Pithub::Issues::Labels->add
-    # Pithub::Issues::Labels->create
-    # Pithub::Issues::Labels->delete
-    # Pithub::Issues::Labels->remove
-    # Pithub::Issues::Labels->replace
-    # Pithub::Issues::Labels->update
-
-    # Pithub::Issues::Milestones->create
-    # Pithub::Issues::Milestones->delete
-    # Pithub::Issues::Milestones->update
 
     # Pithub::Orgs->update
 
