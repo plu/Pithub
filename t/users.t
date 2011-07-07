@@ -216,7 +216,7 @@ BEGIN {
     {
         my $result = $obj->list_following( user => 'plu' );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/user/plu/following', 'HTTP path';
+        is $result->request->uri->path, '/users/plu/following', 'HTTP path';
     }
 
     {

@@ -149,7 +149,7 @@ Examples:
 sub list_following {
     my ( $self, %args ) = @_;
     if ( $args{user} ) {
-        return $self->request( GET => sprintf( '/user/%s/following', $args{user} ) );
+        return $self->request( GET => sprintf( '/users/%s/following', $args{user} ) );
     }
     return $self->request( GET => '/user/following' );
 }
