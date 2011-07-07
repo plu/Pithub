@@ -759,6 +759,132 @@ SKIP: {
         is $p->users->get->content->{location}, "somewhere $$", 'Pithub::Users->get location successful after update';
     }
 
+    {
+
+        # Pithub::Users::Followers->list
+        ok $p->users->followers->list( user => 'plu' )->count >= 30, 'Pithub::Users::Followers->list count';
+
+        # Pithub::Users::Followers->list_following
+        ok $p->users->followers->list_following( user => 'plu' )->count >= 30, 'Pithub::Users::Followers->list_following count';
+
+        # Pithub::Users::Followers->list
+        ok $p->users->followers->list->count >= 0, 'Pithub::Users::Followers->list count authenticated user';
+
+        # Pithub::Users::Followers->list_following
+        is $p->users->followers->list_following->count, 0, 'Pithub::Users::Followers->list_following count authenticated user';
+
+        # Pithub::Users::Followers->is_following
+        ok !$p->users->followers->is_following( user => 'plu' )->success, 'Pithub::Users::Followers->is_following not successful yet';
+
+        # Pithub::Users::Followers->follow
+        ok $p->users->followers->follow( user => 'plu' )->success, 'Pithub::Users::Followers->follow successful';
+
+        # Pithub::Users::Followers->list_following
+        is $p->users->followers->list_following->count, 1, 'Pithub::Users::Followers->list_following authenticated user now following one user';
+
+        # Pithub::Users::Followers->is_following
+        ok $p->users->followers->is_following( user => 'plu' )->success, 'Pithub::Users::Followers->is_following successful now';
+
+        # Pithub::Users::Followers->unfollow
+        ok $p->users->followers->unfollow( user => 'plu' )->success, 'Pithub::Users::Followers->unfollow successful';
+
+        # Pithub::Users::Followers->is_following
+        ok !$p->users->followers->is_following( user => 'plu' )->success, 'Pithub::Users::Followers->is_following not successful anymore';
+    }
+
+    {
+
+        # Pithub::Repos::Watching->is_watching
+        ok $p->repos->watching->is_watching->success, 'Pithub::Repos::Watching->is_watching successful';
+
+        # Pithub::Repos::Watching->is_watching
+        ok !$p->repos->watching->is_watching( user => 'plu', repos => 'Pithub' )->success, 'Pithub::Repos::Watching->is_watching not successful';
+    }
+
+    {
+
+        # Pithub::Repos::Watching->list_repos
+        is $p->repos->watching->list_repos->first->{name}, 'Pithub-Test', 'Pithub::Repos::Watching->list_repos name';
+
+        # Pithub::Repos::Watching->start_watching
+        ok $p->repos->watching->start_watching( user => 'plu', repo => 'Pithub' )->success, 'Pithub::Repos::Watching->start_watching successful';
+
+        # Pithub::Repos::Watching->list_repos
+        is $p->repos->watching->list_repos->first->{name}, 'Pithub', 'Pithub::Repos::Watching->list_repos new watched repo';
+
+        # Pithub::Repos::Watching->stop_watching
+        ok $p->repos->watching->stop_watching( user => 'plu', repo => 'Pithub' )->success, 'Pithub::Repos::Watching->stop_watching successful';
+
+        # Pithub::Repos::Watching->list_repos
+        isnt $p->repos->watching->list_repos->content->[-1]->{name}, 'Pithub', 'Pithub::Repos::Watching->list_repos not watching anymore';
+    }
+
+    {
+        require File::Basename;
+
+        # Pithub::Repos::Downloads->create
+        my $result = $p->repos->downloads->create(
+            data => {
+                name         => File::Basename::basename(__FILE__),
+                size         => ( stat(__FILE__) )[7],
+                description  => 'This test (t/live.t)',
+                content_type => 'text/plain',
+            },
+        );
+        my $id = $result->content->{id};
+        ok $result->success, 'Pithub::Repos::Downloads->create successful';
+
+        # Pithub::Repos::Downloads->upload
+        ok $p->repos->downloads->upload(
+            result => $result,
+            file   => __FILE__,
+        )->is_success, 'Pithub::Repos::Downloads->upload successful';
+
+        # Pithub::Repos::Downloads->get
+        is $p->repos->downloads->get( download_id => $id )->content->{description}, 'This test (t/live.t)', 'Pithub::Repos::Downloads->get new download';
+
+        # Pithub::Repos::Downloads->list
+        is $p->repos->downloads->list->first->{description}, 'This test (t/live.t)', 'Pithub::Repos::Downloads->list new download';
+
+        # Pithub::Repos::Downloads->delete
+        ok $p->repos->downloads->delete( download_id => $id )->success, 'Pithub::Repos::Downloads->delete successful';
+
+        # Pithub::Repos::Downloads->get
+        ok !$p->repos->downloads->get( download_id => $id )->success, 'Pithub::Repos::Downloads->get not successful after delete';
+    }
+
+    {
+
+        # Pithub::Repos::Keys->create
+        my $key_id = $p->repos->keys->create(
+            data => {
+                title => 'someone@somewhere',
+                key   => "ssh-rsa C0FF33$$",
+            }
+        )->content->{id};
+
+        # Pithub::Repos::Keys->get
+        is $p->repos->keys->get( key_id => $key_id )->content->{title}, 'someone@somewhere', 'Pithub::Repos::Keys->get title attribute';
+
+        # Pithub::Repos::Keys->list
+        is $p->repos->keys->list->first->{title}, 'someone@somewhere', 'Pithub::Repos::Keys->list title attribute';
+
+        # Pithub::Repos::Keys->update
+        ok $p->repos->keys->update(
+            key_id => $key_id,
+            data   => { title => 'someone@somewhereelse' }
+        )->success, 'Pithub::Repos::Keys->update successful';
+
+        # Pithub::Repos::Keys->get
+        is $p->repos->keys->get( key_id => $key_id )->content->{title}, 'someone@somewhereelse', 'Pithub::Repos::Keys->get title attribute after update';
+
+        # Pithub::Repos::Keys->delete
+        ok $p->repos->keys->delete( key_id => $key_id )->success, 'Pithub::Repos::Keys->delete successful';
+
+        # Pithub::Repos::Keys->get
+        ok !$p->repos->keys->get( key_id => $key_id )->success, 'Pithub::Repos::Keys->get not successful after delete';
+    }
+
     # Pithub::GitData::Blobs->create
 
     # Pithub::GitData::Commits->create
@@ -827,31 +953,8 @@ SKIP: {
     # Pithub::Repos::Commits->list_comments
     # Pithub::Repos::Commits->update_comment
 
-    # Pithub::Repos::Downloads->create
-    # Pithub::Repos::Downloads->delete
-    # Pithub::Repos::Downloads->get
-    # Pithub::Repos::Downloads->list
-
     # Pithub::Repos::Forks->create
     # Pithub::Repos::Forks->list
-
-    # Pithub::Repos::Keys->create
-    # Pithub::Repos::Keys->delete
-    # Pithub::Repos::Keys->get
-    # Pithub::Repos::Keys->list
-    # Pithub::Repos::Keys->update
-
-    # Pithub::Repos::Watching->is_watching
-
-    # Pithub::Repos::Watching->list_repos
-    # Pithub::Repos::Watching->start_watching
-    # Pithub::Repos::Watching->stop_watching
-
-    # Pithub::Users::Followers->follow
-    # Pithub::Users::Followers->is_following
-    # Pithub::Users::Followers->list
-    # Pithub::Users::Followers->list_following
-    # Pithub::Users::Followers->unfollow
 }
 
 done_testing;
