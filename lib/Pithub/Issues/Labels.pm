@@ -85,7 +85,7 @@ Examples:
     $result = $p->issues->labels->delete(
         repo     => 'Pithub',
         user     => 'plu',
-        label_id => 1,
+        label => 1,
     );
 
 =back
@@ -94,9 +94,9 @@ Examples:
 
 sub delete {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: label_id' unless $args{label_id};
+    croak 'Missing key in parameters: label' unless $args{label};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label_id} ) );
+    return $self->request( DELETE => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label} ) );
 }
 
 =method get
@@ -114,7 +114,7 @@ Examples:
     $result = $p->issues->labels->get(
         repo => 'Pithub',
         user => 'plu',
-        label_id => 1,
+        label => 1,
     );
 
 =back
@@ -123,9 +123,9 @@ Examples:
 
 sub get {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: label_id' unless $args{label_id};
+    croak 'Missing key in parameters: label' unless $args{label};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label_id} ) );
+    return $self->request( GET => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label} ) );
 }
 
 =method list
@@ -205,7 +205,7 @@ Examples:
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
-        label_id => 1,
+        label => 1,
     );
 
 =item *
@@ -230,8 +230,8 @@ sub remove {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
-    if ( my $label_id = $args{label_id} ) {
-        return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%s/labels/%s', $args{user}, $args{repo}, $args{issue_id}, $label_id ) );
+    if ( my $label = $args{label} ) {
+        return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%s/labels/%s', $args{user}, $args{repo}, $args{issue_id}, $label ) );
     }
     return $self->request( DELETE => sprintf( '/repos/%s/%s/issues/%s/labels', $args{user}, $args{repo}, $args{issue_id} ) );
 }
@@ -282,7 +282,7 @@ Examples:
     $result = $p->issues->labels->update(
         repo     => 'Pithub',
         user     => 'plu',
-        label_id => 1,
+        label => 1,
         data     => {
             color => 'FFFFFF',
             name  => 'API',
@@ -295,10 +295,10 @@ Examples:
 
 sub update {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: label_id' unless $args{label_id};
+    croak 'Missing key in parameters: label' unless $args{label};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label_id} ), $args{data} );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s/labels/%s', $args{user}, $args{repo}, $args{label} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

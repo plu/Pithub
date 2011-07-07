@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - change "label_id" key to "label" everywhere since
+            it's not really an id, but just a label
 
 0.01003   2011-07-06 19:54:52 Asia/Dubai
           - add some more tests to live.t

@@ -253,7 +253,7 @@ Cg==
 
     # Pithub::Issues::Labels->list
     {
-        my $result = $p->issues->labels->get( user => 'plu', repo => 'Pithub', label_id => 'Bug' );
+        my $result = $p->issues->labels->get( user => 'plu', repo => 'Pithub', label => 'Bug' );
         is $result->success, 1, 'Pithub::Issues::Labels->get successful';
         eq_or_diff $result->content,
           {
