@@ -367,8 +367,8 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    croak 'Missing key in parameters: repo' unless $args{repo};
-    return $self->request( PATCH => sprintf( '/user/repos/%s', $args{repo} ), $args{data} );
+    $self->_validate_user_repo_args( \%args );
+    return $self->request( PATCH => sprintf( '/repos/%s/%s', $args{user}, $args{repo} ), $args{data} );
 }
 
 __PACKAGE__->meta->make_immutable;

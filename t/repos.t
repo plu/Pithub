@@ -103,20 +103,19 @@ BEGIN {
 
 # Pithub::Repos->update
 {
-    my $obj = Pithub::Test->create('Pithub::Repos');
+    my $obj = Pithub::Test->create( 'Pithub::Repos', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Repos';
 
     throws_ok { $obj->update( data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong data parameter';
-    throws_ok { $obj->update( data => { foo => 'bar' } ) } qr{Missing key in parameters: repo}, 'Missing repo parameter';
-    throws_ok { $obj->update( repo => 'bar', data => { foo => 1 } ) } qr{Access token required for: PATCH /user/repos/bar}, 'Token required';
+    throws_ok { $obj->update( data => { foo => 1 } ) } qr{Access token required for: PATCH /repos/foo/bar}, 'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
-        my $result = $obj->update( repo => 'foobarorg', data => { foo => 1 } );
+        my $result = $obj->update( user => 'bla', repo => 'fasel', data => { foo => 1 } );
         is $result->request->method, 'PATCH', 'HTTP method';
-        is $result->request->uri->path, '/user/repos/foobarorg', 'HTTP path';
+        is $result->request->uri->path, '/repos/bla/fasel', 'HTTP path';
         my $http_request = $result->request->http_request;
         is $http_request->content, '{"foo":1}', 'HTTP body';
     }
