@@ -235,7 +235,8 @@ Cg==
     {
         my $result = $p->issues->labels->list( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Issues::Labels->list successful';
-        eq_or_diff $result->content,
+        my @labels = splice @{ $result->content }, 0, 2;
+        eq_or_diff \@labels,
           [
             {
                 'color' => 'e10c02',
@@ -885,6 +886,37 @@ SKIP: {
         ok !$p->repos->keys->get( key_id => $key_id )->success, 'Pithub::Repos::Keys->get not successful after delete';
     }
 
+    {
+
+        # Pithub::Repos->update
+        ok $p->repos->update( repo => $repo, data => { description => "foo $$" } )->success, 'Pithub::Repos->update successful';
+
+        # Pithub::Repos->get
+        is $p->repos->get( repo => $repo )->content->{description}, "foo $$", 'Pithub::Repos->get description after update';
+    }
+
+    {
+
+        # Pithub::Repos::Collaborators->is_collaborator
+        ok !$p->repos->collaborators->is_collaborator( collaborator => 'plu' )->success, 'Pithub::Repos->Collaborators->is_collaborator not successful yet';
+
+        # Pithub::Repos::Collaborators->add
+        ok $p->repos->collaborators->add( collaborator => 'plu' )->success, 'Pithub::Repos->Collaborators->add successful';
+
+        # Pithub::Repos::Collaborators->is_collaborator
+        ok $p->repos->collaborators->is_collaborator( collaborator => 'plu' )->success, 'Pithub::Repos->Collaborators->is_collaborator successful now';
+
+        # Pithub::Repos::Collaborators->list
+        is $p->repos->collaborators->list->content->[-1]->{login}, 'plu', 'Pithub::Repos->Collaborators->list first attribute login';
+
+        # Pithub::Repos::Collaborators->remove
+        ok $p->repos->collaborators->remove( collaborator => 'plu' )->success, 'Pithub::Repos->Collaborators->remove successful now';
+
+        # Pithub::Repos::Collaborators->is_collaborator
+        ok !$p->repos->collaborators->is_collaborator( collaborator => 'plu' )->success,
+          'Pithub::Repos->Collaborators->is_collaborator not successful anymore after remove';
+    }
+
     # Pithub::GitData::Blobs->create
 
     # Pithub::GitData::Commits->create
@@ -939,12 +971,6 @@ SKIP: {
     # Pithub::PullRequests::Comments->update
 
     # Pithub::Repos->teams
-    # Pithub::Repos->update
-
-    # Pithub::Repos::Collaborators->add
-    # Pithub::Repos::Collaborators->is_collaborator
-    # Pithub::Repos::Collaborators->list
-    # Pithub::Repos::Collaborators->remove
 
     # Pithub::Repos::Commits->create_comment
     # Pithub::Repos::Commits->delete_comment
