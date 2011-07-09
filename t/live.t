@@ -483,10 +483,10 @@ Cg==
 SKIP: {
     skip 'PITHUB_TEST_TOKEN required to run this test - DO NOT DO THIS UNLESS YOU KNOW WHAT YOU ARE DOING', 1 unless $ENV{PITHUB_TEST_TOKEN};
 
-    my $org      = 'PithubTestOrg';
-    my $org_repo = 'PithubTestOrgRepo';
-    my $repo     = 'Pithub-Test';
-    my $user     = 'pithub';
+    my $org      = 'buhtip-org';
+    my $org_repo = 'buhtip-org-repo';
+    my $repo     = 'buhtip-repo';
+    my $user     = 'buhtip';
     my $p        = Pithub->new(
         user  => $user,
         repo  => $repo,
@@ -499,7 +499,7 @@ SKIP: {
             data => {
                 name        => $repo,
                 description => 'Testing Github v3 API',
-                homepage    => "http://github.com/pithub/Pithub-Test-$$",
+                homepage    => "http://github.com/${user}/${repo}",
                 public      => 1,
             }
         );
@@ -807,7 +807,7 @@ SKIP: {
     {
 
         # Pithub::Repos::Watching->list_repos
-        is $p->repos->watching->list_repos->first->{name}, 'Pithub-Test', 'Pithub::Repos::Watching->list_repos name';
+        is $p->repos->watching->list_repos->first->{name}, $repo, 'Pithub::Repos::Watching->list_repos name';
 
         # Pithub::Repos::Watching->start_watching
         ok $p->repos->watching->start_watching( user => 'plu', repo => 'Pithub' )->success, 'Pithub::Repos::Watching->start_watching successful';
