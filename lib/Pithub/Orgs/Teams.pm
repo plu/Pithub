@@ -138,7 +138,7 @@ sub get {
     return $self->request( GET => sprintf( '/teams/%s', $args{team_id} ) );
 }
 
-=method get_repo
+=method has_repo
 
 =over
 
@@ -148,7 +148,7 @@ Get team repo
 
 Examples:
 
-    $result = $p->orgs->teams->get_repo(
+    $result = $p->orgs->teams->has_repo(
         team_id => 1,
         repo    => 'some_repo',
     );
@@ -157,7 +157,7 @@ Examples:
 
 =cut
 
-sub get_repo {
+sub has_repo {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: repo'    unless $args{repo};
