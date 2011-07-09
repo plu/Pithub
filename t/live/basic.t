@@ -94,14 +94,7 @@ done_testing;
 
 # Pithub::Orgs::Members->delete
 
-# Pithub::PullRequests->commits
-# Pithub::PullRequests->create
-# Pithub::PullRequests->files
-# Pithub::PullRequests->get
-# Pithub::PullRequests->is_merged
-# Pithub::PullRequests->list
 # Pithub::PullRequests->merge
-# Pithub::PullRequests->update
 
 # Pithub::PullRequests::Comments->create
 # Pithub::PullRequests::Comments->delete
