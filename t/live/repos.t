@@ -308,6 +308,19 @@ SKIP: {
         # Pithub::Repos::Commits->get_comment
         ok !$p->repos->commits->get_comment( comment_id => $comment_id )->success, 'Pithub::Repos::Commits->get_comment not successful after delete';
     }
+
+    {
+
+        # Pithub::Repos::Forks->create
+        my $result = $p->repos->forks->create(
+            user => $org,
+            repo => $org_repo,
+        );
+        ok grep( $_ eq $result->code, qw(201 422) ), 'Pithub::Repos::Forks->create HTTP status';
+
+        # Pithub::Repos::Forks->list
+        is $p->repos->forks->list( user => $org, repo => $org_repo )->first->{name}, 'buhtip-org-repo', 'Pithub::Repos::Forks->list after create';
+    }
 }
 
 done_testing;

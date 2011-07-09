@@ -110,6 +110,3 @@ done_testing;
 # Pithub::PullRequests::Comments->update
 
 # Pithub::Repos->teams
-
-# Pithub::Repos::Forks->create
-# Pithub::Repos::Forks->list
