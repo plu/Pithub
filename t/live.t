@@ -484,7 +484,7 @@ SKIP: {
     skip 'PITHUB_TEST_TOKEN required to run this test - DO NOT DO THIS UNLESS YOU KNOW WHAT YOU ARE DOING', 1 unless $ENV{PITHUB_TEST_TOKEN};
 
     my $org      = 'PithubTestOrg';
-    my $org_repo = "${org}/PithubTestOrgRepo";
+    my $org_repo = 'PithubTestOrgRepo';
     my $repo     = 'Pithub-Test';
     my $user     = 'pithub';
     my $p        = Pithub->new(
@@ -741,16 +741,16 @@ SKIP: {
     {
 
         # Pithub::Users::Emails->add
-        ok $p->users->emails->add( data => ['johannes@plunien.com'] )->success, 'Pithub::Users::Emails->add successful';
+        ok $p->users->emails->add( data => ['johannes@plunien.name'] )->success, 'Pithub::Users::Emails->add successful';
 
         # Pithub::Users::Emails->list
-        is $p->users->emails->list->content->[-1], 'johannes@plunien.com', 'Pithub::Users::Emails->list recently added email address';
+        is $p->users->emails->list->content->[-1], 'johannes@plunien.name', 'Pithub::Users::Emails->list recently added email address';
 
         # Pithub::Users::Emails->delete
-        ok $p->users->emails->delete( data => ['johannes@plunien.com'] )->success, 'Pithub::Users::Emails->delete successful';
+        ok $p->users->emails->delete( data => ['johannes@plunien.name'] )->success, 'Pithub::Users::Emails->delete successful';
 
         # Pithub::Users::Emails->list
-        isnt $p->users->emails->list->content->[-1], 'johannes@plunien.com', 'Pithub::Users::Emails->list after delete';
+        isnt $p->users->emails->list->content->[-1], 'johannes@plunien.name', 'Pithub::Users::Emails->list after delete';
     }
 
     {
@@ -1041,19 +1041,19 @@ SKIP: {
         # Pithub::Orgs::Teams->has_repo
         ok !$p->orgs->teams->has_repo(
             team_id => $team_id,
-            repo    => $org_repo,
+            repo    => "${org}/${org_repo}",
         )->success, 'Pithub::Orgs::Teams->has_repo not successful yet';
 
         # Pithub::Orgs::Teams->add_repo
         ok $p->orgs->teams->add_repo(
             team_id => $team_id,
-            repo    => $org_repo,
+            repo    => "${org}/${org_repo}",
         )->success, 'Pithub::Orgs::Teams->add_repo successful';
 
         # Pithub::Orgs::Teams->has_repo
         ok $p->orgs->teams->has_repo(
             team_id => $team_id,
-            repo    => $org_repo,
+            repo    => "${org}/${org_repo}",
         )->success, 'Pithub::Orgs::Teams->has_repo successful after add_repo';
 
         # Pithub::Orgs::Teams->list_repos
@@ -1062,13 +1062,13 @@ SKIP: {
         # Pithub::Orgs::Teams->remove_repo
         ok $p->orgs->teams->remove_repo(
             team_id => $team_id,
-            repo    => $org_repo,
+            repo    => "${org}/${org_repo}",
         )->success, 'Pithub::Orgs::Teams->remove_repo successful';
 
         # Pithub::Orgs::Teams->has_repo
         ok !$p->orgs->teams->has_repo(
             team_id => $team_id,
-            repo    => $org_repo,
+            repo    => "${org}/${org_repo}",
         )->success, 'Pithub::Orgs::Teams->has_repo not successful after remove_repo';
 
         # Pithub::Orgs::Teams->delete
@@ -1076,6 +1076,34 @@ SKIP: {
 
         # Pithub::Orgs::Teams->get
         ok !$p->orgs->teams->get( team_id => $team_id )->success, 'Pithub::Orgs::Teams->get not successful after delete';
+    }
+
+    {
+
+        # Pithub::Repos::Commits->create_comment
+        my $comment_id = $p->repos->commits->create_comment(
+            sha  => '54436a6b2e335c9725f45f6562e904ad8b72d683',
+            data => { body => 'some comment' },
+        )->content->{id};
+        like $comment_id, qr{^\d+$}, 'Pithub::Repos::Commits->create_comment returned comment id';
+
+        # Pithub::Repos::Commits->list_comments
+        is $p->repos->commits->list_comments->first->{id}, $comment_id, 'Pithub::Repos::Commits->list_comments first comment id';
+
+        # Pithub::Repos::Commits->update_comment
+        ok $p->repos->commits->update_comment(
+            comment_id => $comment_id,
+            data       => { body => 'updated comment' }
+        )->success, 'Pithub::Repos::Commits->update_comment successful';
+
+        # Pithub::Repos::Commits->get_comment
+        is $p->repos->commits->get_comment( comment_id => $comment_id )->content->{body}, 'updated comment', 'Pithub::Repos::Commits->get_comment after update';
+
+        # Pithub::Repos::Commits->delete_comment
+        ok $p->repos->commits->delete_comment( comment_id => $comment_id )->success, 'Pithub::Repos::Commits->delete_comment successful';
+
+        # Pithub::Repos::Commits->get_comment
+        ok !$p->repos->commits->get_comment( comment_id => $comment_id )->success, 'Pithub::Repos::Commits->get_comment not successful after delete';
     }
 
     # Pithub::GitData::Blobs->create
@@ -1111,13 +1139,6 @@ SKIP: {
     # Pithub::PullRequests::Comments->update
 
     # Pithub::Repos->teams
-
-    # Pithub::Repos::Commits->create_comment
-    # Pithub::Repos::Commits->delete_comment
-    # Pithub::Repos::Commits->get_comment
-
-    # Pithub::Repos::Commits->list_comments
-    # Pithub::Repos::Commits->update_comment
 
     # Pithub::Repos::Forks->create
     # Pithub::Repos::Forks->list
