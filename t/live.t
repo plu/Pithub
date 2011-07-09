@@ -8,7 +8,7 @@ BEGIN {
 }
 
 SKIP: {
-    skip 'Set PITHUB_TEST_LIVE to true to run this test', 1 unless $ENV{PITHUB_TEST_LIVE};
+    skip 'Set PITHUB_TEST_LIVE to true to run these tests', 1 unless $ENV{PITHUB_TEST_LIVE};
 
     my $p = Pithub->new;
     my $result = $p->request( GET => '/' );
@@ -22,7 +22,7 @@ SKIP: {
 # These tests may break very easily because data on Github can and will change, of course.
 # And they also might fail once the ratelimit has been reached.
 SKIP: {
-    skip 'Set PITHUB_TEST_LIVE_DATA to true to run this test', 1 unless $ENV{PITHUB_TEST_LIVE_DATA};
+    skip 'Set PITHUB_TEST_LIVE_DATA to true to run these tests', 1 unless $ENV{PITHUB_TEST_LIVE_DATA};
 
     my $p = Pithub->new;
 
@@ -481,11 +481,13 @@ Cg==
 # Following tests require a token and should only be run on a test
 # account since they will cause a lot of activity in that account.
 SKIP: {
-    skip 'Set PITHUB_TEST_TOKEN to true to run this test', 1 unless $ENV{PITHUB_TEST_TOKEN};
+    skip 'PITHUB_TEST_TOKEN required to run this test - DO NOT DO THIS UNLESS YOU KNOW WHAT YOU ARE DOING', 1 unless $ENV{PITHUB_TEST_TOKEN};
 
-    my $repo = 'Pithub-Test';
-    my $user = 'pithub';
-    my $p    = Pithub->new(
+    my $org      = 'PithubTestOrg';
+    my $org_repo = "${org}/PithubTestOrgRepo";
+    my $repo     = 'Pithub-Test';
+    my $user     = 'pithub';
+    my $p        = Pithub->new(
         user  => $user,
         repo  => $repo,
         token => $ENV{PITHUB_TEST_TOKEN}
@@ -917,6 +919,165 @@ SKIP: {
           'Pithub::Repos->Collaborators->is_collaborator not successful anymore after remove';
     }
 
+    {
+
+        # Pithub::Orgs->update
+        ok $p->orgs->update(
+            org  => $org,
+            data => { location => "somewhere $$" }
+          )->success,
+          'Pithub::Orgs->update successful';
+
+        # Pithub::Orgs->get
+        is $p->orgs->get( org => $org )->content->{location}, "somewhere $$", 'Pithub::Orgs->get location after update';
+
+        # Pithub::Orgs::Members->is_member
+        ok $p->orgs->members->is_member(
+            org  => $org,
+            user => $user,
+        )->success, 'Pithub::Orgs::Members->is_member successful';
+
+        # Pithub::Orgs::Members->conceal
+        ok $p->orgs->members->conceal(
+            org  => $org,
+            user => $user,
+        )->success, 'Pithub::Orgs::Members->conceal successful';
+
+        # Pithub::Orgs::Members->is_public
+        ok !$p->orgs->members->is_public(
+            org  => $org,
+            user => $user,
+        )->success, 'Pithub::Orgs::Members->is_public not successful after conceal';
+
+        # Pithub::Orgs::Members->list_public
+        is $p->orgs->members->list_public(
+            org  => $org,
+            user => $user,
+        )->count, 0, 'Pithub::Orgs::Members->list_public no public members';
+
+        # Pithub::Orgs::Members->publicize
+        ok $p->orgs->members->publicize(
+            org  => $org,
+            user => $user,
+        )->success, 'Pithub::Orgs::Members->publicize successful';
+
+        # Pithub::Orgs::Members->list_public
+        is $p->orgs->members->list_public(
+            org  => $org,
+            user => $user,
+        )->count, 1, 'Pithub::Orgs::Members->list_public one public member after publicize';
+
+        # Pithub::Orgs::Members->is_public
+        ok $p->orgs->members->is_public(
+            org  => $org,
+            user => $user,
+        )->success, 'Pithub::Orgs::Members->is_public successful after publicize';
+
+        # Pithub::Orgs::Members->list
+        is $p->orgs->members->list(
+            org  => $org,
+            user => $user,
+        )->count, 1, 'Pithub::Orgs::Members->list one member';
+
+        # Pithub::Orgs::Teams->create
+        my $team_id = $p->orgs->teams->create(
+            org  => $org,
+            data => { name => 'Core' }
+        )->content->{id};
+        like $team_id, qr{^\d+$}, 'Pithub::Orgs::Teams->create successful, returned team id';
+
+        # Pithub::Orgs::Teams->list
+        my @teams = splice @{ $p->orgs->teams->list( org => $org )->content }, 0, 2;
+        eq_or_diff [ map { $_->{name} } @teams ], [qw(Core Owners)], 'Pithub::Orgs::Teams->list after create';
+
+        # Pithub::Orgs::Teams->update
+        ok $p->orgs->teams->update(
+            team_id => $team_id,
+            data    => { name => 'CoreTeam' },
+        )->success, 'Pithub::Orgs::Teams->update successful';
+
+        # Pithub::Orgs::Teams->get
+        is $p->orgs->teams->get( team_id => $team_id )->content->{name}, 'CoreTeam', 'Pithub::Orgs::Teams->get after update';
+
+        # Pithub::Orgs::Teams->is_member
+      TODO: {
+            local $TODO = 'This seems like a bug in the Github API';
+            ok !$p->orgs->teams->is_member(
+                team_id => $team_id,
+                user    => $user,
+            )->success, 'Pithub::Orgs::Teams->is_member not successful yet';
+        }
+
+        # Pithub::Orgs::Teams->add_member
+        ok $p->orgs->teams->add_member(
+            team_id => $team_id,
+            user    => $user,
+        )->success, 'Pithub::Orgs::Teams->add_member successful';
+
+        # Pithub::Orgs::Teams->is_member
+        ok $p->orgs->teams->is_member(
+            team_id => $team_id,
+            user    => $user,
+        )->success, 'Pithub::Orgs::Teams->is_member successful after add_member';
+
+        # Pithub::Orgs::Teams->list_members
+        is $p->orgs->teams->list_members( team_id => $team_id )->first->{login}, $user, 'Pithub::Orgs::Teams->list_members after add_member';
+
+        # Pithub::Orgs::Teams->remove_member
+        ok $p->orgs->teams->remove_member(
+            team_id => $team_id,
+            user    => $user,
+        )->success, 'Pithub::Orgs::Teams->remove_member successful';
+
+        # Pithub::Orgs::Teams->is_member
+      TODO: {
+            local $TODO = 'This seems like a bug in the Github API';
+            ok !$p->orgs->teams->is_member(
+                team_id => $team_id,
+                user    => $user,
+            )->success, 'Pithub::Orgs::Teams-is_member not successful after remove_member';
+        }
+
+        # Pithub::Orgs::Teams->has_repo
+        ok !$p->orgs->teams->has_repo(
+            team_id => $team_id,
+            repo    => $org_repo,
+        )->success, 'Pithub::Orgs::Teams->has_repo not successful yet';
+
+        # Pithub::Orgs::Teams->add_repo
+        ok $p->orgs->teams->add_repo(
+            team_id => $team_id,
+            repo    => $org_repo,
+        )->success, 'Pithub::Orgs::Teams->add_repo successful';
+
+        # Pithub::Orgs::Teams->has_repo
+        ok $p->orgs->teams->has_repo(
+            team_id => $team_id,
+            repo    => $org_repo,
+        )->success, 'Pithub::Orgs::Teams->has_repo successful after add_repo';
+
+        # Pithub::Orgs::Teams->list_repos
+        is $p->orgs->teams->list_repos( team_id => $team_id )->count, 1, 'Pithub::Orgs::Teams->list_repos one repo';
+
+        # Pithub::Orgs::Teams->remove_repo
+        ok $p->orgs->teams->remove_repo(
+            team_id => $team_id,
+            repo    => $org_repo,
+        )->success, 'Pithub::Orgs::Teams->remove_repo successful';
+
+        # Pithub::Orgs::Teams->has_repo
+        ok !$p->orgs->teams->has_repo(
+            team_id => $team_id,
+            repo    => $org_repo,
+        )->success, 'Pithub::Orgs::Teams->has_repo not successful after remove_repo';
+
+        # Pithub::Orgs::Teams->delete
+        ok $p->orgs->teams->delete( team_id => $team_id )->success, 'Pithub::Orgs::Teams->delete successful';
+
+        # Pithub::Orgs::Teams->get
+        ok !$p->orgs->teams->get( team_id => $team_id )->success, 'Pithub::Orgs::Teams->get not successful after delete';
+    }
+
     # Pithub::GitData::Blobs->create
 
     # Pithub::GitData::Commits->create
@@ -932,28 +1093,7 @@ SKIP: {
     # Pithub::Issues::Events->get
     # Pithub::Issues::Events->list
 
-    # Pithub::Orgs->update
-
-    # Pithub::Orgs::Members->conceal
     # Pithub::Orgs::Members->delete
-    # Pithub::Orgs::Members->is_member
-    # Pithub::Orgs::Members->is_public
-    # Pithub::Orgs::Members->list
-    # Pithub::Orgs::Members->publicize
-
-    # Pithub::Orgs::Teams->add_member
-    # Pithub::Orgs::Teams->add_repo
-    # Pithub::Orgs::Teams->create
-    # Pithub::Orgs::Teams->delete
-    # Pithub::Orgs::Teams->get
-    # Pithub::Orgs::Teams->get_repo
-    # Pithub::Orgs::Teams->is_member
-    # Pithub::Orgs::Teams->list
-    # Pithub::Orgs::Teams->list_members
-    # Pithub::Orgs::Teams->list_repos
-    # Pithub::Orgs::Teams->remove_member
-    # Pithub::Orgs::Teams->remove_repo
-    # Pithub::Orgs::Teams->update
 
     # Pithub::PullRequests->commits
     # Pithub::PullRequests->create
