@@ -140,13 +140,10 @@ SKIP: {
         is $p->orgs->teams->get( team_id => $team_id )->content->{name}, 'CoreTeam', 'Pithub::Orgs::Teams->get after update';
 
         # Pithub::Orgs::Teams->is_member
-      TODO: {
-            local $TODO = 'This seems like a bug in the Github API';
-            ok !$p->orgs->teams->is_member(
-                team_id => $team_id,
-                user    => $user,
-            )->success, 'Pithub::Orgs::Teams->is_member not successful yet';
-        }
+        ok !$p->orgs->teams->is_member(
+            team_id => $team_id,
+            user    => $user,
+        )->success, 'Pithub::Orgs::Teams->is_member not successful yet';
 
         # Pithub::Orgs::Teams->add_member
         ok $p->orgs->teams->add_member(
@@ -170,13 +167,10 @@ SKIP: {
         )->success, 'Pithub::Orgs::Teams->remove_member successful';
 
         # Pithub::Orgs::Teams->is_member
-      TODO: {
-            local $TODO = 'This seems like a bug in the Github API';
-            ok !$p->orgs->teams->is_member(
-                team_id => $team_id,
-                user    => $user,
-            )->success, 'Pithub::Orgs::Teams-is_member not successful after remove_member';
-        }
+        ok !$p->orgs->teams->is_member(
+            team_id => $team_id,
+            user    => $user,
+        )->success, 'Pithub::Orgs::Teams-is_member not successful after remove_member';
 
         # Pithub::Orgs::Teams->has_repo
         ok !$p->orgs->teams->has_repo(
