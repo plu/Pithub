@@ -207,6 +207,25 @@ SKIP: {
         repo  => $repo,
         token => $ENV{PITHUB_TEST_TOKEN}
     );
+
+    {
+
+        # Pithub::GitData::Blobs->create
+        my $sha = $p->git_data->blobs->create(
+            data => {
+                content  => 'Content of the blob',
+                encoding => 'utf-8',
+            }
+        )->content->{sha};
+        ok $sha, 'Pithub::GitData::Blobs->create returned a SHA';
+
+        my $result = $p->git_data->blobs->get( sha => $sha );
+      TODO: {
+            local $TODO = 'This looks like a bug in the API to me';
+            is $result->content->{content}, 'Content of the blob', 'Pithub::GitData::Blobs->get content after create';
+            is $result->content->{encoding}, 'utf-8', 'Pithub::GitData::Blobs->get encoding after create';
+        }
+    }
 }
 
 done_testing;

@@ -77,8 +77,6 @@ done_testing;
 
 # TODO: implement tests for following methods:
 
-# Pithub::GitData::Blobs->create
-
 # Pithub::GitData::Commits->create
 
 # Pithub::GitData::References->create
