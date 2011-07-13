@@ -13,9 +13,49 @@ use namespace::autoclean;
 
 =head1 DESCRIPTION
 
-All L<Pithub/MODULES> inherit from L<Pithub::Base>, even L<Pithub>
-itself. So all attributes listed here can either be set in the
+All C<< Pithub >> L<modules|Pithub/MODULES> inherit from
+L<Pithub::Base>, even L<Pithub> itself. So all
+L<attributes|/ATTRIBUTES> listed here can either be set in the
 constructor or via the setter on the objects.
+
+If any attribute is set on a L<Pithub> object, it gets
+automatically set on objects, that get created by a method call on
+the L<Pithub> object. This is very convenient for attributes like
+the L</token> or the L</user> and L</repo> attributes.
+
+The L</user> and L</repo> attributes are special: They get even
+set on method calls that require B<both> of them. This is to reduce
+verbosity, especially if you want to do a lot of things at the
+same repo. This also works for other objects: If you create an
+object of L<Pithub::Repos> where you set the L</user> and L</repo>
+attribute in the constructor, this will also be set once you
+get to the L<Pithub::Repos::Keys> object via the C<< keys >> method.
+
+Examples:
+
+    # just to demonstrate the "magic"
+    print Pithub->new( user => 'plu' )->repos->user;          # plu
+    print Pithub::Repos->new( user => 'plu' )->keys->user;    # plu
+
+    # and now some real use cases
+    my $p = Pithub->new( user => 'plu', repo => 'Pithub' );
+    my $r = $p->repos;
+
+    print $r->user;    # plu
+    print $r->repo;    # pithub
+
+    # usually you would do
+    print $r->get( user => 'plu', repo => 'Pithub' )->content->{html_url};
+
+    # but since user + repo has been set already
+    print $r->get->content->{html_url};
+
+    # of course parameters to the method take precedence
+    print $r->get( user => 'miyagawa', repo => 'Plack' )->content->{html_url};
+
+    # it even works on other objects
+    my $repo = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
+    print $repo->watching->list->first->{login};
 
 =attr auto_pagination
 
@@ -35,9 +75,11 @@ Defaults to L<https://api.github.com>.
 
 Examples:
 
-    $users = Pithub::Users->new( api_uri => 'https://api-foo.github.com' );
+    my $users = Pithub::Users->new( api_uri => 'https://api-foo.github.com' );
 
-    $users = Pithub::Users->new;
+    # ... is the same as ...
+
+    my $users = Pithub::Users->new;
     $users->api_uri('https://api-foo.github.com');
 
 =cut
@@ -59,8 +101,8 @@ See also: L<http://developer.github.com/v3/#json-p-callbacks>.
 
 Examples:
 
-    $p = Pithub->new( jsonp_callback => 'loadGithubData' );
-    $result = $p->users->get( user => 'plu' );
+    my $p = Pithub->new( jsonp_callback => 'loadGithubData' );
+    my $result = $p->users->get( user => 'plu' );
     print $result->raw_content;
 
 The result will look like this:
@@ -85,6 +127,10 @@ B<Be careful:> The L<content|Pithub::Result/content> method will
 try to decode the JSON into a Perl data structure. This is not
 possible if the C<< jsonp_callback >> is set:
 
+    # calling this ...
+    print $result->content;
+
+    # ... will throw an exception like this ...
     Runtime error: malformed JSON string, neither array, object, number, string or atom,
     at character offset 0 (before "loadGithubData( ...
 
@@ -119,9 +165,11 @@ L<http://developer.github.com/v3/#pagination>.
 
 Examples:
 
-    $users = Pithub::Users->new( per_page => 100 );
+    my $users = Pithub::Users->new( per_page => 100 );
 
-    $users = Pithub::Users->new;
+    # ... is the same as ...
+
+    my $users = Pithub::Users->new;
     $users->per_page(100);
 
 There are two helper methods:
@@ -151,12 +199,15 @@ has 'per_page' => (
 =attr repo
 
 This can be set as a default repo to use for API calls that require
-the repo parameter to be set.
+the repo parameter to be set. There are many of them and it can get
+kind of verbose to include the repo and the user for all of the
+calls, especially if you want to do many operations on the same
+user/repo.
 
 Examples:
 
-    $c = Pithub::Repos::Collaborators->new( repo => 'Pithub' );
-    $result = $c->list( user => 'plu' );
+    my $c = Pithub::Repos::Collaborators->new( repo => 'Pithub' );
+    my $result = $c->list( user => 'plu' );
 
 There are two helper methods:
 
@@ -220,8 +271,8 @@ the user parameter to be set.
 
 Examples:
 
-    $c = Pithub::Repos::Collaborators->new( user => 'plu' );
-    $result = $c->list( repo => 'Pithub' );
+    my $c = Pithub::Repos::Collaborators->new( user => 'plu' );
+    my $result = $c->list( repo => 'Pithub' );
 
 There are two helper methods:
 
@@ -239,10 +290,10 @@ B<has_user>: check if the user attribute is set
 
 It might makes sense to use this together with the repo attribute:
 
-    $c = Pithub::Repos::Commits->new( user => 'plu', repo => 'Pithub' );
-    $result = $c->list;
-    $result = $c->list_comments;
-    $reuslt = $c->get('6b6127383666e8ecb41ec20a669e4f0552772363');
+    my $c = Pithub::Repos::Commits->new( user => 'plu', repo => 'Pithub' );
+    my $result = $c->list;
+    my $result = $c->list_comments;
+    my $result = $c->get('6b6127383666e8ecb41ec20a669e4f0552772363');
 
 =cut
 
@@ -418,35 +469,35 @@ Though here are some examples how to use it:
 
 Same as L<Pithub::Users/get>:
 
-    $p = Pithub->new;
-    $result = $p->request( GET => '/users/plu' );
+    my $p = Pithub->new;
+    my $result = $p->request( GET => '/users/plu' );
 
 Same as L<Pithub::Gists/create>:
 
-    $p      = Pithub->new;
-    $method = 'POST';
-    $path   = '/gists';
-    $data   = {
+    my $p      = Pithub->new;
+    my $method = 'POST';
+    my $path   = '/gists';
+    my $data   = {
         description => 'the description for this gist',
         public      => 1,
         files       => { 'file1.txt' => { content => 'String file content' } }
     };
-    $result = $p->request( $method, $path, $data );
+    my $result = $p->request( $method, $path, $data );
 
 Same as L<Pithub::GitData::Trees/get>:
 
-    $p       = Pithub->new;
-    $method  = 'GET';
-    $path    = '/repos/plu/Pithub/git/trees/aac667c5aaa6e49572894e8c722d0705bb00fab2';
-    $data    = undef;
-    $options = {
+    my $p       = Pithub->new;
+    my $method  = 'GET';
+    my $path    = '/repos/plu/Pithub/git/trees/aac667c5aaa6e49572894e8c722d0705bb00fab2';
+    my $data    = undef;
+    my $options = {
         prepare_uri => sub {
             my ($uri) = @_;
             my %query = ( $uri->query_form, recursive => 1 );
             $uri->query_form(%query);
         },
     };
-    $result = $p->request( $method, $path, $data, $options );
+    my $result = $p->request( $method, $path, $data, $options );
 
 Always be careful using C<< prepare_uri >> and C<< query_form >>. If
 the option L</per_page> is set, you might override the pagination

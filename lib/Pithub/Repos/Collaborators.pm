@@ -19,7 +19,8 @@ Add collaborator
 
 Examples:
 
-    $result = $p->repos->collaborators->add(
+    my $c = Pithub::Repos::Collaborators->new;
+    my $result = $c->add(
         user         => 'plu',
         repo         => 'Pithub',
         collaborator => 'rbo',
@@ -48,7 +49,8 @@ Get
 
 Examples:
 
-    $result = $p->repos->collaborators->is_collaborator(
+    my $c = Pithub::Repos::Collaborators->new;
+    my $result = $c->is_collaborator(
         user         => 'plu',
         repo         => 'Pithub',
         collaborator => 'rbo',
@@ -84,7 +86,8 @@ List
 
 Examples:
 
-    $result = $p->repos->collaborators->list(
+    my $c = Pithub::Repos::Collaborators->new;
+    my $result = $c->list(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -111,7 +114,8 @@ Remove collaborator
 
 Examples:
 
-    $result = $p->repos->collaborators->remove(
+    my $c = Pithub::Repos::Collaborators->new;
+    my $result = $c->remove(
         user         => 'plu',
         repo         => 'Pithub',
         collaborator => 'rbo',

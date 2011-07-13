@@ -19,7 +19,8 @@ Create a Reference
 
 Examples:
 
-    $result = $p->git_data->references->create(
+    my $r = Pithub::GitData::References->new;
+    my $result = $r->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -67,7 +68,8 @@ Get a Reference
 
 Examples:
 
-    $result = $p->git_data->references->get(
+    my $r = Pithub::GitData::References->new;
+    my $result = $r->get(
         user => 'plu',
         repo => 'Pithub',
         ref  => 'heads/master'
@@ -105,7 +107,8 @@ would be the most common.
 
 Examples:
 
-    $result = $p->git_data->references->list(
+    my $r = Pithub::GitData::References->new;
+    my $result = $r->list(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -119,7 +122,8 @@ tag references, you can call:
 
 Examples:
 
-    $result = $p->git_data->references->list(
+    my $r = Pithub::GitData::References->new;
+    my $result = $r->list(
         user => 'plu',
         repo => 'Pithub',
         ref  => 'tags',
@@ -150,7 +154,8 @@ Update a Reference
 
 Examples:
 
-    $result = $p->git_data->references->update(
+    my $r = Pithub::GitData::References->new;
+    my $result = $r->update(
         user => 'plu',
         repo => 'Pithub',
         ref  => 'tags/v1.0',

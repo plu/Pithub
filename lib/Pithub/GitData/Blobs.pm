@@ -19,7 +19,8 @@ Create a Blob
 
 Examples:
 
-    $result = $p->git_data->blobs->create(
+    my $b = Pithub::GitData::Blobs->new;
+    my $result = $b->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -51,7 +52,8 @@ Get a Blob
 
 Examples:
 
-    $result = $p->git_data->blobs->get(
+    my $b = Pithub::GitData::Blobs->new;
+    my $result = $b->get(
         user => 'plu',
         repo => 'Pithub',
         sha  => 'df21b2660fb6',

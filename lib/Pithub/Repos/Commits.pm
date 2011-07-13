@@ -19,7 +19,8 @@ Create a commit comment
 
 Examples:
 
-    $result = $p->repos->commits->create_comment(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->create_comment(
         user => 'plu',
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
@@ -50,7 +51,8 @@ Delete a commit comment
 
 Examples:
 
-    $result = $p->repos->commits->delete_comment(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->delete_comment(
         user       => 'plu',
         repo       => 'Pithub',
         comment_id => 1,
@@ -79,7 +81,8 @@ Get a single commit
 
 Examples:
 
-    $result = $p->repos->commits->get(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->get(
         user => 'plu',
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
@@ -108,7 +111,8 @@ Get a single commit comment
 
 Examples:
 
-    $result = $p->repos->commits->get_comment(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->get_comment(
         user       => 'plu',
         repo       => 'Pithub',
         comment_id => 1,
@@ -137,7 +141,8 @@ List commits on a repository
 
 Examples:
 
-    $result = $p->repos->commits->list(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->list(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -169,7 +174,8 @@ L<http://developer.github.com/v3/mimes/>.
 
 Examples:
 
-    $result = $p->repos->commits->list_comments(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->list_comments(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -182,7 +188,8 @@ List comments for a single commit
 
 Examples:
 
-    $result = $p->repos->commits->list_comments(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->list_comments(
         user => 'plu',
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
@@ -213,7 +220,8 @@ Update a commit comment
 
 Examples:
 
-    $result = $p->repos->commits->update_comment(
+    my $c = Pithub::Repos::Commits->new;
+    my $result = $c->update_comment(
         user       => 'plu',
         repo       => 'Pithub',
         comment_id => 1,

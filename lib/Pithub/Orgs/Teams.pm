@@ -19,7 +19,8 @@ team is associated with.
 
 Examples:
 
-    $result = $p->orgs->teams->add_member(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->add_member(
         team_id => 1,
         user    => 'plu',
     );
@@ -46,7 +47,8 @@ an owner of the org that the team is associated with.
 
 Examples:
 
-    $result = $p->orgs->teams->add_repo(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->add_repo(
         team_id => 1,
         repo    => 'some_repo',
     );
@@ -73,7 +75,8 @@ owner of the given organization.
 
 Examples:
 
-    $result = $p->orgs->teams->create(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->create(
         org  => 'CPAN-API',
         data => {
             name       => 'new team',
@@ -104,7 +107,8 @@ of the org that the team is associated with.
 
 Examples:
 
-    $result = $p->orgs->teams->delete( team_id => 1 );
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->delete( team_id => 1 );
 
 =back
 
@@ -126,7 +130,8 @@ Get team
 
 Examples:
 
-    $result = $p->orgs->teams->get( team_id => 1 );
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->get( team_id => 1 );
 
 =back
 
@@ -148,7 +153,8 @@ Get team repo
 
 Examples:
 
-    $result = $p->orgs->teams->has_repo(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->has_repo(
         team_id => 1,
         repo    => 'some_repo',
     );
@@ -175,7 +181,8 @@ user must be a member of the team.
 
 Examples:
 
-    $result = $p->orgs->teams->is_member(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->is_member(
         team_id => 1,
         user    => 'plu',
     );
@@ -201,7 +208,8 @@ List teams
 
 Examples:
 
-    $result = $p->orgs->teams->list( org => 'CPAN-API' );
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->list( org => 'CPAN-API' );
 
 =back
 
@@ -224,7 +232,8 @@ a member of the team.
 
 Examples:
 
-    $result = $p->orgs->teams->list_members( team_id => 1 );
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->list_members( team_id => 1 );
 
 =back
 
@@ -246,7 +255,8 @@ List team repos
 
 Examples:
 
-    $result = $p->orgs->teams->list_repos( team_id => 1 );
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->list_repos( team_id => 1 );
 
 =back
 
@@ -271,7 +281,8 @@ it just remove them from the team.
 
 Examples:
 
-    $result = $p->orgs->teams->remove_member(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->remove_member(
         team_id => 1,
         user    => 'plu',
     );
@@ -298,7 +309,8 @@ an owner of the org that the team is associated with.
 
 Examples:
 
-    $result = $p->orgs->teams->remove_repo(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->remove_repo(
         team_id => 1,
         repo    => 'some_repo',
     );
@@ -325,7 +337,8 @@ of the org that the team is associated with.
 
 Examples:
 
-    $result = $p->orgs->teams->update(
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->update(
         team_id => 1,
         data    => {
             name       => 'new team name',

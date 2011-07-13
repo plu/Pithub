@@ -69,8 +69,8 @@ The LWP user agent. This is set from L<Pithub> or any other module
 you are using. So you can exchange it by another module which
 implements the L<LWP::UserAgent> interface.
 
-    $p = Pithub->new( ua => WWW::Mechanize->new );
-    $u = Pithub::Users->new( ua => WWW::Mechanize->new );
+    my $p = Pithub->new( ua => WWW::Mechanize->new );
+    my $u = Pithub::Users->new( ua => WWW::Mechanize->new );
 
 Of course you can set various options on the user agent object
 before you hand it over to the constructor, e.g. proxy settings.

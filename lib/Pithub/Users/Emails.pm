@@ -19,13 +19,8 @@ Add email address(es)
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->emails->add( data => ['plu@cpan.org'] );
-    $result = $p->users->emails->add( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
-
-    $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
-    $result = $e->add( data => ['plu@cpan.org'] );
-    $result = $e->add( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+    my $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
+    my $result = $e->add( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
 
 =back
 
@@ -49,13 +44,8 @@ Delete email address(es)
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->emails->delete( data => ['plu@cpan.org'] );
-    $result = $p->users->emails->delete( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
-
-    $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
-    $result = $e->delete( data => ['plu@cpan.org'] );
-    $result = $e->delete( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
+    my $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
+    my $result = $e->delete( data => [ 'plu@cpan.org', 'plu@pqpq.de' ] );
 
 =back
 
@@ -79,11 +69,8 @@ List email addresses for a user
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->emails->list;
-
-    $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
-    $result = $e->list;
+    my $e = Pithub::Users::Emails->new( token => 'b3c62c6' );
+    my $result = $e->list;
 
 =back
 

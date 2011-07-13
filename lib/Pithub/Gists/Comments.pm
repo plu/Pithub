@@ -19,7 +19,8 @@ Create a comment
 
 Examples:
 
-    $result = $p->gists->comments->create(
+    my $c = Pithub::Gists::Comments->new;
+    my $result = $c->create(
         gist_id => 1,
         data    => { body => 'some comment' },
     );
@@ -47,7 +48,8 @@ Delete a comment
 
 Examples:
 
-    $result = $p->gists->comments->delete( comment_id => 1 );
+    my $c = Pithub::Gists::Comments->new;
+    my $result = $c->delete( comment_id => 1 );
 
 =back
 
@@ -71,7 +73,8 @@ Get a single comment
 
 Examples:
 
-    $result = $p->gists->comments->get( comment_id => 1 );
+    my $c = Pithub::Gists::Comments->new;
+    my $result = $c->get( comment_id => 1 );
 
 =back
 
@@ -95,7 +98,8 @@ List comments on a gist
 
 Examples:
 
-    $result = $p->gists->comments->list( gist_id => 1 );
+    my $c = Pithub::Gists::Comments->new;
+    my $result = $c->list( gist_id => 1 );
 
 =back
 
@@ -119,7 +123,8 @@ Edit a comment
 
 Examples:
 
-    $result = $p->gists->comments->update(
+    my $c = Pithub::Gists::Comments->new;
+    my $result = $c->update(
         comment_id => 1,
         data       => { body => 'some comment' }
     );

@@ -23,11 +23,8 @@ Get a single user
 
 Examples:
 
-    $p = Pithub->new;
-    $result = $p->users->get( user => 'plu');
-
-    $u = Pithub::Users->new;
-    $result = $u->get( user => 'plu');
+    my $u = Pithub::Users->new;
+    my $result = $u->get( user => 'plu');
 
 =item *
 
@@ -37,11 +34,8 @@ Get the authenticated user
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->get;
-
-    $u = Pithub::Users->new( token => 'b3c62c6' );
-    $result = $u->get;
+    my $u = Pithub::Users->new( token => 'b3c62c6' );
+    my $result = $u->get;
 
 =back
 
@@ -67,11 +61,8 @@ Update the authenticated user
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->update( data => { email => 'plu@cpan.org' } );
-
-    $u = Pithub::Users->new( token => 'b3c62c6' );
-    $result = $u->update( data => { email => 'plu@cpan.org' } );
+    my $u = Pithub::Users->new( token => 'b3c62c6' );
+    my $result = $u->update( data => { email => 'plu@cpan.org' } );
 
 =back
 

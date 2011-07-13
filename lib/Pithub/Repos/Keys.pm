@@ -19,7 +19,8 @@ Create
 
 Examples:
 
-    $result = $p->repos->keys->create(
+    my $k = Pithub::Repos::Keys->new;
+    my $result = $k->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -51,7 +52,8 @@ Delete
 
 Examples:
 
-    $result = $p->repos->keys->delete(
+    my $k = Pithub::Repos::Keys->new;
+    my $result = $k->delete(
         user   => 'plu',
         repo   => 'Pithub',
         key_id => 1,
@@ -80,7 +82,8 @@ Get
 
 Examples:
 
-    $result = $p->repos->keys->get(
+    my $k = Pithub::Repos::Keys->new;
+    my $result = $k->get(
         user   => 'plu',
         repo   => 'Pithub',
         key_id => 1,
@@ -109,7 +112,8 @@ List
 
 Examples:
 
-    $result = $p->repos->keys->list(
+    my $k = Pithub::Repos::Keys->new;
+    my $result = $k->list(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -136,7 +140,8 @@ Edit
 
 Examples:
 
-    $result = $p->repos->keys->update(
+    my $k = Pithub::Repos::Keys->new;
+    my $result = $k->update(
         user   => 'plu',
         repo   => 'Pithub',
         key_id => 1,

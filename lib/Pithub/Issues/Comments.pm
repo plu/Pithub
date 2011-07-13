@@ -19,7 +19,8 @@ Create a comment
 
 Examples:
 
-    $result = $p->issues->comments->create(
+    my $c = Pithub::Issues::Comments->new;
+    my $result = $c->create(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -50,7 +51,8 @@ Delete a comment
 
 Examples:
 
-    $result = $p->issues->comments->delete(
+    my $c = Pithub::Issues::Comments->new;
+    my $result = $c->delete(
         repo       => 'Pithub',
         user       => 'plu',
         comment_id => 1,
@@ -79,7 +81,8 @@ Get a single comment
 
 Examples:
 
-    $result = $p->issues->comments->get(
+    my $c = Pithub::Issues::Comments->new;
+    my $result = $c->get(
         repo       => 'Pithub',
         user       => 'plu',
         comment_id => 1,
@@ -108,7 +111,8 @@ List comments on an issue
 
 Examples:
 
-    $result = $p->issues->comments->list(
+    my $c = Pithub::Issues::Comments->new;
+    my $result = $c->list(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -137,7 +141,8 @@ Edit a comment
 
 Examples:
 
-    $result = $p->issues->comments->update(
+    my $c = Pithub::Issues::Comments->new;
+    my $result = $c->update(
         repo       => 'Pithub',
         user       => 'plu',
         comment_id => 1,

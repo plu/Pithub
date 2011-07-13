@@ -19,7 +19,8 @@ Add labels to an issue
 
 Examples:
 
-    $result = $p->issues->labels->add(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->add(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -50,7 +51,8 @@ Create a label
 
 Examples:
 
-    $result = $p->issues->labels->create(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->create(
         repo => 'Pithub',
         user => 'plu',
         data => {
@@ -82,7 +84,8 @@ Delete a label
 
 Examples:
 
-    $result = $p->issues->labels->delete(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->delete(
         repo     => 'Pithub',
         user     => 'plu',
         label => 1,
@@ -111,7 +114,8 @@ Get a single label
 
 Examples:
 
-    $result = $p->issues->labels->get(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->get(
         repo => 'Pithub',
         user => 'plu',
         label => 1,
@@ -140,7 +144,8 @@ List all labels for this repository
 
 Examples:
 
-    $result = $p->issues->labels->list(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->list(
         repo => 'Pithub',
         user => 'plu'
     );
@@ -153,7 +158,8 @@ List labels on an issue
 
 Examples:
 
-    $result = $p->issues->labels->list(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->list(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -167,7 +173,8 @@ Get labels for every issue in a milestone
 
 Examples:
 
-    $result = $p->issues->labels->get(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->get(
         repo         => 'Pithub',
         user         => 'plu',
         milestone_id => 1
@@ -201,7 +208,8 @@ Remove a label from an issue
 
 Examples:
 
-    $result = $p->issues->labels->delete(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->delete(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -216,7 +224,8 @@ Remove all labels from an issue
 
 Examples:
 
-    $result = $p->issues->labels->delete(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->delete(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -248,7 +257,8 @@ Replace all labels for an issue
 
 Examples:
 
-    $result = $p->issues->labels->replace(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->replace(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -279,7 +289,8 @@ Update a label
 
 Examples:
 
-    $result = $p->issues->labels->update(
+    my $l = Pithub::Issues::Labels->new;
+    my $result = $l->update(
         repo     => 'Pithub',
         user     => 'plu',
         label => 1,

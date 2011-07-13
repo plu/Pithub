@@ -21,7 +21,8 @@ List commits on a pull request
 
 Examples:
 
-    $result = $p->pull_requests->commits(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->commits(
         user            => 'plu',
         repo            => 'Pithub',
         pull_request_id => 1
@@ -50,7 +51,8 @@ Create a pull request
 
 Examples:
 
-    $result = $p->pull_requests->create(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->create(
         user   => 'plu',
         repo => 'Pithub',
         data   => {
@@ -84,7 +86,8 @@ List pull requests files
 
 Examples:
 
-    $result = $p->pull_requests->files(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->files(
         user            => 'plu',
         repo            => 'Pithub',
         pull_request_id => 1,
@@ -113,7 +116,8 @@ Get a single pull request
 
 Examples:
 
-    $result = $p->pull_requests->get(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->get(
         user            => 'plu',
         repo            => 'Pithub',
         pull_request_id => 1,
@@ -142,7 +146,8 @@ Get if a pull request has been merged
 
 Examples:
 
-    $result = $p->pull_requests->is_merged(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->is_merged(
         user            => 'plu',
         repo            => 'Pithub',
         pull_request_id => 1,
@@ -171,7 +176,8 @@ List pull requests
 
 Examples:
 
-    $result = $p->pull_requests->list(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->list(
         user => 'plu',
         repo => 'Pithub'
     );
@@ -198,7 +204,8 @@ Merge a pull request
 
 Examples:
 
-    $result = $p->pull_requests->merge(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->merge(
         user            => 'plu',
         repo            => 'Pithub',
         pull_request_id => 1,
@@ -227,7 +234,8 @@ Update a pull request
 
 Examples:
 
-    $result = $p->pull_requests->update(
+    my $p = Pithub::PullRequests->new;
+    my $result = $p->update(
         user            => 'plu',
         repo            => 'Pithub',
         pull_request_id => 1,

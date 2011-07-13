@@ -19,7 +19,8 @@ Get a single event
 
 Examples:
 
-    $result = $p->issues->events->get(
+    my $e = Pithub::Issues::Events->new;
+    my $result = $e->get(
         repo     => 'Pithub',
         user     => 'plu',
         event_id => 1,
@@ -48,7 +49,8 @@ List events for an issue
 
 Examples:
 
-    $result = $p->issues->events->list(
+    my $e = Pithub::Issues::Events->new;
+    my $result = $e->list(
         repo     => 'Pithub',
         user     => 'plu',
         issue_id => 1,
@@ -62,7 +64,8 @@ List events for a repository
 
 Examples:
 
-    $result = $p->issues->events->list(
+    my $e = Pithub::Issues::Events->new;
+    my $result = $e->list(
         repo => 'Pithub',
         user => 'plu',
     );

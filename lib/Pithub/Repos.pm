@@ -26,23 +26,8 @@ List Branches
 
 Examples:
 
-    $p      = Pithub->new;
-    $result = $p->repos->branches( user => 'plu', repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu' );
-    $result = $p->repos->branches( repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu', repo => 'Pithub' );
-    $result = $p->repos->branches;
-
-    $r      = Pithub::Repos->new;
-    $result = $r->repos->branches( user => 'plu', repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu' );
-    $result = $r->repos->branches( repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
-    $result = $r->repos->branches;
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->branches( user => 'plu', repo => 'Pithub' );
 
 =back
 
@@ -66,23 +51,8 @@ List contributors
 
 Examples:
 
-    $p      = Pithub->new;
-    $result = $p->repos->contributors( user => 'plu', repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu' );
-    $result = $p->repos->contributors( repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu', repo => 'Pithub' );
-    $result = $p->repos->contributors;
-
-    $r      = Pithub::Repos->new;
-    $result = $r->repos->contributors( user => 'plu', repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu' );
-    $result = $r->repos->contributors( repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
-    $result = $r->repos->contributors;
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->contributors( user => 'plu', repo => 'Pithub' );
 
 =back
 
@@ -106,7 +76,8 @@ Create a new repository for the authenticated user.
 
 Examples:
 
-    $result = $p->repos->create( data => { name => 'some-repo' } );
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->create( data => { name => 'some-repo' } );
 
 =item *
 
@@ -117,7 +88,8 @@ must be a member of this organization.
 
 Examples:
 
-    $result = $p->repos->create(
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->create(
         org  => 'CPAN-API',
         data => { name => 'some-repo' }
     );
@@ -149,23 +121,8 @@ Get a repo
 
 Examples:
 
-    $p      = Pithub->new;
-    $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu' );
-    $result = $p->repos->get( repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu', repo => 'Pithub' );
-    $result = $p->repos->get;
-
-    $r      = Pithub::Repos->new;
-    $result = $r->repos->get( user => 'plu', repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu' );
-    $result = $r->repos->get( repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
-    $result = $r->repos->get;
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->get( user => 'plu', repo => 'Pithub' );
 
 =back
 
@@ -189,23 +146,8 @@ List languages
 
 Examples:
 
-    $p      = Pithub->new;
-    $result = $p->repos->languages( user => 'plu', repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu' );
-    $result = $p->repos->languages( repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu', repo => 'Pithub' );
-    $result = $p->repos->languages;
-
-    $r      = Pithub::Repos->new;
-    $result = $r->repos->languages( user => 'plu', repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu' );
-    $result = $r->repos->languages( repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
-    $result = $r->repos->languages;
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->languages( user => 'plu', repo => 'Pithub' );
 
 =back
 
@@ -227,11 +169,21 @@ List repositories for the authenticated user.
 
     GET /user/repos
 
+Examples:
+
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->list;
+
 =item *
 
 List public repositories for the specified user.
 
     GET /users/:user/repos
+
+Examples:
+
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->list( user => 'plu' );
 
 =item *
 
@@ -241,9 +193,8 @@ List repositories for the specified org.
 
 Examples:
 
-    $result = $p->repos->list( user => 'plu' );
-    $result = $p->repos->list( org => 'CPAN-API' );
-    $result = $p->repos->list;
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->list( org => 'CPAN-API' );
 
 =back
 
@@ -274,23 +225,8 @@ List Tags
 
 Examples:
 
-    $p      = Pithub->new;
-    $result = $p->repos->tags( user => 'plu', repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu' );
-    $result = $p->repos->tags( repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu', repo => 'Pithub' );
-    $result = $p->repos->tags;
-
-    $r      = Pithub::Repos->new;
-    $result = $r->repos->tags( user => 'plu', repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu' );
-    $result = $r->repos->tags( repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
-    $result = $r->repos->tags;
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->tags( user => 'plu', repo => 'Pithub' );
 
 =back
 
@@ -314,23 +250,8 @@ List Teams
 
 Examples:
 
-    $p      = Pithub->new;
-    $result = $p->repos->teams( user => 'plu', repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu' );
-    $result = $p->repos->teams( repo => 'Pithub' );
-
-    $p      = Pithub->new( user => 'plu', repo => 'Pithub' );
-    $result = $p->repos->teams;
-
-    $r      = Pithub::Repos->new;
-    $result = $r->repos->teams( user => 'plu', repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu' );
-    $result = $r->repos->teams( repo => 'Pithub' );
-
-    $r      = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
-    $result = $r->repos->teams;
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->teams( user => 'plu', repo => 'Pithub' );
 
 =back
 
@@ -355,8 +276,9 @@ Edit
 Examples:
 
     # update a repo for the authenticated user
-    $result = $p->repos->update(
-        repo => Pithub,
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->update(
+        repo => 'Pithub',
         data => { description => 'Github API v3' },
     );
 

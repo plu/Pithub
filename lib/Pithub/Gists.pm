@@ -21,13 +21,17 @@ Create a gist
 
 Examples:
 
-    $result = $p->gists->create(
+    my $g = Pithub::Gists->new;
+    my $result = $g->create(
         data => {
             description => 'the description for this gist',
             public      => 1,
             files       => { 'file1.txt' => { content => 'String file content' } }
         }
     );
+    if ( $result->success ) {
+        printf "The new gist is available at %s\n", $result->content->{html_url};
+    }
 
 =back
 
@@ -51,7 +55,11 @@ Delete a gist
 
 Examples:
 
-    $result = $p->gists->delete( gist_id => 784612 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->delete( gist_id => 784612 );
+    if ( $result->success ) {
+        print "The gist 784612 has been deleted\n";
+    }
 
 =back
 
@@ -75,7 +83,11 @@ Fork a gist
 
 Examples:
 
-    $result = $p->gists->fork( gist_id => 784612 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->fork( gist_id => 784612 );
+    if ( $result->success ) {
+        printf "The gist 784612 has been forked: %s\n", $result->content->{html_url};
+    }
 
 =back
 
@@ -99,7 +111,11 @@ Get a single gist
 
 Examples:
 
-    $result = $p->gists->get( gist_id => 784612 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->get( gist_id => 784612 );
+    if ( $result->success ) {
+        print $result->content->{html_url};
+    }
 
 =back
 
@@ -123,7 +139,8 @@ Check if a gist is starred
 
 Examples:
 
-    $result = $p->gists->is_starred( gist_id => 784612 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->is_starred( gist_id => 784612 );
 
 =back
 
@@ -147,7 +164,13 @@ List a user’s gists:
 
 Examples:
 
-    $result = $p->gists->list( user => 'plu' );
+    my $g = Pithub::Gists->new;
+    my $result = $g->list( user => 'miyagawa' );
+    if ( $result->success ) {
+        while ( my $row = $result->next ) {
+            printf "%s => %s\n", $row->{html_url}, $row->{description} || 'no description';
+        }
+    }
 
 =item *
 
@@ -158,7 +181,8 @@ this will returns all public gists:
 
 Examples:
 
-    $result = $p->gists->list;
+    my $g = Pithub::Gists->new;
+    my $result = $g->list;
 
 =item *
 
@@ -168,7 +192,8 @@ List all public gists:
 
 Examples:
 
-    $result = $p->gists->list( public => 1 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->list( public => 1 );
 
 =item *
 
@@ -180,7 +205,8 @@ List the authenticated user’s starred gists:
 
 Examples:
 
-    $result = $p->gists->list( starred => 1 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->list( starred => 1 );
 
 =cut
 
@@ -210,7 +236,8 @@ Star a gist
 
 Examples:
 
-    $result = $p->gists->star( gist_id => 784612 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->star( gist_id => 784612 );
 
 =back
 
@@ -234,7 +261,8 @@ Unstar a gist
 
 Examples:
 
-    $result = $p->gists->unstar( gist_id => 784612 );
+    my $g = Pithub::Gists->new;
+    my $result = $g->unstar( gist_id => 784612 );
 
 =back
 
@@ -258,7 +286,8 @@ Edit a gist
 
 Examples:
 
-    $result = $p->gists->update(
+    my $g = Pithub::Gists->new;
+    my $result = $g->update(
         gist_id => 784612,
         data    => { description => 'bar foo' }
     );

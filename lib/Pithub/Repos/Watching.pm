@@ -19,7 +19,8 @@ Check if you are watching a repo
 
 Examples:
 
-    $result = $p->repos->watching->is_watching(
+    my $w = Pithub::Repos::Watching->new;
+    my $result = $w->is_watching(
         repo => 'Pithub',
         user => 'plu',
     );
@@ -46,7 +47,8 @@ List repos being watched by a user
 
 Examples:
 
-    $result = $p->repos->watching->list_repos( user => 'plu' );
+    my $w = Pithub::Repos::Watching->new;
+    my $result = $w->list_repos( user => 'plu' );
 
 =item *
 
@@ -56,7 +58,8 @@ List repos being watched by the authenticated user
 
 Examples:
 
-    $result = $p->repos->watching->list_repos;
+    my $w = Pithub::Repos::Watching->new;
+    my $result = $w->list_repos;
 
 =back
 
@@ -82,7 +85,8 @@ List watchers
 
 Examples:
 
-    $result = $p->repos->watching->list(
+    my $w = Pithub::Repos::Watching->new;
+    my $result = $w->list(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -109,7 +113,8 @@ Watch a repo
 
 Examples:
 
-    $result = $p->repos->watching->start_watching(
+    my $w = Pithub::Repos::Watching->new;
+    my $result = $w->start_watching(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -136,7 +141,8 @@ Stop watching a repo
 
 Examples:
 
-    $result = $p->repos->watching->stop_watching(
+    my $w = Pithub::Repos::Watching->new;
+    my $result = $w->stop_watching(
         user => 'plu',
         repo => 'Pithub',
     );

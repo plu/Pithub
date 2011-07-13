@@ -19,16 +19,8 @@ Create a public key
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->keys->create(
-        data => {
-            title => 'plu@localhost',
-            key   => 'ssh-rsa AAA...',
-        }
-    );
-
-    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
-    $result = $k->create(
+    my $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    my $result = $k->create(
         data => {
             title => 'plu@localhost',
             key   => 'ssh-rsa AAA...',
@@ -57,11 +49,8 @@ Delete a public key
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->keys->delete( key_id => 123 );
-
-    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
-    $result = $k->delete( key_id => 123 );
+    my $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    my $result = $k->delete( key_id => 123 );
 
 =back
 
@@ -85,11 +74,8 @@ Get a single public key
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->keys->get( key_id => 123 );
-
-    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
-    $result = $k->get( key_id => 123 );
+    my $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    my $result = $k->get( key_id => 123 );
 
 =back
 
@@ -113,11 +99,8 @@ List public keys for a user
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->keys->list;
-
-    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
-    $result = $k->list;
+    my $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    my $result = $k->list;
 
 =back
 
@@ -140,17 +123,8 @@ Update a public key
 
 Examples:
 
-    $p = Pithub->new( token => 'b3c62c6' );
-    $result = $p->users->keys->update(
-        key_id => 123,
-        data => {
-            title => 'plu@localhost',
-            key   => 'ssh-rsa AAA...',
-        }
-    );
-
-    $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
-    $result = $k->update(
+    my $k = Pithub::Users::Keys->new( token => 'b3c62c6' );
+    my $result = $k->update(
         key_id => 123,
         data => {
             title => 'plu@localhost',

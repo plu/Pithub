@@ -19,7 +19,8 @@ Create a milestone
 
 Examples:
 
-    $result = $p->issues->milestones->create(
+    my $m = Pithub::Issues::Milestones->new;
+    my $result = $m->create(
         repo => 'Pithub',
         user => 'plu',
         data => {
@@ -53,7 +54,8 @@ Delete a milestone
 
 Examples:
 
-    $result = $p->issues->milestones->delete(
+    my $m = Pithub::Issues::Milestones->new;
+    my $result = $m->delete(
         repo => 'Pithub',
         user => 'plu',
         milestone_id => 1,
@@ -82,7 +84,8 @@ Get a single milestone
 
 Examples:
 
-    $result = $p->issues->milestones->get(
+    my $m = Pithub::Issues::Milestones->new;
+    my $result = $m->get(
         repo => 'Pithub',
         user => 'plu',
         milestone_id => 1,
@@ -111,7 +114,8 @@ List milestones for an issue
 
 Examples:
 
-    $result = $p->issues->milestones->list(
+    my $m = Pithub::Issues::Milestones->new;
+    my $result = $m->list(
         repo => 'Pithub',
         user => 'plu',
     );
@@ -138,7 +142,8 @@ Update a milestone
 
 Examples:
 
-    $result = $p->issues->milestones->update(
+    my $m = Pithub::Issues::Milestones->new;
+    my $result = $m->update(
         repo => 'Pithub',
         user => 'plu',
         data => {

@@ -26,9 +26,8 @@ call would be unnecessary.
 
 Examples:
 
-    # TODO: verify I got the parameters right:
-    # 'tagger.name' vs tagger.name
-    $result = $p->git_data->tags->create(
+    my $t = Pithub::GitData::Tags->new;
+    my $result = $t->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -104,7 +103,8 @@ Get a Tag
 
 Examples:
 
-    $result = $p->git_data->tags->get(
+    my $t = Pithub::GitData::Tags->new;
+    my $result = $t->get(
         user => 'plu',
         repo => 'Pithub',
         sha  => 'df21b2660fb6',

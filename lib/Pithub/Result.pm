@@ -19,8 +19,8 @@ you can also set it directly on any of the L<Pithub> API objects.
 
 Examples:
 
-    $r = Pithub::Repos->new;
-    $result = $r->list( user => 'rjbs' );
+    mh $r = Pithub::Repos->new;
+    my $result = $r->list( user => 'rjbs' );
 
     # This would just show the first 30 by default
     while ( my $row = $result->next ) {
@@ -35,8 +35,8 @@ Examples:
     }
 
     # Turn auto_pagination on for all L<Pithub::Result> objects
-    $p = Pithub::Repos->new( auto_pagination => 1 );
-    $result = $r->list( user => 'rjbs' );
+    my $p = Pithub::Repos->new( auto_pagination => 1 );
+    my $result = $p->list( user => 'rjbs' );
     while ( my $row = $result->next ) {
         printf "%s: %s\n", $row->{name}, $row->{description};
     }
@@ -279,8 +279,8 @@ the results using this method.
 
 Examples:
 
-    $r = Pithub::Repos->new;
-    $result = $r->list( user => 'rjbs' );
+    my $r = Pithub::Repos->new;
+    my $result = $r->list( user => 'rjbs' );
 
     while ( my $row = $result->next ) {
         printf "%s: %s\n", $row->{name}, $row->{description};
@@ -317,8 +317,8 @@ List all followers in order, from the first one on the first
 page to the last one on the last page. See also
 L</auto_pagination>.
 
-    $followers = Pithub->new->users->followers;
-    $result = $followers->list( user => 'rjbs' );
+    my $followers = Pithub->new->users->followers;
+    my $result = $followers->list( user => 'rjbs' );
     do {
         if ( $result->success ) {
             while ( my $row = $result->next ) {
@@ -355,8 +355,8 @@ List all followers in reverse order, from the last one on the last
 page to the first one on the first page. See also
 L</auto_pagination>.
 
-    $followers = Pithub->new->users->followers;
-    $result = $followers->list( user => 'rjbs' )->last_page;    # this makes two requests!
+    my $followers = Pithub->new->users->followers;
+    my $result = $followers->list( user => 'rjbs' )->last_page;    # this makes two requests!
     do {
         if ( $result->success ) {
             while ( my $row = $result->next ) {

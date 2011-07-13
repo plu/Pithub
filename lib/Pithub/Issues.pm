@@ -24,7 +24,8 @@ Create an issue
 
 Examples:
 
-    $result = $p->issues->create(
+    my $i = Pithub::Issues->new;
+    my $result = $i->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -59,7 +60,8 @@ Get a single issue
 
 Examples:
 
-    $result = $p->issues->get(
+    my $i = Pithub::Issues->new;
+    my $result = $i->get(
         user => 'plu',
         repo => 'Pithub',
         issue_id => 1,
@@ -88,7 +90,8 @@ List issues for a repository
 
 Examples:
 
-    $result = $p->issues->list(
+    my $i = Pithub::Issues->new;
+    my $result = $i->list(
         user => 'plu',
         repo => 'Pithub',
     );
@@ -115,7 +118,8 @@ Edit an issue
 
 Examples:
 
-    $result = $p->issues->update(
+    my $i = Pithub::Issues->new;
+    my $result = $i->update(
         user     => 'plu',
         repo     => 'Pithub',
         issue_id => 1,

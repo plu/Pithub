@@ -22,7 +22,8 @@ Get an organization
 
 Examples:
 
-    $result = $p->orgs->get( org => 'CPAN-API' );
+    my $o = Pithub::Orgs->new;
+    my $result = $o->get( org => 'CPAN-API' );
 
 =back
 
@@ -46,7 +47,8 @@ List all public organizations for a user.
 
 Examples:
 
-    $result = $p->orgs->list( user => 'plu' );
+    my $o = Pithub::Orgs->new;
+    my $result = $o->list( user => 'plu' );
 
 =item *
 
@@ -56,7 +58,8 @@ List public and private organizations for the authenticated user.
 
 Examples:
 
-    $result = $p->orgs->list;
+    my $o = Pithub::Orgs->new;
+    my $result = $o->list;
 
 =back
 
@@ -82,7 +85,8 @@ Edit an organization
 
 Examples:
 
-    $result = $p->orgs->update(
+    my $o = Pithub::Orgs->new;
+    my $result = $o->update(
         org  => 'CPAN-API',
         data => {
             billing_email => 'support@github.com',

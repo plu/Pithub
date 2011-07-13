@@ -19,7 +19,8 @@ Conceal a user's membership
 
 Examples:
 
-    $result = $p->orgs->members->conceal(
+    my $m = Pithub::Orgs::Members->new;
+    my $result = $m->conceal(
         org  => 'CPAN-API',
         user => 'plu',
     );
@@ -49,7 +50,8 @@ repositories.
 
 Examples:
 
-    $result = $p->orgs->members->delete(
+    my $m = Pithub::Orgs::Members->new;
+    my $result = $m->delete(
         org  => 'CPAN-API',
         user => 'plu',
     );
@@ -77,7 +79,8 @@ Check if a user is a member of an organization
 
 Examples:
 
-    $result = $p->orgs->members->is_member(
+    my $m = Pithub::Orgs::Members->new;
+    my $result = $m->is_member(
         org  => 'CPAN-API',
         user => 'plu',
     );
@@ -105,7 +108,8 @@ Get if a user is a public member
 
 Examples:
 
-    $result = $p->orgs->members->is_public(
+    my $m = Pithub::Orgs::Members->new;
+    my $result = $m->is_public(
         org  => 'CPAN-API',
         user => 'plu',
     );
@@ -137,7 +141,8 @@ members are returned.
 
 Examples:
 
-    $result = $p->orgs->members->list( org => 'CPAN-API' );
+    my $m = Pithub::Orgs::Members->new;
+    my $result = $m->list( org => 'CPAN-API' );
 
 =back
 
@@ -162,7 +167,8 @@ publicized or not.
 
 Examples:
 
-    $result = $p->orgs->members->list_public( org => 'CPAN-API' );
+    my $m = Pithub::Orgs::Members->new;
+    my $result = $m->list_public( org => 'CPAN-API' );
 
 =back
 
@@ -186,7 +192,8 @@ Publicize a user's membership
 
 Examples:
 
-    $result = $p->orgs->members->publicize(
+    my $m = Pithub::Orgs::Members->new;
+    my $result = $m->publicize(
         org  => 'CPAN-API',
         user => 'plu',
     );

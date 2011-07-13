@@ -19,7 +19,8 @@ Create a Commit
 
 Examples:
 
-    $result = $p->git_data->commits->create(
+    my $c = Pithub::GitData::Commits->new;
+    my $result = $c->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -57,7 +58,8 @@ Get a Commit
 
 Examples:
 
-    $result = $p->git_data->commits->get(
+    my $c = Pithub::GitData::Commits->new;
+    my $result = $c->get(
         user => 'plu',
         repo => 'Pithub',
         sha  => 'df21b2660fb6',

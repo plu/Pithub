@@ -19,12 +19,14 @@ Create a fork for the authenicated user.
 
 Examples:
 
-    $result = $p->repos->forks->create(
+    my $f = Pithub::Repos::Forks->new;
+    my $result = $f->create(
         user => 'plu',
         repo => 'Pithub',
     );
 
-    $result = $p->repos->forks->create(
+    # or fork to an org
+    my $result = $f->create(
         user => 'plu',
         repo => 'Pithub',
         org  => 'CPAN-API',
@@ -55,7 +57,8 @@ List forks
 
 Examples:
 
-    $result = $p->repos->forks->list(
+    my $f = Pithub::Repos::Forks->new;
+    my $result = $f->list(
         user => 'plu',
         repo => 'Pithub',
     );

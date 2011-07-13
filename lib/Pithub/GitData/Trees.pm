@@ -19,7 +19,8 @@ Create a Tree
 
 Examples:
 
-    $result = $p->git_data->trees->create(
+    my $t = Pithub::GitData::Trees->new;
+    my $result = $t->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -98,7 +99,8 @@ Get a Tree
 
 Examples:
 
-    $result = $p->git_data->trees->get(
+    my $t = Pithub::GitData::Trees->new;
+    my $result = $t->get(
         user => 'plu',
         repo => 'Pithub',
         sha  => 'df21b2660fb6'
@@ -112,7 +114,8 @@ Get a Tree Recursively
 
 Examples:
 
-    $result = $p->git_data->trees->get(
+    my $t = Pithub::GitData::Trees->new;
+    my $result = $t->get(
         user      => 'plu',
         repo      => 'Pithub',
         sha       => 'df21b2660fb6',

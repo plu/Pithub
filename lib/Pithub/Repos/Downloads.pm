@@ -23,7 +23,8 @@ L</upload> to upload the file to Amazon S3.
 
 Examples:
 
-    $result = $p->repos->downloads->create(
+    my $d = Pithub::Repos::Downloads->new;
+    my $result = $d->create(
         user => 'plu',
         repo => 'Pithub',
         data => {
@@ -34,7 +35,7 @@ Examples:
         },
     );
 
-    $p->repos->downloads->upload(
+    $d->upload(
         result => $result,
         file   => '/path/to/file',
     );
@@ -62,7 +63,8 @@ Delete a download
 
 Examples:
 
-    $result = $p->repos->downloads->delete(
+    my $d = Pithub::Repos::Downloads->new;
+    my $result = $d->delete(
         user        => 'plu',
         repo        => 'Pithub',
         download_id => 1,
@@ -91,7 +93,8 @@ Get a single download
 
 Examples:
 
-    $result = $p->repos->downloads->get(
+    my $d = Pithub::Repos::Downloads->new;
+    my $result = $d->get(
         user        => 'plu',
         repo        => 'Pithub',
         download_id => 1,
@@ -120,7 +123,8 @@ List downloads for a repository
 
 Examples:
 
-    $result = $p->repos->downloads->list(
+    my $d = Pithub::Repos::Downloads->new;
+    my $result = $d->list(
         user => 'plu',
         repo => 'Pithub',
     );
