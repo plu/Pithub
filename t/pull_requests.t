@@ -20,7 +20,7 @@ BEGIN {
         my $result = $obj->commits( pull_request_id => 1 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1/commits', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -47,7 +47,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"Please pull this in!","base":"master","head":"octocat:new-feature","title":"Amazing new feature"}', 'HTTP body';
     }
 }
@@ -64,7 +64,7 @@ BEGIN {
         my $result = $obj->files( pull_request_id => 1 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1/files', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -81,7 +81,7 @@ BEGIN {
         my $result = $obj->get( pull_request_id => 1 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -98,7 +98,7 @@ BEGIN {
         my $result = $obj->is_merged( pull_request_id => 1 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1/merge', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -118,7 +118,7 @@ BEGIN {
         my $result = $obj->merge( pull_request_id => 123 );
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/123/merge', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -147,7 +147,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"Please pull this in!","base":"master","head":"octocat:new-feature","title":"Amazing new feature"}', 'HTTP body';
     }
 }
@@ -172,7 +172,7 @@ BEGIN {
         my $result = $obj->create( pull_request_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/123/comments', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"some comment"}', 'HTTP body';
     }
 }
@@ -192,7 +192,7 @@ BEGIN {
         my $result = $obj->delete( comment_id => 456 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/456', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -209,7 +209,7 @@ BEGIN {
         my $result = $obj->get( comment_id => 456 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/456', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -226,7 +226,7 @@ BEGIN {
         my $result = $obj->list( pull_request_id => 456 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/456/comments', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -251,7 +251,7 @@ BEGIN {
         my $result = $obj->update( comment_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"some comment"}', 'HTTP body';
     }
 }

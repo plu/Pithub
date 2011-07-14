@@ -131,7 +131,7 @@ B<raw_content>: L<Pithub::Response/content>
 
 =item *
 
-B<request>: L<Pithub::Response/request>
+B<request>: L<Pithub::Response/http_request>
 
 =item *
 
@@ -145,7 +145,7 @@ has 'response' => (
     handles => {
         code        => 'code',
         raw_content => 'content',
-        request     => 'request',
+        request     => 'http_request',
         success     => 'success',
     },
     is       => 'ro',

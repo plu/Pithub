@@ -55,8 +55,7 @@ either in the constructor or later by calling the setters.
 Besides that there are other modules involved. Every method call
 which maps directly to a Github API call returns a
 L<Pithub::Result> object. This contains everything interesting
-about the L<response|Pithub::Response> returned from the API
-call as well as the L<request|Pithub::Request> that has been sent.
+about the L<response|Pithub::Response> returned from the API call.
 Even the L<Pithub::Base> module might be interesting because this one
 provides the L<request|Pithub::Base/request> method, which is used by
 all other modules. In case Github adds a new API call which is

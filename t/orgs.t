@@ -21,7 +21,7 @@ BEGIN {
         my $result = $obj->get( org => 'some-org' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/orgs/some-org', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -36,7 +36,7 @@ BEGIN {
         my $result = $obj->list( user => 'foo' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/users/foo/orgs', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -46,7 +46,7 @@ BEGIN {
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/user/orgs', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -78,7 +78,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/orgs/some-org', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content,
 '{"email":"support@github.com","location":"San Francisco","billing_email":"support@github.com","name":"github","blog":"https://github.com/blog","company":"GitHub"}',
           'HTTP body';
@@ -101,7 +101,7 @@ BEGIN {
         my $result = $obj->conceal( org => 'foo', user => 'bar' );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/orgs/foo/public_members/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -122,7 +122,7 @@ BEGIN {
         my $result = $obj->delete( org => 'foo', user => 'bar' );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/orgs/foo/members/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -143,7 +143,7 @@ BEGIN {
         my $result = $obj->is_member( org => 'foo', user => 'bar' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/orgs/foo/members/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -163,7 +163,7 @@ BEGIN {
         my $result = $obj->is_public( org => 'foo', user => 'bar' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/orgs/foo/public_members/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -180,7 +180,7 @@ BEGIN {
         my $result = $obj->list( org => 'foo' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/orgs/foo/members', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -197,7 +197,7 @@ BEGIN {
         my $result = $obj->list_public( org => 'foo' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/orgs/foo/public_members', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -218,7 +218,7 @@ BEGIN {
         my $result = $obj->publicize( org => 'foo', user => 'bar' );
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/orgs/foo/public_members/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -239,7 +239,7 @@ BEGIN {
         my $result = $obj->add_member( team_id => 123, user => 'bar' );
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/teams/123/members/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -260,7 +260,7 @@ BEGIN {
         my $result = $obj->add_repo( team_id => 123, repo => 'bar' );
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/teams/123/repos/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -288,7 +288,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/orgs/blorg/teams', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"permission":"push","name":"new team","repo_names":["github/dotfiles"]}', 'HTTP body';
     }
 }
@@ -308,7 +308,7 @@ BEGIN {
         my $result = $obj->delete( team_id => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/teams/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -328,7 +328,7 @@ BEGIN {
         my $result = $obj->get( team_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/teams/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -349,7 +349,7 @@ BEGIN {
         my $result = $obj->has_repo( team_id => 123, repo => 'foo' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/teams/123/repos/foo', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -370,7 +370,7 @@ BEGIN {
         my $result = $obj->is_member( team_id => 123, user => 'foo' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/teams/123/members/foo', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -390,7 +390,7 @@ BEGIN {
         my $result = $obj->list( org => 'foorg' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/orgs/foorg/teams', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -410,7 +410,7 @@ BEGIN {
         my $result = $obj->list_members( team_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/teams/123/members', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -430,7 +430,7 @@ BEGIN {
         my $result = $obj->list_repos( team_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/teams/123/repos', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -451,7 +451,7 @@ BEGIN {
         my $result = $obj->remove_member( team_id => 123, user => 'bar' );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/teams/123/members/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -472,7 +472,7 @@ BEGIN {
         my $result = $obj->remove_repo( team_id => 123, repo => 'bar' );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/teams/123/repos/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -499,7 +499,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/teams/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"permission":"push","name":"new team name"}', 'HTTP body';
     }
 }

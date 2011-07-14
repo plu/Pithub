@@ -26,7 +26,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/gists', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content,
           '{"files":{"file1.txt":{"content":"String file content"}},"public":1,"description":"the description for this gist"}',
           'HTTP body';
@@ -48,7 +48,7 @@ BEGIN {
         my $result = $obj->delete( gist_id => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/gists/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -65,7 +65,7 @@ BEGIN {
         my $result = $obj->fork( gist_id => 123 );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/gists/123/fork', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -82,7 +82,7 @@ BEGIN {
         my $result = $obj->get( gist_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -102,7 +102,7 @@ BEGIN {
         my $result = $obj->is_starred( gist_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/123/star', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -117,7 +117,7 @@ BEGIN {
         my $result = $obj->list( user => 'foo' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/users/foo/gists', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -127,7 +127,7 @@ BEGIN {
         my $result = $obj->list( starred => 1 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/starred', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
         ok $obj->clear_token, 'Token removed';
     }
@@ -136,7 +136,7 @@ BEGIN {
         my $result = $obj->list( public => 1 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/public', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -144,7 +144,7 @@ BEGIN {
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -164,7 +164,7 @@ BEGIN {
         my $result = $obj->star( gist_id => 123 );
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/gists/123/star', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -184,7 +184,7 @@ BEGIN {
         my $result = $obj->unstar( gist_id => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/gists/123/star', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -212,7 +212,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/gists/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content,
           '{"files":{"file1.txt":{"content":"String file content"}},"public":1,"description":"the description for this gist"}',
           'HTTP body';
@@ -236,7 +236,7 @@ BEGIN {
         my $result = $obj->create( gist_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/gists/123/comments', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"some comment"}', 'HTTP body';
     }
 }
@@ -256,7 +256,7 @@ BEGIN {
         my $result = $obj->delete( comment_id => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/gists/comments/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -273,7 +273,7 @@ BEGIN {
         my $result = $obj->get( comment_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/comments/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -290,7 +290,7 @@ BEGIN {
         my $result = $obj->list( gist_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/123/comments', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -312,7 +312,7 @@ BEGIN {
         my $result = $obj->update( comment_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/gists/comments/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"some comment"}', 'HTTP body';
     }
 }

@@ -4,11 +4,14 @@ package Pithub::Base;
 
 use Moose;
 use Carp qw(croak);
+use HTTP::Headers;
+use HTTP::Request;
+use JSON::Any;
 use LWP::UserAgent;
 use MooseX::Types::URI qw(Uri);
-use Pithub::Request;
 use Pithub::Response;
 use Pithub::Result;
+use URI;
 use namespace::autoclean;
 
 =head1 DESCRIPTION
@@ -305,6 +308,12 @@ has 'user' => (
     required  => 0,
 );
 
+has '_json' => (
+    is         => 'ro',
+    isa        => 'JSON::Any',
+    lazy_build => 1,
+);
+
 my @TOKEN_REQUIRED = (
     'DELETE /user/emails',
     'GET /user',
@@ -511,18 +520,36 @@ This method always returns a L<Pithub::Result> object.
 =cut
 
 sub request {
-    my $self = shift;
+    my ( $self, $method, $path, $data, $options ) = @_;
 
-    my %req_args = $self->_prepare_request_args(@_);
-    my $request  = Pithub::Request->new(%req_args);
-    my %res_args = $self->_prepare_response_args($request);
-    my $response = Pithub::Response->new(%res_args);
+    croak 'Missing mandatory parameters: $method, $path' if scalar @_ < 3;
+    croak "Invalid method: ${method}" unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
+
+    my $uri = $self->_uri_for($path);
+
+    if ( $self->_token_required( $method, $path ) && !$self->has_token ) {
+        croak sprintf "Access token required for: %s %s (%s)", $method, $path, $uri;
+    }
+
+    if ($options) {
+        croak 'The parameter $options must be a hashref' unless ref $options eq 'HASH';
+        croak 'The key prepare_uri in the $options hashref must be a coderef' if $options->{prepare_uri} && ref $options->{prepare_uri} ne 'CODE';
+        $options->{prepare_uri}->($uri) if $options->{prepare_uri};
+    }
+
+    my $request = $self->_request_for( $method, $uri, $data );
+    my $response = Pithub::Response->new( http_request => $request, ua => $self->ua );
 
     return Pithub::Result->new(
         auto_pagination => $self->auto_pagination,
         response        => $response,
         _request        => sub { $self->request(@_) },
     );
+}
+
+sub _build__json {
+    my ($self) = @_;
+    return JSON::Any->new;
 }
 
 sub _build_ua {
@@ -556,11 +583,38 @@ sub _merge_args {
     return ( %args, @args );
 }
 
-sub _prepare_request_args {
-    my ( $self, $method, $path, $data, $options ) = @_;
+sub _request_for {
+    my ( $self, $method, $uri, $data ) = @_;
 
-    croak 'Missing mandatory parameters: $method, $path' if scalar @_ < 3;
-    croak "Invalid method: ${method}" unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
+    my $headers = HTTP::Headers->new;
+
+    if ( $self->has_token ) {
+        $headers->header( 'Authorization' => sprintf( 'token %s', $self->token ) );
+    }
+
+    my $request = HTTP::Request->new( $method, $uri, $headers );
+
+    if ($data) {
+        my $json = $self->_json->encode($data);
+        $request->content($json);
+    }
+
+    $request->header( 'Content-Length' => length $request->content );
+
+    return $request;
+}
+
+sub _token_required {
+    my ( $self, $method, $path ) = @_;
+    return 1 if grep $_ eq "${method} ${path}", @TOKEN_REQUIRED;
+    foreach my $regexp (@TOKEN_REQUIRED_REGEXP) {
+        return 1 if "${method} ${path}" =~ /$regexp/;
+    }
+    return 0;
+}
+
+sub _uri_for {
+    my ( $self, $path ) = @_;
 
     my $uri = $self->api_uri->clone;
     $uri->path($path);
@@ -575,41 +629,7 @@ sub _prepare_request_args {
         $uri->query_form(%query);
     }
 
-    if ($options) {
-        croak 'The parameter $options must be a hashref' unless ref $options eq 'HASH';
-        croak 'The key prepare_uri in the $options hashref must be a coderef' if $options->{prepare_uri} && ref $options->{prepare_uri} ne 'CODE';
-        $options->{prepare_uri}->($uri) if $options->{prepare_uri};
-    }
-
-    if ( $self->_token_required( $method, $path ) && !$self->has_token ) {
-        croak sprintf "Access token required for: %s %s (%s)", $method, $path, $uri;
-    }
-
-    my %args = (
-        uri    => $uri,
-        method => $method,
-        ua     => $self->ua,
-    );
-
-    $args{data}  = $data        if defined $data;
-    $args{token} = $self->token if $self->has_token;
-
-    return %args;
-}
-
-sub _prepare_response_args {
-    my ( $self, $request ) = @_;
-    my %args = ( request => $request );
-    return %args;
-}
-
-sub _token_required {
-    my ( $self, $method, $path ) = @_;
-    return 1 if grep $_ eq "${method} ${path}", @TOKEN_REQUIRED;
-    foreach my $regexp (@TOKEN_REQUIRED_REGEXP) {
-        return 1 if "${method} ${path}" =~ /$regexp/;
-    }
-    return 0;
+    return $uri;
 }
 
 sub _validate_user_repo_args {

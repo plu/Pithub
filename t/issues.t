@@ -35,7 +35,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content,
           '{"body":"I\'m having a problem with this.","assignee":"octocat","milestone":1,"title":"Found a bug","labels":["Label1","Label2"]}',
           'HTTP body';
@@ -54,7 +54,7 @@ BEGIN {
         my $result = $obj->get( issue_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -69,7 +69,7 @@ BEGIN {
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -101,7 +101,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content,
           '{"body":"I\'m having a problem with this.","assignee":"octocat","milestone":1,"title":"Found a bug","labels":["Label1","Label2"],"state":"open"}',
           'HTTP body';
@@ -128,7 +128,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/comments', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"comment"}', 'HTTP body';
     }
 }
@@ -148,7 +148,7 @@ BEGIN {
         my $result = $obj->delete( comment_id => 123, );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/comments/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -165,7 +165,7 @@ BEGIN {
         my $result = $obj->get( comment_id => 123, );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/comments/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -182,7 +182,7 @@ BEGIN {
         my $result = $obj->list( issue_id => 123, );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/comments', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -207,7 +207,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/comments/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"body":"comment"}', 'HTTP body';
     }
 }
@@ -224,7 +224,7 @@ BEGIN {
         my $result = $obj->get( event_id => 123, );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/events/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -239,7 +239,7 @@ BEGIN {
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/events', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -247,7 +247,7 @@ BEGIN {
         my $result = $obj->list( issue_id => 123, );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/events', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -274,7 +274,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '["label1","label2"]', 'HTTP body';
     }
 }
@@ -300,7 +300,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"color":"FFFFFF","name":"label1"}', 'HTTP body';
     }
 }
@@ -320,7 +320,7 @@ BEGIN {
         my $result = $obj->delete( label => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -337,7 +337,7 @@ BEGIN {
         my $result = $obj->get( label => 'bug' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels/bug', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -352,7 +352,7 @@ BEGIN {
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -360,7 +360,7 @@ BEGIN {
         my $result = $obj->list( issue_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -368,7 +368,7 @@ BEGIN {
         my $result = $obj->list( milestone_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123/labels', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -389,7 +389,7 @@ BEGIN {
         my $result = $obj->remove( issue_id => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -397,7 +397,7 @@ BEGIN {
         my $result = $obj->remove( issue_id => 123, label => 456 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels/456', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -424,7 +424,7 @@ BEGIN {
         );
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '["label1","label2"]', 'HTTP body';
     }
 }
@@ -451,7 +451,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"color":"FF0000","name":"label2"}', 'HTTP body';
     }
 }
@@ -479,7 +479,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"title":"String","due_on":"Time","description":"String","state":"open or closed"}', 'HTTP body';
     }
 }
@@ -499,7 +499,7 @@ BEGIN {
         my $result = $obj->delete( milestone_id => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -516,7 +516,7 @@ BEGIN {
         my $result = $obj->get( milestone_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -531,7 +531,7 @@ BEGIN {
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -562,7 +562,7 @@ BEGIN {
         );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"title":"String","due_on":"Time","description":"String","state":"open or closed"}', 'HTTP body';
     }
 }

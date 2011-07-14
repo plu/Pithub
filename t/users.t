@@ -83,7 +83,7 @@ BEGIN {
         my $result = $obj->add( data => ['foo@bar.com'] );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '["foo@bar.com"]', 'HTTP body';
     }
 
@@ -91,7 +91,7 @@ BEGIN {
         my $result = $obj->add( data => [ 'foo@bar.com', 'bar@foo.com' ] );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '["foo@bar.com","bar@foo.com"]', 'HTTP body';
     }
 }
@@ -111,7 +111,7 @@ BEGIN {
         my $result = $obj->delete( data => ['foo@bar.com'] );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '["foo@bar.com"]', 'HTTP body';
     }
 
@@ -119,7 +119,7 @@ BEGIN {
         my $result = $obj->delete( data => [ 'foo@bar.com', 'bar@foo.com' ] );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '["foo@bar.com","bar@foo.com"]', 'HTTP body';
     }
 }

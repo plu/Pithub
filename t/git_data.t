@@ -32,7 +32,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/blobs', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"content":"Content of the blob","encoding":"utf-8"}', 'HTTP body';
     }
 }
@@ -49,7 +49,7 @@ BEGIN {
         my $result = $obj->get( sha => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/blobs/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -70,7 +70,7 @@ BEGIN {
         my $result = $obj->create( data => { message => 'my commit message' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/commits', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"message":"my commit message"}', 'HTTP body';
     }
 }
@@ -87,7 +87,7 @@ BEGIN {
         my $result = $obj->get( sha => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/commits/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -104,7 +104,7 @@ BEGIN {
         my $result = $obj->get( ref => 'heads/sc/featureA' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs/heads/sc/featureA', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -125,7 +125,7 @@ BEGIN {
         my $result = $obj->create( data => { ref => 'refs/heads/master' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"ref":"refs/heads/master"}', 'HTTP body';
     }
 }
@@ -140,7 +140,7 @@ BEGIN {
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -148,7 +148,7 @@ BEGIN {
         my $result = $obj->list( ref => 'tags' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs/tags', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -170,7 +170,7 @@ BEGIN {
         my $result = $obj->update( ref => 'foo/bar', data => { sha => '123' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs/foo/bar', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"sha":"123"}', 'HTTP body';
     }
 }
@@ -187,7 +187,7 @@ BEGIN {
         my $result = $obj->get( sha => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/tags/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -215,7 +215,7 @@ BEGIN {
         );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/tags', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"object":"827efc6d56897b048c772eb4087f854f46256132","type":"commit","tag":"v0.1","message":"Tagged v0.1"}', 'HTTP body';
     }
 }
@@ -232,7 +232,7 @@ BEGIN {
         my $result = $obj->get( sha => 123 );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/trees/123', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 
@@ -241,7 +241,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/trees/456', 'HTTP path';
         is $result->request->uri->query, 'recursive=1', 'HTTP GET parameters';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
 }
@@ -262,7 +262,7 @@ BEGIN {
         my $result = $obj->create( data => { tree => [ { path => 'file1.pl' } ] } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/trees', 'HTTP path';
-        my $http_request = $result->request->http_request;
+        my $http_request = $result->request;
         is $http_request->content, '{"tree":[{"path":"file1.pl"}]}', 'HTTP body';
     }
 }

@@ -122,19 +122,13 @@ my %accessors = (
 
     my $result       = $p->request( GET => '/bar' );
     my $response     = $result->response;
-    my $request      = $response->request;
-    my $http_request = $request->http_request;
+    my $http_request = $response->http_request;
 
     isa_ok $result,       'Pithub::Result';
     isa_ok $response,     'Pithub::Response';
-    isa_ok $request,      'Pithub::Request';
     isa_ok $http_request, 'HTTP::Request';
 
-    is $result->request, $request, 'Shortcut to the Pithub::Request object';
-    is $request->method, 'GET', 'The HTTP method was set in the Pithub::Request object';
-    is $request->uri->path, '/bar', 'The HTTP path was set in the Pithub::Request object';
-    is $request->has_data, '',    'There was no data set in the Pithub::Request object';
-    is $request->data,     undef, 'The data hashref is undef';
+    is $http_request->content, '', 'The data hashref is undef';
 
     is $http_request->uri->path, '/bar', 'The HTTP path was set in the HTTP::Request object';
     is $http_request->header('Authorization'), undef, 'Authorization header was not set in the HTTP::Request object';
@@ -146,12 +140,12 @@ my %accessors = (
     my $p = Pithub->new( ua => Pithub::Test::UA->new );
     $p->token('123');
     my $request = $p->request( POST => '/foo', { some => 'data' } )->request;
-    eq_or_diff $request->data, { some => 'data' }, 'The data hashref was set in the request object';
-    is $request->http_request->header('Authorization'), 'token 123', 'Authorization header was set in the HTTP::Request object';
+    eq_or_diff $request->content, '{"some":"data"}', 'The JSON content was set in the request object';
+    is $request->header('Authorization'), 'token 123', 'Authorization header was set in the HTTP::Request object';
     ok $p->clear_token, 'Access token clearer';
     is $p->token, undef, 'No token set anymore';
     $request = $p->request( POST => '/foo', { some => 'data' } )->request;
-    is $request->http_request->header('Authorization'), undef, 'Authorization header was not set in the HTTP::Request object';
+    is $request->header('Authorization'), undef, 'Authorization header was not set in the HTTP::Request object';
 }
 
 {
