@@ -8,6 +8,27 @@ use JSON::Any;
 use URI;
 use namespace::autoclean;
 
+=head1 DESCRIPTION
+
+Every method call which maps directly to a Github API call returns a
+L<Pithub::Result> object. Once you got the result object, you can
+set L<attributes|/ATTRIBUTES> on them or call L<methods|/METHODS>.
+The HTTP requests are made lazy, means: Once you got the result
+object returned, no HTTP request has been made yet. Only if you
+access data using one of the methods like L</content> or L</next>,
+it will make the HTTP request.
+
+Example:
+
+    use Data::Dumper;
+
+    my $r = Pithub::Repos->new;
+    my $result = $r->list( user => 'rjbs' );
+    # no HTTP request was made so far
+
+    # on the next line the HTTP request will happen
+    print Dumper $result->content;
+
 =attr auto_pagination
 
 If you set this to true and use the L</next> method to iterate
@@ -52,7 +73,7 @@ has 'auto_pagination' => (
 =attr content
 
 The decoded JSON response. May be an arrayref or hashref, depending
-on the API call.
+on the API call. For some calls there is no content at all.
 
 =cut
 
@@ -331,7 +352,9 @@ L</auto_pagination>.
     } while $result = $result->next_page;
 
 The nature of the implementation requires you here to do a
-C<< do { ... } while ... >> loop.
+C<< do { ... } while ... >> loop. If you're going to fetch
+all results of all pages, I suggest to use the
+L</auto_pagination> feature, it's much more convenient.
 
 =back
 

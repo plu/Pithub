@@ -46,7 +46,7 @@ L<Github v3 API|http://developer.github.com/v3/>.
 =head1 MODULES
 
 There are different ways of using the Pithub library. You can either
-use the main module C<< Pithub >> to get access to all other
+use the main module L<Pithub> to get access to all other
 modules, like L<Pithub::Repos> for example. Or you can use
 L<Pithub::Repos> directly and create an instance of it. All
 modules accept the same L<attributes|Pithub::Base/ATTRIBUTES>,
@@ -56,11 +56,26 @@ Besides that there are other modules involved. Every method call
 which maps directly to a Github API call returns a
 L<Pithub::Result> object. This contains everything interesting
 about the L<response|Pithub::Response> returned from the API call.
-Even the L<Pithub::Base> module might be interesting because this one
-provides the L<request|Pithub::Base/request> method, which is used by
-all other modules. In case Github adds a new API call which is
-not supported yet by L<Pithub> the L<request|Pithub::Base/request>
-method can be used directly.
+L<Pithub::Response> will also provide access to the
+L<request object|Pithub::Response/http_request>, which is just a
+plain L<HTTP::Request>.
+
+L<Pithub::Base> might be interesting for two reasons:
+
+=over
+
+=item *
+
+The list of L<attributes|Pithub::Base/ATTRIBUTES> which all modules
+accept.
+
+=item *
+
+The L<request|Pithub::Base/request> method: In case Github adds a
+new API call which is not supported yet by L<Pithub> the
+L<request|Pithub::Base/request> method can be used directly to
+perform this new API call, there's some documentation on how to
+use it.
 
 =over
 

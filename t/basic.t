@@ -112,8 +112,8 @@ my %accessors = (
     lives_ok { $p->request( method => 'GET', path => 'bar' ) } 'Correct parameters do not throw an exception';
 
     throws_ok { $p->request( method => 'GET', path => '/bar', options => [] ) }
-    qr{The parameter \$options must be a hashref},
-      '$options must be a hashref';
+    qr{The key options must be a hashref},
+      'options must be a hashref';
 
     throws_ok { $p->request( method => 'GET', path => '/bar', options => { prepare_request => 1 } ) }
     qr{The key prepare_request in the \$options hashref must be a coderef},

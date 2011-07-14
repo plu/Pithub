@@ -52,19 +52,19 @@ methods of L<HTTP::Response>:
 
 =item *
 
-B<header>: L<HTTP::Response>->header
+B<header>: L<HTTP::Response> C<< -> >> header
 
 =item *
 
-B<code>: L<HTTP::Response>->code
+B<code>: L<HTTP::Response> C<< -> >> code
 
 =item *
 
-B<content>: L<HTTP::Response>->content
+B<content>: L<HTTP::Response> C<< -> >> content
 
 =item *
 
-B<success>: L<HTTP::Response>->is_success
+B<success>: L<HTTP::Response> C<< -> >> is_success
 
 =back
 

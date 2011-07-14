@@ -16,7 +16,7 @@ use namespace::autoclean;
 
 =head1 DESCRIPTION
 
-All C<< Pithub >> L<modules|Pithub/MODULES> inherit from
+All L<Pithub> L<modules|Pithub/MODULES> inherit from
 L<Pithub::Base>, even L<Pithub> itself. So all
 L<attributes|/ATTRIBUTES> listed here can either be set in the
 constructor or via the setter on the objects.
@@ -28,7 +28,7 @@ the L</token> or the L</user> and L</repo> attributes.
 
 The L</user> and L</repo> attributes are special: They get even
 set on method calls that require B<both> of them. This is to reduce
-verbosity, especially if you want to do a lot of things at the
+verbosity, especially if you want to do a lot of things on the
 same repo. This also works for other objects: If you create an
 object of L<Pithub::Repos> where you set the L</user> and L</repo>
 attribute in the constructor, this will also be set once you
@@ -291,7 +291,7 @@ B<has_user>: check if the user attribute is set
 
 =back
 
-It might makes sense to use this together with the repo attribute:
+It might make sense to use this together with the repo attribute:
 
     my $c = Pithub::Repos::Commits->new( user => 'plu', repo => 'Pithub' );
     my $result = $c->list;
@@ -419,13 +419,13 @@ my @TOKEN_REQUIRED_REGEXP = (
 This method is the central point: All L<Pithub> are using this method
 for making requests to the Github. If Github adds a new API call that
 is not yet supported, this method can be used directly. It accepts
-following parameters:
+an hash with following keys:
 
 =over
 
 =item *
 
-B<$method>: mandatory string, one of the following:
+B<method>: mandatory string, one of the following:
 
 =over
 
@@ -453,18 +453,18 @@ PUT
 
 =item *
 
-B<$path>: mandatory string of the relative path used for making the
+B<path>: mandatory string of the relative path used for making the
 API call.
 
 =item *
 
-B<$data>: optional data reference, usually a reference to an array
+B<data>: optional data reference, usually a reference to an array
 or hash. It must be possible to serialize this using L<JSON::Any>.
 This will be the HTTP request body.
 
 =item *
 
-B<$options>: optional hash reference to set additional options on
+B<options>: optional hash reference to set additional options on
 the request. So far only C<< prepare_request >> is supported. See
 more about that in the examples below.
 
@@ -557,8 +557,8 @@ sub request {
 
     my $request = $self->_request_for( $method, $uri, $data );
 
-    if ( $options ) {
-        croak 'The parameter $options must be a hashref' unless ref $options eq 'HASH';
+    if ($options) {
+        croak 'The key options must be a hashref' unless ref $options eq 'HASH';
         croak 'The key prepare_request in the $options hashref must be a coderef' if $options->{prepare_request} && ref $options->{prepare_request} ne 'CODE';
         $options->{prepare_request}->($request) if $options->{prepare_request};
     }
