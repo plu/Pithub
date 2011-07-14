@@ -465,8 +465,8 @@ This will be the HTTP request body.
 =item *
 
 B<$options>: optional hash reference to set additional options on
-the request. So far only C<< prepare_uri >> is supported. See more
-about that in the examples below.
+the request. So far only C<< prepare_request >> is supported. See
+more about that in the examples below.
 
 =back
 
@@ -474,12 +474,16 @@ Usually you should not end up using this method at all. It's only
 available if L<Pithub> is missing anything from the Github v3 API.
 Though here are some examples how to use it:
 
+=over
+
 =item *
 
 Same as L<Pithub::Users/get>:
 
     my $p = Pithub->new;
     my $result = $p->request( GET => '/users/plu' );
+
+=item *
 
 Same as L<Pithub::Gists/create>:
 
@@ -493,6 +497,8 @@ Same as L<Pithub::Gists/create>:
     };
     my $result = $p->request( $method, $path, $data );
 
+=item *
+
 Same as L<Pithub::GitData::Trees/get>:
 
     my $p       = Pithub->new;
@@ -500,20 +506,22 @@ Same as L<Pithub::GitData::Trees/get>:
     my $path    = '/repos/plu/Pithub/git/trees/aac667c5aaa6e49572894e8c722d0705bb00fab2';
     my $data    = undef;
     my $options = {
-        prepare_uri => sub {
-            my ($uri) = @_;
-            my %query = ( $uri->query_form, recursive => 1 );
-            $uri->query_form(%query);
+        prepare_request => sub {
+            my ($request) = @_;
+            my %query = ( $request->uri->query_form, recursive => 1 );
+            $request->uri->query_form(%query);
         },
     };
     my $result = $p->request( $method, $path, $data, $options );
 
-Always be careful using C<< prepare_uri >> and C<< query_form >>. If
-the option L</per_page> is set, you might override the pagination
+Always be careful using C<< prepare_request >> and C<< query_form >>.
+If the option L</per_page> is set, you might override the pagination
 parameter. That's the reason for this construct:
 
-    my %query = ( $uri->query_form, recursive => 1 );
-    $uri->query_form(%query);
+    my %query = ( $request->uri->query_form, recursive => 1 );
+    $request->uri->query_form(%query);
+
+=back
 
 This method always returns a L<Pithub::Result> object.
 
@@ -531,13 +539,14 @@ sub request {
         croak sprintf "Access token required for: %s %s (%s)", $method, $path, $uri;
     }
 
+    my $request = $self->_request_for( $method, $uri, $data );
+
     if ($options) {
         croak 'The parameter $options must be a hashref' unless ref $options eq 'HASH';
-        croak 'The key prepare_uri in the $options hashref must be a coderef' if $options->{prepare_uri} && ref $options->{prepare_uri} ne 'CODE';
-        $options->{prepare_uri}->($uri) if $options->{prepare_uri};
+        croak 'The key prepare_request in the $options hashref must be a coderef' if $options->{prepare_request} && ref $options->{prepare_request} ne 'CODE';
+        $options->{prepare_request}->($request) if $options->{prepare_request};
     }
 
-    my $request = $self->_request_for( $method, $uri, $data );
     my $response = Pithub::Response->new( http_request => $request, ua => $self->ua );
 
     return Pithub::Result->new(

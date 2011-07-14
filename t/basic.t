@@ -114,9 +114,9 @@ my %accessors = (
     qr{The parameter \$options must be a hashref},
       '$options must be a hashref';
 
-    throws_ok { $p->request( GET => '/bar', undef, { prepare_uri => 1 } ) }
-    qr{The key prepare_uri in the \$options hashref must be a coderef},
-      'prepare_uri must be a coderef';
+    throws_ok { $p->request( GET => '/bar', undef, { prepare_request => 1 } ) }
+    qr{The key prepare_request in the \$options hashref must be a coderef},
+      'prepare_request must be a coderef';
 
     lives_ok { $p->request( GET => 'bar', undef, {} ) } 'Empty options hashref';
 

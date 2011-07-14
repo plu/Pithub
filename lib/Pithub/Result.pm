@@ -246,10 +246,10 @@ sub get_page {
     $query{page} = $page;
 
     my $options = {
-        prepare_uri => sub {
-            my ($u) = @_;
-            %query = ( $u->query_form, %query );
-            $u->query_form(%query);
+        prepare_request => sub {
+            my ($request) = @_;
+            %query = ( $request->uri->query_form, %query );
+            $request->uri->query_form(%query);
         },
     };
 
@@ -449,10 +449,10 @@ sub _paginate {
     my ( $self, $uri_str ) = @_;
     my $uri     = URI->new($uri_str);
     my $options = {
-        prepare_uri => sub {
-            my ($u) = @_;
-            my %query = ( $u->query_form, $uri->query_form );
-            $u->query_form(%query);
+        prepare_request => sub {
+            my ($request) = @_;
+            my %query = ( $request->uri->query_form, $uri->query_form );
+            $request->uri->query_form(%query);
         },
     };
     return $self->_request->( GET => $uri->path, undef, $options );
