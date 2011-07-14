@@ -36,7 +36,11 @@ sub create_comment {
     croak 'Missing key in parameters: sha' unless $args{sha};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( POST => sprintf( '/repos/%s/%s/commits/%s/comments', $args{user}, $args{repo}, $args{sha} ), $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/commits/%s/comments', delete $args{user}, delete $args{repo}, delete $args{sha} ),
+        %args,
+    );
 }
 
 =method delete_comment
@@ -66,7 +70,11 @@ sub delete_comment {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/repos/%s/%s/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        %args,
+    );
 }
 
 =method get
@@ -96,7 +104,11 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: sha' unless $args{sha};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/commits/%s', $args{user}, $args{repo}, $args{sha} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/commits/%s', delete $args{user}, delete $args{repo}, delete $args{sha} ),
+        %args,
+    );
 }
 
 =method get_comment
@@ -126,7 +138,11 @@ sub get_comment {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        %args,
+    );
 }
 
 =method list
@@ -154,7 +170,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/commits', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/commits', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method list_comments
@@ -202,10 +222,18 @@ Examples:
 sub list_comments {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    if ( my $sha = $args{sha} ) {
-        return $self->request( GET => sprintf( '/repos/%s/%s/commits/%s/comments', $args{user}, $args{repo}, $sha ) );
+    if ( my $sha = delete $args{sha} ) {
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/repos/%s/%s/commits/%s/comments', delete $args{user}, delete $args{repo}, $sha ),
+            %args,
+        );
     }
-    return $self->request( GET => sprintf( '/repos/%s/%s/comments', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/comments', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method update_comment
@@ -237,7 +265,11 @@ sub update_comment {
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/comments/%s', $args{user}, $args{repo}, $args{comment_id} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/repos/%s/%s/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

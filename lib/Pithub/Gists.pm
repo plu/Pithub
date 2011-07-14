@@ -40,7 +40,11 @@ Examples:
 sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( POST => '/gists', $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => '/gists',
+        %args,
+    );
 }
 
 =method delete
@@ -68,7 +72,11 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( DELETE => sprintf( '/gists/%s', $args{gist_id} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/gists/%s', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method fork
@@ -96,7 +104,11 @@ Examples:
 sub fork {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( POST => sprintf( '/gists/%s/fork', $args{gist_id} ) );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/gists/%s/fork', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method get
@@ -124,7 +136,11 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( GET => sprintf( '/gists/%s', $args{gist_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/gists/%s', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method is_starred
@@ -149,7 +165,11 @@ Examples:
 sub is_starred {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( GET => sprintf( '/gists/%s/star', $args{gist_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/gists/%s/star', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method list
@@ -212,16 +232,32 @@ Examples:
 
 sub list {
     my ( $self, %args ) = @_;
-    if ( my $user = $args{user} ) {
-        return $self->request( GET => sprintf( '/users/%s/gists', $user ) );
+    if ( my $user = delete $args{user} ) {
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/users/%s/gists', $user ),
+            %args,
+        );
     }
-    elsif ( $args{starred} ) {
-        return $self->request( GET => '/gists/starred' );
+    elsif ( delete $args{starred} ) {
+        return $self->request(
+            method => 'GET',
+            path   => '/gists/starred',
+            %args,
+        );
     }
-    elsif ( $args{public} ) {
-        return $self->request( GET => '/gists/public' );
+    elsif ( delete $args{public} ) {
+        return $self->request(
+            method => 'GET',
+            path   => '/gists/public',
+            %args,
+        );
     }
-    return $self->request( GET => '/gists' );
+    return $self->request(
+        method => 'GET',
+        path   => '/gists',
+        %args,
+    );
 }
 
 =method star
@@ -246,7 +282,11 @@ Examples:
 sub star {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( PUT => sprintf( '/gists/%s/star', $args{gist_id} ) );
+    return $self->request(
+        method => 'PUT',
+        path   => sprintf( '/gists/%s/star', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method unstar
@@ -271,7 +311,11 @@ Examples:
 sub unstar {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( DELETE => sprintf( '/gists/%s/star', $args{gist_id} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/gists/%s/star', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method update
@@ -300,7 +344,11 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => sprintf( '/gists/%s', $args{gist_id} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/gists/%s', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

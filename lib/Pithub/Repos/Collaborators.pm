@@ -34,7 +34,11 @@ sub add {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: collaborator' unless $args{collaborator};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PUT => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
+    return $self->request(
+        method => 'PUT',
+        path   => sprintf( '/repos/%s/%s/collaborators/%s', delete $args{user}, delete $args{repo}, delete $args{collaborator} ),
+        %args,
+    );
 }
 
 =method is_collaborator
@@ -71,7 +75,11 @@ sub is_collaborator {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: collaborator' unless $args{collaborator};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/collaborators/%s', delete $args{user}, delete $args{repo}, delete $args{collaborator} ),
+        %args,
+    );
 }
 
 =method list
@@ -99,7 +107,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/collaborators', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/collaborators', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method remove
@@ -129,7 +141,11 @@ sub remove {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: collaborator' unless $args{collaborator};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/collaborators/%s', $args{user}, $args{repo}, $args{collaborator} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/repos/%s/%s/collaborators/%s', delete $args{user}, delete $args{repo}, delete $args{collaborator} ),
+        %args
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

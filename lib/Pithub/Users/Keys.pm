@@ -34,7 +34,11 @@ Examples:
 sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( POST => '/user/keys', $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => '/user/keys',
+        %args,
+    );
 }
 
 =method delete
@@ -59,7 +63,11 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: key_id' unless $args{key_id};
-    return $self->request( DELETE => sprintf( '/user/keys/%s', $args{key_id} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/user/keys/%s', delete $args{key_id} ),
+        %args,
+    );
 }
 
 =method get
@@ -84,7 +92,11 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: key_id' unless $args{key_id};
-    return $self->request( GET => sprintf( '/user/keys/%s', $args{key_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/user/keys/%s', delete $args{key_id} ),
+        %args,
+    );
 }
 
 =method list
@@ -107,8 +119,12 @@ Examples:
 =cut
 
 sub list {
-    my ($self) = @_;
-    return $self->request( GET => '/user/keys' );
+    my ( $self, %args ) = @_;
+    return $self->request(
+        method => 'GET',
+        path   => '/user/keys',
+        %args,
+    );
 }
 
 =method update
@@ -140,7 +156,11 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: key_id' unless $args{key_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => sprintf( '/user/keys/%s', $args{key_id} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/user/keys/%s', delete $args{key_id} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

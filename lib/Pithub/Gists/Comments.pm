@@ -33,7 +33,11 @@ sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( POST => sprintf( '/gists/%s/comments', $args{gist_id} ), $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/gists/%s/comments', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method delete
@@ -58,7 +62,11 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
-    return $self->request( DELETE => sprintf( '/gists/comments/%s', $args{comment_id} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/gists/comments/%s', delete $args{comment_id} ),
+        %args,
+    );
 }
 
 =method get
@@ -83,7 +91,11 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
-    return $self->request( GET => sprintf( '/gists/comments/%s', $args{comment_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/gists/comments/%s', delete $args{comment_id} ),
+        %args,
+    );
 }
 
 =method list
@@ -108,7 +120,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    return $self->request( GET => sprintf( '/gists/%s/comments', $args{gist_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/gists/%s/comments', delete $args{gist_id} ),
+        %args,
+    );
 }
 
 =method update
@@ -137,7 +153,11 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => sprintf( '/gists/comments/%s', $args{comment_id} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/gists/comments/%s', delete $args{comment_id} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -11,8 +11,11 @@ BEGIN {
 SKIP: {
     skip 'Set PITHUB_TEST_LIVE to true to run these tests', 1 unless $ENV{PITHUB_TEST_LIVE};
 
-    my $p = Pithub->new;
-    my $result = $p->request( GET => '/' );
+    my $p      = Pithub->new;
+    my $result = $p->request(
+        method => 'GET',
+        path   => '/'
+    );
 
     is $result->code,        200,  'HTTP status is 200';
     is $result->success,     1,    'Successful';

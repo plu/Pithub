@@ -106,21 +106,22 @@ my %accessors = (
 
     isa_ok $p, 'Pithub';
 
-    throws_ok { $p->request } qr{Missing mandatory parameters: \$method, \$path}, 'Not given any parameters';
-    throws_ok { $p->request( xxx => '/bar' ) } qr{Invalid method: xxx}, 'Not a valid HTTP method';
-    lives_ok { $p->request( GET => 'bar' ) } 'Correct parameters do not throw an exception';
+    throws_ok { $p->request } qr{Missing mandatory key in parameters: method}, 'Not given any parameters';
+    throws_ok { $p->request( method => 'GET' ) } qr{Missing mandatory key in parameters: path}, 'Parameter path missing';
+    throws_ok { $p->request( method => 'xxx', path => '/bar' ) } qr{Invalid method: xxx}, 'Not a valid HTTP method';
+    lives_ok { $p->request( method => 'GET', path => 'bar' ) } 'Correct parameters do not throw an exception';
 
-    throws_ok { $p->request( GET => '/bar', undef, [] ) }
+    throws_ok { $p->request( method => 'GET', path => '/bar', options => [] ) }
     qr{The parameter \$options must be a hashref},
       '$options must be a hashref';
 
-    throws_ok { $p->request( GET => '/bar', undef, { prepare_request => 1 } ) }
+    throws_ok { $p->request( method => 'GET', path => '/bar', options => { prepare_request => 1 } ) }
     qr{The key prepare_request in the \$options hashref must be a coderef},
       'prepare_request must be a coderef';
 
-    lives_ok { $p->request( GET => 'bar', undef, {} ) } 'Empty options hashref';
+    lives_ok { $p->request( method => 'GET', path => 'bar', options => {} ) } 'Empty options hashref';
 
-    my $result       = $p->request( GET => '/bar' );
+    my $result       = $p->request( method => 'GET', path => '/bar' );
     my $response     = $result->response;
     my $http_request = $response->http_request;
 
@@ -139,18 +140,18 @@ my %accessors = (
 {
     my $p = Pithub->new( ua => Pithub::Test::UA->new );
     $p->token('123');
-    my $request = $p->request( POST => '/foo', { some => 'data' } )->request;
+    my $request = $p->request( method => 'POST', path => '/foo', data => { some => 'data' } )->request;
     eq_or_diff $request->content, '{"some":"data"}', 'The JSON content was set in the request object';
     is $request->header('Authorization'), 'token 123', 'Authorization header was set in the HTTP::Request object';
     ok $p->clear_token, 'Access token clearer';
     is $p->token, undef, 'No token set anymore';
-    $request = $p->request( POST => '/foo', { some => 'data' } )->request;
+    $request = $p->request( method => 'POST', path => '/foo', data => { some => 'data' } )->request;
     is $request->header('Authorization'), undef, 'Authorization header was not set in the HTTP::Request object';
 }
 
 {
     my $p = Pithub->new( ua => Pithub::Test::UA->new );
-    my $result = $p->request( GET => '/error/notfound' );
+    my $result = $p->request( method => 'GET', path => '/error/notfound' );
 
     is $result->code,    404, 'HTTP status is 404';
     is $result->success, '',  'Unsuccessful response';
@@ -241,13 +242,13 @@ my %accessors = (
 
 {
     my $p = Pithub->new( ua => Pithub::Test::UA->new, jsonp_callback => 'foo' );
-    my $result = $p->request( GET => '/foo' );
+    my $result = $p->request( method => 'GET', path => '/foo' );
     is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
 }
 
 {
     my $p = Pithub->new( ua => Pithub::Test::UA->new );
-    my $result = $p->request( GET => '/orgs/CPAN-API/repos' );
+    my $result = $p->request( method => 'GET', path => '/orgs/CPAN-API/repos' );
 
     my @expectations = (
         'https://github.com/CPAN-API/cpan-api',        'https://github.com/CPAN-API/search-metacpan-org',
@@ -266,7 +267,7 @@ my %accessors = (
 
 {
     my $p = Pithub->new( ua => Pithub::Test::UA->new );
-    my $result = $p->request( GET => '/users/plu' );
+    my $result = $p->request( method => 'GET', path => '/users/plu' );
 
     my $row = $result->next;
     is $row->{id}, 31597, 'Row data found';

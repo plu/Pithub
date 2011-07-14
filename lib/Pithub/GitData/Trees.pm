@@ -84,7 +84,11 @@ sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( POST => sprintf( '/repos/%s/%s/git/trees', $args{user}, $args{repo} ), $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/git/trees', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method get
@@ -139,7 +143,12 @@ sub get {
             $request->uri->query_form(%query);
         };
     }
-    return $self->request( GET => $path, undef, $options );
+    return $self->request(
+        method  => 'GET',
+        path    => $path,
+        options => $options,
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

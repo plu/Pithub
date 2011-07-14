@@ -33,7 +33,11 @@ sub add_member {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: user'    unless $args{user};
-    return $self->request( PUT => sprintf( '/teams/%s/members/%s', $args{team_id}, $args{user} ) );
+    return $self->request(
+        method => 'PUT',
+        path   => sprintf( '/teams/%s/members/%s', delete $args{team_id}, delete $args{user} ),
+        %args,
+    );
 }
 
 =method add_repo
@@ -61,7 +65,11 @@ sub add_repo {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: repo'    unless $args{repo};
-    return $self->request( PUT => sprintf( '/teams/%s/repos/%s', $args{team_id}, $args{repo} ) );
+    return $self->request(
+        method => 'PUT',
+        path   => sprintf( '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method create
@@ -93,7 +101,11 @@ sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org' unless $args{org};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( POST => sprintf( '/orgs/%s/teams', $args{org} ), $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/orgs/%s/teams', delete $args{org} ),
+        %args,
+    );
 }
 
 =method delete
@@ -117,7 +129,11 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
-    return $self->request( DELETE => sprintf( '/teams/%s', $args{team_id} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/teams/%s', delete $args{team_id} ),
+        %args,
+    );
 }
 
 =method get
@@ -140,7 +156,11 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
-    return $self->request( GET => sprintf( '/teams/%s', $args{team_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/teams/%s', delete $args{team_id} ),
+        %args,
+    );
 }
 
 =method has_repo
@@ -167,7 +187,11 @@ sub has_repo {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: repo'    unless $args{repo};
-    return $self->request( GET => sprintf( '/teams/%s/repos/%s', $args{team_id}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method is_member
@@ -195,7 +219,11 @@ sub is_member {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: user'    unless $args{user};
-    return $self->request( GET => sprintf( '/teams/%s/members/%s', $args{team_id}, $args{user} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/teams/%s/members/%s', delete $args{team_id}, delete $args{user} ),
+        %args,
+    );
 }
 
 =method list
@@ -218,7 +246,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org' unless $args{org};
-    return $self->request( GET => sprintf( '/orgs/%s/teams', $args{org} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/orgs/%s/teams', delete $args{org} ),
+        %args,
+    );
 }
 
 =method list_members
@@ -242,7 +274,11 @@ Examples:
 sub list_members {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
-    return $self->request( GET => sprintf( '/teams/%s/members', $args{team_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/teams/%s/members', delete $args{team_id} ),
+        %args,
+    );
 }
 
 =method list_repos
@@ -265,7 +301,11 @@ Examples:
 sub list_repos {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
-    return $self->request( GET => sprintf( '/teams/%s/repos', $args{team_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/teams/%s/repos', delete $args{team_id} ),
+        %args,
+    );
 }
 
 =method remove_member
@@ -295,7 +335,11 @@ sub remove_member {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: user'    unless $args{user};
-    return $self->request( DELETE => sprintf( '/teams/%s/members/%s', $args{team_id}, $args{user} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/teams/%s/members/%s', delete $args{team_id}, delete $args{user} ),
+        %args,
+    );
 }
 
 =method remove_repo
@@ -323,7 +367,11 @@ sub remove_repo {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: repo'    unless $args{repo};
-    return $self->request( DELETE => sprintf( '/teams/%s/repos/%s', $args{team_id}, $args{repo} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method update
@@ -354,7 +402,11 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => sprintf( '/teams/%s', $args{team_id} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/teams/%s', delete $args{team_id} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

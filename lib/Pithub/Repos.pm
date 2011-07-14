@@ -36,7 +36,11 @@ Examples:
 sub branches {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/branches', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/branches', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method contributors
@@ -61,7 +65,11 @@ Examples:
 sub contributors {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/contributors', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/contributors', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method create
@@ -101,11 +109,19 @@ Examples:
 sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    if ( my $org = $args{org} ) {
-        return $self->request( POST => sprintf( '/orgs/%s/repos', $args{org} ), $args{data} );
+    if ( my $org = delete $args{org} ) {
+        return $self->request(
+            method => 'POST',
+            path   => sprintf( '/orgs/%s/repos', $org ),
+            %args,
+        );
     }
     else {
-        return $self->request( POST => '/user/repos', $args{data} );
+        return $self->request(
+            method => 'POST',
+            path   => '/user/repos',
+            %args,
+        );
     }
 }
 
@@ -131,7 +147,11 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method languages
@@ -156,7 +176,11 @@ Examples:
 sub languages {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/languages', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/languages', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method list
@@ -202,14 +226,26 @@ Examples:
 
 sub list {
     my ( $self, %args ) = @_;
-    if ( my $user = $args{user} ) {
-        return $self->request( GET => sprintf( '/users/%s/repos', $user ) );
+    if ( my $user = delete $args{user} ) {
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/users/%s/repos', $user ),
+            %args,
+        );
     }
-    elsif ( my $org = $args{org} ) {
-        return $self->request( GET => sprintf( '/orgs/%s/repos', $org ) );
+    elsif ( my $org = delete $args{org} ) {
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/orgs/%s/repos', $org ),
+            %args
+        );
     }
     else {
-        return $self->request( GET => '/user/repos' );
+        return $self->request(
+            method => 'GET',
+            path   => '/user/repos',
+            %args,
+        );
     }
 }
 
@@ -235,7 +271,11 @@ Examples:
 sub tags {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/tags', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/tags', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method teams
@@ -260,7 +300,11 @@ Examples:
 sub teams {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/teams', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/teams', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method update
@@ -290,7 +334,11 @@ sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s', $args{user}, $args{repo} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

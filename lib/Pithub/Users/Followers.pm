@@ -29,7 +29,11 @@ Examples:
 sub follow {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( PUT => sprintf( '/user/following/%s', $args{user} ) );
+    return $self->request(
+        method => 'PUT',
+        path   => sprintf( '/user/following/%s', delete $args{user} ),
+        %args,
+    );
 }
 
 =method is_following
@@ -61,7 +65,11 @@ Examples:
 sub is_following {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( GET => sprintf( '/user/following/%s', $args{user} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/user/following/%s', delete $args{user} ),
+        %args,
+    );
 }
 
 =method list
@@ -97,9 +105,17 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     if ( $args{user} ) {
-        return $self->request( GET => sprintf( '/users/%s/followers', $args{user} ) );
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/users/%s/followers', delete $args{user} ),
+            %args,
+        );
     }
-    return $self->request( GET => '/user/followers' );
+    return $self->request(
+        method => 'GET',
+        path   => '/user/followers',
+        %args,
+    );
 }
 
 =method list_following
@@ -135,9 +151,17 @@ Examples:
 sub list_following {
     my ( $self, %args ) = @_;
     if ( $args{user} ) {
-        return $self->request( GET => sprintf( '/users/%s/following', $args{user} ) );
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/users/%s/following', delete $args{user} ),
+            %args,
+        );
     }
-    return $self->request( GET => '/user/following' );
+    return $self->request(
+        method => 'GET',
+        path   => '/user/following',
+        %args,
+    );
 }
 
 =method unfollow
@@ -162,7 +186,11 @@ Examples:
 sub unfollow {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( DELETE => sprintf( '/user/following/%s', $args{user} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/user/following/%s', delete $args{user} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

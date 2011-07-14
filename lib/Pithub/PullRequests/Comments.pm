@@ -41,7 +41,11 @@ sub create {
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( POST => sprintf( '/repos/%s/%s/pulls/%s/comments', $args{user}, $args{repo}, $args{pull_request_id} ), $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/pulls/%s/comments', delete $args{user}, delete $args{repo}, delete $args{pull_request_id} ),
+        %args
+    );
 }
 
 =method delete
@@ -71,7 +75,11 @@ sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/repos/%s/%s/pulls/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/repos/%s/%s/pulls/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        %args,
+    );
 }
 
 =method get
@@ -101,7 +109,11 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/comments/%s', $args{user}, $args{repo}, $args{comment_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/pulls/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        %args,
+    );
 }
 
 =method list
@@ -131,7 +143,11 @@ sub list {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: pull_request_id' unless $args{pull_request_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/pulls/%s/comments', $args{user}, $args{repo}, $args{pull_request_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/pulls/%s/comments', delete $args{user}, delete $args{repo}, delete $args{pull_request_id} ),
+        %args,
+    );
 }
 
 =method update
@@ -163,7 +179,11 @@ sub update {
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/pulls/comments/%s', $args{user}, $args{repo}, $args{comment_id} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/repos/%s/%s/pulls/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

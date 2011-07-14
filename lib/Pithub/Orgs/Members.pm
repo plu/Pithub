@@ -33,7 +33,11 @@ sub conceal {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org'  unless $args{org};
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( DELETE => sprintf( '/orgs/%s/public_members/%s', $args{org}, $args{user} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/orgs/%s/public_members/%s', delete $args{org}, delete $args{user} ),
+        %args,
+    );
 }
 
 =method delete
@@ -64,7 +68,11 @@ sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org'  unless $args{org};
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( DELETE => sprintf( '/orgs/%s/members/%s', $args{org}, $args{user} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/orgs/%s/members/%s', delete $args{org}, delete $args{user} ),
+        %args,
+    );
 }
 
 =method is_member
@@ -93,7 +101,11 @@ sub is_member {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org'  unless $args{org};
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( GET => sprintf( '/orgs/%s/members/%s', $args{org}, $args{user} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/orgs/%s/members/%s', delete $args{org}, delete $args{user} ),
+        %args,
+    );
 }
 
 =method is_public
@@ -122,7 +134,11 @@ sub is_public {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org'  unless $args{org};
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( GET => sprintf( '/orgs/%s/public_members/%s', $args{org}, $args{user} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/orgs/%s/public_members/%s', delete $args{org}, delete $args{user} ),
+        %args,
+    );
 }
 
 =method list
@@ -151,7 +167,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org' unless $args{org};
-    return $self->request( GET => sprintf( '/orgs/%s/members', $args{org} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/orgs/%s/members', delete $args{org} ),
+        %args,
+    );
 }
 
 =method list_public
@@ -177,7 +197,11 @@ Examples:
 sub list_public {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org' unless $args{org};
-    return $self->request( GET => sprintf( '/orgs/%s/public_members', $args{org} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/orgs/%s/public_members', delete $args{org} ),
+        %args,
+    );
 }
 
 =method publicize
@@ -206,7 +230,11 @@ sub publicize {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org'  unless $args{org};
     croak 'Missing key in parameters: user' unless $args{user};
-    return $self->request( PUT => sprintf( '/orgs/%s/public_members/%s', $args{org}, $args{user} ) );
+    return $self->request(
+        method => 'PUT',
+        path   => sprintf( '/orgs/%s/public_members/%s', delete $args{org}, delete $args{user} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

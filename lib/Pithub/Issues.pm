@@ -45,7 +45,11 @@ sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( POST => sprintf( '/repos/%s/%s/issues', $args{user}, $args{repo} ), $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/issues', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method get
@@ -75,7 +79,11 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/%s', $args{user}, $args{repo}, $args{issue_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/issues/%s', delete $args{user}, delete $args{repo}, delete $args{issue_id} ),
+        %args,
+    );
 }
 
 =method list
@@ -103,7 +111,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/issues', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method update
@@ -142,7 +154,11 @@ sub update {
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PATCH => sprintf( '/repos/%s/%s/issues/%s', $args{user}, $args{repo}, $args{issue_id} ), $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => sprintf( '/repos/%s/%s/issues/%s', delete $args{user}, delete $args{repo}, delete $args{issue_id} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

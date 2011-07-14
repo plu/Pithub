@@ -34,7 +34,11 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: event_id' unless $args{event_id};
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/events/%s', $args{user}, $args{repo}, $args{event_id} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/issues/events/%s', delete $args{user}, delete $args{repo}, delete $args{event_id} ),
+        %args,
+    );
 }
 
 =method list
@@ -77,10 +81,18 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    if ( my $issue_id = $args{issue_id} ) {
-        return $self->request( GET => sprintf( '/repos/%s/%s/issues/%s/events', $args{user}, $args{repo}, $issue_id ) );
+    if ( my $issue_id = delete $args{issue_id} ) {
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/repos/%s/%s/issues/%s/events', delete $args{user}, delete $args{repo}, $issue_id ),
+            %args,
+        );
     }
-    return $self->request( GET => sprintf( '/repos/%s/%s/issues/events', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/issues/events', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -481,7 +481,10 @@ Though here are some examples how to use it:
 Same as L<Pithub::Users/get>:
 
     my $p = Pithub->new;
-    my $result = $p->request( GET => '/users/plu' );
+    my $result = $p->request(
+        method => 'GET',
+        path   => '/users/plu',
+    );
 
 =item *
 
@@ -495,7 +498,11 @@ Same as L<Pithub::Gists/create>:
         public      => 1,
         files       => { 'file1.txt' => { content => 'String file content' } }
     };
-    my $result = $p->request( $method, $path, $data );
+    my $result = $p->request(
+        method => $method,
+        path   => $path,
+        data   => $data,
+    );
 
 =item *
 
@@ -512,7 +519,12 @@ Same as L<Pithub::GitData::Trees/get>:
             $request->uri->query_form(%query);
         },
     };
-    my $result = $p->request( $method, $path, $data, $options );
+    my $result = $p->request(
+        method  => $method,
+        path    => $path,
+        data    => $data,
+        options => $options,
+    );
 
 Always be careful using C<< prepare_request >> and C<< query_form >>.
 If the option L</per_page> is set, you might override the pagination
@@ -528,10 +540,14 @@ This method always returns a L<Pithub::Result> object.
 =cut
 
 sub request {
-    my ( $self, $method, $path, $data, $options ) = @_;
+    my ( $self, %args ) = @_;
 
-    croak 'Missing mandatory parameters: $method, $path' if scalar @_ < 3;
-    croak "Invalid method: ${method}" unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
+    my $method = delete $args{method} || croak 'Missing mandatory key in parameters: method';
+    my $path   = delete $args{path}   || croak 'Missing mandatory key in parameters: path';
+    my $data   = delete $args{data};
+    my $options = delete $args{options};
+
+    croak "Invalid method: $method" unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
 
     my $uri = $self->_uri_for($path);
 
@@ -541,7 +557,7 @@ sub request {
 
     my $request = $self->_request_for( $method, $uri, $data );
 
-    if ($options) {
+    if ( $options ) {
         croak 'The parameter $options must be a hashref' unless ref $options eq 'HASH';
         croak 'The key prepare_request in the $options hashref must be a coderef' if $options->{prepare_request} && ref $options->{prepare_request} ne 'CODE';
         $options->{prepare_request}->($request) if $options->{prepare_request};

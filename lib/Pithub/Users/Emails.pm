@@ -29,7 +29,11 @@ Examples:
 sub add {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
-    return $self->request( POST => '/user/emails', $args{data} );
+    return $self->request(
+        method => 'POST',
+        path   => '/user/emails',
+        %args,
+    );
 }
 
 =method delete
@@ -54,7 +58,11 @@ Examples:
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
-    return $self->request( DELETE => '/user/emails', $args{data} );
+    return $self->request(
+        method => 'DELETE',
+        path   => '/user/emails',
+        %args,
+    );
 }
 
 =method list
@@ -77,8 +85,12 @@ Examples:
 =cut
 
 sub list {
-    my ($self) = @_;
-    return $self->request( GET => '/user/emails' );
+    my ( $self, %args ) = @_;
+    return $self->request(
+        method => 'GET',
+        path   => '/user/emails',
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -32,7 +32,11 @@ Examples:
 sub is_watching {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/user/watched/%s/%s', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/user/watched/%s/%s', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method list_repos
@@ -67,10 +71,18 @@ Examples:
 
 sub list_repos {
     my ( $self, %args ) = @_;
-    if ( my $user = $args{user} ) {
-        return $self->request( GET => sprintf( '/users/%s/watched', $args{user} ) );
+    if ( my $user = delete $args{user} ) {
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/users/%s/watched', $user ),
+            %args,
+        );
     }
-    return $self->request( GET => '/user/watched' );
+    return $self->request(
+        method => 'GET',
+        path   => '/user/watched',
+        %args,
+    );
 }
 
 =method list
@@ -98,7 +110,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/watchers', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/watchers', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method start_watching
@@ -126,7 +142,11 @@ Examples:
 sub start_watching {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( PUT => sprintf( '/user/watched/%s/%s', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'PUT',
+        path   => sprintf( '/user/watched/%s/%s', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method stop_watching
@@ -154,7 +174,11 @@ Examples:
 sub stop_watching {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( DELETE => sprintf( '/user/watched/%s/%s', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/user/watched/%s/%s', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

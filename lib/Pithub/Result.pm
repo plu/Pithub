@@ -253,7 +253,10 @@ sub get_page {
         },
     };
 
-    return $self->_request->( GET => $uri->path, undef, $options );
+    return $self->_request->(
+        method  => 'GET' => path => $uri->path,
+        options => $options
+    );
 }
 
 =method last_page
@@ -455,7 +458,11 @@ sub _paginate {
             $request->uri->query_form(%query);
         },
     };
-    return $self->_request->( GET => $uri->path, undef, $options );
+    return $self->_request->(
+        method  => 'GET',
+        path    => => $uri->path,
+        options => $options
+    );
 }
 
 sub _reset {

@@ -44,9 +44,17 @@ Examples:
 sub get {
     my ( $self, %args ) = @_;
     if ( $args{user} ) {
-        return $self->request( GET => sprintf( '/users/%s', $args{user} ) );
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/users/%s', delete $args{user} ),
+            %args,
+        );
     }
-    return $self->request( GET => '/user' );
+    return $self->request(
+        method => 'GET',
+        path   => '/user',
+        %args,
+    );
 }
 
 =method update
@@ -71,7 +79,11 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    return $self->request( PATCH => '/user', $args{data} );
+    return $self->request(
+        method => 'PATCH',
+        path   => '/user',
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;

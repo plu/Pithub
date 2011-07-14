@@ -39,10 +39,19 @@ Examples:
 sub create {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    if ( my $org = $args{org} ) {
-        return $self->request( POST => sprintf( '/repos/%s/%s/forks', $args{user}, $args{repo} ), { org => $org } );
+    if ( my $org = delete $args{org} ) {
+        return $self->request(
+            method => 'POST',
+            path   => sprintf( '/repos/%s/%s/forks', delete $args{user}, delete $args{repo} ),
+            data => { org => $org },
+            %args,
+        );
     }
-    return $self->request( POST => sprintf( '/repos/%s/%s/forks', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/forks', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 =method list
@@ -70,7 +79,11 @@ Examples:
 sub list {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    return $self->request( GET => sprintf( '/repos/%s/%s/forks', $args{user}, $args{repo} ) );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/forks', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
 }
 
 __PACKAGE__->meta->make_immutable;
