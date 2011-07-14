@@ -19,7 +19,7 @@ you can also set it directly on any of the L<Pithub> API objects.
 
 Examples:
 
-    mh $r = Pithub::Repos->new;
+    my $r = Pithub::Repos->new;
     my $result = $r->list( user => 'rjbs' );
 
     # This would just show the first 30 by default
@@ -123,19 +123,19 @@ installed for convenience:
 
 =item *
 
-B<code>: response->code
+B<code>: L<Pithub::Response/code>
 
 =item *
 
-B<raw_content>: response->content
+B<raw_content>: L<Pithub::Response/content>
 
 =item *
 
-B<request>: response->request
+B<request>: L<Pithub::Response/request>
 
 =item *
 
-B<success>: response->success
+B<success>: L<Pithub::Response/success>
 
 =back
 
@@ -383,7 +383,7 @@ Returns the value of the C<< X-Ratelimit-Limit >> http header.
 
 sub ratelimit {
     my ($self) = @_;
-    return $self->response->http_response->header('X-RateLimit-Limit');
+    return $self->response->header('X-RateLimit-Limit');
 }
 
 =method ratelimit_remaining
@@ -394,7 +394,7 @@ Returns the value of the C<< X-Ratelimit-Remaining >> http header.
 
 sub ratelimit_remaining {
     my ($self) = @_;
-    return $self->response->http_response->header('X-RateLimit-Remaining');
+    return $self->response->header('X-RateLimit-Remaining');
 }
 
 sub _build_content {
@@ -436,7 +436,7 @@ sub _build__json {
 sub _get_link_header {
     my ( $self, $type ) = @_;
     return $self->{_get_link_header}{$type} if $self->{_get_link_header}{$type};
-    my $link = $self->response->http_response->header('Link');
+    my $link = $self->response->header('Link');
     return unless $link;
     foreach my $item ( split /,/, $link ) {
         my @result = $item =~ /<([^>]+)>; rel="([^"]+)"/g;

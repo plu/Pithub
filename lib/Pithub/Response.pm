@@ -18,31 +18,9 @@ has 'request' => (
     required => 1,
 );
 
-=attr http_response
-
-The L<HTTP::Response> object. There are following delegate methods
-installed for convenience:
-
-=over
-
-=item *
-
-B<code>: http_response->code
-
-=item *
-
-B<content>: http_response->content
-
-=item *
-
-B<success>: http_response->is_cuess
-
-=back
-
-=cut
-
 has 'http_response' => (
     handles => {
+        header  => 'header',
         code    => 'code',
         content => 'content',
         success => 'is_success',
@@ -52,6 +30,33 @@ has 'http_response' => (
     lazy_build => 1,
     required   => 0,
 );
+
+=head1 METHODS
+
+There are currently following methods, which delegate directly to
+methods of L<HTTP::Response>:
+
+=over
+
+=item *
+
+B<header>: L<HTTP::Response>->header
+
+=item *
+
+B<code>: L<HTTP::Response>->code
+
+=item *
+
+B<content>: L<HTTP::Response>->content
+
+=item *
+
+B<success>: L<HTTP::Response>->is_success
+
+=back
+
+=cut
 
 sub _build_http_response {
     return shift->request->send;
