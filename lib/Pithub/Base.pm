@@ -199,6 +199,71 @@ has 'per_page' => (
     required  => 0,
 );
 
+=attr prepare_request
+
+This is a CodeRef and can be used to modify the L<HTTP::Request>
+object on a global basis, before it's being sent to the Github
+API. It's useful for setting MIME types for example. See also:
+L<http://developer.github.com/v3/mimes/>. This is the right way
+to go if you want to modify the HTTP request of B<all> API
+calls. If you just want to change a few, consider sending the
+C<< prepare_request >> parameter on any method call.
+
+Let's use this example from the Github docs:
+
+B<Html>
+
+C<< application/vnd.github-issue.html+json >>
+
+Return html rendered from the body’s markdown. Response will
+include body_html.
+
+Examples:
+
+    my $p = Pithub::Issues->new(
+        prepare_request => sub {
+            my ($request) = @_;
+            $request->header( Accept => 'application/vnd.github-issue.html+json' );
+        }
+    );
+
+    my $result = $p->get(
+        user     => 'miyagawa',
+        repo     => 'Plack',
+        issue_id => 209,
+    );
+
+    print $result->content->{body_html};
+
+Please compare to the solution where you set the custom HTTP header
+on the method call, instead globally on the object:
+
+    my $p = Pithub::Issues->new;
+
+    my $result = $p->get(
+        user     => 'miyagawa',
+        repo     => 'Plack',
+        issue_id => 209,
+        options  => {
+            prepare_request => sub {
+                my ($request) = @_;
+                $request->header( Accept => 'application/vnd.github-issue.html+json' );
+            },
+        }
+    );
+
+    print $result->content->{body_html};
+
+=cut
+
+has 'prepare_request' => (
+    clearer   => 'clear_prepare_request',
+    is        => 'rw',
+    isa       => 'CodeRef',
+    predicate => 'has_prepare_request',
+    required  => 0,
+);
+
 =attr repo
 
 This can be set as a default repo to use for API calls that require
@@ -466,7 +531,8 @@ This will be the HTTP request body.
 
 B<options>: optional hash reference to set additional options on
 the request. So far only C<< prepare_request >> is supported. See
-more about that in the examples below.
+more about that in the examples below. So this can be used on
+B<every> method which maps directly to an API call.
 
 =back
 
@@ -605,6 +671,9 @@ sub _merge_args {
     if ( $self->has_jsonp_callback ) {
         $args{jsonp_callback} = $self->jsonp_callback;
     }
+    if ( $self->has_prepare_request ) {
+        $args{prepare_request} = $self->prepare_request;
+    }
     return ( %args, @args );
 }
 
@@ -625,6 +694,10 @@ sub _request_for {
     }
 
     $request->header( 'Content-Length' => length $request->content );
+
+    if ( $self->has_prepare_request ) {
+        $self->prepare_request->($request);
+    }
 
     return $request;
 }

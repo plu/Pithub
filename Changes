@@ -11,6 +11,8 @@ Revision history for {{$dist->name}}
           - remove Pithub::Request [!!!]
           - replace prepare_uri with more flexible
             prepare_request [!!!]
+          - prepare_request is now available globally and can be set
+            on any object to modify all HTTP requests
 
 0.01003   2011-07-06 19:54:52 Asia/Dubai
           - add some more tests to live.t

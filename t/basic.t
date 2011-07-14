@@ -298,4 +298,29 @@ my %accessors = (
     is scalar(@followers), 54, 'Automatically paginate through four pages';
 }
 
+{
+    my $p = Pithub->new(
+        prepare_request => sub {
+            my ($request) = @_;
+            $request->header( Accept => 'anything' );
+        }
+    );
+    my $result = $p->users->followers->list( user => 'plu' );
+    is $result->request->header('Accept'), 'anything', 'The request header got set using global prepare_request';
+}
+
+{
+    my $p      = Pithub->new;
+    my $result = $p->users->followers->list(
+        user    => 'plu',
+        options => {
+            prepare_request => sub {
+                my ($request) = @_;
+                $request->header( Accept => 'foobar' );
+              }
+        }
+    );
+    is $result->request->header('Accept'), 'foobar', 'The request header got set via the method call';
+}
+
 done_testing;
