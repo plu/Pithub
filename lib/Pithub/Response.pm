@@ -47,10 +47,15 @@ has 'http_response' => (
         content => 'content',
         success => 'is_success',
     },
-    is       => 'rw',
-    isa      => 'HTTP::Response',
-    required => 0,
+    is         => 'rw',
+    isa        => 'HTTP::Response',
+    lazy_build => 1,
+    required   => 0,
 );
+
+sub _build_http_response {
+    return shift->request->send;
+}
 
 __PACKAGE__->meta->make_immutable;
 

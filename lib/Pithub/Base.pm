@@ -600,7 +600,6 @@ sub _prepare_request_args {
 sub _prepare_response_args {
     my ( $self, $request ) = @_;
     my %args = ( request => $request );
-    $args{http_response} = $request->send;
     return %args;
 }
 

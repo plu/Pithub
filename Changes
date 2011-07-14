@@ -6,6 +6,7 @@ Revision history for {{$dist->name}}
           - fix Pithub::Users->list_following
           - fix Pithub::Repos->update
           - rename Orgs->Teams->get_repo to ->has_repo [!!!]
+          - sending HTTP requests is lazy now
 
 0.01003   2011-07-06 19:54:52 Asia/Dubai
           - add some more tests to live.t
