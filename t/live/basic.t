@@ -77,15 +77,10 @@ done_testing;
 
 # TODO: implement tests for following methods:
 
-# Pithub::GitData::Commits->create
-
 # Pithub::GitData::References->create
-# Pithub::GitData::References->update
 
 # Pithub::GitData::Tags->get
 # Pithub::GitData::Tags->create
-
-# Pithub::GitData::Trees->create
 
 # Pithub::Issues::Events->get
 # Pithub::Issues::Events->list

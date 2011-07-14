@@ -211,19 +211,54 @@ SKIP: {
     {
 
         # Pithub::GitData::Blobs->create
-        my $sha = $p->git_data->blobs->create(
+        my $blob_sha = $p->git_data->blobs->create(
             data => {
                 content  => 'Content of the blob',
                 encoding => 'utf-8',
             }
         )->content->{sha};
-        ok $sha, 'Pithub::GitData::Blobs->create returned a SHA';
+        ok $blob_sha, 'Pithub::GitData::Blobs->create returned a SHA';
 
-        my $result = $p->git_data->blobs->get( sha => $sha );
+        my $result = $p->git_data->blobs->get( sha => $blob_sha );
+        is $result->content->{content}, "Q29udGVudCBvZiB0aGUgYmxvYg==\n", 'Pithub::GitData::Blobs->get content after create';
+        is $result->content->{encoding}, 'base64', 'Pithub::GitData::Blobs->get encoding after create';
+
+        # Pithub::GitData::Trees->create
+        my $tree_sha = $p->git_data->trees->create(
+            data => {
+                tree => [
+                    {
+                        path => 'b.lob',
+                        mode => '100644',
+                        type => 'blob',
+                        sha  => $blob_sha,
+                    }
+                ],
+            }
+        )->content->{sha};
+        ok $tree_sha, 'Pithub::GitData::Trees->create returned a SHA';
+
+        # Pithub::GitData::References->get
+        my $master_sha = $p->git_data->references->get( ref => 'heads/master' )->content->{object}{sha};
+        ok $master_sha, 'Pithub::GitData::Trees->get returned a SHA';
+
+        # Pithub::GitData::Commits->create
+        my $commit_sha = $p->git_data->commits->create(
+            data => {
+                message => 'my commit message',
+                parents => [$master_sha],
+                tree    => $tree_sha,
+            }
+        )->content->{sha};
+        ok $commit_sha, 'Pithub::GitData::Commits->create returned a SHA';
+
+        # Pithub::GitData::References->update
       TODO: {
-            local $TODO = 'This looks like a bug in the API to me';
-            is $result->content->{content}, 'Content of the blob', 'Pithub::GitData::Blobs->get content after create';
-            is $result->content->{encoding}, 'utf-8', 'Pithub::GitData::Blobs->get encoding after create';
+            local $TODO = 'This does not work yet, reason unknown';
+            ok $p->git_data->references->update(
+                ref  => 'heads/master',
+                data => { sha => $tree_sha }
+            )->success, 'Pithub::GitData::References->update successful';
         }
     }
 }
