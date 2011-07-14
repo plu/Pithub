@@ -82,6 +82,8 @@ done_testing;
 # Pithub::GitData::Tags->get
 # Pithub::GitData::Tags->create
 
+# Pithub::Gists->fork
+
 # Pithub::Issues::Events->get
 # Pithub::Issues::Events->list
 
