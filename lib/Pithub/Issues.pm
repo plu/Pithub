@@ -92,6 +92,12 @@ sub get {
 
 =item *
 
+List the issues of the authenticated user
+
+    GET /issues
+
+=item *
+
 List issues for a repository
 
     GET /repos/:user/:repo/issues
@@ -110,10 +116,17 @@ Examples:
 
 sub list {
     my ( $self, %args ) = @_;
-    $self->_validate_user_repo_args( \%args );
+    $self->_get_user_repo_args( \%args );
+    if ( $args{user} && $args{repo} ) {
+        return $self->request(
+            method => 'GET',
+            path   => sprintf( '/repos/%s/%s/issues', delete $args{user}, delete $args{repo} ),
+            %args,
+        );
+    }
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/issues', delete $args{user}, delete $args{repo} ),
+        path   => sprintf('/issues'),
         %args,
     );
 }

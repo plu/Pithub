@@ -61,14 +61,24 @@ BEGIN {
 
 # Pithub::Issues->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
-
-    isa_ok $obj, 'Pithub::Issues';
-
     {
+        my $obj = Pithub::Test->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
+        isa_ok $obj, 'Pithub::Issues';
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+
+    {
+        my $obj = Pithub::Test->create('Pithub::Issues');
+        isa_ok $obj, 'Pithub::Issues';
+        throws_ok { $obj->list; } qr{Access token required for: GET /issues}, 'Token required';
+        ok $obj->token(123), 'Token set';
+        my $result = $obj->list;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/issues', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
@@ -117,7 +127,8 @@ BEGIN {
     throws_ok { $obj->create } qr{Missing key in parameters: issue_id}, 'No parameters';
     throws_ok { $obj->create( issue_id => 1 ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
     throws_ok { $obj->create( issue_id => 1, data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong data parameter';
-    throws_ok { $obj->create( issue_id => 1, data => { foo => 123 } ); } qr{Access token required for: POST /repos/foo/bar/issues/1/comments\s+}, 'Token required';
+    throws_ok { $obj->create( issue_id => 1, data => { foo => 123 } ); } qr{Access token required for: POST /repos/foo/bar/issues/1/comments\s+},
+      'Token required';
 
     ok $obj->token(123), 'Token set';
 
@@ -381,7 +392,8 @@ BEGIN {
 
     throws_ok { $obj->remove } qr{Missing key in parameters: issue_id}, 'No parameters';
     throws_ok { $obj->remove( issue_id => 123 ); } qr{Access token required for: DELETE /repos/foo/bar/issues/123/labels\s+}, 'Token required';
-    throws_ok { $obj->remove( issue_id => 123, label => 456 ); } qr{Access token required for: DELETE /repos/foo/bar/issues/123/labels/456\s+}, 'Token required';
+    throws_ok { $obj->remove( issue_id => 123, label => 456 ); } qr{Access token required for: DELETE /repos/foo/bar/issues/123/labels/456\s+},
+      'Token required';
 
     ok $obj->token(123), 'Token set';
 
@@ -444,7 +456,7 @@ BEGIN {
     {
         my $result = $obj->update(
             label => 123,
-            data     => {
+            data  => {
                 name  => 'label2',
                 color => 'FF0000',
             }

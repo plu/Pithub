@@ -416,6 +416,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^DELETE /user/watched/[^/]+/.*?$},
     qr{^GET /gists/starred$},
     qr{^GET /gists/[^/]+/star$},
+    qr{^GET /issues$},
     qr{^GET /orgs/[^/]+/members/.*?$},
     qr{^GET /orgs/[^/]+/teams$},
     qr{^GET /repos/[^/]+/[^/]+/collaborators$},
@@ -678,6 +679,13 @@ sub _build_ua {
     return LWP::UserAgent->new;
 }
 
+sub _get_user_repo_args {
+    my ( $self, $args ) = @_;
+    $args->{user} = $self->user unless defined $args->{user};
+    $args->{repo} = $self->repo unless defined $args->{repo};
+    return $args;
+}
+
 sub _merge_args {
     my ( $orig, $self ) = @_;
     my @args = $self->$orig;
@@ -762,8 +770,7 @@ sub _uri_for {
 
 sub _validate_user_repo_args {
     my ( $self, $args ) = @_;
-    $args->{user} = $self->user unless defined $args->{user};
-    $args->{repo} = $self->repo unless defined $args->{repo};
+    $args = $self->_get_user_repo_args($args);
     croak 'Missing key in parameters: user' unless $args->{user};
     croak 'Missing key in parameters: repo' unless $args->{repo};
 }
