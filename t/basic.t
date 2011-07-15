@@ -292,7 +292,7 @@ sub validate_tree {
       'options must be a hashref';
 
     throws_ok { $p->request( method => 'GET', path => '/bar', options => { prepare_request => 1 } ) }
-    qr{The key prepare_request in the \$options hashref must be a coderef},
+    qr{The key prepare_request in the options hashref must be a coderef},
       'prepare_request must be a coderef';
 
     lives_ok { $p->request( method => 'GET', path => 'bar', options => {} ) } 'Empty options hashref';
@@ -487,7 +487,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p      = Pithub::Test->create('Pithub');
     my $result = $p->users->followers->list(
         user    => 'plu',
         options => {
@@ -503,11 +503,11 @@ sub validate_tree {
 {
     my $p = Pithub::Test->create('Pithub');
     throws_ok {
-        $p->users->get( user => 'foo', options => { params => 5 } );
+        $p->users->get( user => 'foo', params => 5 );
     }
-    qr{The key params in the \$options hashref must be a hashref}, 'The params key must be a hashref';
+    qr{The key params must be a hashref}, 'The params key must be a hashref';
 
-    my $result = $p->users->get( user => 'foo', options => { params => { direction => 'asc' } } );
+    my $result = $p->users->get( user => 'foo', params => { direction => 'asc' } );
     my %query = $result->request->uri->query_form;
     eq_or_diff \%query, { direction => 'asc' }, 'The params were set';
 }

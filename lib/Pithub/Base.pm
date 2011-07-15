@@ -532,10 +532,15 @@ This will be the HTTP request body.
 B<options>: optional hash reference to set additional options on
 the request. So far C<< prepare_request >> is supported. See
 more about that in the examples below. So this can be used on
-B<every> method which maps directly to an API call. Besides that
-C<< params >> can be set to a hashref, which will be truned into
-C<< GET >> parameters. This is used in the
-L<list method of Pithub::Issues|Pithub::Issues/list> for example.
+B<every> method which maps directly to an API call.
+
+=item *
+
+B<params>: optional hash reference to set additional C<< GET >>
+parameters. This could be achieved using the C<< prepare_request >>
+in the C<< options >> hashref as well, but this is shorter. It's
+being used in L<list method of Pithub::Issues|Pithub::Issues/list>
+for example.
 
 =back
 
@@ -551,14 +556,12 @@ Same as L<Pithub::Issues/list>:
 
     my $p      = Pithub->new;
     my $result = $p->request(
-        method  => 'GET',
-        path    => '/repos/plu/Pithub/issues',
-        options => {
-            params => {
-                state     => 'closed',
-                direction => 'asc',
-            }
-        },
+        method => 'GET',
+        path   => '/repos/plu/Pithub/issues',
+        params => {
+            state     => 'closed',
+            direction => 'asc',
+        }
     );
 
 =item *
@@ -634,6 +637,7 @@ sub request {
     my $path   = delete $args{path}   || croak 'Missing mandatory key in parameters: path';
     my $data   = delete $args{data};
     my $options = delete $args{options};
+    my $params  = delete $args{params};
 
     croak "Invalid method: $method" unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
 
@@ -647,17 +651,17 @@ sub request {
 
     if ($options) {
         croak 'The key options must be a hashref' unless ref $options eq 'HASH';
-        croak 'The key prepare_request in the $options hashref must be a coderef' if $options->{prepare_request} && ref $options->{prepare_request} ne 'CODE';
-        croak 'The key params in the $options hashref must be a hashref'          if $options->{params}          && ref $options->{params}          ne 'HASH';
+        croak 'The key prepare_request in the options hashref must be a coderef' if $options->{prepare_request} && ref $options->{prepare_request} ne 'CODE';
 
         if ( $options->{prepare_request} ) {
             $options->{prepare_request}->($request);
         }
+    }
 
-        if ( $options->{params} ) {
-            my %query = ( $request->uri->query_form, %{ $options->{params} } );
-            $request->uri->query_form(%query);
-        }
+    if ($params) {
+        croak 'The key params must be a hashref' unless ref $params eq 'HASH';
+        my %query = ( $request->uri->query_form, %$params );
+        $request->uri->query_form(%query);
     }
 
     my $response = $self->ua->request($request);
