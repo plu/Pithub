@@ -9,6 +9,11 @@ extends 'Pithub::Base';
 
 =method create
 
+The tree creation API will take nested entries as well. If both a
+tree and a nested path modifying that tree are specified, it will
+overwrite the contents of that tree with the new path contents and
+write a new tree out.
+
 =over
 
 =item *
@@ -17,64 +22,92 @@ Create a Tree
 
     POST /repos/:user/:repo/git/trees
 
-Examples:
-
-    my $t = Pithub::GitData::Trees->new;
-    my $result = $t->create(
-        user => 'plu',
-        repo => 'Pithub',
-        data => {
-            tree => [
-                {
-                    path => 'file.pl',
-                    mode => '100644',
-                    type => 'blob',
-                    sha  => '44b4fc6d56897b048c772eb4087f854f46256132',
-                }
-            ]
-        }
-    );
-
-=back
-
-Parameters in C<< data >> hashref:
+Parameters:
 
 =over
 
 =item *
 
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
 B<base_tree>: optional String of the SHA1 of the tree you want to
-update with new data
+update with new data.
 
 =item *
 
-B<tree>: Array of Hash objects (of path, mode, type and sha)
-specifying a tree structure
+B<tree>: mandatory arrayref of hashrefs, having following keys:
+
+=over
 
 =item *
 
-B<tree.path>: String of the file referenced in the tree
+B<path>: mandatory string of the file referenced in the tree.
 
 =item *
 
-B<tree.mode>: String of the file mode - one of 100644 for file
-(blob), 100755 for executable (blob), 040000 for subdirectory
-(tree), 160000 for submodule (commit) or 120000 for a blob that
-specifies the path of a symlink
+B<mode>: mandatory string of the file mode - one of C<< 100644 >>
+for file (blob), C<< 100755 >> for executable (blob), C<< 040000 >>
+for subdirectory (tree), C<< 160000 >> for submodule (commit) or
+C<< 120000 >> for a blob that specifies the path of a symlink.
 
 =item *
 
-B<tree.type>: String of blob, tree, commit
+B<type>: mandatory string of C<< blob >>, C<< tree >>, C<< commit >>.
 
 =item *
 
-B<tree.sha>: String of SHA1 checksum ID of the object in the tree
+B<sha>: mandatory string of SHA1 checksum ID of the object in the tree.
 
 =item *
 
-B<tree.content>: String of content you want this file to have -
-GitHub will write this blob out and use that SHA for this entry.
-Use either this or tree.sha
+B<content>: String of content you want this file to have - GitHub will
+write this blob out and use that SHA for this entry. Use either this
+or C<< tree.sha >>.
+
+=back
+
+=back
+
+Examples:
+
+    my $t = Pithub::GitData::Trees->new;
+    my $result = $t->create(
+        user => 'octocat',
+        repo => 'Hello-World',
+        data => {
+            tree => [
+                {
+                    path => 'file.rb',
+                    mode => '100644',
+                    type => 'blob',
+                    sha  => '7c258a9869f33c1e1e1f74fbb32f07c86cb5a75b',
+                }
+            ]
+        }
+    );
+
+Response: C<< Status: 201 Created >>
+
+    {
+        "sha": "cd8274d15fa3ae2ab983129fb037999f264ba9a7",
+        "url": "https://api.github.com/repo/octocat/Hello-World/trees/cd8274d15fa3ae2ab983129fb037999f264ba9a7",
+        "tree": [
+        {
+            "path": "file.rb",
+            "mode": "100644",
+            "type": "blob",
+            "size": 132,
+            "sha": "7c258a9869f33c1e1e1f74fbb32f07c86cb5a75b",
+            "url": "https://api.github.com/octocat/Hello-World/git/blobs/7c258a9869f33c1e1e1f74fbb32f07c86cb5a75b"
+        }
+        ]
+    }
 
 =back
 
@@ -101,6 +134,28 @@ Get a Tree
 
     GET /repos/:user/:repo/git/trees/:sha
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<sha>: mandatory string
+
+=item *
+
+B<recursive>: optional boolean
+
+=back
+
 Examples:
 
     my $t = Pithub::GitData::Trees->new;
@@ -110,11 +165,65 @@ Examples:
         sha  => 'df21b2660fb6'
     );
 
+Response: C<< Status: 200 OK >>
+
+    {
+        "sha": "9fb037999f264ba9a7fc6274d15fa3ae2ab98312",
+        "url": "https://api.github.com/repo/octocat/Hello-World/trees/9fb037999f264ba9a7fc6274d15fa3ae2ab98312",
+        "tree": [
+        {
+            "path": "file.rb",
+            "mode": "100644",
+            "type": "blob",
+            "size": 30,
+            "sha": "44b4fc6d56897b048c772eb4087f854f46256132",
+            "url": "https://api.github.com/octocat/Hello-World/git/blobs/44b4fc6d56897b048c772eb4087f854f46256132"
+        },
+        {
+            "path": "subdir",
+            "mode": "040000",
+            "type": "tree",
+            "sha": "f484d249c660418515fb01c2b9662073663c242e",
+            "url": "https://api.github.com/octocat/Hello-World/git/blobs/f484d249c660418515fb01c2b9662073663c242e"
+        },
+        {
+            "path": "exec_file",
+            "mode": "100755",
+            "type": "blob",
+            "size": 75,
+            "sha": "45b983be36b73c0788dc9cbcb76cbb80fc7bb057",
+            "url": "https://api.github.com/octocat/Hello-World/git/blobs/45b983be36b73c0788dc9cbcb76cbb80fc7bb057"
+        }
+        ]
+    }
+
 =item *
 
 Get a Tree Recursively
 
     GET /repos/:user/:repo/git/trees/:sha?recursive=1
+
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<sha>: mandatory string
+
+=item *
+
+B<recursive>: optional boolean
+
+=back
 
 Examples:
 
@@ -125,6 +234,23 @@ Examples:
         sha       => 'df21b2660fb6',
         recursive => 1,
     );
+
+Response: C<< Status: 200 OK >>
+
+    {
+        "sha": "fc6274d15fa3ae2ab983129fb037999f264ba9a7",
+        "url": "https://api.github.com/repo/octocat/Hello-World/trees/fc6274d15fa3ae2ab983129fb037999f264ba9a7",
+        "tree": [
+        {
+            "path": "subdir/file.txt",
+            "mode": "100644",
+            "type": "blob",
+            "size": 132,
+            "sha": "7c258a9869f33c1e1e1f74fbb32f07c86cb5a75b",
+            "url": "https://api.github.com/octocat/Hello-World/git/7c258a9869f33c1e1e1f74fbb32f07c86cb5a75b"
+        }
+        ]
+    }
 
 =back
 
