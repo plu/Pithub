@@ -47,7 +47,7 @@ sub conceal {
 =item *
 
 Removing a user from this list will remove them from all teams and
-they will no longer have any access to the organization’s
+they will no longer have any access to the organization's
 repositories.
 
     DELETE /orgs/:org/members/:user

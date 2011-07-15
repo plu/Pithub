@@ -389,7 +389,7 @@ sub is_starred {
 
 =item *
 
-List a user’s gists:
+List a user's gists:
 
     GET /users/:user/gists
 
@@ -415,7 +415,7 @@ Examples:
 
 =item *
 
-List the authenticated user’s gists or if called anonymously,
+List the authenticated user's gists or if called anonymously,
 this will returns all public gists:
 
     GET /gists
@@ -448,7 +448,7 @@ Examples:
 
 =item *
 
-List the authenticated user’s starred gists:
+List the authenticated user's starred gists:
 
     GET /gists/starred
 

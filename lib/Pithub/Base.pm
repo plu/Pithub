@@ -214,7 +214,7 @@ B<Html>
 
 C<< application/vnd.github-issue.html+json >>
 
-Return html rendered from the body’s markdown. Response will
+Return html rendered from the body's markdown. Response will
 include body_html.
 
 Examples:

@@ -296,7 +296,7 @@ B<mentioned>: Issues mentioning you
 
 =item *
 
-B<subscribed>: Issues you’re subscribed to updates for
+B<subscribed>: Issues you're subscribed to updates for
 
 =back
 
