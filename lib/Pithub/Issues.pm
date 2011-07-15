@@ -96,6 +96,21 @@ List the issues of the authenticated user
 
     GET /issues
 
+Examples:
+
+    my $i      = Pithub::Issues->new;
+    my $result = $i->list(
+        options => {
+            params => {
+                filter    => 'assigned',
+                state     => 'open',
+                labels    => 'bug',
+                sort      => 'updated',
+                direction => 'asc',
+            }
+        }
+    );
+
 =item *
 
 List issues for a repository
@@ -104,10 +119,19 @@ List issues for a repository
 
 Examples:
 
-    my $i = Pithub::Issues->new;
+    my $i      = Pithub::Issues->new;
     my $result = $i->list(
-        user => 'plu',
-        repo => 'Pithub',
+        user    => 'plu',
+        repo    => 'Pithub',
+        options => {
+            params => {
+                milestone => 42,
+                state     => 'open',
+                labels    => 'bug',
+                sort      => 'updated',
+                direction => 'asc',
+            }
+        }
     );
 
 =back
