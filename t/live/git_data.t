@@ -223,12 +223,21 @@ SKIP: {
         is $result->content->{content}, "Q29udGVudCBvZiB0aGUgYmxvYg==\n", 'Pithub::GitData::Blobs->get content after create';
         is $result->content->{encoding}, 'base64', 'Pithub::GitData::Blobs->get encoding after create';
 
+        # Pithub::GitData::References->get
+        my $master_sha = $p->git_data->references->get( ref => 'heads/master' )->content->{object}{sha};
+        ok $master_sha, 'Pithub::GitData::Trees->get returned a SHA';
+
+        # Pithub::GitData::Commits->get
+        my $base_tree_sha = $p->git_data->commits->get( sha => $master_sha )->content->{tree}{sha};
+        ok $master_sha, 'Pithub::GitData::Commits->get returned a tree SHA';
+
         # Pithub::GitData::Trees->create
         my $tree_sha = $p->git_data->trees->create(
             data => {
-                tree => [
+                base_tree => $base_tree_sha,
+                tree      => [
                     {
-                        path => 'b.lob',
+                        path => "${blob_sha}.blob",
                         mode => '100644',
                         type => 'blob',
                         sha  => $blob_sha,
@@ -237,10 +246,6 @@ SKIP: {
             }
         )->content->{sha};
         ok $tree_sha, 'Pithub::GitData::Trees->create returned a SHA';
-
-        # Pithub::GitData::References->get
-        my $master_sha = $p->git_data->references->get( ref => 'heads/master' )->content->{object}{sha};
-        ok $master_sha, 'Pithub::GitData::Trees->get returned a SHA';
 
         # Pithub::GitData::Commits->create
         my $commit_sha = $p->git_data->commits->create(
@@ -253,13 +258,10 @@ SKIP: {
         ok $commit_sha, 'Pithub::GitData::Commits->create returned a SHA';
 
         # Pithub::GitData::References->update
-      TODO: {
-            local $TODO = 'This does not work yet, reason unknown';
-            ok $p->git_data->references->update(
-                ref  => 'heads/master',
-                data => { sha => $tree_sha }
-            )->success, 'Pithub::GitData::References->update successful';
-        }
+        ok $p->git_data->references->update(
+            ref  => 'heads/master',
+            data => { sha => $commit_sha }
+        )->success, 'Pithub::GitData::References->update successful';
     }
 }
 
