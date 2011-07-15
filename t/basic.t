@@ -278,7 +278,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
 
     isa_ok $p, 'Pithub';
 
@@ -314,7 +314,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     $p->token('123');
     my $request = $p->request( method => 'POST', path => '/foo', data => { some => 'data' } )->request;
     eq_or_diff $request->content, '{"some":"data"}', 'The JSON content was set in the request object';
@@ -326,7 +326,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->request( method => 'GET', path => '/error/notfound' );
 
     is $result->code,    404, 'HTTP status is 404';
@@ -344,7 +344,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
     is $result->count,          30,                                                        'Count accessor';
@@ -363,7 +363,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(3);
 
     is $result->first_page_uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page link on third page';
@@ -378,7 +378,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(26);
 
     is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
@@ -391,7 +391,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new, per_page => 1 );
+    my $p = Pithub::Test->create( 'Pithub', per_page => 1 );
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
     is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2&per_page=1',   'Next page call';
@@ -404,7 +404,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->users->get( user => 'plu' );
 
     is $result->first_page, undef, 'First page call';
@@ -417,13 +417,13 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new, jsonp_callback => 'foo' );
+    my $p = Pithub::Test->create( 'Pithub', jsonp_callback => 'foo' );
     my $result = $p->request( method => 'GET', path => '/foo' );
     is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->request( method => 'GET', path => '/orgs/CPAN-API/repos' );
 
     my @expectations = (
@@ -442,7 +442,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->request( method => 'GET', path => '/users/plu' );
 
     my $row = $result->next;
@@ -454,7 +454,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new, per_page => 15 );
+    my $p = Pithub::Test->create( 'Pithub', per_page => 15 );
     my $result = $p->users->followers->list( user => 'plu' );
     $result->auto_pagination(1);
     my @followers = ();
@@ -465,7 +465,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new, per_page => 15, auto_pagination => 1 );
+    my $p = Pithub::Test->create( 'Pithub', per_page => 15, auto_pagination => 1 );
     my $result = $p->users->followers->list( user => 'plu' );
     my @followers = ();
     while ( my $row = $result->next ) {
@@ -475,8 +475,8 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new(
-        ua              => Pithub::Test::UA->new,
+    my $p = Pithub::Test->create(
+        'Pithub',
         prepare_request => sub {
             my ($request) = @_;
             $request->header( Accept => 'anything' );
@@ -487,7 +487,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     my $result = $p->users->followers->list(
         user    => 'plu',
         options => {
@@ -501,7 +501,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    my $p = Pithub::Test->create('Pithub');
     throws_ok {
         $p->users->get( user => 'foo', options => { params => 5 } );
     }
