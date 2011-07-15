@@ -269,18 +269,14 @@ sub get {
     croak 'Missing key in parameters: sha' unless $args{sha};
     $self->_validate_user_repo_args( \%args );
     my $path = sprintf( '/repos/%s/%s/git/trees/%s', $args{user}, $args{repo}, $args{sha} );
-    my $options = {};
+    my %params = ();
     if ( $args{recursive} ) {
-        $options->{prepare_request} = sub {
-            my ($request) = @_;
-            my %query = ( $request->uri->query_form, recursive => 1 );
-            $request->uri->query_form(%query);
-        };
+        $params{recursive} = 1;
     }
     return $self->request(
-        method  => 'GET',
-        path    => $path,
-        options => $options,
+        method => 'GET',
+        path   => $path,
+        params => \%params,
         %args,
     );
 }

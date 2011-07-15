@@ -598,13 +598,12 @@ Same as L<Pithub::GitData::Trees/get>:
 
     my $p       = Pithub->new;
     my $method  = 'GET';
-    my $path    = '/repos/plu/Pithub/git/trees/aac667c5aaa6e49572894e8c722d0705bb00fab2';
+    my $path    = '/repos/miyagawa/Plack/issues/209';
     my $data    = undef;
     my $options = {
         prepare_request => sub {
             my ($request) = @_;
-            my %query = ( $request->uri->query_form, recursive => 1 );
-            $request->uri->query_form(%query);
+            $request->header( Accept => 'application/vnd.github-issue.html+json' );
         },
     };
     my $result = $p->request(
@@ -613,16 +612,6 @@ Same as L<Pithub::GitData::Trees/get>:
         data    => $data,
         options => $options,
     );
-
-Always be careful using C<< prepare_request >> and C<< query_form >>.
-If the option L</per_page> is set, you might override the pagination
-parameter. That's the reason for this construct:
-
-    my %query = ( $request->uri->query_form, recursive => 1 );
-    $request->uri->query_form(%query);
-
-If you just want to add C<< GET >> parameters, consider using the
-C<< params >> key in the C<< options >> hashref instead.
 
 =back
 
