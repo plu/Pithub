@@ -9,7 +9,6 @@ use HTTP::Request;
 use JSON::Any;
 use LWP::UserAgent;
 use MooseX::Types::URI qw(Uri);
-use Pithub::Response;
 use Pithub::Result;
 use URI;
 use namespace::autoclean;
@@ -629,7 +628,7 @@ sub request {
         $options->{prepare_request}->($request) if $options->{prepare_request};
     }
 
-    my $response = Pithub::Response->new( http_request => $request, ua => $self->ua );
+    my $response = $self->ua->request($request);
 
     return Pithub::Result->new(
         auto_pagination => $self->auto_pagination,

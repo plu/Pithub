@@ -299,10 +299,10 @@ sub validate_tree {
 
     my $result       = $p->request( method => 'GET', path => '/bar' );
     my $response     = $result->response;
-    my $http_request = $response->http_request;
+    my $http_request = $response->request;
 
     isa_ok $result,       'Pithub::Result';
-    isa_ok $response,     'Pithub::Response';
+    isa_ok $response,     'HTTP::Response';
     isa_ok $http_request, 'HTTP::Request';
 
     is $http_request->content, '', 'The data hashref is undef';

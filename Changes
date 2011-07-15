@@ -6,9 +6,8 @@ Revision history for {{$dist->name}}
           - fix Pithub::Users->list_following
           - fix Pithub::Repos->update
           - rename Orgs->Teams->get_repo to ->has_repo [!!!]
-          - sending HTTP requests is lazy now
           - make access to response headers easier
-          - remove Pithub::Request [!!!]
+          - remove Pithub::Request and Pithub::Response [!!!]
           - replace prepare_uri with more flexible
             prepare_request [!!!]
           - prepare_request is now available globally and can be set

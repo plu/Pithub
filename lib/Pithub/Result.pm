@@ -13,21 +13,6 @@ use namespace::autoclean;
 Every method call which maps directly to a Github API call returns a
 L<Pithub::Result> object. Once you got the result object, you can
 set L<attributes|/ATTRIBUTES> on them or call L<methods|/METHODS>.
-The HTTP requests are made lazy, means: Once you got the result
-object returned, no HTTP request has been made yet. Only if you
-access data using one of the methods like L</content> or L</next>,
-it will make the HTTP request.
-
-Example:
-
-    use Data::Dumper;
-
-    my $r = Pithub::Repos->new;
-    my $result = $r->list( user => 'rjbs' );
-    # no HTTP request was made so far
-
-    # on the next line the HTTP request will happen
-    print Dumper $result->content;
 
 =attr auto_pagination
 
@@ -137,28 +122,7 @@ has 'prev_page_uri' => (
 
 =attr response
 
-The L<Pithub::Response> object. There are following delegate methods
-installed for convenience:
-
-=over
-
-=item *
-
-B<code>: L<Pithub::Response/code>
-
-=item *
-
-B<raw_content>: L<Pithub::Response/content>
-
-=item *
-
-B<request>: L<Pithub::Response/http_request>
-
-=item *
-
-B<success>: L<Pithub::Response/success>
-
-=back
+The L<HTTP::Response> object.
 
 =cut
 
@@ -166,11 +130,11 @@ has 'response' => (
     handles => {
         code        => 'code',
         raw_content => 'content',
-        request     => 'http_request',
-        success     => 'success',
+        request     => 'request',
+        success     => 'is_success',
     },
     is       => 'ro',
-    isa      => 'Pithub::Response',
+    isa      => 'HTTP::Response',
     required => 1,
 );
 

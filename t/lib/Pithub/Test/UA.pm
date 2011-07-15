@@ -15,11 +15,11 @@ sub request {
     while ( my ( $k, $v ) = each %query_form ) {
         $path .= sprintf '.%s-%s', $k, $v;
     }
+    my $response = HTTP::Response->new;
     if ( -f $path ) {
         my $res = read_file($path);
-        return HTTP::Response->parse($res);
+        $response = HTTP::Response->parse($res);
     }
-    my $response = HTTP::Response->new;
     $response->request($request);
     return $response;
 }
