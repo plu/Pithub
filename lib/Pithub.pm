@@ -15,6 +15,14 @@ with 'MooseX::Role::BuildInstanceOf' => { target => '::Repos' };
 with 'MooseX::Role::BuildInstanceOf' => { target => '::Users' };
 around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
+=head1 DOCUMENTATION
+
+Quite a lot of the L<Pithub> documentation has been taken directly
+from the great API documentation at
+L<Github|http://developer.github.com/v3/>. Please also read the
+documentation there, since it might be more complete and more
+up-to-date.
+
 =head1 SYNOPSIS
 
     use Pithub;
