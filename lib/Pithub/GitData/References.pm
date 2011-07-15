@@ -17,6 +17,39 @@ Create a Reference
 
     POST /repos/:user/:repo/git/refs
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<data>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
+B<ref>: mandatory string of the name of the fully qualified
+reference (ie: refs/heads/master). If it doesn’t start with
+'refs' and have at least two slashes, it will be rejected.
+
+=item *
+
+B<sha>: mandatory string of the SHA1 value to set this
+reference to.
+
+=back
+
+=back
+
 Examples:
 
     my $r = Pithub::GitData::References->new;
@@ -28,22 +61,6 @@ Examples:
             sha => '827efc6d56897b048c772eb4087f854f46256132' .
         }
     );
-
-=back
-
-Parameters in C<< data >> hashref:
-
-=over
-
-=item *
-
-B<ref>: String of the name of the fully qualified reference (ie:
-refs/heads/master). If it doesn’t start with 'refs' and have at
-least two slashes, it will be rejected.
-
-=item *
-
-B<sha>: String of the SHA1 value to set this reference to
 
 =back
 
@@ -70,6 +87,28 @@ Get a Reference
 
     GET /repos/:user/:repo/git/refs/:ref
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<ref>: mandatory string
+
+The key B<ref> must be formatted as C<< heads/branch >>, not just
+C<< branch >>. For example, the call to get the data for a branch
+named C<< sc/featureA > would be: C<< heads/sc/featureA >>
+
+=back
+
 Examples:
 
     my $r = Pithub::GitData::References->new;
@@ -79,11 +118,19 @@ Examples:
         ref  => 'heads/master'
     );
 
-=back
+Response: C<< Status: 200 OK >>
 
-The key B<ref> must be formatted as C<< heads/branch >>, not just
-C<< branch >>. For example, the call to get the data for a branch
-named C<< sc/featureA > would be: C<< heads/sc/featureA >>
+    {
+        "ref": "refs/heads/sc/featureA",
+        "url": "https://api.github.com/repos/octocat/Hello-World/git/refs/heads/sc/featureA",
+        "object": {
+            "type": "commit",
+            "sha": "aa218f56b14c9653891f9e74264a383fa43fefbd",
+            "url": "https://api.github.com/repos/octocat/Hello-World/git/commits/aa218f56b14c9653891f9e74264a383fa43fefbd"
+        }
+    }
+
+=back
 
 =cut
 
@@ -113,6 +160,20 @@ including things like notes and stashes if they exist on the server.
 Anything in the namespace, not just heads and tags, though that
 would be the most common.
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=back
+
 Examples:
 
     my $r = Pithub::GitData::References->new;
@@ -128,6 +189,24 @@ tag references, you can call:
 
     GET /repos/:user/:repo/git/refs/tags
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<ref>: mandatory string
+
+=back
+
 Examples:
 
     my $r = Pithub::GitData::References->new;
@@ -136,6 +215,29 @@ Examples:
         repo => 'Pithub',
         ref  => 'tags',
     );
+
+Response: C<< Status: 200 OK >>
+
+    [
+        {
+            "object": {
+                "type": "commit",
+                "sha": "1c5230f42d6d3e376162591f223fc4130d671937",
+                "url": "https://api.github.com/repos/plu/Pithub/git/commits/1c5230f42d6d3e376162591f223fc4130d671937"
+            },
+            "ref": "refs/tags/v0.01000",
+            "url": "https://api.github.com/repos/plu/Pithub/git/refs/tags/v0.01000"
+        },
+        {
+            "object": {
+                "type": "tag",
+                "sha": "ef328a0679a992bd2c0ac537cf19d379f1c8d177",
+                "url": "https://api.github.com/repos/plu/Pithub/git/tags/ef328a0679a992bd2c0ac537cf19d379f1c8d177"
+            },
+            "ref": "refs/tags/v0.01001",
+            "url": "https://api.github.com/repos/plu/Pithub/git/refs/tags/v0.01001"
+        }
+    ]
 
 =back
 
@@ -168,6 +270,44 @@ Update a Reference
 
     PATCH /repos/:user/:repo/git/refs/:ref
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<ref>: mandatory string
+
+=item *
+
+B<data>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
+B<sha>: mandatory string of the SHA1 value to set this
+reference to.
+
+=item *
+
+B<force>: optional boolean indicating whether to force the update or
+to make sure the update is a fast-forward update. The default is
+C<< false >> so leaving this out or setting it to C<< false >> will
+make sure you’re not overwriting work.
+
+=back
+
+=back
+
 Examples:
 
     my $r = Pithub::GitData::References->new;
@@ -181,22 +321,19 @@ Examples:
         }
     );
 
-=back
+Response: C<< Status: 200 OK >>
 
-Parameters in C<< data >> hashref:
-
-=over
-
-=item *
-
-B<sha>: String of the SHA1 value to set this reference to
-
-=item *
-
-B<force>: Boolean indicating whether to force the update or to make
-sure the update is a fast-forward update. The default is false, so
-leaving this out or setting it to false will make sure you’re not
-overwriting work.
+    [
+        {
+            "ref": "refs/heads/sc/featureA",
+            "url": "https://api.github.com/repos/octocat/Hello-World/git/refs/heads/sc/featureA",
+            "object": {
+                "type": "commit",
+                "sha": "aa218f56b14c9653891f9e74264a383fa43fefbd",
+                "url": "https://api.github.com/repos/octocat/Hello-World/git/commits/aa218f56b14c9653891f9e74264a383fa43fefbd"
+            }
+        }
+    ]
 
 =back
 
