@@ -17,13 +17,50 @@ Create a comment
 
     POST /gists/:gist_id/comments
 
+Parameters:
+
+=over
+
+=item *
+
+B<gist_id>: mandatory integer
+
+=item *
+
+B<data>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
+B<body>: mandatory string
+
+=back
+
+=back
+
 Examples:
 
     my $c = Pithub::Gists::Comments->new;
     my $result = $c->create(
         gist_id => 1,
-        data    => { body => 'some comment' },
+        data    => { body => 'Just commenting for the sake of commenting' },
     );
+
+Response: C<< Status: 201 Created >>
+
+    {
+        "id": 1,
+        "url": "https://api.github.com/gists/comments/1",
+        "body": "Just commenting for the sake of commenting",
+        "user": {
+            "login": "octocat",
+            "id": 1,
+            "gravatar_url": "https://github.com/images/error/octocat_happy.gif",
+            "url": "https://api.github.com/users/octocat"
+        },
+        "created_at": "2011-04-18T23:23:56Z"
+    }
 
 =back
 
@@ -50,10 +87,22 @@ Delete a comment
 
     DELETE /gists/comments/:id
 
+Parameters:
+
+=over
+
+=item *
+
+B<comment_id>: mandatory integer
+
+=back
+
 Examples:
 
     my $c = Pithub::Gists::Comments->new;
     my $result = $c->delete( comment_id => 1 );
+
+Response: C<< Status: 204 No Content >>
 
 =back
 
@@ -79,10 +128,35 @@ Get a single comment
 
     GET /gists/comments/:id
 
+Parameters:
+
+=over
+
+=item *
+
+B<comment_id>: mandatory integer
+
+=back
+
 Examples:
 
     my $c = Pithub::Gists::Comments->new;
     my $result = $c->get( comment_id => 1 );
+
+Response: C<< Status: 200 OK >>
+
+    {
+        "id": 1,
+        "url": "https://api.github.com/gists/comments/1",
+        "body": "Just commenting for the sake of commenting",
+        "user": {
+            "login": "octocat",
+            "id": 1,
+            "gravatar_url": "https://github.com/images/error/octocat_happy.gif",
+            "url": "https://api.github.com/users/octocat"
+        },
+        "created_at": "2011-04-18T23:23:56Z"
+    }
 
 =back
 
@@ -108,10 +182,37 @@ List comments on a gist
 
     GET /gists/:gist_id/comments
 
+Parameters:
+
+=over
+
+=item *
+
+B<gist_id>: mandatory integer
+
+=back
+
 Examples:
 
     my $c = Pithub::Gists::Comments->new;
     my $result = $c->list( gist_id => 1 );
+
+Response: C<< Status: 200 OK >>
+
+    [
+        {
+            "id": 1,
+            "url": "https://api.github.com/gists/comments/1",
+            "body": "Just commenting for the sake of commenting",
+            "user": {
+                "login": "octocat",
+                "id": 1,
+                "gravatar_url": "https://github.com/images/error/octocat_happy.gif",
+                "url": "https://api.github.com/users/octocat"
+            },
+            "created_at": "2011-04-18T23:23:56Z"
+        }
+    ]
 
 =back
 
@@ -137,6 +238,28 @@ Edit a comment
 
     PATCH /gists/comments/:id
 
+Parameters:
+
+=over
+
+=item *
+
+B<comment_id>: mandatory integer
+
+=item *
+
+B<data>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
+B<body>: mandatory string
+
+=back
+
+=back
+
 Examples:
 
     my $c = Pithub::Gists::Comments->new;
@@ -144,6 +267,21 @@ Examples:
         comment_id => 1,
         data       => { body => 'some comment' }
     );
+
+Response: C<< Status: 200 OK >>
+
+    {
+        "id": 1,
+        "url": "https://api.github.com/gists/comments/1",
+        "body": "Just commenting for the sake of commenting",
+        "user": {
+            "login": "octocat",
+            "id": 1,
+            "gravatar_url": "https://github.com/images/error/octocat_happy.gif",
+            "url": "https://api.github.com/users/octocat"
+        },
+        "created_at": "2011-04-18T23:23:56Z"
+    }
 
 =back
 
