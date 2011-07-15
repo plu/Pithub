@@ -476,6 +476,7 @@ sub validate_tree {
 
 {
     my $p = Pithub->new(
+        ua              => Pithub::Test::UA->new,
         prepare_request => sub {
             my ($request) = @_;
             $request->header( Accept => 'anything' );
@@ -486,7 +487,7 @@ sub validate_tree {
 }
 
 {
-    my $p      = Pithub->new;
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
     my $result = $p->users->followers->list(
         user    => 'plu',
         options => {
@@ -497,6 +498,18 @@ sub validate_tree {
         }
     );
     is $result->request->header('Accept'), 'foobar', 'The request header got set via the method call';
+}
+
+{
+    my $p = Pithub->new( ua => Pithub::Test::UA->new );
+    throws_ok {
+        $p->users->get( user => 'foo', options => { params => 5 } );
+    }
+    qr{The key params in the \$options hashref must be a hashref}, 'The params key must be a hashref';
+
+    my $result = $p->users->get( user => 'foo', options => { params => { direction => 'asc' } } );
+    my %query = $result->request->uri->query_form;
+    eq_or_diff \%query, { direction => 'asc' }, 'The params were set';
 }
 
 done_testing;
