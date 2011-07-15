@@ -291,7 +291,7 @@ SKIP: {
         like $comment_id, qr{^\d+$}, 'Pithub::Repos::Commits->create_comment returned comment id';
 
         # Pithub::Repos::Commits->list_comments
-        is $p->repos->commits->list_comments->first->{id}, $comment_id, 'Pithub::Repos::Commits->list_comments first comment id';
+        is $p->repos->commits->list_comments->content->[-1]->{id}, $comment_id, 'Pithub::Repos::Commits->list_comments last comment id';
 
         # Pithub::Repos::Commits->update_comment
         ok $p->repos->commits->update_comment(
