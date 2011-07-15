@@ -31,6 +31,12 @@ B<repo>: mandatory string
 
 =item *
 
+B<data>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
 B<message>: mandatory string, the commit message
 
 =item *
@@ -48,7 +54,7 @@ should be provided points to.
 
 =back
 
-Optional Parameters:
+Optional Parameters in the C<< data >> hashref:
 
 The committer section is optional and will be filled with the author
 data if omitted. If the author section is omitted, it will be filled
@@ -93,6 +99,8 @@ B<email>: string of the email of the committer of the commit
 =item *
 
 B<date>: timestamp of when this commit was committed
+
+=back
 
 =back
 

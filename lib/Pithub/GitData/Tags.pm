@@ -43,6 +43,12 @@ B<repo>: mandatory string
 
 =item *
 
+B<data>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
 B<tag>: mandatory string of the tag
 
 =item *
@@ -76,6 +82,8 @@ B<email>: string of the email of the author of the tag
 =item *
 
 B<date>: timestamp of when this commit was tagged
+
+=back
 
 =back
 

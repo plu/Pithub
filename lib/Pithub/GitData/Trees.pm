@@ -36,6 +36,12 @@ B<repo>: mandatory string
 
 =item *
 
+B<data>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
 B<base_tree>: optional String of the SHA1 of the tree you want to
 update with new data.
 
@@ -69,6 +75,8 @@ B<sha>: mandatory string of SHA1 checksum ID of the object in the tree.
 B<content>: String of content you want this file to have - GitHub will
 write this blob out and use that SHA for this entry. Use either this
 or C<< tree.sha >>.
+
+=back
 
 =back
 
