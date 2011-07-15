@@ -182,10 +182,7 @@ SKIP: {
         ok $p->issues->labels->remove( issue_id => $issue_id ), 'Pithub::Issues::Labels->remove all labels';
 
         # Pithub::Issues::Labels->list
-      TODO: {
-            local $TODO = 'This broke, reason unknown yet';
-            is $p->issues->labels->list( issue_id => $issue_id )->count, 0, 'Pithub::Issues::Labels->list no labels left';
-        }
+        is $p->issues->labels->list( issue_id => $issue_id )->count, 0, 'Pithub::Issues::Labels->list no labels left';
 
         # Pithub::Issues::Labels->delete
         ok $p->issues->labels->delete( label => "label #$_" )->success, 'Pithub::Issues::Labels->delete successful' for 1 .. 2;
