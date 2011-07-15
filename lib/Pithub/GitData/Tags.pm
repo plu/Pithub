@@ -7,6 +7,11 @@ use Carp qw(croak);
 use namespace::autoclean;
 extends 'Pithub::Base';
 
+=head1 DESCRIPTION
+
+This tags api only deals with tag objects - so only annotated tags,
+not lightweight tags.
+
 =method create
 
 =over
@@ -24,6 +29,58 @@ call would be unnecessary.
 
     POST /repos/:user/:repo/git/tags
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<tag>: mandatory string of the tag
+
+=item *
+
+B<message>: mandatory string of the tag message
+
+=item *
+
+B<object>: mandatory stringof the SHA of the git object this is tagging
+
+=item *
+
+B<type>: mandatory string of the type of the object we're tagging.
+Normally this is a C<< commit >> but it can also be a C<< tree >>
+or a C<< blob >>.
+
+=item *
+
+B<tagger>: mandatory hashref, having following keys:
+
+=over
+
+=item *
+
+B<name>: string of the name of the author of the tag
+
+=item *
+
+B<email>: string of the email of the author of the tag
+
+=item *
+
+B<date>: timestamp of when this commit was tagged
+
+=back
+
+=back
+
 Examples:
 
     my $t = Pithub::GitData::Tags->new;
@@ -32,53 +89,35 @@ Examples:
         repo => 'Pithub',
         data => {
             tagger => {
-                date  => '2010-04-10T14:10:01-07:00',
-                email => 'plu@cpan.org',
-                name  => 'Johannes Plunien',
+                date  => '2011-06-17T14:53:35-07:00',
+                email => 'schacon@gmail.com',
+                name  => 'Scott Chacon',
             },
-            message => 'Tagged v0.1',
-            object  => '827efc6d56897b048c772eb4087f854f46256132',
-            tag     => 'v0.1',
+            message => 'initial version',
+            object  => 'c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c',
+            tag     => 'v0.0.1',
             type    => 'commit',
         }
     );
 
-=back
+Response: C<< Status: 201 Created >>
 
-Parameters in C<< data >> hashref:
-
-Parameters
-
-=over
-
-=item *
-
-B<tag>: String of the tag
-
-=item *
-
-B<message>: String of the tag message
-
-=item *
-
-B<object>: String of the SHA of the git object this is tagging
-
-=item *
-
-B<type>: String of the type of the object we’re tagging.
-Normally this is a commit but it can also be a tree or a blob.
-
-=item *
-
-B<tagger.name>: String of the name of the author of the tag
-
-=item *
-
-B<tagger.email>: String of the email of the author of the tag
-
-=item *
-
-B<tagger.date>: Timestamp of when this object was tagged
+    {
+        "tag": "v0.0.1",
+        "sha": "940bd336248efae0f9ee5bc7b2d5c985887b16ac",
+        "url": "https://api.github.com/repos/octocat/Hello-World/git/tags/940bd336248efae0f9ee5bc7b2d5c985887b16ac",
+        "message": "initial version\n",
+        "tagger": {
+            "name": "Scott Chacon",
+            "email": "schacon@gmail.com",
+            "date": "2011-06-17T14:53:35-07:00"
+        },
+        "object": {
+            "type": "commit",
+            "sha": "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
+            "url": "https://api.github.com/repos/octocat/Hello-World/git/commits/c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c"
+        }
+    }
 
 =back
 
@@ -105,6 +144,24 @@ Get a Tag
 
     GET /repos/:user/:repo/git/tags/:sha
 
+Parameters:
+
+=over
+
+=item *
+
+B<user>: mandatory string
+
+=item *
+
+B<repo>: mandatory string
+
+=item *
+
+B<sha>: mandatory string
+
+=back
+
 Examples:
 
     my $t = Pithub::GitData::Tags->new;
@@ -113,6 +170,25 @@ Examples:
         repo => 'Pithub',
         sha  => 'df21b2660fb6',
     );
+
+Response: C<< Status: 200 OK >>
+
+    {
+        "tag": "v0.0.1",
+        "sha": "940bd336248efae0f9ee5bc7b2d5c985887b16ac",
+        "url": "https://api.github.com/repos/octocat/Hello-World/git/tags/940bd336248efae0f9ee5bc7b2d5c985887b16ac",
+        "message": "initial version\n",
+        "tagger": {
+            "name": "Scott Chacon",
+            "email": "schacon@gmail.com",
+            "date": "2011-06-17T14:53:35-07:00"
+        },
+        "object": {
+            "type": "commit",
+            "sha": "c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c",
+            "url": "https://api.github.com/repos/octocat/Hello-World/git/commits/c3d0be41ecbe669545ee3e94d31ed9a4bc91ee3c"
+        }
+    }
 
 =back
 
