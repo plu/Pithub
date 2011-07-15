@@ -275,8 +275,9 @@ sub get_page {
     };
 
     return $self->_request->(
-        method  => 'GET' => path => $uri->path,
-        options => $options
+        method  => 'GET',
+        path    => $uri->path,
+        options => $options,
     );
 }
 
@@ -483,8 +484,8 @@ sub _paginate {
     };
     return $self->_request->(
         method  => 'GET',
-        path    => => $uri->path,
-        options => $options
+        path    => $uri->path,
+        options => $options,
     );
 }
 
