@@ -27,15 +27,16 @@ my $master = $git->references->get( ref => 'heads/master' );
 
 die "Could not get the heads/master reference" unless $master->success;
 
-# and we need the tree this SHA belongs to
-my $base_tree = $git->commits->get( sha => $master->content->{object}{sha} );
+# and we need the full commit of this SHA. Later we will
+# extract the tree SHA this commit belongs to.
+my $base_commit = $git->commits->get( sha => $master->content->{object}{sha} );
 
-die "Could not get the base tree" unless $base_tree->success;
+die "Could not get the base commit" unless $base_commit->success;
 
 # create a new tree, based on the old one, that adds the new blob
 my $tree = $git->trees->create(
     data => {
-        base_tree => $base_tree->content->{tree}{sha},
+        base_tree => $base_commit->content->{tree}{sha},
         tree      => [
             {
                 path => 'examples/gitdata_commit.pl',
