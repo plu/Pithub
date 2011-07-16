@@ -54,7 +54,7 @@ die "Could not create the new tree" unless $tree->success;
 # having the current master as a parent
 my $commit = $git->commits->create(
     data => {
-        message => 'Add exmples/gitdata_commit.pl.',
+        message => 'Add examples/gitdata_commit.pl.',
         parents => [ $master->content->{object}{sha} ],
         tree    => $tree->content->{sha},
     }
