@@ -5,7 +5,7 @@ use Pithub::Repos::Downloads;
 
 my $download = Pithub::Repos::Downloads->new(
     repo  => 'Pithub',
-    token => 'my secret token',
+    token => $ENV{GITHUB_TOKEN},
     user  => 'plu',
 );
 
