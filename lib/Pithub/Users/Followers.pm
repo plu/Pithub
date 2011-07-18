@@ -2,9 +2,8 @@ package Pithub::Users::Followers;
 
 # ABSTRACT: Github v3 User Followers API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method follow
@@ -192,7 +191,5 @@ sub unfollow {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

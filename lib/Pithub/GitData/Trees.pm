@@ -2,9 +2,8 @@ package Pithub::GitData::Trees;
 
 # ABSTRACT: Github v3 Git Data Trees API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method create
@@ -280,7 +279,5 @@ sub get {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

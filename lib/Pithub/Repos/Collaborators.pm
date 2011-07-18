@@ -2,9 +2,8 @@ package Pithub::Repos::Collaborators;
 
 # ABSTRACT: Github v3 Repo Collaborators API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method add
@@ -147,7 +146,5 @@ sub remove {
         %args
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

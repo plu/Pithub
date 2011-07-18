@@ -2,9 +2,8 @@ package Pithub::Repos::Commits;
 
 # ABSTRACT: Github v3 Repo Commits API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method create_comment
@@ -271,7 +270,5 @@ sub update_comment {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

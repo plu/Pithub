@@ -2,9 +2,8 @@ package Pithub::Gists::Comments;
 
 # ABSTRACT: Github v3 Gist Comments API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method create
@@ -297,7 +296,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

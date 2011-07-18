@@ -2,12 +2,14 @@ package Pithub::Gists;
 
 # ABSTRACT: Github v3 Gists API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
+use Pithub::Gists::Comments
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
-around qr{^merge_.*?_args$} => \&Pithub::Base::_merge_args;
+
+sub comments {
+    return shift->_create_instance('Pithub::Gists::Comments');
+}
 
 =method create
 
@@ -746,7 +748,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

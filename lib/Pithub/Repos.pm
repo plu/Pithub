@@ -2,17 +2,39 @@ package Pithub::Repos;
 
 # ABSTRACT: Github v3 Repos API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
+use Pithub::Repos::Collaborators;
+use Pithub::Repos::Commits;
+use Pithub::Repos::Downloads;
+use Pithub::Repos::Forks;
+use Pithub::Repos::Keys;
+use Pithub::Repos::Watching;
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Collaborators' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Commits' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Downloads' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Forks' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Keys' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Watching' };
-around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
+
+sub collaborators {
+    return shift->_create_instance('Pithub::Repos::Collaborators');
+}
+
+sub commits {
+    return shift->_create_instance('Pithub::Repos::Commits');
+}
+
+sub downloads {
+    return shift->_create_instance('Pithub::Repos::Downloads');
+}
+
+sub forks {
+    return shift->_create_instance('Pithub::Repos::Forks');
+}
+
+sub keys {
+    return shift->_create_instance('Pithub::Repos::Keys');
+}
+
+sub watching {
+    return shift->_create_instance('Pithub::Repos::Watching');
+}
 
 =method branches
 
@@ -340,7 +362,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

@@ -2,9 +2,8 @@ package Pithub::Orgs::Members;
 
 # ABSTRACT: Github v3 Org Members API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method conceal
@@ -236,7 +235,5 @@ sub publicize {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

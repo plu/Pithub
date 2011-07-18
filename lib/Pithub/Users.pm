@@ -2,14 +2,24 @@ package Pithub::Users;
 
 # ABSTRACT: Github v3 Users API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
+use Pithub::Users::Emails;
+use Pithub::Users::Followers;
+use Pithub::Users::Keys;
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Emails' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Followers' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Keys' };
-around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
+
+sub emails {
+    return shift->_create_instance('Pithub::Users::Emails');
+}
+
+sub followers {
+    return shift->_create_instance('Pithub::Users::Followers');
+}
+
+sub keys {
+    return shift->_create_instance('Pithub::Users::Keys');
+}
 
 =method get
 
@@ -85,7 +95,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

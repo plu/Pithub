@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - replace Moose with Moo
 
 0.01004   2011-07-15 14:43:34 Asia/Dubai
           - change "label_id" key to "label" everywhere since [!!!]

@@ -2,17 +2,33 @@ package Pithub::GitData;
 
 # ABSTRACT: Github v3 Git Data API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
+use Pithub::GitData::Blobs;
+use Pithub::GitData::Commits;
+use Pithub::GitData::References;
+use Pithub::GitData::Tags;
+use Pithub::GitData::Trees;
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Blobs' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Commits' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::References' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Tags' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Trees' };
-around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
 
-__PACKAGE__->meta->make_immutable;
+sub blobs {
+    return shift->_create_instance('Pithub::GitData::Blobs');
+}
+
+sub commits {
+    return shift->_create_instance('Pithub::GitData::Commits');
+}
+
+sub references {
+    return shift->_create_instance('Pithub::GitData::References');
+}
+
+sub tags {
+    return shift->_create_instance('Pithub::GitData::Tags');
+}
+
+sub trees {
+    return shift->_create_instance('Pithub::GitData::Trees');
+}
 
 1;

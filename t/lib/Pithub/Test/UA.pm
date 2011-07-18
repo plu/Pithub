@@ -1,12 +1,11 @@
 package    # hide from PAUSE
   Pithub::Test::UA;
 
-use Moose;
+use Moo;
 use File::Basename qw(dirname);
 use File::Slurp qw(read_file);
 use HTTP::Response;
 use Test::More;
-use namespace::autoclean;
 
 sub request {
     my ( $self, $request ) = @_;
@@ -23,7 +22,5 @@ sub request {
     $response->request($request);
     return $response;
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

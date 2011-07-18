@@ -2,10 +2,9 @@ package Pithub::Repos::Downloads;
 
 # ABSTRACT: Github v3 Repo Downloads API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
 use HTTP::Request::Common qw(POST);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method create
@@ -198,7 +197,5 @@ sub upload {
     my $request = POST $result->{s3_url}, %data;
     return $self->ua->request($request);
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

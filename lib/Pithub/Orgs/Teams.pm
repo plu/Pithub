@@ -2,9 +2,8 @@ package Pithub::Orgs::Teams;
 
 # ABSTRACT: Github v3 Org Teams API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method add_member
@@ -408,7 +407,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

@@ -2,15 +2,29 @@ package Pithub::Issues;
 
 # ABSTRACT: Github v3 Issues API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
+use Pithub::Issues::Comments;
+use Pithub::Issues::Events;
+use Pithub::Issues::Labels;
+use Pithub::Issues::Milestones;
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Events' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Labels' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Milestones' };
-around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
+
+sub comments {
+    return shift->_create_instance('Pithub::Issues::Comments');
+}
+
+sub events {
+    return shift->_create_instance('Pithub::Issues::Events');
+}
+
+sub labels {
+    return shift->_create_instance('Pithub::Issues::Labels');
+}
+
+sub milestones {
+    return shift->_create_instance('Pithub::Issues::Milestones');
+}
 
 =method create
 
@@ -749,7 +763,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

@@ -2,12 +2,14 @@ package Pithub::PullRequests;
 
 # ABSTRACT: Github v3 Pull Requests API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
+use Pithub::PullRequests::Comments;
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Comments' };
-around qr{^merge_.*?_args$} => \&Pithub::Base::_merge_args;
+
+sub comments {
+    return shift->_create_instance('Pithub::PullRequests::Comments');
+}
 
 =method commits
 
@@ -290,7 +292,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

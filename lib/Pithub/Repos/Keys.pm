@@ -2,9 +2,8 @@ package Pithub::Repos::Keys;
 
 # ABSTRACT: Github v3 Repo Keys API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method create
@@ -179,7 +178,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

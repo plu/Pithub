@@ -2,9 +2,8 @@ package Pithub::Users::Keys;
 
 # ABSTRACT: Github v3 User Keys API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
 extends 'Pithub::Base';
 
 =method create
@@ -162,7 +161,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;

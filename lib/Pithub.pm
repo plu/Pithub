@@ -2,18 +2,43 @@ package Pithub;
 
 # ABSTRACT: Github v3 API
 
-use Moose;
-use Class::MOP;
-use namespace::autoclean;
+use Moo;
+use Pithub::Gists;
+use Pithub::GitData;
+use Pithub::Issues;
+use Pithub::Orgs;
+use Pithub::PullRequests;
+use Pithub::Repos;
+use Pithub::Users;
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Gists' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::GitData' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Issues' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Orgs' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::PullRequests' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Repos' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Users' };
-around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
+
+sub gists {
+    return shift->_create_instance('Pithub::Gists');
+}
+
+sub git_data {
+    return shift->_create_instance('Pithub::GitData');
+}
+
+sub issues {
+    return shift->_create_instance('Pithub::Issues');
+}
+
+sub orgs {
+    return shift->_create_instance('Pithub::Orgs');
+}
+
+sub pull_requests {
+    return shift->_create_instance('Pithub::PullRequests');
+}
+
+sub repos {
+    return shift->_create_instance('Pithub::Repos');
+}
+
+sub users {
+    return shift->_create_instance('Pithub::Users');
+}
 
 =head1 DOCUMENTATION
 
@@ -422,7 +447,5 @@ See also: L<http://developer.github.com/v3/users/keys/>
 =back
 
 =cut
-
-__PACKAGE__->meta->make_immutable;
 
 1;

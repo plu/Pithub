@@ -2,13 +2,19 @@ package Pithub::Orgs;
 
 # ABSTRACT: Github v3 Orgs API
 
-use Moose;
+use Moo;
 use Carp qw(croak);
-use namespace::autoclean;
+use Pithub::Orgs::Members;
+use Pithub::Orgs::Teams;
 extends 'Pithub::Base';
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Members' };
-with 'MooseX::Role::BuildInstanceOf' => { target => '::Teams' };
-around qr{^merge_.*?_args$}          => \&Pithub::Base::_merge_args;
+
+sub members {
+    return shift->_create_instance('Pithub::Orgs::Members');
+}
+
+sub teams {
+    return shift->_create_instance('Pithub::Orgs::Teams');
+}
 
 =method get
 
@@ -124,7 +130,5 @@ sub update {
         %args,
     );
 }
-
-__PACKAGE__->meta->make_immutable;
 
 1;
