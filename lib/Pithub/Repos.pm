@@ -12,30 +12,6 @@ use Pithub::Repos::Keys;
 use Pithub::Repos::Watching;
 extends 'Pithub::Base';
 
-sub collaborators {
-    return shift->_create_instance('Pithub::Repos::Collaborators');
-}
-
-sub commits {
-    return shift->_create_instance('Pithub::Repos::Commits');
-}
-
-sub downloads {
-    return shift->_create_instance('Pithub::Repos::Downloads');
-}
-
-sub forks {
-    return shift->_create_instance('Pithub::Repos::Forks');
-}
-
-sub keys {
-    return shift->_create_instance('Pithub::Repos::Keys');
-}
-
-sub watching {
-    return shift->_create_instance('Pithub::Repos::Watching');
-}
-
 =method branches
 
 =over
@@ -63,6 +39,26 @@ sub branches {
         path   => sprintf( '/repos/%s/%s/branches', delete $args{user}, delete $args{repo} ),
         %args,
     );
+}
+
+=method collaborators
+
+Provides access to L<Pithub::Repos::Collaborators>.
+
+=cut
+
+sub collaborators {
+    return shift->_create_instance('Pithub::Repos::Collaborators');
+}
+
+=method commits
+
+Provides access to L<Pithub::Repos::Commits>.
+
+=cut
+
+sub commits {
+    return shift->_create_instance('Pithub::Repos::Commits');
 }
 
 =method contributors
@@ -147,6 +143,26 @@ sub create {
     }
 }
 
+=method downloads
+
+Provides access to L<Pithub::Repos::Downloads>.
+
+=cut
+
+sub downloads {
+    return shift->_create_instance('Pithub::Repos::Downloads');
+}
+
+=method forks
+
+Provides access to L<Pithub::Repos::Forks>.
+
+=cut
+
+sub forks {
+    return shift->_create_instance('Pithub::Repos::Forks');
+}
+
 =method get
 
 =over
@@ -174,6 +190,16 @@ sub get {
         path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
         %args,
     );
+}
+
+=method keys
+
+Provides access to L<Pithub::Repos::Keys>.
+
+=cut
+
+sub keys {
+    return shift->_create_instance('Pithub::Repos::Keys');
 }
 
 =method languages
@@ -361,6 +387,16 @@ sub update {
         path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
         %args,
     );
+}
+
+=method watching
+
+Provides access to L<Pithub::Repos::Watching>.
+
+=cut
+
+sub watching {
+    return shift->_create_instance('Pithub::Repos::Watching');
 }
 
 1;

@@ -7,6 +7,12 @@ use Carp qw(croak);
 use Pithub::PullRequests::Comments;
 extends 'Pithub::Base';
 
+=method comments
+
+Provides access to L<Pithub::PullRequests::Comments>.
+
+=cut
+
 sub comments {
     return shift->_create_instance('Pithub::PullRequests::Comments');
 }

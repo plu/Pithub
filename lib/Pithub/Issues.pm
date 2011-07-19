@@ -10,20 +10,14 @@ use Pithub::Issues::Labels;
 use Pithub::Issues::Milestones;
 extends 'Pithub::Base';
 
+=method comments
+
+Provides access to L<Pithub::Issues::Comments>.
+
+=cut
+
 sub comments {
     return shift->_create_instance('Pithub::Issues::Comments');
-}
-
-sub events {
-    return shift->_create_instance('Pithub::Issues::Events');
-}
-
-sub labels {
-    return shift->_create_instance('Pithub::Issues::Labels');
-}
-
-sub milestones {
-    return shift->_create_instance('Pithub::Issues::Milestones');
 }
 
 =method create
@@ -167,6 +161,16 @@ sub create {
     );
 }
 
+=method events
+
+Provides access to L<Pithub::Issues::Events>.
+
+=cut
+
+sub events {
+    return shift->_create_instance('Pithub::Issues::Events');
+}
+
 =method get
 
 =over
@@ -273,6 +277,16 @@ sub get {
         path   => sprintf( '/repos/%s/%s/issues/%s', delete $args{user}, delete $args{repo}, delete $args{issue_id} ),
         %args,
     );
+}
+
+=method labels
+
+Provides access to L<Pithub::Issues::Labels>.
+
+=cut
+
+sub labels {
+    return shift->_create_instance('Pithub::Issues::Labels');
 }
 
 =method list
@@ -672,6 +686,16 @@ sub list {
         path   => sprintf('/issues'),
         %args,
     );
+}
+
+=method milestones
+
+Provides access to L<Pithub::Issues::Milestones>.
+
+=cut
+
+sub milestones {
+    return shift->_create_instance('Pithub::Issues::Milestones');
 }
 
 =method update

@@ -8,14 +8,6 @@ use Pithub::Orgs::Members;
 use Pithub::Orgs::Teams;
 extends 'Pithub::Base';
 
-sub members {
-    return shift->_create_instance('Pithub::Orgs::Members');
-}
-
-sub teams {
-    return shift->_create_instance('Pithub::Orgs::Teams');
-}
-
 =method get
 
 =over
@@ -89,6 +81,26 @@ sub list {
         path   => '/user/orgs',
         %args,
     );
+}
+
+=method members
+
+Provides access to L<Pithub::Orgs::Members>.
+
+=cut
+
+sub members {
+    return shift->_create_instance('Pithub::Orgs::Members');
+}
+
+=method teams
+
+Provides access to L<Pithub::Orgs::Teams>.
+
+=cut
+
+sub teams {
+    return shift->_create_instance('Pithub::Orgs::Teams');
 }
 
 =method update

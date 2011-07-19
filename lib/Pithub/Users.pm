@@ -9,16 +9,24 @@ use Pithub::Users::Followers;
 use Pithub::Users::Keys;
 extends 'Pithub::Base';
 
+=method emails
+
+Provides access to L<Pithub::Users::Emails>.
+
+=cut
+
 sub emails {
     return shift->_create_instance('Pithub::Users::Emails');
 }
 
+=method followers
+
+Provides access to L<Pithub::Users::Followers>.
+
+=cut
+
 sub followers {
     return shift->_create_instance('Pithub::Users::Followers');
-}
-
-sub keys {
-    return shift->_create_instance('Pithub::Users::Keys');
 }
 
 =method get
@@ -65,6 +73,16 @@ sub get {
         path   => '/user',
         %args,
     );
+}
+
+=method keys
+
+Provides access to L<Pithub::Users::Keys>.
+
+=cut
+
+sub keys {
+    return shift->_create_instance('Pithub::Users::Keys');
 }
 
 =method update

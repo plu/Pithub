@@ -12,41 +12,12 @@ use Pithub::Repos;
 use Pithub::Users;
 extends 'Pithub::Base';
 
-sub gists {
-    return shift->_create_instance('Pithub::Gists');
-}
+=head1 DESCRIPTION
 
-sub git_data {
-    return shift->_create_instance('Pithub::GitData');
-}
-
-sub issues {
-    return shift->_create_instance('Pithub::Issues');
-}
-
-sub orgs {
-    return shift->_create_instance('Pithub::Orgs');
-}
-
-sub pull_requests {
-    return shift->_create_instance('Pithub::PullRequests');
-}
-
-sub repos {
-    return shift->_create_instance('Pithub::Repos');
-}
-
-sub users {
-    return shift->_create_instance('Pithub::Users');
-}
-
-=head1 DOCUMENTATION
-
-Quite a lot of the L<Pithub> documentation has been taken directly
-from the great API documentation at
-L<Github|http://developer.github.com/v3/>. Please also read the
-documentation there, since it might be more complete and more
-up-to-date.
+L<Pithub> provides a set of modules to access the
+L<Github v3 API|http://developer.github.com/v3/> in an object
+oriented way. There is also L<Net::Github> does the same for the
+older versions of the API. L<Pithub> supports all API calls so far.
 
 =head1 SYNOPSIS
 
@@ -67,6 +38,14 @@ up-to-date.
         printf "%s\n", $row->{name};
     }
 
+=head1 DOCUMENTATION
+
+Quite a lot of the L<Pithub> documentation has been taken directly
+from the great API documentation at
+L<Github|http://developer.github.com/v3/>. Please also read the
+documentation there, since it might be more complete and more
+up-to-date.
+
 =head1 WARNING
 
 L<Pithub> as well as the
@@ -75,6 +54,17 @@ development. So there might be things broken on both sides. Besides
 that it's possible that the API will change. This applies to
 L<Pithub> itself as well as the
 L<Github v3 API|http://developer.github.com/v3/>.
+
+=head1 CONTRIBUTE
+
+This module is hosted on L<Github|https://github.com/plu/Pithub>, so
+feel free to fork it and send pull requests.
+There are two different kinds of test suites, one is just checking
+the HTTP requests that are created by the method calls, without
+actually sending them. The second one is sending real requests to
+the Github API. If you want to contribute to this project, I highly
+recommend to run the live tests on a test account, because it will
+generate a lof of activity.
 
 =head1 MODULES
 
@@ -447,5 +437,76 @@ See also: L<http://developer.github.com/v3/users/keys/>
 =back
 
 =cut
+
+=method gists
+
+Provides access to L<Pithub::Gists>.
+
+=cut
+
+sub gists {
+    return shift->_create_instance('Pithub::Gists');
+}
+
+=method git_data
+
+Provides access to L<Pithub::GitData>.
+
+=cut
+
+sub git_data {
+    return shift->_create_instance('Pithub::GitData');
+}
+
+=method issues
+
+Provides access to L<Pithub::Issues>.
+
+=cut
+
+sub issues {
+    return shift->_create_instance('Pithub::Issues');
+}
+
+=method orgs
+
+Provides access to L<Pithub::Orgs>.
+
+=cut
+
+sub orgs {
+    return shift->_create_instance('Pithub::Orgs');
+}
+
+=method pull_requests
+
+Provides access to L<Pithub::PullRequests>.
+
+=cut
+
+sub pull_requests {
+    return shift->_create_instance('Pithub::PullRequests');
+}
+
+=method repos
+
+Provides access to L<Pithub::Repos>.
+
+=cut
+
+sub repos {
+    return shift->_create_instance('Pithub::Repos');
+}
+
+=method users
+
+Provides access to L<Pithub::Users>.
+
+=cut
+
+sub users {
+    return shift->_create_instance('Pithub::Users');
+}
+
 
 1;
