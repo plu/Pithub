@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01005   2011-07-20 14:28:59 Asia/Dubai
           - replace Moose with Moo
 
 0.01004   2011-07-15 14:43:34 Asia/Dubai
