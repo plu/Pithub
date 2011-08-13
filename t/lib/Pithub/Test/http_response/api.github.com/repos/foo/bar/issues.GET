@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Server: nginx/1.0.4
+Date: Sat, 13 Aug 2011 03:47:06 GMT
+Content-Type: application/json
+Connection: keep-alive
+Status: 200 OK
+X-RateLimit-Limit: 5000
+X-RateLimit-Remaining: 4998
+Link: <>; rel="create"; method="POST", <https://api.github.com/repos/buhtip/buhtip-repo/issues?page=2>; rel="next", <https://api.github.com/repos/buhtip/buhtip-repo/issues?page=2>; rel="last"

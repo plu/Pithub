@@ -435,8 +435,10 @@ sub _get_link_header {
     return $self->{_get_link_header}{$type} if $self->{_get_link_header}{$type};
     my $link = $self->response->header('Link');
     return unless $link;
+    return unless $link =~ /(next|first|last|prev)/;
     foreach my $item ( split /,/, $link ) {
         my @result = $item =~ /<([^>]+)>; rel="([^"]+)"/g;
+        next if !$result[1] || !$result[0];
         $self->{_get_link_header}{ $result[1] } = $result[0];
     }
     return $self->{_get_link_header}{$type};

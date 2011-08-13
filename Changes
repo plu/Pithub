@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Fix bug in link header parser
 
 0.01005   2011-07-20 14:28:59 Asia/Dubai
           - replace Moose with Moo

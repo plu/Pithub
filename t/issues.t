@@ -68,7 +68,8 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, '',    'HTTP body';
+        is $result->prev_page_uri, undef, 'No prev link header set';
     }
 
     {
