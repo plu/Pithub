@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01006   2011-08-13 13:22:39 Asia/Dubai
           - Fix bug in link header parser
 
 0.01005   2011-07-20 14:28:59 Asia/Dubai
