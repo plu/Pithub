@@ -17,10 +17,9 @@ SKIP: {
         path   => '/'
     );
 
-    is $result->code,        200,  'HTTP status is 200';
+    is $result->code,        204,  'HTTP status is 204';
     is $result->success,     1,    'Successful';
-    is $result->raw_content, '{}', 'Empty JSON object';
-    eq_or_diff $result->content, {}, 'Empty hashref';
+    is $result->raw_content, '', 'Empty response';
 }
 
 # These tests may break very easily because data on Github can and will change, of course.
