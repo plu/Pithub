@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.01008   2011-10-21 14:46:39 Asia/Dubai
+
           - Mention Net::Github supporting v3 now
 
 0.01007   2011-10-21 10:13:23 Asia/Dubai
