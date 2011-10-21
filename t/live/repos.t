@@ -59,7 +59,8 @@ SKIP: {
         my $result = $p->repos->tags( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Repos->tags successful';
         ok $result->count > 0, 'Pithub::Repos->tags has some rows';
-        my @tags = splice @{ $result->content }, 0, 2;
+        my @sorted = sort { $a->{name} cmp $b->{name} } @{ $result->content };
+        my @tags = splice @sorted, 0, 2;
         eq_or_diff \@tags,
           [
             {
@@ -124,8 +125,7 @@ SKIP: {
     {
         my $result = $p->repos->watching->list( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Repos::Watching->list successful';
-        is $result->content->[0]{id},    '31597', "Pithub::Repos::Watching->list: Attribute id";
-        is $result->content->[0]{login}, 'plu',   "Pithub::Repos::Watching->list: Attribute login";
+        like $result->content->[0]{id}, qr{^\d+$}, "Pithub::Repos::Watching->list: Attribute id";
     }
 }
 
