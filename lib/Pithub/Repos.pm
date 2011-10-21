@@ -8,6 +8,7 @@ use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
 use Pithub::Repos::Downloads;
 use Pithub::Repos::Forks;
+use Pithub::Repos::Hooks;
 use Pithub::Repos::Keys;
 use Pithub::Repos::Watching;
 extends 'Pithub::Base';
@@ -190,6 +191,16 @@ sub get {
         path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
         %args,
     );
+}
+
+=method hooks
+
+Provides access to L<Pithub::Repos::Hooks>.
+
+=cut
+
+sub hooks {
+    return shift->_create_instance('Pithub::Repos::Hooks');
 }
 
 =method keys

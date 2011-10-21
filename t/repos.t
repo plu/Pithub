@@ -9,6 +9,7 @@ BEGIN {
     use_ok('Pithub::Repos::Commits');
     use_ok('Pithub::Repos::Downloads');
     use_ok('Pithub::Repos::Forks');
+    use_ok('Pithub::Repos::Hooks');
     use_ok('Pithub::Repos::Keys');
     use_ok('Pithub::Repos::Watching');
 }
@@ -574,6 +575,126 @@ BEGIN {
         is $result->request->uri->path, '/user/watched/foo/bar', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Hooks->list
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Hooks', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Hooks';
+
+    throws_ok { $obj->list } qr{Access token required for: GET /repos/foo/bar/hooks}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->list( user => 'plu' );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/plu/bar/hooks', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Hooks->get
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Hooks', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Hooks';
+
+    throws_ok { $obj->get } qr{Missing key in parameters: hook_id}, 'No parameters';
+    throws_ok { $obj->get( hook_id => 5 ) } qr{Access token required for: GET /repos/foo/bar/hooks/5}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->get( hook_id => 123 );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/hooks/123', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Hooks->delete
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Hooks', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Hooks';
+
+    throws_ok { $obj->delete } qr{Missing key in parameters: hook_id}, 'No parameters';
+    throws_ok { $obj->delete( hook_id => 5 ) } qr{Access token required for: DELETE /repos/foo/bar/hooks/5}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->delete( hook_id => 123 );
+        is $result->request->method, 'DELETE', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/hooks/123', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Hooks->test
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Hooks', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Hooks';
+
+    throws_ok { $obj->test } qr{Missing key in parameters: hook_id}, 'No parameters';
+    throws_ok { $obj->test( hook_id => 5 ) } qr{Access token required for: POST /repos/foo/bar/hooks/5/test}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->test( hook_id => 123 );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/hooks/123/test', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Hooks->create
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Hooks', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Hooks';
+
+    throws_ok { $obj->create } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok { $obj->create( data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok {
+        $obj->create( data => { name => 'web' } );
+    }
+    qr{Access token required for: POST /repos/foo/bar/hooks}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->create( data => { name => 'web' } );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/hooks', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '{"name":"web"}', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Hooks->update
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Hooks', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Hooks';
+
+    throws_ok { $obj->update } qr{Missing key in parameters: hook_id}, 'No parameters';
+    throws_ok { $obj->update( hook_id => 123 ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok { $obj->update( hook_id => 123, data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok {
+        $obj->update( hook_id => 123, data => { name => 'irc' } );
+    }
+    qr{Access token required for: PATCH /repos/foo/bar/hooks/123}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->update( hook_id => 123, data => { name => 'irc' } );
+        is $result->request->method, 'PATCH', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/hooks/123', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '{"name":"irc"}', 'HTTP body';
     }
 }
 

@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Implement new repos hooks API
 
 0.01006   2011-08-13 13:22:39 Asia/Dubai
           - Fix bug in link header parser

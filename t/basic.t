@@ -135,6 +135,11 @@ my @tree = (
                 methods  => [qw(create list)],
             },
             {
+                accessor => 'hooks',
+                isa      => 'Pithub::Repos::Hooks',
+                methods  => [qw(create delete get list update test)],
+            },
+            {
                 accessor => 'keys',
                 isa      => 'Pithub::Repos::Keys',
                 methods  => [qw(create delete get list update)],
@@ -240,6 +245,7 @@ sub validate_tree {
                         download_id  => 1,
                         event_id     => 1,
                         gist_id      => 1,
+                        hook_id      => 1,
                         issue_id     => 1,
                         key_id       => 1,
                         label        => 1,
