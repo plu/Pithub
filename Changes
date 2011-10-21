@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01007   2011-10-21 10:13:23 Asia/Dubai
           - Implement new repos hooks API
 
 0.01006   2011-08-13 13:22:39 Asia/Dubai
