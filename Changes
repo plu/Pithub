@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+          - Mention Net::Github supporting v3 now
+
 0.01007   2011-10-21 10:13:23 Asia/Dubai
           - Implement new repos hooks API
 
