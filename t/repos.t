@@ -171,6 +171,22 @@ BEGIN {
     is $result->request->uri->path, '/repos/foo/bar/collaborators/somebody', 'HTTP path';
 }
 
+# Pithub::Repos::Commits->compare
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Commits', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Commits';
+
+    throws_ok { $obj->compare } qr{Missing key in parameters: base}, 'No parameters';
+    throws_ok { $obj->compare( base => 'from' ) } qr{Missing key in parameters: head}, 'Not enough parameters';
+
+    {
+        my $result = $obj->compare( base => 'from', head => 'to' );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/compare/from...to', 'HTTP path';
+    }
+}
+
 # Pithub::Repos::Commits->create_comment
 {
     my $obj = Pithub::Test->create( 'Pithub::Repos::Commits', user => 'foo', repo => 'bar' );

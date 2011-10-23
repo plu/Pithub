@@ -87,6 +87,14 @@ SKIP: {
 
     # Pithub::Repos::Commits->get
     {
+        my $result = $p->repos->commits->compare( user => 'plu', repo => 'Pithub', base => 'v0.01008', head => 'master' );
+        is $result->success, 1, 'Pithub::Repos::Commits->compare successful';
+        is $result->content->{status}, 'ahead', 'Pithub::Repos::Commits->compare status';
+        ok $result->content->{total_commits} >= 2, 'Pithub::Repos::Commits->compare total_commits';
+    }
+
+    # Pithub::Repos::Commits->get
+    {
         my $result = $p->repos->commits->get( user => 'plu', repo => 'Pithub', sha => '7e351527f62acaaeadc69acf2b80c38e48214df8' );
         is $result->success, 1, 'Pithub::Repos::Commits->get successful';
         eq_or_diff $result->content->{commit},

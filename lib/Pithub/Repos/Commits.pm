@@ -6,6 +6,42 @@ use Moo;
 use Carp qw(croak);
 extends 'Pithub::Base';
 
+=method compare
+
+=over
+
+=item *
+
+Compare two commits
+
+    GET /repos/:user/:repo/compare/:base...:head
+
+Examples:
+
+    my $c      = Pithub::Repos::Commits->new;
+    my $result = $c->compare(
+        user => 'plu',
+        repo => 'Pithub',
+        base => 'v0.01008,
+        head => ' master ',
+    );
+
+=back
+
+=cut
+
+sub compare {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: base' unless $args{base};
+    croak 'Missing key in parameters: head' unless $args{head};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/repos/%s/%s/compare/%s...%s', delete $args{user}, delete $args{repo}, delete $args{base}, delete $args{head} ),
+        %args,
+    );
+}
+
 =method create_comment
 
 =over

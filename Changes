@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Implement Pithub::Repos::Commits->compare
 
 0.01008   2011-10-21 14:46:39 Asia/Dubai
 
