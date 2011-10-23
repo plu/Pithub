@@ -107,7 +107,7 @@ Examples:
         }
     );
 
-Response: C<< Status: 201 Created >>
+Response: B<Status: 201 Created>
 
     {
         "tag": "v0.0.1",
@@ -178,7 +178,7 @@ Examples:
         sha  => 'df21b2660fb6',
     );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     {
         "tag": "v0.0.1",

@@ -46,7 +46,7 @@ Examples:
         data    => { body => 'Just commenting for the sake of commenting' },
     );
 
-Response: C<< Status: 201 Created >>
+Response: B<Status: 201 Created>
 
     {
         "id": 1,
@@ -101,7 +101,7 @@ Examples:
     my $c = Pithub::Gists::Comments->new;
     my $result = $c->delete( comment_id => 1 );
 
-Response: C<< Status: 204 No Content >>
+Response: B<Status: 204 No Content>
 
 =back
 
@@ -142,7 +142,7 @@ Examples:
     my $c = Pithub::Gists::Comments->new;
     my $result = $c->get( comment_id => 1 );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     {
         "id": 1,
@@ -196,7 +196,7 @@ Examples:
     my $c = Pithub::Gists::Comments->new;
     my $result = $c->list( gist_id => 1 );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     [
         {
@@ -267,7 +267,7 @@ Examples:
         data       => { body => 'some comment' }
     );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     {
         "id": 1,

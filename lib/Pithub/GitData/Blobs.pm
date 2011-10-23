@@ -65,7 +65,7 @@ Examples:
         }
     );
 
-Response: C<< Status: 201 Created >>
+Response: B<Status: 201 Created>
 
     {
         "sha": "3a0f86fb8db8eea7ccbb9a95f325ddbedfb25e15"
@@ -123,7 +123,7 @@ Examples:
         sha  => 'b7cdea6830e128bc16c2b75efd99842d971666e2',
     );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     {
         "content": "Content of the blob",

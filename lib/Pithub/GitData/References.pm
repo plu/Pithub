@@ -117,7 +117,7 @@ Examples:
         ref  => 'heads/master'
     );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     {
         "ref": "refs/heads/sc/featureA",
@@ -215,7 +215,7 @@ Examples:
         ref  => 'tags',
     );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     [
         {
@@ -320,7 +320,7 @@ Examples:
         }
     );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     [
         {

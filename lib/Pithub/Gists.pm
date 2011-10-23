@@ -67,7 +67,7 @@ Examples:
         printf "The new gist is available at %s\n", $result->content->{html_url};
     }
 
-Response: C<< Status: 201 Created >>
+Response: B<Status: 201 Created>
 
     {
         "url": "https://api.github.com/gists/1",
@@ -166,7 +166,7 @@ Examples:
         print "The gist 784612 has been deleted\n";
     }
 
-Response: C<< Status: 204 No Content >>
+Response: B<Status: 204 No Content>
 
 =back
 
@@ -210,7 +210,7 @@ Examples:
         printf "The gist 784612 has been forked: %s\n", $result->content->{html_url};
     }
 
-Response: C<< Status: 201 Created >>
+Response: B<Status: 201 Created>
 
     {
         "url": "https://api.github.com/gists/1",
@@ -279,7 +279,7 @@ Examples:
         print $result->content->{html_url};
     }
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     {
         "url": "https://api.github.com/gists/1",
@@ -375,7 +375,7 @@ Examples:
     my $g = Pithub::Gists->new;
     my $result = $g->is_starred( gist_id => 784612 );
 
-Response: C<< Status: 204 No Content >> / C<< Status: 404 Not Found >>
+Response: B<Status: 204 No Content> / C<< Status: 404 Not Found >>
 
 =back
 
@@ -475,7 +475,7 @@ Examples:
     my $g = Pithub::Gists->new;
     my $result = $g->list( starred => 1 );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     [
         {
@@ -563,7 +563,7 @@ Examples:
     my $g = Pithub::Gists->new;
     my $result = $g->star( gist_id => 784612 );
 
-Response: C<< Status: 204 No Content >>
+Response: B<Status: 204 No Content>
 
 =back
 
@@ -604,7 +604,7 @@ Examples:
     my $g = Pithub::Gists->new;
     my $result = $g->unstar( gist_id => 784612 );
 
-Response: C<< Status: 204 No Content >>
+Response: B<Status: 204 No Content>
 
 =back
 
@@ -683,7 +683,7 @@ Examples:
         }
     );
 
-Response: C<< Status: 200 OK >>
+Response: B<Status: 200 OK>
 
     {
         "url": "https://api.github.com/gists/1",
