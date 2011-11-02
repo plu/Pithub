@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01010   2011-11-02 18:35:10 Asia/Dubai
           - Support new Events API
 
 0.01009   2011-10-29 09:50:12 Asia/Dubai
