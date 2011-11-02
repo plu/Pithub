@@ -428,6 +428,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^GET /user/orgs$},
     qr{^GET /user/watched$},
     qr{^GET /user/watched/[^/]+/.*?$},
+    qr{^GET /users/[^/]+/events/orgs/.*?$},
     qr{^PATCH /gists/.*?$},
     qr{^PATCH /gists/comments/.*?$},
     qr{^PATCH /orgs/.*?$},

@@ -3,6 +3,7 @@ package Pithub;
 # ABSTRACT: Github v3 API
 
 use Moo;
+use Pithub::Events;
 use Pithub::Gists;
 use Pithub::GitData;
 use Pithub::Issues;
@@ -99,6 +100,15 @@ perform this new API call, there's some documentation on how to
 use it.
 
 =over
+
+=item *
+
+L<Pithub::Events>
+
+See also: L<http://developer.github.com/v3/events/>
+
+    my $gists = Pithub->new->events;
+    my $gists = Pithub::Events->new;
 
 =item *
 
@@ -438,6 +448,16 @@ See also: L<http://developer.github.com/v3/users/keys/>
 =back
 
 =cut
+
+=method events
+
+Provides access to L<Pithub::Events>.
+
+=cut
+
+sub events {
+    return shift->_create_instance('Pithub::Events');
+}
 
 =method gists
 

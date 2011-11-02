@@ -10,6 +10,12 @@ BEGIN {
 
 my @tree = (
     {
+        accessor => 'events',
+        isa      => 'Pithub::Events',
+        methods  => [qw(issue network org org_for_user public repos user_performed user_received)],
+        subtree  => [],
+    },
+    {
         accessor => 'gists',
         isa      => 'Pithub::Gists',
         methods  => [qw(create delete fork get is_starred list star unstar update)],
