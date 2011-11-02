@@ -203,7 +203,7 @@ List events performed by a user
     GET /users/:user/events
 
 If you are authenticated as the given user, you will see your
-private events. Otherwise, you’ll only see public events.
+private events. Otherwise, you'll only see public events.
 
 Examples:
 
@@ -245,9 +245,9 @@ List events that a user has received
 
     GET /users/:user/received_events
 
-These are events that you’ve received by watching repos and
+These are events that you've received by watching repos and
 following users. If you are authenticated as the given user,
-you will see private events. Otherwise, you’ll only see
+you will see private events. Otherwise, you'll only see
 public events.
 
 Examples:
