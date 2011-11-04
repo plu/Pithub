@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Tiny POD fixes
 
 0.01010   2011-11-02 18:35:10 Asia/Dubai
           - Support new Events API
