@@ -661,7 +661,7 @@ BEGIN {
     {
         my $result = $obj->test( hook_id => 123 );
         is $result->request->method, 'POST', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/hooks/123/test', 'HTTP path';
+        is $result->request->uri->path, '/repos/foo/bar/hooks/123/tests', 'HTTP path';
     }
 }
 

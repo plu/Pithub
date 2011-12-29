@@ -212,7 +212,7 @@ sub list {
 
 Get single hook
 
-    POST /repos/:user/:repo/hooks/:id/test
+    POST /repos/:user/:repo/hooks/:id/tests
 
 Examples:
 
@@ -233,7 +233,7 @@ sub test {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/hooks/%d/test', delete $args{user}, delete $args{repo}, delete $args{hook_id} ),
+        path   => sprintf( '/repos/%s/%s/hooks/%d/tests', delete $args{user}, delete $args{repo}, delete $args{hook_id} ),
         %args,
     );
 }

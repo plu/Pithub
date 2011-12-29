@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - The /repos/:user/:repo/hooks/:id/test action becomes
+            /repos/:user/:repo/hooks/:id/tests.
 
 0.01011   2011-11-04 12:00:07 Asia/Dubai
           - Tiny POD fixes
