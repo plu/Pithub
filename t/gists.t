@@ -64,7 +64,7 @@ BEGIN {
     {
         my $result = $obj->fork( gist_id => 123 );
         is $result->request->method, 'POST', 'HTTP method';
-        is $result->request->uri->path, '/gists/123/fork', 'HTTP path';
+        is $result->request->uri->path, '/gists/123/forks', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
