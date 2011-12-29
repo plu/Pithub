@@ -20,7 +20,7 @@ SKIP: {
         is $result->success, 1, 'Pithub::Orgs->get successful';
         is $result->content->{type},  'Organization', 'Pithub::Orgs->get: Attribute type';
         is $result->content->{login}, 'CPAN-API',     'Pithub::Orgs->get: Attribute login';
-        is $result->content->{name},  'CPAN API',     'Pithub::Orgs->get: Attribute name';
+        is $result->content->{name},  'MetaCPAN',     'Pithub::Orgs->get: Attribute name';
         is $result->content->{id},    460239,         'Pithub::Orgs->get: Attribute id';
     }
 
