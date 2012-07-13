@@ -49,7 +49,7 @@ Examples:
 =cut
 
 has 'auto_pagination' => (
-    default => 0,
+    default => sub { 0 },
     is      => 'rw',
 );
 
