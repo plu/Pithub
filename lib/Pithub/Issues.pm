@@ -4,11 +4,22 @@ package Pithub::Issues;
 
 use Moo;
 use Carp qw(croak);
+use Pithub::Issues::Assignees;
 use Pithub::Issues::Comments;
 use Pithub::Issues::Events;
 use Pithub::Issues::Labels;
 use Pithub::Issues::Milestones;
 extends 'Pithub::Base';
+
+=method assignees
+
+Provides access to L<Pithub::Issues::Assignees>.
+
+=cut
+
+sub assignees {
+    return shift->_create_instance('Pithub::Issues::Assignees');
+}
 
 =method comments
 

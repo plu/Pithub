@@ -5,6 +5,7 @@ use Test::Most;
 
 BEGIN {
     use_ok('Pithub::Issues');
+    use_ok('Pithub::Issues::Assignees');
     use_ok('Pithub::Issues::Comments');
     use_ok('Pithub::Issues::Events');
     use_ok('Pithub::Issues::Labels');
@@ -116,6 +117,39 @@ BEGIN {
         is $http_request->content,
           '{"body":"I\'m having a problem with this.","assignee":"octocat","milestone":1,"title":"Found a bug","labels":["Label1","Label2"],"state":"open"}',
           'HTTP body';
+    }
+}
+
+# Pithub::Issues::Assignees->check
+{
+    my $obj = Pithub::Test->create( 'Pithub::Issues::Assignees', user => 'foo', repo => 'bar' );
+
+    throws_ok { $obj->check } qr{Missing key in parameters: assignee}, 'No parameters';
+
+    isa_ok $obj, 'Pithub::Issues::Assignees';
+
+    {
+        my $result = $obj->check( assignee => 'plu' );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/assignees/plu', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+
+# Pithub::Issues::Assignees->list
+{
+    my $obj = Pithub::Test->create( 'Pithub::Issues::Assignees', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Issues::Assignees';
+
+    {
+        my $result = $obj->list;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/assignees', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
     }
 }
 
