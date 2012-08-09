@@ -217,6 +217,16 @@ See also: L<http://developer.github.com/v3/issues/>
 
 =item *
 
+L<Pithub::Issues::Assignees>
+
+See also: L<http://developer.github.com/v3/issues/assignees/>
+
+    my $assignees = Pithub->new->issues->assignees;
+    my $assignees = Pithub::Issues->new->assignees;
+    my $assignees = Pithub::Issues::Assignees->new;
+
+=item *
+
 L<Pithub::Issues::Comments>
 
 See also: L<http://developer.github.com/v3/issues/comments/>
@@ -358,6 +368,17 @@ See also: L<http://developer.github.com/v3/repos/commits/>
 
 =item *
 
+L<Pithub::Repos::Contents>
+
+See also: L<http://developer.github.com/v3/repos/contents/>
+
+    my $contents = Pithub->new->repos->contents;
+    my $contents = Pithub::Repos->new->contents;
+    my $contents = Pithub::Repos::Contents->new;
+
+
+=item *
+
 L<Pithub::Repos::Downloads>
 
 See also: L<http://developer.github.com/v3/repos/downloads/>
@@ -442,6 +463,8 @@ See also: L<http://developer.github.com/v3/users/keys/>
     my $keys = Pithub->new->users->keys;
     my $keys = Pithub::Users->new->keys;
     my $keys = Pithub::Users::Keys->new;
+
+=back
 
 =back
 
