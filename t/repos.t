@@ -302,6 +302,57 @@ BEGIN {
     }
 }
 
+# Pithub::Repos::Contents->archive
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Contents', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Contents';
+
+    throws_ok { $obj->archive } qr{Missing key in parameters: archive_format}, 'No parameters';
+    throws_ok { $obj->archive( archive_format => 'foo' ) } qr{Invalid archive_format. Valid formats: tarball, zipball}, 'No parameters';
+
+    for my $format (qw(tarball zipball)) {
+        my $result = $obj->archive( archive_format => $format );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, "/repos/foo/bar/$format/", 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Contents->get
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Contents', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Contents';
+
+    {
+        my $result = $obj->get( params => { ref => 'bla' } );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/contents', 'HTTP path';
+        is $result->request->uri->query, 'ref=bla', 'HTTP query params';
+    }
+
+    {
+        my $result = $obj->get( path => 'bla/fasel/file.pm', params => { ref => 'bla' } );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/contents/bla/fasel/file.pm', 'HTTP path';
+        is $result->request->uri->query, 'ref=bla', 'HTTP query params';
+    }
+}
+
+# Pithub::Repos::Contents->readme
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Contents', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Contents';
+
+    {
+        my $result = $obj->readme( params => { ref => 'bla' } );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/readme', 'HTTP path';
+        is $result->request->uri->query, 'ref=bla', 'HTTP query params';
+    }
+}
+
 # Pithub::Repos::Downloads->create
 {
     my $obj = Pithub::Test->create( 'Pithub::Repos::Downloads', user => 'foo', repo => 'bar' );

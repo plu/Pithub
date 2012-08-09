@@ -651,7 +651,6 @@ sub request {
         my %query = ( $request->uri->query_form, %$params );
         $request->uri->query_form(%query);
     }
-
     my $response = $self->ua->request($request);
 
     return Pithub::Result->new(

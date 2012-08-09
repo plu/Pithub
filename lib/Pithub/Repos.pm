@@ -6,6 +6,7 @@ use Moo;
 use Carp qw(croak);
 use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
+use Pithub::Repos::Contents;
 use Pithub::Repos::Downloads;
 use Pithub::Repos::Forks;
 use Pithub::Repos::Hooks;
@@ -60,6 +61,16 @@ Provides access to L<Pithub::Repos::Commits>.
 
 sub commits {
     return shift->_create_instance('Pithub::Repos::Commits');
+}
+
+=method contents
+
+Provides access to L<Pithub::Repos::Contents>.
+
+=cut
+
+sub contents {
+    return shift->_create_instance('Pithub::Repos::Contents');
 }
 
 =method contributors
