@@ -104,7 +104,7 @@ B<ref>: mandatory string
 
 The key B<ref> must be formatted as C<< heads/branch >>, not just
 C<< branch >>. For example, the call to get the data for a branch
-named C<< sc/featureA > would be: C<< heads/sc/featureA >>
+named C<< sc/featureA >> would be: C<< heads/sc/featureA >>
 
 =back
 

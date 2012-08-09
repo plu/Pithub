@@ -65,6 +65,8 @@ push - Any git push to a Repository.
 
 watch - Any time a User watches the Repository.
 
+=back
+
 =method create
 
 =over
