@@ -314,7 +314,7 @@ BEGIN {
     for my $format (qw(tarball zipball)) {
         my $result = $obj->archive( archive_format => $format );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, "/repos/foo/bar/$format/", 'HTTP path';
+        is $result->request->uri->path, "/repos/foo/bar/$format", 'HTTP path';
     }
 }
 

@@ -743,7 +743,10 @@ sub _uri_for {
     my ( $self, $path ) = @_;
 
     my $uri = $self->api_uri->clone;
-    $uri->path($path);
+    my @parts;
+    push @parts, split qr{/+}, $uri->path;
+    push @parts, split qr{/+}, $path;
+    $uri->path( join '/',  grep { $_ } @parts );
 
     if ( $self->has_per_page ) {
         my %query = ( $uri->query_form, per_page => $self->per_page );

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Fix usage on a Github:FI or Github:Enterprise
+            installation
 
 0.01014   2012-08-09 08:24:42 Europe/Berlin
           - Implement new issues assignee api
