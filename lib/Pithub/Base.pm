@@ -743,6 +743,8 @@ sub _uri_for {
     my ( $self, $path ) = @_;
 
     my $uri = $self->api_uri->clone;
+    my $base_path = $uri->path;
+    $path =~ s/^$base_path//;
     my @parts;
     push @parts, split qr{/+}, $uri->path;
     push @parts, split qr{/+}, $path;
