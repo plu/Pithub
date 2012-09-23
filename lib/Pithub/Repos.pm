@@ -11,6 +11,7 @@ use Pithub::Repos::Downloads;
 use Pithub::Repos::Forks;
 use Pithub::Repos::Hooks;
 use Pithub::Repos::Keys;
+use Pithub::Repos::Starring;
 use Pithub::Repos::Watching;
 extends 'Pithub::Base';
 
@@ -317,6 +318,16 @@ sub list {
             %args,
         );
     }
+}
+
+=method starring
+
+Provides access to L<Pithub::Repos::Starring>.
+
+=cut
+
+sub starring {
+    return shift->_create_instance('Pithub::Repos::Starring');
 }
 
 =method tags

@@ -12,6 +12,7 @@ BEGIN {
     use_ok('Pithub::Repos::Hooks');
     use_ok('Pithub::Repos::Keys');
     use_ok('Pithub::Repos::Watching');
+    use_ok('Pithub::Repos::Starring');
 }
 
 # Pithub::Repos->create
@@ -559,6 +560,87 @@ BEGIN {
         is $result->request->uri->path, '/repos/foo/bar/keys/123', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '{"title":"some key"}', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Starring->has_watching
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Starring', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Starring';
+
+    throws_ok { $obj->has_starred } qr{Access token required for: GET /user/starred/foo/bar}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->has_starred;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/user/starred/foo/bar', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Starring->list_repos
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Starring', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Starring';
+
+    {
+        my $result = $obj->list_repos( user => 'bla' );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/users/bla/starred', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+
+    {
+        ok $obj->token(123), 'Token set';
+        my $result = $obj->list_repos;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/user/starred', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Starring->star
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Starring', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Starring';
+
+    throws_ok { $obj->star } qr{Access token required for: PUT /user/starred/foo/bar}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->star;
+        is $result->request->method, 'PUT', 'HTTP method';
+        is $result->request->uri->path, '/user/starred/foo/bar', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Starring->unstar
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Starring', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Starring';
+
+    throws_ok { $obj->unstar } qr{Access token required for: DELETE /user/starred/foo/bar}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->unstar;
+        is $result->request->method, 'DELETE', 'HTTP method';
+        is $result->request->uri->path, '/user/starred/foo/bar', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
     }
 }
 

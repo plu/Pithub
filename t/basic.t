@@ -65,6 +65,11 @@ my @tree = (
         methods  => [qw(create get list update)],
         subtree  => [
             {
+                accessor => 'assignees',
+                isa      => 'Pithub::Issues::Assignees',
+                methods  => [qw(check list)],
+            },
+            {
                 accessor => 'comments',
                 isa      => 'Pithub::Issues::Comments',
                 methods  => [qw(create delete get list update)],
@@ -131,6 +136,11 @@ my @tree = (
                 methods  => [qw(create_comment delete_comment get get_comment list list_comments update_comment)],
             },
             {
+                accessor => 'contents',
+                isa      => 'Pithub::Repos::Contents',
+                methods  => [qw(archive get readme)],
+            },
+            {
                 accessor => 'downloads',
                 isa      => 'Pithub::Repos::Downloads',
                 methods  => [qw(create delete get list upload)],
@@ -149,6 +159,11 @@ my @tree = (
                 accessor => 'keys',
                 isa      => 'Pithub::Repos::Keys',
                 methods  => [qw(create delete get list update)],
+            },
+            {
+                accessor => 'starring',
+                isa      => 'Pithub::Repos::Starring',
+                methods  => [qw(has_starred list_repos list star unstar)],
             },
             {
                 accessor => 'watching',
@@ -245,18 +260,20 @@ sub validate_tree {
 
                 lives_ok {
                     $result = $obj->$accessor->$method(
-                        collaborator => 1,
-                        comment_id   => 1,
-                        data         => $data,
-                        download_id  => 1,
-                        event_id     => 1,
-                        gist_id      => 1,
-                        hook_id      => 1,
-                        issue_id     => 1,
-                        key_id       => 1,
-                        label        => 1,
-                        milestone_id => 1,
-                        options      => {
+                        archive_format => 'tarball',
+                        assignee       => 'john',
+                        collaborator   => 1,
+                        comment_id     => 1,
+                        data           => $data,
+                        download_id    => 1,
+                        event_id       => 1,
+                        gist_id        => 1,
+                        hook_id        => 1,
+                        issue_id       => 1,
+                        key_id         => 1,
+                        label          => 1,
+                        milestone_id   => 1,
+                        options        => {
                             prepare_request => sub {
                                 shift->header( 'Accept' => 'foo.bar' );
                             },

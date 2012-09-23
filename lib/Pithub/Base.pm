@@ -406,6 +406,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^DELETE /teams/[^/]+/repos/.*?$},
     qr{^DELETE /user/following/.*?$},
     qr{^DELETE /user/keys/.*?$},
+    qr{^DELETE /user/starred/[^/]+/.*?$},
     qr{^DELETE /user/watched/[^/]+/.*?$},
     qr{^GET /gists/starred$},
     qr{^GET /gists/[^/]+/star$},
@@ -426,6 +427,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^GET /user/following/.*?$},
     qr{^GET /user/keys/.*?$},
     qr{^GET /user/orgs$},
+    qr{^GET /user/starred/[^/]+/.*?$},
     qr{^GET /user/watched$},
     qr{^GET /user/watched/[^/]+/.*?$},
     qr{^GET /users/[^/]+/events/orgs/.*?$},
@@ -475,6 +477,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^PUT /teams/[^/]+/members/.*?$},
     qr{^PUT /teams/[^/]+/repos/.*?$},
     qr{^PUT /user/following/.*?$},
+    qr{^PUT /user/starred/[^/]+/.*?$},
     qr{^PUT /user/watched/[^/]+/.*?$},
 );
 
