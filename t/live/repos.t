@@ -104,6 +104,7 @@ SKIP: {
                 'email' => 'plu@pqpq.de',
                 'name'  => 'Johannes Plunien'
             },
+            'comment_count' => 0,
             'committer' => {
                 'date'  => '2011-06-30T22:37:12-07:00',
                 'email' => 'plu@pqpq.de',
@@ -227,12 +228,11 @@ SKIP: {
     }
 
     {
-
         # Pithub::Repos::Keys->create
         my $key_id = $p->repos->keys->create(
             data => {
                 title => 'someone@somewhere',
-                key   => "ssh-rsa C0FF33$$",
+                key   => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFkRr3GEn06UrbFEUbDFy+N0rcGyqcSVFa0FfSGXWK52143U7zTyFW0fLEhVHiD585sn8oRCOn44xfUeEHgiC6S0oto/2XELWjTO9O0nBcfxeDjvZN+8tN/w4iz0tYLOejy5FnQWJbk537TOu17v3cYgOMU1+eSLzxpxHIg3qk4dSMqdL3mI8EQ8esMu2c584BkEd6UkCNpU+3Zbq0bGzLOgKHCisvSmI0rDTtGXv3vPYyxxJ1gbRCL6MjGaGqWzJsl6cqutlhw/QCHKGnupsmiiIb58E162rg63/gugogWRi4tfmh6IlSgIx6jdTHf/20cjIcjKcyL8OFTgpA3o3V",
             }
         )->content->{id};
 
