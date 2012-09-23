@@ -194,6 +194,11 @@ my @tree = (
             },
         ],
     },
+    {
+        accessor => 'search',
+        isa      => 'Pithub::Search',
+        methods  => [qw(emails issues repos users)],
+    },
 );
 
 sub validate_tree {

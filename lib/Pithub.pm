@@ -10,6 +10,7 @@ use Pithub::Issues;
 use Pithub::Orgs;
 use Pithub::PullRequests;
 use Pithub::Repos;
+use Pithub::Search;
 use Pithub::Users;
 extends 'Pithub::Base';
 
@@ -540,6 +541,16 @@ Provides access to L<Pithub::Repos>.
 
 sub repos {
     return shift->_create_instance('Pithub::Repos');
+}
+
+=method search
+
+Provides access to L<Pithub::Search>.
+
+=cut
+
+sub search {
+    return shift->_create_instance('Pithub::Search');
 }
 
 =method users
