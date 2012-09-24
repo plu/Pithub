@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Implement search api #RT-79819
 
 0.01015   2012-09-23 09:55:40 Europe/Berlin
           - Implement new repo starring api

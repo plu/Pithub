@@ -6,8 +6,36 @@ use Moo;
 use Carp qw(croak);
 extends 'Pithub::Base';
 
-sub emails {
+=method email
+
+=over
+
+=item *
+
+This API call is added for compatibility reasons only. There's
+no guarantee that full email searches will always be available.
+
+    GET /legacy/user/email/:email
+
+Examples:
+
+    my $search = Pithub::Search->new;
+    my $result = $search->email(
+        email => 'plu@pqpq.de',
+    );
+
+=back
+
+=cut
+
+sub email {
     my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: email' unless $args{email};
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/legacy/user/email/%s', delete $args{email} ),
+        %args,
+    );
 }
 
 =method issues
@@ -46,12 +74,73 @@ sub issues {
     );
 }
 
+=method repos
+
+=over
+
+=item *
+
+Find repositories by keyword. Note, this legacy method does not
+follow the v3 pagination pattern. This method returns up to 100
+results per page and pages can be fetched using the start_page
+parameter.
+
+    GET /legacy/repos/search/:keyword
+
+Examples:
+
+    my $search = Pithub::Search->new;
+    my $result = $search->repos(
+        keyword => 'github',
+        params  => {
+            language   => 'Perl',
+            start_page => 0,
+        }
+    );
+
+=back
+
+=cut
+
 sub repos {
     my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: keyword' unless $args{keyword};
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/legacy/repos/search/%s', delete $args{keyword} ),
+        %args,
+    );
 }
+
+=method users
+
+=over
+
+=item *
+
+Find users by keyword.
+
+    GET /legacy/user/search/:keyword
+
+Examples:
+
+    my $search = Pithub::Search->new;
+    my $result = $search->users(
+        keyword => 'plu',
+    );
+
+=back
+
+=cut
 
 sub users {
     my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: keyword' unless $args{keyword};
+    return $self->request(
+        method => 'GET',
+        path   => sprintf( '/legacy/user/search/%s', delete $args{keyword} ),
+        %args,
+    );
 }
 
 1;

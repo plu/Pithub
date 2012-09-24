@@ -197,7 +197,7 @@ my @tree = (
     {
         accessor => 'search',
         isa      => 'Pithub::Search',
-        methods  => [qw(emails issues repos users)],
+        methods  => [qw(email issues repos users)],
     },
 );
 
@@ -271,11 +271,13 @@ sub validate_tree {
                         comment_id     => 1,
                         data           => $data,
                         download_id    => 1,
+                        email          => 'foo',
                         event_id       => 1,
                         gist_id        => 1,
                         hook_id        => 1,
                         issue_id       => 1,
                         key_id         => 1,
+                        keyword        => 'foo',
                         label          => 1,
                         milestone_id   => 1,
                         options        => {
@@ -288,6 +290,7 @@ sub validate_tree {
                         ref             => 1,
                         repo            => 1,
                         sha             => 1,
+                        state           => 'open',
                         team_id         => 1,
                         user            => 1,
                     );
