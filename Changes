@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01017   2012-12-15 10:34:03 Europe/Berlin
           - Fix tests on 5.17.x
 
 0.01016   2012-09-24 19:55:04 Europe/Berlin
