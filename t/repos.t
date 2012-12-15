@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Test::Most;
 
@@ -28,19 +29,21 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( data => { foo => 1 } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/repos', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"foo":1}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'foo' => 1 }, 'HTTP body';
     }
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( org => 'foobarorg', data => { bar => 1 } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/orgs/foobarorg/repos', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"bar":1}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'bar' => 1 }, 'HTTP body';
     }
 }
 
@@ -115,11 +118,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->update( user => 'bla', repo => 'fasel', data => { foo => 1 } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/bla/fasel', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"foo":1}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'foo' => 1 }, 'HTTP body';
     }
 }
 
@@ -205,11 +209,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create_comment( sha => 123, data => { body => 'some comment' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/commits/123/comments', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"some comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }
 }
 
@@ -295,11 +300,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->update_comment( comment_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"some comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }
 }
 
@@ -468,11 +474,12 @@ BEGIN {
     }
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( org => 'foobarorg' );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/forks', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"org":"foobarorg"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'org' => 'foobarorg' }, 'HTTP body';
     }
 }
 
@@ -491,11 +498,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( data => { title => 'some key' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/keys', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"title":"some key"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'title' => 'some key' }, 'HTTP body';
     }
 }
 
@@ -555,11 +563,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->update( key_id => 123, data => { title => 'some key' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/keys/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"title":"some key"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'title' => 'some key' }, 'HTTP body';
     }
 }
 
@@ -814,11 +823,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( data => { name => 'web' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/hooks', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"name":"web"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'name' => 'web' }, 'HTTP body';
     }
 }
 
@@ -839,11 +849,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->update( hook_id => 123, data => { name => 'irc' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/hooks/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"name":"irc"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'name' => 'irc' }, 'HTTP body';
     }
 }
 

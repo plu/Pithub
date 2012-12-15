@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Test::Most;
 
@@ -13,6 +14,7 @@ BEGIN {
 
 # Pithub::GitData::Blobs->create
 {
+    my $json = JSON::Any->new;
     my $obj = Pithub::Test->create( 'Pithub::GitData::Blobs', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Blobs';
@@ -33,7 +35,7 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/blobs', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"content":"Content of the blob","encoding":"utf-8"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'content' => 'Content of the blob', 'encoding' => 'utf-8' }, 'HTTP body';
     }
 }
 
@@ -67,11 +69,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( data => { message => 'my commit message' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/commits', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"message":"my commit message"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'message' => 'my commit message' }, 'HTTP body';
     }
 }
 
@@ -122,11 +125,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( data => { ref => 'refs/heads/master' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"ref":"refs/heads/master"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'ref' => 'refs/heads/master' }, 'HTTP body';
     }
 }
 
@@ -167,11 +171,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->update( ref => 'foo/bar', data => { sha => '123' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"sha":"123"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'sha' => '123' }, 'HTTP body';
     }
 }
 
@@ -205,6 +210,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->create(
             data => {
                 message => 'Tagged v0.1',
@@ -216,7 +222,8 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/tags', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"object":"827efc6d56897b048c772eb4087f854f46256132","type":"commit","tag":"v0.1","message":"Tagged v0.1"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ),
+          { 'object' => '827efc6d56897b048c772eb4087f854f46256132', 'type' => 'commit', 'tag' => 'v0.1', 'message' => 'Tagged v0.1' }, 'HTTP body';
     }
 }
 
@@ -254,16 +261,18 @@ BEGIN {
 
     throws_ok { $obj->create } qr{Missing key in parameters: data \(hashref\)}, 'No parameters';
     throws_ok { $obj->create( data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong data parameter';
-    throws_ok { $obj->create( data => { tree => [ { path => 'file1.pl' } ] } ); } qr{Access token required for: POST /repos/foo/bar/git/trees}, 'Token required';
+    throws_ok { $obj->create( data => { tree => [ { path => 'file1.pl' } ] } ); } qr{Access token required for: POST /repos/foo/bar/git/trees},
+      'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( data => { tree => [ { path => 'file1.pl' } ] } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/trees', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"tree":[{"path":"file1.pl"}]}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'tree' => [ { 'path' => 'file1.pl' } ] }, 'HTTP body';
     }
 }
 

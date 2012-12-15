@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Fix tests on 5.17.x
 
 0.01016   2012-09-24 19:55:04 Europe/Berlin
           - Implement search api #RT-79819

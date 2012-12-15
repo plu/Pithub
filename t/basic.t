@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Pithub::Test::UA;
 use Test::Most;
@@ -351,10 +352,11 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $json = JSON::Any->new;
+    my $p    = Pithub::Test->create('Pithub');
     $p->token('123');
     my $request = $p->request( method => 'POST', path => '/foo', data => { some => 'data' } )->request;
-    eq_or_diff $request->content, '{"some":"data"}', 'The JSON content was set in the request object';
+    eq_or_diff $json->decode( $request->content ), { some => 'data' }, 'The JSON content was set in the request object';
     is $request->header('Authorization'), 'token 123', 'Authorization header was set in the HTTP::Request object';
     ok $p->clear_token, 'Access token clearer';
     is $p->token, undef, 'No token set anymore';
@@ -431,12 +433,12 @@ sub validate_tree {
     my $p = Pithub::Test->create( 'Pithub', per_page => 1 );
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
-    is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2&per_page=1',   'Next page call';
-    is $result->last_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=769&per_page=1', 'Last page call';
+    eq_or_diff { $result->next_page->request->uri->query_form }, { page => 2,   per_page => 1 }, 'Next page call';
+    eq_or_diff { $result->last_page->request->uri->query_form }, { page => 769, per_page => 1 }, 'Last page call';
     is $result->prev_page,  undef, 'No prev page on the first page';
     is $result->first_page, undef, 'We are on first page already';
 
-    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42&per_page=1',
+    eq_or_diff { $result->get_page(42)->request->uri->query_form }, { page => 42, per_page => 1 },
       'URI for get_page is generated, no matter if it exists or not';
 }
 

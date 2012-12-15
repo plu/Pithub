@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Test::Most;
 
@@ -10,7 +11,8 @@ BEGIN {
 
 # Pithub::Gists->create
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $json = JSON::Any->new;
+    my $obj  = Pithub::Test->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -27,8 +29,8 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/gists', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content,
-          '{"files":{"file1.txt":{"content":"String file content"}},"public":1,"description":"the description for this gist"}',
+        eq_or_diff $json->decode( $http_request->content ),
+          { 'files' => { 'file1.txt' => { 'content' => 'String file content' } }, 'public' => 1, 'description' => 'the description for this gist' },
           'HTTP body';
     }
 }
@@ -202,6 +204,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             gist_id => 123,
             data    => {
@@ -213,8 +216,8 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/gists/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content,
-          '{"files":{"file1.txt":{"content":"String file content"}},"public":1,"description":"the description for this gist"}',
+        eq_or_diff $json->decode( $http_request->content ),
+          { 'files' => { 'file1.txt' => { 'content' => 'String file content' } }, 'public' => 1, 'description' => 'the description for this gist' },
           'HTTP body';
     }
 }
@@ -233,11 +236,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( gist_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/gists/123/comments', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"some comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }
 }
 
@@ -309,11 +313,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->update( comment_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/gists/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"some comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }
 }
 

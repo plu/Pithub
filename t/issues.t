@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Test::Most;
 
@@ -25,6 +26,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->create(
             data => {
                 assignee  => 'octocat',
@@ -37,8 +39,14 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content,
-          '{"body":"I\'m having a problem with this.","assignee":"octocat","milestone":1,"title":"Found a bug","labels":["Label1","Label2"]}',
+        eq_or_diff $json->decode( $http_request->content ),
+          {
+            'body'      => 'I\'m having a problem with this.',
+            'assignee'  => 'octocat',
+            'milestone' => 1,
+            'title'     => 'Found a bug',
+            'labels'    => [ 'Label1', 'Label2' ]
+          },
           'HTTP body';
     }
 }
@@ -100,6 +108,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             issue_id => 123,
             data     => {
@@ -114,8 +123,15 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content,
-          '{"body":"I\'m having a problem with this.","assignee":"octocat","milestone":1,"title":"Found a bug","labels":["Label1","Label2"],"state":"open"}',
+        eq_or_diff $json->decode( $http_request->content ),
+          {
+            'body'      => 'I\'m having a problem with this.',
+            'assignee'  => 'octocat',
+            'milestone' => 1,
+            'title'     => 'Found a bug',
+            'labels'    => [ 'Label1', 'Label2' ],
+            'state'     => 'open'
+          },
           'HTTP body';
     }
 }
@@ -136,7 +152,6 @@ BEGIN {
         is $http_request->content, '', 'HTTP body';
     }
 }
-
 
 # Pithub::Issues::Assignees->list
 {
@@ -168,6 +183,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->create(
             issue_id => 123,
             data     => { body => 'comment' }
@@ -175,7 +191,7 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/comments', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'comment' }, 'HTTP body';
     }
 }
 
@@ -247,6 +263,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             comment_id => 123,
             data       => { body => 'comment' }
@@ -254,7 +271,7 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'comment' }, 'HTTP body';
     }
 }
 
@@ -314,6 +331,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->add(
             issue_id => 123,
             data     => [qw(label1 label2)],
@@ -321,7 +339,7 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '["label1","label2"]', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), [ 'label1', 'label2' ], 'HTTP body';
     }
 }
 
@@ -338,6 +356,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->create(
             data => {
                 name  => 'label1',
@@ -347,7 +366,7 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"color":"FFFFFF","name":"label1"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'color' => 'FFFFFF', 'name' => 'label1' }, 'HTTP body';
     }
 }
 
@@ -465,6 +484,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->replace(
             issue_id => 123,
             data     => [qw(label1 label2)],
@@ -472,7 +492,7 @@ BEGIN {
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '["label1","label2"]', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), [ 'label1', 'label2' ], 'HTTP body';
     }
 }
 
@@ -489,6 +509,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             label => 123,
             data  => {
@@ -499,7 +520,7 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"color":"FF0000","name":"label2"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'color' => 'FF0000', 'name' => 'label2' }, 'HTTP body';
     }
 }
 
@@ -516,6 +537,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->create(
             data => {
                 description => 'String',
@@ -527,7 +549,8 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"title":"String","due_on":"Time","description":"String","state":"open or closed"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'title' => 'String', 'due_on' => 'Time', 'description' => 'String', 'state' => 'open or closed' },
+          'HTTP body';
     }
 }
 
@@ -598,6 +621,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             milestone_id => 123,
             data         => {
@@ -610,7 +634,8 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"title":"String","due_on":"Time","description":"String","state":"open or closed"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'title' => 'String', 'due_on' => 'Time', 'description' => 'String', 'state' => 'open or closed' },
+          'HTTP body';
     }
 }
 

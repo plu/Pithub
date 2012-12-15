@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Test::Most;
 
@@ -37,6 +38,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->create(
             data => {
                 base  => 'master',
@@ -48,7 +50,8 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"Please pull this in!","base":"master","head":"octocat:new-feature","title":"Amazing new feature"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ),
+          { 'body' => 'Please pull this in!', 'base' => 'master', 'head' => 'octocat:new-feature', 'title' => 'Amazing new feature' }, 'HTTP body';
     }
 }
 
@@ -136,6 +139,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             pull_request_id => 123,
             data            => {
@@ -148,7 +152,8 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"Please pull this in!","base":"master","head":"octocat:new-feature","title":"Amazing new feature"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ),
+          { 'body' => 'Please pull this in!', 'base' => 'master', 'head' => 'octocat:new-feature', 'title' => 'Amazing new feature' }, 'HTTP body';
     }
 }
 
@@ -169,11 +174,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->create( pull_request_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/123/comments', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"some comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }
 }
 
@@ -248,11 +254,12 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->update( comment_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"body":"some comment"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }
 }
 

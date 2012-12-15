@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Test::Most;
 
@@ -65,6 +66,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             org  => 'some-org',
             data => {
@@ -79,8 +81,15 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/orgs/some-org', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content,
-'{"email":"support@github.com","location":"San Francisco","billing_email":"support@github.com","name":"github","blog":"https://github.com/blog","company":"GitHub"}',
+        eq_or_diff $json->decode( $http_request->content ),
+          {
+            'email'         => 'support@github.com',
+            'location'      => 'San Francisco',
+            'billing_email' => 'support@github.com',
+            'name'          => 'github',
+            'blog'          => 'https://github.com/blog',
+            'company'       => 'GitHub'
+          },
           'HTTP body';
     }
 }
@@ -278,6 +287,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->create(
             org  => 'blorg',
             data => {
@@ -289,7 +299,8 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/orgs/blorg/teams', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"permission":"push","name":"new team","repo_names":["github/dotfiles"]}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'permission' => 'push', 'name' => 'new team', 'repo_names' => ['github/dotfiles'] },
+          'HTTP body';
     }
 }
 
@@ -490,6 +501,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json   = JSON::Any->new;
         my $result = $obj->update(
             team_id => 123,
             data    => {
@@ -500,7 +512,7 @@ BEGIN {
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/teams/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"permission":"push","name":"new team name"}', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'permission' => 'push', 'name' => 'new team name' }, 'HTTP body';
     }
 }
 

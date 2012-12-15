@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
+use JSON::Any;
 use Pithub::Test;
 use Test::Most;
 
@@ -80,19 +81,21 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->add( data => ['foo@bar.com'] );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '["foo@bar.com"]', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), ['foo@bar.com'], 'HTTP body';
     }
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->add( data => [ 'foo@bar.com', 'bar@foo.com' ] );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '["foo@bar.com","bar@foo.com"]', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), [ 'foo@bar.com', 'bar@foo.com' ], 'HTTP body';
     }
 }
 
@@ -108,19 +111,21 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->delete( data => ['foo@bar.com'] );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '["foo@bar.com"]', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), ['foo@bar.com'], 'HTTP body';
     }
 
     {
+        my $json = JSON::Any->new;
         my $result = $obj->delete( data => [ 'foo@bar.com', 'bar@foo.com' ] );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '["foo@bar.com","bar@foo.com"]', 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), [ 'foo@bar.com', 'bar@foo.com' ], 'HTTP body';
     }
 }
 
