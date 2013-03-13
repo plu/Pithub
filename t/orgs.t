@@ -3,6 +3,7 @@ use lib "$FindBin::Bin/lib";
 use JSON::Any;
 use Pithub::Test;
 use Test::Most;
+use MIME::Base64 qw();
 
 BEGIN {
     use_ok('Pithub::Orgs');
@@ -50,6 +51,28 @@ BEGIN {
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
+    {
+        # Check if prepare_request is able to add a authorization header to
+        # satisfy has_token
+        $obj->clear_token;
+        throws_ok { $obj->list } qr{Access token required for: GET /user/orgs}, 'Token required';
+        $obj->prepare_request(sub {
+                my $req = shift;
+                $req->header(
+                    'Authorization' => 'Basic ' . MIME::Base64::encode(
+                        'someuser:sometoken'
+                    )
+                );
+            }
+        );
+        my $result = $obj->list;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/user/orgs', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+
+
 }
 
 # Pithub::Orgs->update

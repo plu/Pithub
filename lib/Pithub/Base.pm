@@ -307,7 +307,7 @@ See also: L<http://developer.github.com/v3/oauth/>
 has 'token' => (
     clearer   => 'clear_token',
     is        => 'rw',
-    predicate => 'has_token',
+    predicate => '_has_token',
     required  => 0,
 );
 
@@ -634,11 +634,12 @@ sub request {
 
     my $uri = $self->_uri_for($path);
 
-    if ( $self->_token_required( $method, $path ) && !$self->has_token ) {
+    my $request = $self->_request_for( $method, $uri, $data );
+
+    if ( $self->_token_required( $method, $path ) && !$self->has_token($request) ) {
         croak sprintf "Access token required for: %s %s (%s)", $method, $path, $uri;
     }
 
-    my $request = $self->_request_for( $method, $uri, $data );
 
     if ($options) {
         croak 'The key options must be a hashref' unless ref $options eq 'HASH';
@@ -661,6 +662,25 @@ sub request {
         response        => $response,
         _request        => sub { $self->request(@_) },
     );
+}
+
+=method has_token (?$request)
+
+This method checks if a token has been specified, or if not, and a request
+object is passed, then it looks for an Authorization header in the request.
+
+=cut
+
+sub has_token {
+    my ($self, $request) = @_;
+
+    # If we have one specified in the object, return true
+    return 1 if $self->_has_token;
+    # If no reqest object here, we don't have a token
+    return 0  unless $request;
+
+    return 1 if $request->header('Authorization');
+    return 0;
 }
 
 sub _build__json {
