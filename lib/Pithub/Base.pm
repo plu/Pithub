@@ -6,7 +6,7 @@ use Moo;
 use Carp qw(croak);
 use HTTP::Headers;
 use HTTP::Request;
-use JSON::Any;
+use JSON;
 use LWP::UserAgent;
 use Pithub::Result;
 use URI;
@@ -526,7 +526,7 @@ API call.
 =item *
 
 B<data>: optional data reference, usually a reference to an array
-or hash. It must be possible to serialize this using L<JSON::Any>.
+or hash. It must be possible to serialize this using L<JSON>.
 This will be the HTTP request body.
 
 =item *
@@ -685,7 +685,7 @@ sub has_token {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON::Any->new;
+    return JSON->new;
 }
 
 sub _build_ua {

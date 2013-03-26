@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::Any;
+use JSON;
 use Pithub::Test;
 use Pithub::Test::UA;
 use Test::Most;
@@ -352,7 +352,7 @@ sub validate_tree {
 }
 
 {
-    my $json = JSON::Any->new;
+    my $json = JSON->new;
     my $p    = Pithub::Test->create('Pithub');
     $p->token('123');
     my $request = $p->request( method => 'POST', path => '/foo', data => { some => 'data' } )->request;
