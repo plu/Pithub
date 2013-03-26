@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::Any;
+use JSON;
 use Pithub::Test;
 use Test::Most;
 
@@ -14,7 +14,7 @@ BEGIN {
 
 # Pithub::GitData::Blobs->create
 {
-    my $json = JSON::Any->new;
+    my $json = JSON->new;
     my $obj = Pithub::Test->create( 'Pithub::GitData::Blobs', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Blobs';
@@ -69,7 +69,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->create( data => { message => 'my commit message' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/commits', 'HTTP path';
@@ -125,7 +125,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->create( data => { ref => 'refs/heads/master' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs', 'HTTP path';
@@ -171,7 +171,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->update( ref => 'foo/bar', data => { sha => '123' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs/foo/bar', 'HTTP path';
@@ -210,7 +210,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->create(
             data => {
                 message => 'Tagged v0.1',
@@ -267,7 +267,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->create( data => { tree => [ { path => 'file1.pl' } ] } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/trees', 'HTTP path';

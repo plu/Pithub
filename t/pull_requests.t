@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::Any;
+use JSON;
 use Pithub::Test;
 use Test::Most;
 
@@ -38,7 +38,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->create(
             data => {
                 base  => 'master',
@@ -139,7 +139,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->update(
             pull_request_id => 123,
             data            => {
@@ -174,7 +174,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->create( pull_request_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/123/comments', 'HTTP path';
@@ -254,7 +254,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->update( comment_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'PATCH', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/123', 'HTTP path';

@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::Any;
+use JSON;
 use Pithub::Test;
 use Test::Most;
 use MIME::Base64 qw();
@@ -89,7 +89,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->update(
             org  => 'some-org',
             data => {
@@ -310,7 +310,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->create(
             org  => 'blorg',
             data => {
@@ -524,7 +524,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->update(
             team_id => 123,
             data    => {

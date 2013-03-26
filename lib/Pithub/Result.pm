@@ -4,7 +4,7 @@ package Pithub::Result;
 
 use Moo;
 use Array::Iterator;
-use JSON::Any;
+use JSON;
 use URI;
 
 =head1 DESCRIPTION
@@ -160,7 +160,7 @@ has '_iterator' => (
 has '_json' => (
     builder => '_build__json',
     is      => 'ro',
-    isa     => sub { die 'must be a JSON::Any, but is ' . ref $_[0] unless ref $_[0] eq 'JSON::Any' },
+    isa     => sub { die 'must be a JSON, but is ' . ref $_[0] unless ref $_[0] eq 'JSON' },
     lazy    => 1,
 );
 
@@ -427,7 +427,7 @@ sub _build_prev_page_uri {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON::Any->new;
+    return JSON->new;
 }
 
 sub _get_link_header {

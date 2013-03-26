@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::Any;
+use JSON;
 use Pithub::Test;
 use Test::Most;
 
@@ -26,7 +26,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->create(
             data => {
                 assignee  => 'octocat',
@@ -108,7 +108,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->update(
             issue_id => 123,
             data     => {
@@ -183,7 +183,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->create(
             issue_id => 123,
             data     => { body => 'comment' }
@@ -263,7 +263,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->update(
             comment_id => 123,
             data       => { body => 'comment' }
@@ -331,7 +331,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->add(
             issue_id => 123,
             data     => [qw(label1 label2)],
@@ -356,7 +356,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->create(
             data => {
                 name  => 'label1',
@@ -484,7 +484,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->replace(
             issue_id => 123,
             data     => [qw(label1 label2)],
@@ -509,7 +509,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->update(
             label => 123,
             data  => {
@@ -537,7 +537,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->create(
             data => {
                 description => 'String',
@@ -621,7 +621,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json   = JSON::Any->new;
+        my $json   = JSON->new;
         my $result = $obj->update(
             milestone_id => 123,
             data         => {
