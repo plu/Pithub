@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::Any;
+use JSON;
 use Pithub::Test;
 use Test::Most;
 
@@ -81,7 +81,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->add( data => ['foo@bar.com'] );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
@@ -90,7 +90,7 @@ BEGIN {
     }
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->add( data => [ 'foo@bar.com', 'bar@foo.com' ] );
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
@@ -111,7 +111,7 @@ BEGIN {
     ok $obj->token(123), 'Token set';
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->delete( data => ['foo@bar.com'] );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
@@ -120,7 +120,7 @@ BEGIN {
     }
 
     {
-        my $json = JSON::Any->new;
+        my $json = JSON->new;
         my $result = $obj->delete( data => [ 'foo@bar.com', 'bar@foo.com' ] );
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/emails', 'HTTP path';
