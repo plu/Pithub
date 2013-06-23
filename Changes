@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01019   2013-06-23 07:47:53 Europe/Berlin
           - Replace JSON::Any with JSON (Alessandro Ghedini)
 
 0.01018   2013-03-13 11:24:16 Europe/Berlin
