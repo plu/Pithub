@@ -14,6 +14,7 @@ BEGIN {
     use_ok('Pithub::Repos::Keys');
     use_ok('Pithub::Repos::Watching');
     use_ok('Pithub::Repos::Starring');
+    use_ok('Pithub::Repos::Stats');
 }
 
 # Pithub::Repos->create
@@ -855,6 +856,21 @@ BEGIN {
         is $result->request->uri->path, '/repos/foo/bar/hooks/123', 'HTTP path';
         my $http_request = $result->request;
         eq_or_diff $json->decode( $http_request->content ), { 'name' => 'irc' }, 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Stats->contributors
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Stats', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, "Pithub::Repos::Stats";
+
+    {
+        my $result = $obj->contributors;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/stats/contributors', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
     }
 }
 
