@@ -563,5 +563,20 @@ sub users {
     return shift->_create_instance('Pithub::Users');
 }
 
+=head1 CONTRIBUTORS
+
+=over
+
+=item *
+
+Andreas Marienborg
+
+=item *
+
+Alessandro Ghedini
+
+=back
+
+=cut
 
 1;
