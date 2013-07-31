@@ -8,6 +8,18 @@ extends 'Pithub::Base';
 
 =method contributors
 
+Extra arguments
+
+=over
+
+=item * wait_for_200
+
+If this is set, and we receive the 202 status from github, we will sleep for
+this many seconds before trying the request again. We will keep trying until we
+get anything else than 202 status
+
+=back
+
 List contributors with stats
 
     GET /repos/:user/:repo/stats/contributors
@@ -21,6 +33,8 @@ Examples:
 
 sub contributors {
     my ( $self, %args ) = @_;
+    # The default is to not wait for 200
+    my $sleep = delete $args{wait_for_200} || 0;
     $self->_validate_user_repo_args( \%args );
     my $req = {
         method => 'GET',
@@ -34,10 +48,11 @@ sub contributors {
         %$req
     );
 
-    while ($res->response->code == 202) {
-        warn "202 response, sleeping and redoing..";
-        sleep 5;
-        $res = $self->request(%$req);
+    if ($sleep) {
+        while ($res->response->code == 202) {
+            sleep $sleep;
+            $res = $self->request(%$req);
+        }
     }
     return $res;
 }
