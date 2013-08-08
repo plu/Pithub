@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add Pithub::Repos::Stats->contributors
+            (Andreas Marienborg)
 
 0.01019   2013-06-23 07:47:53 Europe/Berlin
           - Replace JSON::Any with JSON (Alessandro Ghedini)
