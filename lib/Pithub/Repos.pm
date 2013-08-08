@@ -176,6 +176,16 @@ sub forks {
     return shift->_create_instance('Pithub::Repos::Forks');
 }
 
+=method stats
+
+Provide access to L<Pithub::Repos::Stats>.
+
+=cut
+
+sub stats {
+    return shift->_create_instance('Pitbub::Repos::Stats');
+}
+
 =method get
 
 =over
