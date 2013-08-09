@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01020   2013-08-09 17:21:22 Asia/Bangkok
           - Add Pithub::Repos::Stats->contributors
             (Andreas Marienborg)
 
