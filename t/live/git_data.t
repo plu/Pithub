@@ -16,20 +16,18 @@ SKIP: {
 
     # Pithub::GitData::Blobs->get
     {
-        my $result = $p->git_data->blobs->get( user => 'plu', repo => 'Pithub', sha => '20f946f933a911253e480eb0e9feced1e36dbd45' );
+        my $result = $p->git_data->blobs->get( user => 'plu', repo => 'Pithub', sha => '5ab76a4e0253f527bf5bee2a02072261c8d2b811' );
         is $result->success, 1, 'Pithub::GitData::Blobs->get successful';
         eq_or_diff $result->content, {
-            'content' => 'dHJlZSA4Nzc2OTQyY2I4MzRlNTEwNzMxNzQwM2E4YTE2N2UzMDE2N2Y4MDU2
-CnBhcmVudCA5NjE2ZDRmMTUxNWJmNGRlMWEzMmY4NWE4ZmExYjFjYzQ0MWRh
-MTY0CmF1dGhvciBKb2hhbm5lcyBQbHVuaWVuIDxwbHVAcHFwcS5kZT4gMTMw
-OTIzNTg4OSArMDQwMApjb21taXR0ZXIgSm9oYW5uZXMgUGx1bmllbiA8cGx1
-QHBxcHEuZGU+IDEzMDkyMzY5ODQgKzA0MDAKCkFkZCBDaGFuZ2VzIGZpbGUu
-Cg==
+            'content' => 'UmV2aXNpb24gaGlzdG9yeSBmb3Ige3skZGlzdC0+bmFtZX19Cgp7eyRORVhU
+fX0KICAgICAgICAgIC0gbWlub3IgUE9EIGNoYW5nZXMKCjAuMDEwMDAgICAy
+MDExLTA2LTI3IDEyOjM2OjQ0IEFzaWEvRHViYWkKICAgICAgICAgIC0gZmly
+c3QgcmVsZWFzZQo=
 ',
             'encoding' => 'base64',
-            'sha'      => '20f946f933a911253e480eb0e9feced1e36dbd45',
-            'size'     => 226,
-            'url'      => 'https://api.github.com/repos/plu/Pithub/git/blobs/20f946f933a911253e480eb0e9feced1e36dbd45'
+            'sha'      => '5ab76a4e0253f527bf5bee2a02072261c8d2b811',
+            'size'     => 146,
+            'url'      => 'https://api.github.com/repos/plu/Pithub/git/blobs/5ab76a4e0253f527bf5bee2a02072261c8d2b811'
           },
           'Pithub::GitData::Blobs->get content';
     }
@@ -41,18 +39,20 @@ Cg==
         eq_or_diff $result->content,
           {
             'author' => {
-                'date'  => '2011-06-27T21:38:09-07:00',
+                'date'  => '2011-06-28T04:38:09Z',
                 'email' => 'plu@pqpq.de',
                 'name'  => 'Johannes Plunien'
             },
             'committer' => {
-                'date'  => '2011-06-27T21:56:24-07:00',
+                'date'  => '2011-06-28T04:56:24Z',
                 'email' => 'plu@pqpq.de',
                 'name'  => 'Johannes Plunien'
             },
-            'message' => "Add Changes file.\n",
+            'message' => "Add Changes file.",
+            'html_url' => 'https://github.com/plu/Pithub/commits/20f946f933a911253e480eb0e9feced1e36dbd45',
             'parents' => [
                 {
+                    'html_url' => 'https://github.com/plu/Pithub/commits/9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
                     'sha' => '9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
                     'url' => 'https://api.github.com/repos/plu/Pithub/git/commits/9616d4f1515bf4de1a32f85a8fa1b1cc441da164'
                 }
