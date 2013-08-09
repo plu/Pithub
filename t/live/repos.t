@@ -69,8 +69,8 @@ SKIP: {
                     'url' => 'https://api.github.com/repos/plu/Pithub/commits/1c5230f42d6d3e376162591f223fc4130d671937'
                 },
                 'name'        => 'v0.01000',
-                'tarball_url' => 'https://github.com/plu/Pithub/tarball/v0.01000',
-                'zipball_url' => 'https://github.com/plu/Pithub/zipball/v0.01000'
+                'tarball_url' => 'https://api.github.com/repos/plu/Pithub/tarball/v0.01000',
+                'zipball_url' => 'https://api.github.com/repos/plu/Pithub/zipball/v0.01000'
             },
             {
                 'commit' => {
@@ -78,8 +78,8 @@ SKIP: {
                     'url' => 'https://api.github.com/repos/plu/Pithub/commits/09da9bff13167ca9940ff6540a7e7dcc936ca25e'
                 },
                 'name'        => 'v0.01001',
-                'tarball_url' => 'https://github.com/plu/Pithub/tarball/v0.01001',
-                'zipball_url' => 'https://github.com/plu/Pithub/zipball/v0.01001'
+                'tarball_url' => 'https://api.github.com/repos/plu/Pithub/tarball/v0.01001',
+                'zipball_url' => 'https://api.github.com/repos/plu/Pithub/zipball/v0.01001'
             }
           ],
           'Pithub::Repos->tags content';
@@ -100,13 +100,13 @@ SKIP: {
         eq_or_diff $result->content->{commit},
           {
             'author' => {
-                'date'  => '2011-06-30T22:37:12-07:00',
+                'date'  => '2011-07-01T05:37:12Z',
                 'email' => 'plu@pqpq.de',
                 'name'  => 'Johannes Plunien'
             },
             'comment_count' => 0,
             'committer' => {
-                'date'  => '2011-06-30T22:37:12-07:00',
+                'date'  => '2011-07-01T05:37:12Z',
                 'email' => 'plu@pqpq.de',
                 'name'  => 'Johannes Plunien'
             },

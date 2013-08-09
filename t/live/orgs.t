@@ -28,8 +28,8 @@ SKIP: {
     {
         my $result = $p->orgs->list( user => 'plu' );
         is $result->success, 1, 'Pithub::Orgs->list successful';
-        is $result->content->[0]{login}, 'CPAN-API', 'Pithub::Orgs->get: Attribute login';
-        is $result->content->[0]{id},    460239,     'Pithub::Orgs->get: Attribute id';
+        is $result->content->[1]{login}, 'CPAN-API', 'Pithub::Orgs->get: Attribute login';
+        is $result->content->[1]{id},    460239,     'Pithub::Orgs->get: Attribute id';
     }
 
     # Pithub::Orgs::Members->list_public
