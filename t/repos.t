@@ -107,6 +107,24 @@ BEGIN {
     }
 }
 
+# Pithub::Repos->list_all
+{
+    my $obj = Pithub::Test->create('Pithub::Repos');
+
+    isa_ok $obj, 'Pithub::Repos';
+
+    {
+        my $result = $obj->list_all;
+
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repositories', 'HTTP path';
+
+        is $result->code,    200, 'HTTP status is 200';
+        is $result->success, 1,   'Successful';
+    }
+
+}
+
 # Pithub::Repos->update
 {
     my $obj = Pithub::Test->create( 'Pithub::Repos', user => 'foo', repo => 'bar' );

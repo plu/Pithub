@@ -54,6 +54,16 @@ SKIP: {
         }
     }
 
+    # Pithub::Repos->list_all
+    {
+        my $result = $p->repos->list_all;
+        is $result->success, 1, 'Pithub::Repos->list_all successful';
+        ok $result->count > 0, 'Pithub::Repos->list_all has some rows';
+        while ( my $row = $result->next ) {
+            ok $row->{name}, "Pithub::Repos->list_all: Attribute name ($row->{name})";
+        }
+    }
+
     # Pithub::Repos->tags
     {
         my $result = $p->repos->tags( user => 'plu', repo => 'Pithub' );

@@ -330,6 +330,44 @@ sub list {
     }
 }
 
+=method list_all
+
+List all public repositories.
+
+    GET /repositories
+
+Examples:
+
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->list_all;
+
+Start list at a specific repository id
+
+    my $repos  = Pithub::Repos->new;
+    my $result = $repos->list_all( since => 500);
+
+=cut
+
+sub list_all {
+    my ( $self, %args ) = @_;
+    if ( my $since = delete $args{'since'} ) {
+        return $self->request(
+            method => 'GET',
+            path   => '/repositories',
+            params => { since => $since, },
+            %args,
+        );
+    }
+    else {
+        return $self->request(
+            method => 'GET',
+            path   => '/repositories',
+            %args,
+        );
+    }
+}
+
+
 =method starring
 
 Provides access to L<Pithub::Repos::Starring>.
