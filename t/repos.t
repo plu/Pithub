@@ -15,6 +15,7 @@ BEGIN {
     use_ok('Pithub::Repos::Watching');
     use_ok('Pithub::Repos::Starring');
     use_ok('Pithub::Repos::Stats');
+    use_ok('Pithub::Repos::Statuses');
 }
 
 # Pithub::Repos->create
@@ -871,6 +872,31 @@ BEGIN {
         is $result->request->uri->path, '/repos/foo/bar/stats/contributors', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Statuses->list
+#
+# Pithub::Repos::Statuses->create
+#
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Statuses', user => 'foo', repo => 'bar' );
+    isa_ok $obj, "Pithub::Repos::Statuses";
+
+    {
+        my $result = $obj->list( ref => 'abcdef' );
+        is $result->request->method, "GET", 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/statuses/abcdef', "HTTP Path";
+        is $result->request->content, '', 'HTTP body';
+    }
+    {
+        my $json = JSON->new;
+        my $result = $obj->create( sha => '0123456', data => {
+                state => 'error', description => 'testing'
+            },);
+        is $result->request->method, "POST", "HTTP method";
+        is $result->request->uri->path, '/repos/foo/bar/statuses/0123456', 'HTTP path';
+        eq_or_diff $json->decode( $result->request->content ), { 'description' => 'testing', 'state' => 'error' }, 'HTTP body';
     }
 }
 
