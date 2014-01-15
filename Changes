@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add Pithub::Repos::Statuses->list and ->create
+            (Andreas Marienborg)
 
 0.01020   2013-08-09 17:21:22 Asia/Bangkok
           - Add Pithub::Repos::Stats->contributors
