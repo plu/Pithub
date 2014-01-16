@@ -183,7 +183,7 @@ Provide access to L<Pithub::Repos::Stats>.
 =cut
 
 sub stats {
-    return shift->_create_instance('Pitbub::Repos::Stats');
+    return shift->_create_instance('Pithub::Repos::Stats');
 }
 
 =method get
