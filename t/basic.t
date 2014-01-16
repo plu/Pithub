@@ -167,6 +167,16 @@ my @tree = (
                 methods  => [qw(has_starred list_repos list star unstar)],
             },
             {
+                accessor => 'stats',
+                isa      => 'Pithub::Repos::Stats',
+                methods  => [qw(contributors)],
+            },
+            {
+                accessor => 'statuses',
+                isa      => 'Pithub::Repos::Statuses',
+                methods  => [qw(create list)],
+            },
+            {
                 accessor => 'watching',
                 isa      => 'Pithub::Repos::Watching',
                 methods  => [qw(is_watching list_repos list start_watching stop_watching)],
@@ -257,7 +267,7 @@ sub validate_tree {
                 next if $node->{isa} eq 'Pithub::Repos::Downloads' and $method eq 'upload';
 
                 my $result;
-                my $data = {};
+                my $data = {state => 'pending'};
 
                 # unfortunately the API expects arrayrefs on a very few calls
                 $data = []
