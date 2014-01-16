@@ -12,6 +12,8 @@ use Pithub::Repos::Forks;
 use Pithub::Repos::Hooks;
 use Pithub::Repos::Keys;
 use Pithub::Repos::Starring;
+use Pithub::Repos::Stats;
+use Pithub::Repos::Statuses;
 use Pithub::Repos::Watching;
 extends 'Pithub::Base';
 
