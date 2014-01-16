@@ -334,51 +334,51 @@ use it.
                 my $watching = Pithub::Repos->new->stats;
                 my $watching = Pithub::Repos::Stats->new;
 
-    - [Pithub::Repos::Statuses](https://metacpan.org/pod/Pithub::Repos::Statuses)
+        - [Pithub::Repos::Statuses](https://metacpan.org/pod/Pithub::Repos::Statuses)
 
-        See also: [http://developer.github.com/v3/repos/statuses/](http://developer.github.com/v3/repos/statuses/)
+            See also: [http://developer.github.com/v3/repos/statuses/](http://developer.github.com/v3/repos/statuses/)
 
-            my $watching = Pithub->new->repos->statuses;
-            my $watching = Pithub::Repos->new->statuses;
-            my $watching = Pithub::Repos::Statuses->new;
-- [Pithub::Repos::Watching](https://metacpan.org/pod/Pithub::Repos::Watching)
+                my $watching = Pithub->new->repos->statuses;
+                my $watching = Pithub::Repos->new->statuses;
+                my $watching = Pithub::Repos::Statuses->new;
 
-    See also: [http://developer.github.com/v3/repos/watching/](http://developer.github.com/v3/repos/watching/)
+        - [Pithub::Repos::Watching](https://metacpan.org/pod/Pithub::Repos::Watching)
 
-        my $watching = Pithub->new->repos->watching;
-        my $watching = Pithub::Repos->new->watching;
-        my $watching = Pithub::Repos::Watching->new;
+            See also: [http://developer.github.com/v3/repos/watching/](http://developer.github.com/v3/repos/watching/)
 
-- [Pithub::Users](https://metacpan.org/pod/Pithub::Users)
+                my $watching = Pithub->new->repos->watching;
+                my $watching = Pithub::Repos->new->watching;
+                my $watching = Pithub::Repos::Watching->new;
+    - [Pithub::Users](https://metacpan.org/pod/Pithub::Users)
 
-See also: [http://developer.github.com/v3/users/](http://developer.github.com/v3/users/)
+        See also: [http://developer.github.com/v3/users/](http://developer.github.com/v3/users/)
 
-    my $users = Pithub->new->users;
-    my $users = Pithub::Users->new;
+            my $users = Pithub->new->users;
+            my $users = Pithub::Users->new;
 
-- [Pithub::Users::Emails](https://metacpan.org/pod/Pithub::Users::Emails)
+        - [Pithub::Users::Emails](https://metacpan.org/pod/Pithub::Users::Emails)
 
-    See also: [http://developer.github.com/v3/users/emails/](http://developer.github.com/v3/users/emails/)
+            See also: [http://developer.github.com/v3/users/emails/](http://developer.github.com/v3/users/emails/)
 
-        my $emails = Pithub->new->users->emails;
-        my $emails = Pithub::Users->new->emails;
-        my $emails = Pithub::Users::Emails->new;
+                my $emails = Pithub->new->users->emails;
+                my $emails = Pithub::Users->new->emails;
+                my $emails = Pithub::Users::Emails->new;
 
-- [Pithub::Users::Followers](https://metacpan.org/pod/Pithub::Users::Followers)
+        - [Pithub::Users::Followers](https://metacpan.org/pod/Pithub::Users::Followers)
 
-    See also: [http://developer.github.com/v3/users/followers/](http://developer.github.com/v3/users/followers/)
+            See also: [http://developer.github.com/v3/users/followers/](http://developer.github.com/v3/users/followers/)
 
-        my $followers = Pithub->new->users->followers;
-        my $followers = Pithub::Users->new->followers;
-        my $followers = Pithub::Users::Followers->new;
+                my $followers = Pithub->new->users->followers;
+                my $followers = Pithub::Users->new->followers;
+                my $followers = Pithub::Users::Followers->new;
 
-- [Pithub::Users::Keys](https://metacpan.org/pod/Pithub::Users::Keys)
+        - [Pithub::Users::Keys](https://metacpan.org/pod/Pithub::Users::Keys)
 
-    See also: [http://developer.github.com/v3/users/keys/](http://developer.github.com/v3/users/keys/)
+            See also: [http://developer.github.com/v3/users/keys/](http://developer.github.com/v3/users/keys/)
 
-        my $keys = Pithub->new->users->keys;
-        my $keys = Pithub::Users->new->keys;
-        my $keys = Pithub::Users::Keys->new;
+                my $keys = Pithub->new->users->keys;
+                my $keys = Pithub::Users->new->keys;
+                my $keys = Pithub::Users::Keys->new;
 
 # CONTRIBUTORS
 
