@@ -410,6 +410,30 @@ See also: L<http://developer.github.com/v3/repos/keys/>
 
 =item *
 
+L<Pithub::Repos::Stats>
+
+See also: L<http://developer.github.com/v3/repos/statistics/>
+
+    my $watching = Pithub->new->repos->stats;
+    my $watching = Pithub::Repos->new->stats;
+    my $watching = Pithub::Repos::Stats->new;
+
+=back
+
+=item *
+
+L<Pithub::Repos::Statuses>
+
+See also: L<http://developer.github.com/v3/repos/statuses/>
+
+    my $watching = Pithub->new->repos->statuses;
+    my $watching = Pithub::Repos->new->statuses;
+    my $watching = Pithub::Repos::Statuses->new;
+
+=back
+
+=item *
+
 L<Pithub::Repos::Watching>
 
 See also: L<http://developer.github.com/v3/repos/watching/>
