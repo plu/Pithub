@@ -178,16 +178,6 @@ sub forks {
     return shift->_create_instance('Pithub::Repos::Forks');
 }
 
-=method stats
-
-Provide access to L<Pithub::Repos::Stats>.
-
-=cut
-
-sub stats {
-    return shift->_create_instance('Pithub::Repos::Stats');
-}
-
 =method get
 
 =over
@@ -340,6 +330,26 @@ Provides access to L<Pithub::Repos::Starring>.
 
 sub starring {
     return shift->_create_instance('Pithub::Repos::Starring');
+}
+
+=method stats
+
+Provide access to L<Pithub::Repos::Stats>.
+
+=cut
+
+sub stats {
+    return shift->_create_instance('Pithub::Repos::Stats');
+}
+
+=method statuses
+
+Provide access to L<Pithub::Repos::Statuses>.
+
+=cut
+
+sub statuses {
+    return shift->_create_instance('Pithub::Repos::Statuses');
 }
 
 =method tags
