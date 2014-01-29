@@ -606,6 +606,30 @@ BEGIN {
     }
 }
 
+# Pithub::Repos::Releases->create
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Releases';
+
+    throws_ok { $obj->create } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok { $obj->create( data => { foo => 'bar' } ); } qr{Access token required for: POST /repos/foo/bar/releases}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->create( data => { tag_name => 'foo' } );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases', 'HTTP path';
+        my $http_request = $result->request;
+        my $json   = JSON->new;
+        eq_or_diff $json->decode( $http_request->content ), { tag_name => 'foo' }, 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Releases->update
+# Pithub::Repos::Releases->delete
+
 # Pithub::Repos::Starring->has_watching
 {
     my $obj = Pithub::Test->create( 'Pithub::Repos::Starring', user => 'foo', repo => 'bar' );

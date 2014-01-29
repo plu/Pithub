@@ -72,4 +72,45 @@ sub get {
     );
 }
 
+=method create
+
+=over
+
+=item *
+
+Create a release.
+
+    POST /repos/:user/:repo/releases
+
+Examples:
+
+    my $r = Pithub::Repos::Releases->new;
+    my $result = $r->create(
+        user => 'plu',
+        repo => 'Pithub',
+        data => {
+            tag_name         => 'v1.0.0',
+            target_commitish => 'master',
+            name             => 'v1.0.0',
+            body             => 'Description of the release',
+            draft            => 0,
+            prerelease       => 0,
+        }
+    );
+
+=back
+
+=cut
+
+sub create {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/releases', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
+}
+
 1;
