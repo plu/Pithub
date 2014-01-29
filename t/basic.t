@@ -304,6 +304,7 @@ sub validate_tree {
                         org             => 1,
                         pull_request_id => 1,
                         ref             => 1,
+                        release_id      => 1,
                         repo            => 1,
                         sha             => 1,
                         state           => 'open',
