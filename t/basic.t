@@ -165,6 +165,13 @@ my @tree = (
                 accessor => 'releases',
                 isa      => 'Pithub::Repos::Releases',
                 methods  => [qw(list get create update delete)],
+                subtree  => [
+                    {
+                        accessor => 'assets',
+                        isa      => 'Pithub::Repos::Releases::Assets',
+                        methods  => [qw(list get create update delete)],
+                    }
+                ],
             },
             {
                 accessor => 'starring',
