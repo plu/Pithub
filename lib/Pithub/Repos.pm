@@ -11,6 +11,7 @@ use Pithub::Repos::Downloads;
 use Pithub::Repos::Forks;
 use Pithub::Repos::Hooks;
 use Pithub::Repos::Keys;
+use Pithub::Repos::Releases;
 use Pithub::Repos::Starring;
 use Pithub::Repos::Stats;
 use Pithub::Repos::Statuses;
@@ -320,6 +321,16 @@ sub list {
             %args,
         );
     }
+}
+
+=method releases
+
+Provides access to L<Pithub::Repos::Releases>.
+
+=cut
+
+sub releases {
+    return shift->_create_instance('Pithub::Repos::Releases');
 }
 
 =method starring

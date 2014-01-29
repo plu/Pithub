@@ -162,6 +162,11 @@ my @tree = (
                 methods  => [qw(create delete get list update)],
             },
             {
+                accessor => 'releases',
+                isa      => 'Pithub::Repos::Releases',
+                methods  => [qw(list get create update delete)],
+            },
+            {
                 accessor => 'starring',
                 isa      => 'Pithub::Repos::Starring',
                 methods  => [qw(has_starred list_repos list star unstar)],
