@@ -113,7 +113,7 @@ sub create {
     );
 }
 
-=method create
+=method update
 
 =over
 
