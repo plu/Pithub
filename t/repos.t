@@ -650,6 +650,25 @@ BEGIN {
 }
 
 # Pithub::Repos::Releases->delete
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Releases';
+
+    throws_ok { $obj->delete } qr{Missing key in parameters: release_id}, 'No parameters';
+    throws_ok { $obj->delete( release_id => 1 ); } qr{Access token required for: DELETE /repos/foo/bar/releases/1}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->delete( release_id => 1 );
+        is $result->request->method, 'DELETE', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases/1', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
 
 # Pithub::Repos::Starring->has_watching
 {

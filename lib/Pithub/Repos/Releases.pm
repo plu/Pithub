@@ -156,4 +156,38 @@ sub update {
     );
 }
 
+=method delete
+
+=over
+
+=item *
+
+Delete a release.
+
+    DELETE /repos/:user/:repo/releases:id
+
+Examples:
+
+    my $r = Pithub::Repos::Releases->new;
+    my $result = $r->delete(
+        user       => 'plu',
+        repo       => 'Pithub',
+        release_id => 1,
+    );
+
+=back
+
+=cut
+
+sub delete {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: release_id' unless $args{release_id};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/repos/%s/%s/releases/%d', delete $args{user}, delete $args{repo}, delete $args{release_id} ),
+        %args,
+    );
+}
+
 1;
