@@ -574,6 +574,21 @@ BEGIN {
     }
 }
 
+# Pithub::Repos::Releases->list
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Releases';
+
+    {
+        my $result = $obj->list;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
 # Pithub::Repos::Starring->has_watching
 {
     my $obj = Pithub::Test->create( 'Pithub::Repos::Starring', user => 'foo', repo => 'bar' );
