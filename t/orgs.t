@@ -282,16 +282,17 @@ BEGIN {
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
-    throws_ok { $obj->add_repo } qr{Missing key in parameters: team_id}, 'No parameters';
+    throws_ok { $obj->edd_repo } qr{Missing key in parameters: team_id}, 'No parameters';
     throws_ok { $obj->add_repo( team_id => 123 ) } qr{Missing key in parameters: repo}, 'No repo parameter';
-    throws_ok { $obj->add_repo( team_id => 123, repo => 'bar' ); } qr{Access token required for: PUT /teams/123/repos/bar\s+}, 'Token required';
+    throws_ok { $obj->add_repo( team_id => 123, repo => 'bar' ); } qr{Missing key in parameters: org}, 'No org paramter';
+    throws_ok { $obj->add_repo( team_id => 123, repo => 'bar', org => 'myorg'); } qr{Access token required for: PUT /teams/123/repos/myorg/bar\s+}, 'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
-        my $result = $obj->add_repo( team_id => 123, repo => 'bar' );
+        my $result = $obj->add_repo( team_id => 123, repo => 'bar', org => 'myorg' );
         is $result->request->method, 'PUT', 'HTTP method';
-        is $result->request->uri->path, '/teams/123/repos/bar', 'HTTP path';
+        is $result->request->uri->path, '/teams/123/repos/myorg/bar', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }

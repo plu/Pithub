@@ -54,6 +54,7 @@ Examples:
     my $result = $t->add_repo(
         team_id => 1,
         repo    => 'some_repo',
+        org => 'our_organization',
     );
 
 =back
@@ -64,9 +65,13 @@ sub add_repo {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: repo'    unless $args{repo};
+    croak 'Missing key in parameters: org'     unless $args{org};
     return $self->request(
         method => 'PUT',
-        path   => sprintf( '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo} ),
+        path   => sprintf( '/teams/%s/repos/%s/%s',
+            delete $args{team_id},
+            delete $args{org},
+            delete $args{repo} ),
         %args,
     );
 }
