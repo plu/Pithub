@@ -282,7 +282,7 @@ BEGIN {
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
-    throws_ok { $obj->edd_repo } qr{Missing key in parameters: team_id}, 'No parameters';
+    throws_ok { $obj->add_repo } qr{Missing key in parameters: team_id}, 'No parameters';
     throws_ok { $obj->add_repo( team_id => 123 ) } qr{Missing key in parameters: repo}, 'No repo parameter';
     throws_ok { $obj->add_repo( team_id => 123, repo => 'bar' ); } qr{Missing key in parameters: org}, 'No org paramter';
     throws_ok { $obj->add_repo( team_id => 123, repo => 'bar', org => 'myorg'); } qr{Access token required for: PUT /teams/123/repos/myorg/bar\s+}, 'Token required';
