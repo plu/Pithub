@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01022   2014-03-27 13:59:44+01:00 Europe/Oslo
           - Add Pithub::Repos::Releases (Johannes Plunien)
           - Missing accessors and docs, typos (Johannes Plunien)
 
