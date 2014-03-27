@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add Pithub::Repos::Releases (Johannes Plunien)
+          - Missing accessors and docs, typos (Johannes Plunien)
 
 0.01021   2014-01-15 15:14:43 Asia/Bangkok
           - Add Pithub::Repos::Statuses->list and ->create
