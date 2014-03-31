@@ -7,6 +7,12 @@ use Carp qw(croak);
 use HTTP::Request::Common qw(POST);
 extends 'Pithub::Base';
 
+=head1 NOTE
+
+Github says: The Downloads API (described below) was deprecated on
+December 11, 2012. It will be removed at a future date. We recommend
+using L<Pithub::Repos::Releases> instead.
+
 =method create
 
 =over

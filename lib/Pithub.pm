@@ -382,6 +382,10 @@ See also: L<http://developer.github.com/v3/repos/contents/>
 
 L<Pithub::Repos::Downloads>
 
+Github says: The Downloads API (described below) was deprecated on
+December 11, 2012. It will be removed at a future date. We recommend
+using L<Pithub::Repos::Releases> instead.
+
 See also: L<http://developer.github.com/v3/repos/downloads/>
 
     my $downloads = Pithub->new->repos->downloads;
