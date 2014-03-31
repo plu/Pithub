@@ -143,7 +143,6 @@ use it.
                 my $comments = Pithub->new->gists->comments;
                 my $comments = Pithub::Gists->new->comments;
                 my $comments = Pithub::Gists::Comments->new;
-
     - [Pithub::GitData](https://metacpan.org/pod/Pithub::GitData)
 
         See also: [http://developer.github.com/v3/git/](http://developer.github.com/v3/git/)
@@ -190,7 +189,6 @@ use it.
                 my $trees = Pithub->new->git_data->trees;
                 my $trees = Pithub::GitData->new->trees;
                 my $trees = Pithub::GitData::Trees->new;
-
     - [Pithub::Issues](https://metacpan.org/pod/Pithub::Issues)
 
         See also: [http://developer.github.com/v3/issues/](http://developer.github.com/v3/issues/)
@@ -237,7 +235,6 @@ use it.
                 my $milestones = Pithub->new->issues->milestones;
                 my $milestones = Pithub::Issues->new->milestones;
                 my $milestones = Pithub::Issues::Milestones->new;
-
     - [Pithub::Orgs](https://metacpan.org/pod/Pithub::Orgs)
 
         See also: [http://developer.github.com/v3/orgs/](http://developer.github.com/v3/orgs/)
@@ -260,7 +257,6 @@ use it.
                 my $teams = Pithub->new->orgs->teams;
                 my $teams = Pithub::Orgs->new->teams;
                 my $teams = Pithub::Orgs::Teams->new;
-
     - [Pithub::PullRequests](https://metacpan.org/pod/Pithub::PullRequests)
 
         See also: [http://developer.github.com/v3/pulls/](http://developer.github.com/v3/pulls/)
@@ -275,7 +271,6 @@ use it.
                 my $comments = Pithub->new->pull_requests->comments;
                 my $comments = Pithub::PullRequests->new->comments;
                 my $comments = Pithub::PullRequests::Comments->new;
-
     - [Pithub::Repos](https://metacpan.org/pod/Pithub::Repos)
 
         See also: [http://developer.github.com/v3/repos/](http://developer.github.com/v3/repos/)
@@ -309,6 +304,10 @@ use it.
 
         - [Pithub::Repos::Downloads](https://metacpan.org/pod/Pithub::Repos::Downloads)
 
+            Github says: The Downloads API (described below) was deprecated on
+            December 11, 2012. It will be removed at a future date. We recommend
+            using [Pithub::Repos::Releases](https://metacpan.org/pod/Pithub::Repos::Releases) instead.
+
             See also: [http://developer.github.com/v3/repos/downloads/](http://developer.github.com/v3/repos/downloads/)
 
                 my $downloads = Pithub->new->repos->downloads;
@@ -330,6 +329,14 @@ use it.
                 my $keys = Pithub->new->repos->keys;
                 my $keys = Pithub::Repos->new->keys;
                 my $keys = Pithub::Repos::Keys->new;
+
+        - [Pithub::Repos::Releases](https://metacpan.org/pod/Pithub::Repos::Releases)
+
+            See also: [http://developer.github.com/v3/repos/releases/](http://developer.github.com/v3/repos/releases/)
+
+                my $watching = Pithub->new->repos->releases;
+                my $watching = Pithub::Repos->new->releases;
+                my $watching = Pithub::Repos::Releases->new;
 
         - [Pithub::Repos::Stats](https://metacpan.org/pod/Pithub::Repos::Stats)
 
@@ -354,7 +361,6 @@ use it.
                 my $watching = Pithub->new->repos->watching;
                 my $watching = Pithub::Repos->new->watching;
                 my $watching = Pithub::Repos::Watching->new;
-
     - [Pithub::Users](https://metacpan.org/pod/Pithub::Users)
 
         See also: [http://developer.github.com/v3/users/](http://developer.github.com/v3/users/)
