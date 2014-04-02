@@ -418,9 +418,24 @@ L<Pithub::Repos::Releases>
 
 See also: L<http://developer.github.com/v3/repos/releases/>
 
-    my $watching = Pithub->new->repos->releases;
-    my $watching = Pithub::Repos->new->releases;
-    my $watching = Pithub::Repos::Releases->new;
+    my $releases = Pithub->new->repos->releases;
+    my $releases = Pithub::Repos->new->releases;
+    my $releases = Pithub::Repos::Releases->new;
+
+=over
+
+=item *
+
+L<Pithub::Repos::Releases::Assets>
+
+See also: L<http://developer.github.com/v3/repos/releases/>
+
+    my $assets = Pithub->new->repos->releases->assets;
+    my $assets = Pithub::Repos->new->releases->assets;
+    my $assets = Pithub::Repos::Releases->new->assets;
+    my $assets = Pithub::Repos::Releases::Assets->new;
+
+=back
 
 =item *
 

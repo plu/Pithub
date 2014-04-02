@@ -289,9 +289,11 @@ sub validate_tree {
                 lives_ok {
                     $result = $obj->$accessor->$method(
                         archive_format => 'tarball',
+                        asset_id       => 1,
                         assignee       => 'john',
                         collaborator   => 1,
                         comment_id     => 1,
+                        content_type   => 'text/plain',
                         data           => $data,
                         download_id    => 1,
                         email          => 'foo',
@@ -303,6 +305,7 @@ sub validate_tree {
                         keyword        => 'foo',
                         label          => 1,
                         milestone_id   => 1,
+                        name           => 'foo',
                         options        => {
                             prepare_request => sub {
                                 shift->header( 'Accept' => 'foo.bar' );
