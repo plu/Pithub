@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01023   2014-04-04 16:55:58+02:00 Europe/Berlin
           - Add Pithub::Repos::Releases::Assets (Johannes Plunien)
 
 0.01022   2014-03-27 13:59:44+01:00 Europe/Oslo
