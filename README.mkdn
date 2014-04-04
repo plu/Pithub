@@ -1,3 +1,4 @@
+# <a name="title"></a> Pithub [![Build Status](https://api.travis-ci.org/plu/Pithub.png)](https://travis-ci.org/plu/Pithub)
 # NAME
 
 Pithub - Github v3 API
