@@ -4,7 +4,18 @@ package Pithub::Repos::Releases;
 
 use Moo;
 use Carp qw(croak);
+use Pithub::Repos::Releases::Assets;
 extends 'Pithub::Base';
+
+=method assets
+
+Provides access to L<Pithub::Repos::Releases::Assets>.
+
+=cut
+
+sub assets {
+    return shift->_create_instance('Pithub::Repos::Releases::Assets');
+}
 
 =method list
 

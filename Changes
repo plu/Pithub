@@ -2,6 +2,12 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.01024   2014-04-06 09:59:51+02:00 Europe/Berlin
+          - No changes.
+
+0.01023   2014-04-04 16:55:58+02:00 Europe/Berlin
+          - Add Pithub::Repos::Releases::Assets (Johannes Plunien)
+
 0.01022   2014-03-27 13:59:44+01:00 Europe/Oslo
           - Add Pithub::Repos::Releases (Johannes Plunien)
           - Missing accessors and docs, typos (Johannes Plunien)
@@ -99,3 +105,4 @@ Revision history for {{$dist->name}}
 
 0.01000   2011-06-27 12:36:44 Asia/Dubai
           - first release
+

@@ -12,10 +12,12 @@ BEGIN {
     use_ok('Pithub::Repos::Forks');
     use_ok('Pithub::Repos::Hooks');
     use_ok('Pithub::Repos::Keys');
-    use_ok('Pithub::Repos::Watching');
+    use_ok('Pithub::Repos::Releases');
+    use_ok('Pithub::Repos::Releases::Assets');
     use_ok('Pithub::Repos::Starring');
     use_ok('Pithub::Repos::Stats');
     use_ok('Pithub::Repos::Statuses');
+    use_ok('Pithub::Repos::Watching');
 }
 
 # Pithub::Repos->create
@@ -669,6 +671,105 @@ BEGIN {
     }
 }
 
+# Pithub::Repos::Releases::Assets->create
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases::Assets', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Releases::Assets';
+    throws_ok { $obj->create } qr{Missing key in parameters: name}, 'No parameters';
+    throws_ok { $obj->create(name => 'foo') } qr{Missing key in parameters: release_id}, 'No release_id parameter';
+    throws_ok { $obj->create(name => 'foo', release_id => 1) } qr{Missing key in parameters: data}, 'No data parameter';
+    throws_ok { $obj->create(name => 'foo', release_id => 1, data => 'data') } qr{Missing key in parameters: content_type}, 'No content_type parameter';
+    throws_ok { $obj->create(name => 'foo', release_id => 1, data => 'data', content_type => 'text/plain') } qr{Access token required for: POST /repos/foo/bar/releases/1/assets}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->create( release_id => 1, name => 'foo', data => 'data', content_type => 'text/plain' );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases/1/assets', 'HTTP path';
+        is $result->request->uri->host, 'uploads.github.com', 'HTTP host';
+        is $result->request->uri->query, 'name=foo', 'HTTP query';
+        is $result->request->content, 'data', 'HTTP body';
+        is $result->request->header('Content-Type'), 'text/plain', 'HTTP content type header';
+    }
+}
+
+# Pithub::Repos::Releases::Assets->delete
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases::Assets', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Releases::Assets';
+    throws_ok { $obj->delete } qr{Missing key in parameters: asset_id}, 'No parameters';
+    throws_ok { $obj->delete( asset_id => 1 ); } qr{Access token required for: DELETE /repos/foo/bar/releases/assets/1}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->delete( asset_id => 1 );
+        is $result->request->method, 'DELETE', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases/assets/1', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Releases::Assets->get
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases::Assets', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Releases::Assets';
+    throws_ok { $obj->get } qr{Missing key in parameters: asset_id}, 'No parameters';
+
+    isa_ok $obj, 'Pithub::Repos::Releases::Assets';
+
+    {
+        my $result = $obj->get( asset_id => 51 );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases/assets/51', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Releases::Assets->list
+{
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases::Assets', user => 'foo', repo => 'bar' );
+
+    throws_ok { $obj->list } qr{Missing key in parameters: release_id}, 'No parameters';
+
+    isa_ok $obj, 'Pithub::Repos::Releases::Assets';
+
+    {
+        my $result = $obj->list( release_id => 51 );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases/51/assets', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::Repos::Releases::Assets->update
+{
+    my $json = JSON->new;
+    my $obj = Pithub::Test->create( 'Pithub::Repos::Releases::Assets', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Releases::Assets';
+    throws_ok { $obj->update } qr{Missing key in parameters: asset_id}, 'No parameters';
+    throws_ok { $obj->update(asset_id => 1) } qr{Missing key in parameters: data}, 'No data parameter';
+    throws_ok { $obj->update(asset_id => 1, data => {}) } qr{Access token required for: PATCH /repos/foo/bar/releases/assets/1}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->update(asset_id => 1, data => { name => 'foo', label => 'bar' });
+        is $result->request->method, 'PATCH', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/releases/assets/1', 'HTTP path';
+        eq_or_diff $json->decode( $result->request->content ),
+          { name => 'foo', label => 'bar', },
+          'HTTP body';
+    }
+}
 
 # Pithub::Repos::Starring->has_watching
 {

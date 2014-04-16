@@ -382,6 +382,10 @@ See also: L<http://developer.github.com/v3/repos/contents/>
 
 L<Pithub::Repos::Downloads>
 
+Github says: The Downloads API (described below) was deprecated on
+December 11, 2012. It will be removed at a future date. We recommend
+using L<Pithub::Repos::Releases> instead.
+
 See also: L<http://developer.github.com/v3/repos/downloads/>
 
     my $downloads = Pithub->new->repos->downloads;
@@ -407,6 +411,31 @@ See also: L<http://developer.github.com/v3/repos/keys/>
     my $keys = Pithub->new->repos->keys;
     my $keys = Pithub::Repos->new->keys;
     my $keys = Pithub::Repos::Keys->new;
+
+=item *
+
+L<Pithub::Repos::Releases>
+
+See also: L<http://developer.github.com/v3/repos/releases/>
+
+    my $releases = Pithub->new->repos->releases;
+    my $releases = Pithub::Repos->new->releases;
+    my $releases = Pithub::Repos::Releases->new;
+
+=over
+
+=item *
+
+L<Pithub::Repos::Releases::Assets>
+
+See also: L<http://developer.github.com/v3/repos/releases/>
+
+    my $assets = Pithub->new->repos->releases->assets;
+    my $assets = Pithub::Repos->new->releases->assets;
+    my $assets = Pithub::Repos::Releases->new->assets;
+    my $assets = Pithub::Repos::Releases::Assets->new;
+
+=back
 
 =item *
 

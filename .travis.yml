@@ -1,0 +1,13 @@
+language: "perl"
+perl:
+  - "5.18"
+  - "5.16"
+  - "5.14"
+  - "5.12"
+env: PERL_CPANM_OPT="--notest --force --skip-satisfied"
+before_install:
+  - "cpanm Dist::Zilla"
+  - "cpanm Test::Pod"
+  - "dzil authordeps | xargs cpanm"
+install: "dzil listdeps | xargs cpanm"
+script: "dzil test --release"
