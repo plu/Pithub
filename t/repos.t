@@ -483,7 +483,7 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/forks', 'HTTP path';
         my $http_request = $result->request;
-        eq_or_diff $json->decode( $http_request->content ), { 'org' => 'foobarorg' }, 'HTTP body';
+        eq_or_diff $json->decode( $http_request->content ), { 'organization' => 'foobarorg' }, 'HTTP body';
     }
 }
 

@@ -42,7 +42,7 @@ sub create {
         return $self->request(
             method => 'POST',
             path   => sprintf( '/repos/%s/%s/forks', delete $args{user}, delete $args{repo} ),
-            data => { org => $org },
+            data => { organization => $org },
             %args,
         );
     }
