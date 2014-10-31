@@ -27,7 +27,7 @@ SKIP: {
         is $result->success, 1, 'Pithub::Gists->list successful';
         while ( my $row = $result->next ) {
             ok $row->{id}, "Pithub::Gists->list has id: $row->{id}";
-            like $row->{url}, qr{https://api.github.com/gists/\d+$}, "Pithub::Gists->list has url: $row->{url}";
+            like $row->{url}, qr{https://api.github.com/gists/[a-f\d]+$}, "Pithub::Gists->list has url: $row->{url}";
         }
     }
 
@@ -37,7 +37,7 @@ SKIP: {
         is $result->success, 1, 'Pithub::Gists::Comments->list successful';
         while ( my $row = $result->next ) {
             ok $row->{id}, "Pithub::Gists::Comments->list has id: $row->{id}";
-            like $row->{url}, qr{https://api.github.com/gists/\d+/comments/\d+$}, "Pithub::Gists::Comments->list has url: $row->{url}";
+            like $row->{url}, qr{https://api.github.com/gists/[a-f\d]+/comments/\d+$}, "Pithub::Gists::Comments->list has url: $row->{url}";
         }
     }
 }
