@@ -49,10 +49,10 @@ c3QgcmVsZWFzZQo=
                 'name'  => 'Johannes Plunien'
             },
             'message' => "Add Changes file.",
-            'html_url' => 'https://github.com/plu/Pithub/commits/20f946f933a911253e480eb0e9feced1e36dbd45',
+            'html_url' => 'https://github.com/plu/Pithub/commit/20f946f933a911253e480eb0e9feced1e36dbd45',
             'parents' => [
                 {
-                    'html_url' => 'https://github.com/plu/Pithub/commits/9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
+                    'html_url' => 'https://github.com/plu/Pithub/commit/9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
                     'sha' => '9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
                     'url' => 'https://api.github.com/repos/plu/Pithub/git/commits/9616d4f1515bf4de1a32f85a8fa1b1cc441da164'
                 }
