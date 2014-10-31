@@ -2,6 +2,7 @@ use FindBin;
 use lib "$FindBin::Bin/../lib";
 use Pithub::Test;
 use Test::Most;
+require JSON::PP;
 
 BEGIN {
     use_ok('Pithub');
@@ -49,10 +50,10 @@ c3QgcmVsZWFzZQo=
                 'name'  => 'Johannes Plunien'
             },
             'message' => "Add Changes file.",
-            'html_url' => 'https://github.com/plu/Pithub/commits/20f946f933a911253e480eb0e9feced1e36dbd45',
+            'html_url' => 'https://github.com/plu/Pithub/commit/20f946f933a911253e480eb0e9feced1e36dbd45',
             'parents' => [
                 {
-                    'html_url' => 'https://github.com/plu/Pithub/commits/9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
+                    'html_url' => 'https://github.com/plu/Pithub/commit/9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
                     'sha' => '9616d4f1515bf4de1a32f85a8fa1b1cc441da164',
                     'url' => 'https://api.github.com/repos/plu/Pithub/git/commits/9616d4f1515bf4de1a32f85a8fa1b1cc441da164'
                 }
@@ -145,7 +146,8 @@ c3QgcmVsZWFzZQo=
                     'url'  => 'https://api.github.com/repos/plu/Pithub/git/trees/7d2b61bafb9a703b393af386e4bcc350ad2c9aa9'
                 }
             ],
-            'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7331484696162bf7b5c97de488fd2c1289fd175c'
+            'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7331484696162bf7b5c97de488fd2c1289fd175c',
+            truncated => JSON::PP::false(),
           },
           'Pithub::GitData::Trees->get content';
 
@@ -187,6 +189,7 @@ c3QgcmVsZWFzZQo=
                     'url'  => 'https://api.github.com/repos/plu/Pithub/git/blobs/b493b43e8016b86550c065fcf83df537052ad371'
                 }
             ],
+            truncated => JSON::PP::false(),
             'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7331484696162bf7b5c97de488fd2c1289fd175c'
           },
           'Pithub::GitData::Trees->get content recursive';
