@@ -595,4 +595,14 @@ sub validate_tree {
     eq_or_diff \%query, { direction => 'asc' }, 'The params were set';
 }
 
+subtest "_create_instance passes attributes" => sub {
+    my $p = Pithub::Test::Factory->create("Pithub", per_page => 10);
+
+    is $p->repos->per_page, 10;
+    is $p->repos( per_page => 5 )->per_page, 5;
+    is $p->issues->comments( per_page => 3 )->per_page, 3;
+
+    is $p->repos( per_page => undef )->per_page, undef, "undef is allowed";
+};
+
 done_testing;

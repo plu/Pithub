@@ -18,7 +18,7 @@ Provides access to L<Pithub::Issues::Assignees>.
 =cut
 
 sub assignees {
-    return shift->_create_instance('Pithub::Issues::Assignees');
+    return shift->_create_instance('Pithub::Issues::Assignees', @_);
 }
 
 =method comments
@@ -28,7 +28,7 @@ Provides access to L<Pithub::Issues::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance('Pithub::Issues::Comments');
+    return shift->_create_instance('Pithub::Issues::Comments', @_);
 }
 
 =method create
@@ -179,7 +179,7 @@ Provides access to L<Pithub::Issues::Events>.
 =cut
 
 sub events {
-    return shift->_create_instance('Pithub::Issues::Events');
+    return shift->_create_instance('Pithub::Issues::Events', @_);
 }
 
 =method get
@@ -297,7 +297,7 @@ Provides access to L<Pithub::Issues::Labels>.
 =cut
 
 sub labels {
-    return shift->_create_instance('Pithub::Issues::Labels');
+    return shift->_create_instance('Pithub::Issues::Labels', @_);
 }
 
 =method list
@@ -706,7 +706,7 @@ Provides access to L<Pithub::Issues::Milestones>.
 =cut
 
 sub milestones {
-    return shift->_create_instance('Pithub::Issues::Milestones');
+    return shift->_create_instance('Pithub::Issues::Milestones', @_);
 }
 
 =method update

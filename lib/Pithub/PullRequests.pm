@@ -14,7 +14,7 @@ Provides access to L<Pithub::PullRequests::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance('Pithub::PullRequests::Comments');
+    return shift->_create_instance('Pithub::PullRequests::Comments', @_);
 }
 
 =method commits

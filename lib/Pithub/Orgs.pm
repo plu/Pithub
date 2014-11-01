@@ -90,7 +90,7 @@ Provides access to L<Pithub::Orgs::Members>.
 =cut
 
 sub members {
-    return shift->_create_instance('Pithub::Orgs::Members');
+    return shift->_create_instance('Pithub::Orgs::Members', @_);
 }
 
 =method teams
@@ -100,7 +100,7 @@ Provides access to L<Pithub::Orgs::Teams>.
 =cut
 
 sub teams {
-    return shift->_create_instance('Pithub::Orgs::Teams');
+    return shift->_create_instance('Pithub::Orgs::Teams', @_);
 }
 
 =method update

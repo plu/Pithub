@@ -747,30 +747,23 @@ sub _get_user_repo_args {
 }
 
 sub _create_instance {
-    my ( $self, $class ) = @_;
+    my ( $self, $class, @args ) = @_;
+
     my %args = (
         api_uri         => $self->api_uri,
         auto_pagination => $self->auto_pagination,
         ua              => $self->ua,
+        @args
     );
-    if ( $self->has_repo ) {
-        $args{repo} = $self->repo;
+
+    for my $attr (qw(repo token user per_page jsonp_callback prepare_request)) {
+        # Allow overrides to set attributes to undef
+        next if exists $args{$attr};
+
+        my $has_attr = "has_$attr";
+        $args{$attr} = $self->$attr if $self->$has_attr;
     }
-    if ( $self->has_token ) {
-        $args{token} = $self->token;
-    }
-    if ( $self->has_user ) {
-        $args{user} = $self->user;
-    }
-    if ( $self->has_per_page ) {
-        $args{per_page} = $self->per_page;
-    }
-    if ( $self->has_jsonp_callback ) {
-        $args{jsonp_callback} = $self->jsonp_callback;
-    }
-    if ( $self->has_prepare_request ) {
-        $args{prepare_request} = $self->prepare_request;
-    }
+
     return $class->new(%args);
 }
 

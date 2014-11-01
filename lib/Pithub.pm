@@ -529,7 +529,7 @@ Provides access to L<Pithub::Events>.
 =cut
 
 sub events {
-    return shift->_create_instance('Pithub::Events');
+    return shift->_create_instance('Pithub::Events', @_);
 }
 
 =method gists
@@ -539,7 +539,7 @@ Provides access to L<Pithub::Gists>.
 =cut
 
 sub gists {
-    return shift->_create_instance('Pithub::Gists');
+    return shift->_create_instance('Pithub::Gists', @_);
 }
 
 =method git_data
@@ -549,7 +549,7 @@ Provides access to L<Pithub::GitData>.
 =cut
 
 sub git_data {
-    return shift->_create_instance('Pithub::GitData');
+    return shift->_create_instance('Pithub::GitData', @_);
 }
 
 =method issues
@@ -559,7 +559,7 @@ Provides access to L<Pithub::Issues>.
 =cut
 
 sub issues {
-    return shift->_create_instance('Pithub::Issues');
+    return shift->_create_instance('Pithub::Issues', @_);
 }
 
 =method orgs
@@ -569,7 +569,7 @@ Provides access to L<Pithub::Orgs>.
 =cut
 
 sub orgs {
-    return shift->_create_instance('Pithub::Orgs');
+    return shift->_create_instance('Pithub::Orgs', @_);
 }
 
 =method pull_requests
@@ -579,7 +579,7 @@ Provides access to L<Pithub::PullRequests>.
 =cut
 
 sub pull_requests {
-    return shift->_create_instance('Pithub::PullRequests');
+    return shift->_create_instance('Pithub::PullRequests', @_);
 }
 
 =method repos
@@ -589,7 +589,7 @@ Provides access to L<Pithub::Repos>.
 =cut
 
 sub repos {
-    return shift->_create_instance('Pithub::Repos');
+    return shift->_create_instance('Pithub::Repos', @_);
 }
 
 =method search
@@ -599,7 +599,7 @@ Provides access to L<Pithub::Search>.
 =cut
 
 sub search {
-    return shift->_create_instance('Pithub::Search');
+    return shift->_create_instance('Pithub::Search', @_);
 }
 
 =method users
@@ -609,7 +609,7 @@ Provides access to L<Pithub::Users>.
 =cut
 
 sub users {
-    return shift->_create_instance('Pithub::Users');
+    return shift->_create_instance('Pithub::Users', @_);
 }
 
 =head1 CONTRIBUTORS

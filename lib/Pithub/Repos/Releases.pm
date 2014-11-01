@@ -14,7 +14,7 @@ Provides access to L<Pithub::Repos::Releases::Assets>.
 =cut
 
 sub assets {
-    return shift->_create_instance('Pithub::Repos::Releases::Assets');
+    return shift->_create_instance('Pithub::Repos::Releases::Assets', @_);
 }
 
 =method list
