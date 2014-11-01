@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Pithub::Test::UA;
 use Test::Most;
 
@@ -342,7 +342,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
 
     isa_ok $p, 'Pithub';
 
@@ -379,7 +379,7 @@ sub validate_tree {
 
 {
     my $json = JSON->new;
-    my $p    = Pithub::Test->create('Pithub');
+    my $p    = Pithub::Test::Factory::Factory->create('Pithub');
     $p->token('123');
     my $request = $p->request( method => 'POST', path => '/foo', data => { some => 'data' } )->request;
     eq_or_diff $json->decode( $request->content ), { some => 'data' }, 'The JSON content was set in the request object';
@@ -391,7 +391,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     $p->ua->add_response('error/notfound.GET');
     my $result = $p->request( method => 'GET', path => '/error/notfound' );
 
@@ -410,7 +410,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     $p->ua->add_response('users/miyagawa/followers.GET');
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
@@ -430,7 +430,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     $p->ua->add_response('users/miyagawa/followers.GET');
     $p->ua->add_response('users/miyagawa/followers.GET.page-3');
     my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(3);
@@ -447,7 +447,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     $p->ua->add_response('users/miyagawa/followers.GET');
     $p->ua->add_response('users/miyagawa/followers.GET.page-26');
     my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(26);
@@ -462,7 +462,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create( 'Pithub', per_page => 1 );
+    my $p = Pithub::Test::Factory::Factory->create( 'Pithub', per_page => 1 );
     $p->ua->add_response('users/miyagawa/followers.GET.per_page-1');
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
@@ -476,7 +476,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     $p->ua->add_response('users/plu.GET');
     my $result = $p->users->get( user => 'plu' );
 
@@ -490,13 +490,13 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create( 'Pithub', jsonp_callback => 'foo' );
+    my $p = Pithub::Test::Factory::Factory->create( 'Pithub', jsonp_callback => 'foo' );
     my $result = $p->request( method => 'GET', path => '/foo' );
     is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     $p->ua->add_response('orgs/CPAN-API/repos.GET');
     my $result = $p->request( method => 'GET', path => '/orgs/CPAN-API/repos' );
 
@@ -516,7 +516,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     $p->ua->add_response('users/plu.GET');
     my $result = $p->request( method => 'GET', path => '/users/plu' );
 
@@ -529,7 +529,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create( 'Pithub', per_page => 15 );
+    my $p = Pithub::Test::Factory::Factory->create( 'Pithub', per_page => 15 );
     $p->ua->add_response('users/plu/followers.GET.per_page-15');
     $p->ua->add_response('users/plu/followers.GET.page-2.per_page-15');
     $p->ua->add_response('users/plu/followers.GET.page-3.per_page-15');
@@ -544,7 +544,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create( 'Pithub', per_page => 15, auto_pagination => 1 );
+    my $p = Pithub::Test::Factory::Factory->create( 'Pithub', per_page => 15, auto_pagination => 1 );
     $p->ua->add_response('users/plu/followers.GET.per_page-15');
     $p->ua->add_response('users/plu/followers.GET.page-2.per_page-15');
     $p->ua->add_response('users/plu/followers.GET.page-3.per_page-15');
@@ -558,7 +558,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create(
+    my $p = Pithub::Test::Factory::Factory->create(
         'Pithub',
         prepare_request => sub {
             my ($request) = @_;
@@ -570,7 +570,7 @@ sub validate_tree {
 }
 
 {
-    my $p      = Pithub::Test->create('Pithub');
+    my $p      = Pithub::Test::Factory::Factory->create('Pithub');
     my $result = $p->users->followers->list(
         user    => 'plu',
         options => {
@@ -584,7 +584,7 @@ sub validate_tree {
 }
 
 {
-    my $p = Pithub::Test->create('Pithub');
+    my $p = Pithub::Test::Factory::Factory->create('Pithub');
     throws_ok {
         $p->users->get( user => 'foo', params => 5 );
     }

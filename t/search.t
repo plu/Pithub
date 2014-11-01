@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 
 BEGIN {
@@ -9,7 +9,7 @@ BEGIN {
 
 # Pithub::Search->email
 {
-    my $obj = Pithub::Test->create('Pithub::Search');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Search');
 
     isa_ok $obj, 'Pithub::Search';
 
@@ -24,7 +24,7 @@ BEGIN {
 
 # Pithub::Search->issues
 {
-    my $obj = Pithub::Test->create( 'Pithub::Search', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Search', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Search';
 
@@ -43,7 +43,7 @@ BEGIN {
 
 # Pithub::Search->repos
 {
-    my $obj = Pithub::Test->create('Pithub::Search');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Search');
 
     isa_ok $obj, 'Pithub::Search';
 
@@ -59,7 +59,7 @@ BEGIN {
 
 # Pithub::Search->users
 {
-    my $obj = Pithub::Test->create('Pithub::Search');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Search');
 
     isa_ok $obj, 'Pithub::Search';
 

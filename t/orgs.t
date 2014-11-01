@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 use MIME::Base64 qw();
 
@@ -13,7 +13,7 @@ BEGIN {
 
 # Pithub::Orgs->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::Orgs', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Orgs', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Orgs';
 
@@ -30,7 +30,7 @@ BEGIN {
 
 # Pithub::Orgs->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Orgs', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Orgs', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Orgs';
 
@@ -77,7 +77,7 @@ BEGIN {
 
 # Pithub::Orgs->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::Orgs', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Orgs', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Orgs';
 
@@ -119,7 +119,7 @@ BEGIN {
 
 # Pithub::Orgs::Members->conceal
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Members');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Members');
 
     isa_ok $obj, 'Pithub::Orgs::Members';
 
@@ -140,7 +140,7 @@ BEGIN {
 
 # Pithub::Orgs::Members->delete
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Members');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Members');
 
     isa_ok $obj, 'Pithub::Orgs::Members';
 
@@ -161,7 +161,7 @@ BEGIN {
 
 # Pithub::Orgs::Members->is_member
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Members');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Members');
 
     isa_ok $obj, 'Pithub::Orgs::Members';
 
@@ -182,7 +182,7 @@ BEGIN {
 
 # Pithub::Orgs::Members->is_public
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Members');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Members');
 
     isa_ok $obj, 'Pithub::Orgs::Members';
 
@@ -202,7 +202,7 @@ BEGIN {
 
 # Pithub::Orgs::Members->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Orgs::Members', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Orgs::Members', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Orgs::Members';
 
@@ -219,7 +219,7 @@ BEGIN {
 
 # Pithub::Orgs::Members->list_public
 {
-    my $obj = Pithub::Test->create( 'Pithub::Orgs::Members', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Orgs::Members', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Orgs::Members';
 
@@ -236,7 +236,7 @@ BEGIN {
 
 # Pithub::Orgs::Members->publicize
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Members');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Members');
 
     isa_ok $obj, 'Pithub::Orgs::Members';
 
@@ -257,7 +257,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->add_member
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -278,7 +278,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->add_repo
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -300,7 +300,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->create
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -330,7 +330,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->delete
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -350,7 +350,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->get
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -370,7 +370,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->has_repo
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -391,7 +391,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->is_member
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -412,7 +412,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->list
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -432,7 +432,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->list_members
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -452,7 +452,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->list_repos
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -472,7 +472,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->remove_member
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -493,7 +493,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->remove_repo
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -514,7 +514,7 @@ BEGIN {
 
 # Pithub::Orgs::Teams->update
 {
-    my $obj = Pithub::Test->create('Pithub::Orgs::Teams');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Orgs::Teams');
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 

@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 
 BEGIN {
@@ -8,7 +8,7 @@ BEGIN {
 }
 
 {
-    my $obj = Pithub::Test->create( 'Pithub::Events', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Events', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Events';
 

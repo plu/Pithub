@@ -1,5 +1,5 @@
 package    # hide from PAUSE
-  Pithub::Test;
+  Pithub::Test::Factory::Factory;
 
 use strict;
 use warnings;

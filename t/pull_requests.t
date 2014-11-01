@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 
 BEGIN {
@@ -11,7 +11,7 @@ BEGIN {
 
 # Pithub::PullRequests->commits
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
 
     throws_ok { $obj->commits } qr{Missing key in parameters: pull_request_id}, 'No parameters';
 
@@ -28,7 +28,7 @@ BEGIN {
 
 # Pithub::PullRequests->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests';
 
@@ -57,7 +57,7 @@ BEGIN {
 
 # Pithub::PullRequests->files
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
 
     throws_ok { $obj->files } qr{Missing key in parameters: pull_request_id}, 'No parameters';
 
@@ -74,7 +74,7 @@ BEGIN {
 
 # Pithub::PullRequests->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
 
     throws_ok { $obj->get } qr{Missing key in parameters: pull_request_id}, 'No parameters';
 
@@ -91,7 +91,7 @@ BEGIN {
 
 # Pithub::PullRequests->is_merged
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
 
     throws_ok { $obj->is_merged } qr{Missing key in parameters: pull_request_id}, 'No parameters';
 
@@ -108,7 +108,7 @@ BEGIN {
 
 # Pithub::PullRequests->merge
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests';
 
@@ -128,7 +128,7 @@ BEGIN {
 
 # Pithub::PullRequests->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests';
 
@@ -159,7 +159,7 @@ BEGIN {
 
 # Pithub::PullRequests::Comments->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests::Comments';
 
@@ -185,7 +185,7 @@ BEGIN {
 
 # Pithub::PullRequests::Comments->delete
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests::Comments';
 
@@ -205,7 +205,7 @@ BEGIN {
 
 # Pithub::PullRequests::Comments->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests::Comments';
 
@@ -222,7 +222,7 @@ BEGIN {
 
 # Pithub::PullRequests::Comments->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests::Comments';
 
@@ -239,7 +239,7 @@ BEGIN {
 
 # Pithub::PullRequests::Comments->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::PullRequests::Comments';
 

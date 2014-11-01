@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 
 BEGIN {
@@ -15,7 +15,7 @@ BEGIN {
 
 # Pithub::Issues->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues';
 
@@ -53,7 +53,7 @@ BEGIN {
 
 # Pithub::Issues->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues';
 
@@ -71,7 +71,7 @@ BEGIN {
 # Pithub::Issues->list
 {
     {
-        my $obj = Pithub::Test->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
+        my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
         isa_ok $obj, 'Pithub::Issues';
         my $result = $obj->list;
         is $result->request->method, 'GET', 'HTTP method';
@@ -82,7 +82,7 @@ BEGIN {
     }
 
     {
-        my $obj = Pithub::Test->create('Pithub::Issues');
+        my $obj = Pithub::Test::Factory::Factory->create('Pithub::Issues');
         isa_ok $obj, 'Pithub::Issues';
         throws_ok { $obj->list; } qr{Access token required for: GET /issues}, 'Token required';
         ok $obj->token(123), 'Token set';
@@ -96,7 +96,7 @@ BEGIN {
 
 # Pithub::Issues->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues';
 
@@ -138,7 +138,7 @@ BEGIN {
 
 # Pithub::Issues::Assignees->check
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Assignees', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Assignees', user => 'foo', repo => 'bar' );
 
     throws_ok { $obj->check } qr{Missing key in parameters: assignee}, 'No parameters';
 
@@ -155,7 +155,7 @@ BEGIN {
 
 # Pithub::Issues::Assignees->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Assignees', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Assignees', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Assignees';
 
@@ -170,7 +170,7 @@ BEGIN {
 
 # Pithub::Issues::Comments->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Comments';
 
@@ -197,7 +197,7 @@ BEGIN {
 
 # Pithub::Issues::Comments->delete
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Comments';
 
@@ -217,7 +217,7 @@ BEGIN {
 
 # Pithub::Issues::Comments->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Comments';
 
@@ -234,7 +234,7 @@ BEGIN {
 
 # Pithub::Issues::Comments->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Comments';
 
@@ -251,7 +251,7 @@ BEGIN {
 
 # Pithub::Issues::Comments->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Comments', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Comments';
 
@@ -277,7 +277,7 @@ BEGIN {
 
 # Pithub::Issues::Events->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Events', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Events', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Events';
 
@@ -294,7 +294,7 @@ BEGIN {
 
 # Pithub::Issues::Events->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Events', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Events', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Events';
 
@@ -317,7 +317,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->add
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -345,7 +345,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -372,7 +372,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->delete
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -392,7 +392,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -409,7 +409,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -440,7 +440,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->remove
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -470,7 +470,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->replace
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -498,7 +498,7 @@ BEGIN {
 
 # Pithub::Issues::Labels->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Labels', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Labels';
 
@@ -526,7 +526,7 @@ BEGIN {
 
 # Pithub::Issues::Milestones->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Milestones';
 
@@ -556,7 +556,7 @@ BEGIN {
 
 # Pithub::Issues::Milestones->delete
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Milestones';
 
@@ -576,7 +576,7 @@ BEGIN {
 
 # Pithub::Issues::Milestones->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Milestones';
 
@@ -593,7 +593,7 @@ BEGIN {
 
 # Pithub::Issues::Milestones->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Milestones';
 
@@ -608,7 +608,7 @@ BEGIN {
 
 # Pithub::Issues::Milestones->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Issues::Milestones', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Issues::Milestones';
 

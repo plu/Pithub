@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 
 BEGIN {
@@ -12,7 +12,7 @@ BEGIN {
 # Pithub::Gists->create
 {
     my $json = JSON->new;
-    my $obj  = Pithub::Test->create('Pithub::Gists');
+    my $obj  = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -37,7 +37,7 @@ BEGIN {
 
 # Pithub::Gists->delete
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -57,7 +57,7 @@ BEGIN {
 
 # Pithub::Gists->fork
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -74,7 +74,7 @@ BEGIN {
 
 # Pithub::Gists->get
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -91,7 +91,7 @@ BEGIN {
 
 # Pithub::Gists->is_starred
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -111,7 +111,7 @@ BEGIN {
 
 # Pithub::Gists->list
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -153,7 +153,7 @@ BEGIN {
 
 # Pithub::Gists->star
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -173,7 +173,7 @@ BEGIN {
 
 # Pithub::Gists->unstar
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -193,7 +193,7 @@ BEGIN {
 
 # Pithub::Gists->update
 {
-    my $obj = Pithub::Test->create('Pithub::Gists');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists');
 
     isa_ok $obj, 'Pithub::Gists';
 
@@ -224,7 +224,7 @@ BEGIN {
 
 # Pithub::Gists::Comments->create
 {
-    my $obj = Pithub::Test->create('Pithub::Gists::Comments');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists::Comments');
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 
@@ -247,7 +247,7 @@ BEGIN {
 
 # Pithub::Gists::Comments->delete
 {
-    my $obj = Pithub::Test->create('Pithub::Gists::Comments');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists::Comments');
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 
@@ -267,7 +267,7 @@ BEGIN {
 
 # Pithub::Gists::Comments->get
 {
-    my $obj = Pithub::Test->create('Pithub::Gists::Comments');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists::Comments');
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 
@@ -284,7 +284,7 @@ BEGIN {
 
 # Pithub::Gists::Comments->list
 {
-    my $obj = Pithub::Test->create('Pithub::Gists::Comments');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists::Comments');
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 
@@ -301,7 +301,7 @@ BEGIN {
 
 # Pithub::Gists::Comments->update
 {
-    my $obj = Pithub::Test->create('Pithub::Gists::Comments');
+    my $obj = Pithub::Test::Factory::Factory->create('Pithub::Gists::Comments');
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 

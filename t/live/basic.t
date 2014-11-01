@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/../lib";
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 
 BEGIN {

@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
-use Pithub::Test;
+use Pithub::Test::Factory;
 use Test::Most;
 
 BEGIN {
@@ -15,7 +15,7 @@ BEGIN {
 # Pithub::GitData::Blobs->create
 {
     my $json = JSON->new;
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Blobs', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Blobs', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Blobs';
 
@@ -41,7 +41,7 @@ BEGIN {
 
 # Pithub::GitData::Blobs->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Blobs', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Blobs', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Blobs';
 
@@ -58,7 +58,7 @@ BEGIN {
 
 # Pithub::GitData::Commits->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Commits', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Commits', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Commits';
 
@@ -80,7 +80,7 @@ BEGIN {
 
 # Pithub::GitData::Commits->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Commits', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Commits', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Commits';
 
@@ -97,7 +97,7 @@ BEGIN {
 
 # Pithub::GitData::References->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::References';
 
@@ -114,7 +114,7 @@ BEGIN {
 
 # Pithub::GitData::References->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::References';
 
@@ -136,7 +136,7 @@ BEGIN {
 
 # Pithub::GitData::References->list
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::References';
 
@@ -159,7 +159,7 @@ BEGIN {
 
 # Pithub::GitData::References->update
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::References', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::References';
 
@@ -182,7 +182,7 @@ BEGIN {
 
 # Pithub::GitData::Tags->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Tags', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Tags', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Tags';
 
@@ -199,7 +199,7 @@ BEGIN {
 
 # Pithub::GitData::Tags->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Tags', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Tags', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Tags';
 
@@ -229,7 +229,7 @@ BEGIN {
 
 # Pithub::GitData::Trees->get
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Trees', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Trees', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Trees';
 
@@ -255,7 +255,7 @@ BEGIN {
 
 # Pithub::GitData::Trees->create
 {
-    my $obj = Pithub::Test->create( 'Pithub::GitData::Trees', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::GitData::Trees', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::GitData::Trees';
 
