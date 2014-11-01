@@ -119,6 +119,10 @@ SKIP: {
             user => $user,
         )->count, 1, 'Pithub::Orgs::Members->list one member';
 
+        foreach my $team (@{ $p->orgs->teams->list( org => $org )->content }) {
+            $p->orgs->teams->delete( team_id => $team->{id} );
+        }
+
         # Pithub::Orgs::Teams->create
         my $team_id = $p->orgs->teams->create(
             org  => $org,
@@ -128,7 +132,7 @@ SKIP: {
 
         # Pithub::Orgs::Teams->list
         my @teams = splice @{ $p->orgs->teams->list( org => $org )->content }, 0, 2;
-        eq_or_diff [ map { $_->{name} } @teams ], [qw(Core Owners)], 'Pithub::Orgs::Teams->list after create';
+        eq_or_diff [ sort map { $_->{name} } @teams ], [sort qw(Core Owners)], 'Pithub::Orgs::Teams->list after create';
 
         # Pithub::Orgs::Teams->update
         ok $p->orgs->teams->update(
@@ -181,7 +185,8 @@ SKIP: {
         # Pithub::Orgs::Teams->add_repo
         ok $p->orgs->teams->add_repo(
             team_id => $team_id,
-            repo    => "${org}/${org_repo}",
+            org     => $org,
+            repo    => $org_repo,
         )->success, 'Pithub::Orgs::Teams->add_repo successful';
 
         # Pithub::Orgs::Teams->has_repo
