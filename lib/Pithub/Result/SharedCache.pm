@@ -1,5 +1,7 @@
 package Pithub::Result::SharedCache;
 
+# ABSTRACT: A role to share the LRU cache with all Pithub objects
+
 use Moo::Role;
 use Cache::LRU;
 
