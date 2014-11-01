@@ -159,6 +159,24 @@ sub create {
     }
 }
 
+=method delete
+
+Delete a repository.
+
+    DELETE /repos/:owner/:repo
+
+=cut
+
+sub delete {
+    my( $self, %args ) = @_;
+    $self->_validate_user_repo_args( \%args );
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
+}
+
 =method downloads
 
 Provides access to L<Pithub::Repos::Downloads>.
