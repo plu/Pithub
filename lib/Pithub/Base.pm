@@ -388,7 +388,7 @@ my @TOKEN_REQUIRED = (
 
 my @TOKEN_REQUIRED_REGEXP = (
     qr{^DELETE /gists/.*?$},
-    qr{^DELETE /gists/comments/.*?$},
+    qr{^DELETE /gists/[^/]+/comments/.*?$},
     qr{^DELETE /gists/[^/]+/star$},
     qr{^DELETE /orgs/[^/]+/members/.*?$},
     qr{^DELETE /orgs/[^/]+/public_members/.*?},
@@ -436,7 +436,7 @@ my @TOKEN_REQUIRED_REGEXP = (
     qr{^GET /user/watched/[^/]+/.*?$},
     qr{^GET /users/[^/]+/events/orgs/.*?$},
     qr{^PATCH /gists/.*?$},
-    qr{^PATCH /gists/comments/.*?$},
+    qr{^PATCH /gists/[^/]+/comments/.*?$},
     qr{^PATCH /orgs/.*?$},
     qr{^PATCH /repos/[^/]+/.*?$},
     qr{^PATCH /repos/[^/]+/[^/]+/comments/.*?$},

@@ -229,17 +229,17 @@ BEGIN {
     isa_ok $obj, 'Pithub::Gists::Comments';
 
     throws_ok { $obj->create } qr{Missing key in parameters: gist_id}, 'No parameters';
-    throws_ok { $obj->create( gist_id => 123 ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
-    throws_ok { $obj->create( gist_id => 123, data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
-    throws_ok { $obj->create( gist_id => 123, data => { body => 'bar' } ); } qr{Access token required for: POST /gists/123/comments}, 'Token required';
+    throws_ok { $obj->create( gist_id => 'c0ff33' ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok { $obj->create( gist_id => 'c0ff33', data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok { $obj->create( gist_id => 'c0ff33', data => { body => 'bar' } ); } qr{Access token required for: POST /gists/c0ff33/comments}, 'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
         my $json = JSON->new;
-        my $result = $obj->create( gist_id => 123, data => { body => 'some comment' } );
+        my $result = $obj->create( gist_id => 'c0ff33', data => { body => 'some comment' } );
         is $result->request->method, 'POST', 'HTTP method';
-        is $result->request->uri->path, '/gists/123/comments', 'HTTP path';
+        is $result->request->uri->path, '/gists/c0ff33/comments', 'HTTP path';
         my $http_request = $result->request;
         eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }
@@ -251,15 +251,16 @@ BEGIN {
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 
-    throws_ok { $obj->delete } qr{Missing key in parameters: comment_id}, 'No parameters';
-    throws_ok { $obj->delete( comment_id => 123 ); } qr{Access token required for: DELETE /gists/comments/123}, 'Token required';
+    throws_ok { $obj->delete } qr{Missing key in parameters: gist_id}, 'No parameters';
+    throws_ok { $obj->delete( gist_id => 'c0ff33' ) } qr{Missing key in parameters: comment_id}, 'No parameters';
+    throws_ok { $obj->delete( gist_id => 'c0ff33', comment_id => 123 ); } qr{Access token required for: DELETE /gists/c0ff33/comments/123}, 'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
-        my $result = $obj->delete( comment_id => 123 );
+        my $result = $obj->delete( gist_id => 'c0ff33', comment_id => 123 );
         is $result->request->method, 'DELETE', 'HTTP method';
-        is $result->request->uri->path, '/gists/comments/123', 'HTTP path';
+        is $result->request->uri->path, '/gists/c0ff33/comments/123', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
@@ -271,12 +272,13 @@ BEGIN {
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 
-    throws_ok { $obj->get } qr{Missing key in parameters: comment_id}, 'No parameters';
+    throws_ok { $obj->get } qr{Missing key in parameters: gist_id}, 'No parameters';
+    throws_ok { $obj->get( gist_id => 'c0ff33' ) } qr{Missing key in parameters: comment_id}, 'No parameters';
 
     {
-        my $result = $obj->get( comment_id => 123 );
+        my $result = $obj->get( gist_id => 'c0ff33', comment_id => 123 );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/gists/comments/123', 'HTTP path';
+        is $result->request->uri->path, '/gists/c0ff33/comments/123', 'HTTP path';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }
@@ -305,18 +307,19 @@ BEGIN {
 
     isa_ok $obj, 'Pithub::Gists::Comments';
 
-    throws_ok { $obj->update } qr{Missing key in parameters: comment_id}, 'No parameters';
-    throws_ok { $obj->update( comment_id => 123 ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
-    throws_ok { $obj->update( comment_id => 123, data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
-    throws_ok { $obj->update( comment_id => 123, data => { body => 'bar' } ); } qr{Access token required for: PATCH /gists/comments/123}, 'Token required';
+    throws_ok { $obj->update } qr{Missing key in parameters: gist_id}, 'No parameters';
+    throws_ok { $obj->update( gist_id => 'c0ff33' ) } qr{Missing key in parameters: comment_id}, 'No parameters';
+    throws_ok { $obj->update( gist_id => 'c0ff33', comment_id => 123 ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok { $obj->update( gist_id => 'c0ff33', comment_id => 123, data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok { $obj->update( gist_id => 'c0ff33', comment_id => 123, data => { body => 'bar' } ); } qr{Access token required for: PATCH /gists/c0ff33/comments/123}, 'Token required';
 
     ok $obj->token(123), 'Token set';
 
     {
         my $json = JSON->new;
-        my $result = $obj->update( comment_id => 123, data => { body => 'some comment' } );
+        my $result = $obj->update( gist_id => 'c0ff33', comment_id => 123, data => { body => 'some comment' } );
         is $result->request->method, 'PATCH', 'HTTP method';
-        is $result->request->uri->path, '/gists/comments/123', 'HTTP path';
+        is $result->request->uri->path, '/gists/c0ff33/comments/123', 'HTTP path';
         my $http_request = $result->request;
         eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
     }

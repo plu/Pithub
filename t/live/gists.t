@@ -100,21 +100,21 @@ SKIP: {
         like $comment_id, qr{^\d+$}, 'Pithub::Gists::Comments->create returned a comment id';
 
         # Pithub::Gists::Comments->get
-        is $p->gists->comments->get( comment_id => $comment_id )->content->{body}, 'some gist comment', 'Pithub::Gists::Comments->get body';
+        is $p->gists->comments->get( gist_id => $gist_id, comment_id => $comment_id )->content->{body}, 'some gist comment', 'Pithub::Gists::Comments->get body';
 
         # Pithub::Gists::Comments->update
-        ok $p->gists->comments->update( comment_id => $comment_id, data => { body => 'some UPDATED gist comment' } )->success,
+        ok $p->gists->comments->update( gist_id => $gist_id, comment_id => $comment_id, data => { body => 'some UPDATED gist comment' } )->success,
           'Pithub::Gists::Comments->update successful';
 
         # Pithub::Gists::Comments->get
-        is $p->gists->comments->get( comment_id => $comment_id )->content->{body}, 'some UPDATED gist comment',
+        is $p->gists->comments->get( gist_id => $gist_id, comment_id => $comment_id )->content->{body}, 'some UPDATED gist comment',
           'Pithub::Gists::Comments->get body after update';
 
         # Pithub::Gists::Comments->delete
-        ok $p->gists->comments->delete( comment_id => $comment_id )->success, 'Pithub::Gists::Comments->delete successful';
+        ok $p->gists->comments->delete( gist_id => $gist_id, comment_id => $comment_id )->success, 'Pithub::Gists::Comments->delete successful';
 
         # Pithub::Gists::Comments->get
-        ok !$p->gists->comments->get( comment_id => $comment_id )->success, 'Pithub::Gists::Comments->get not successful after delete';
+        ok !$p->gists->comments->get( gist_id => $gist_id, comment_id => $comment_id )->success, 'Pithub::Gists::Comments->get not successful after delete';
 
         # Pithub::Gists->delete
         ok $p->gists->delete( gist_id => $gist_id )->success, 'Pithub::Gists->delete successful';
