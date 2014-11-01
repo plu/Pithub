@@ -246,7 +246,7 @@ BEGIN {
     {
         my $result = $obj->get( sha => 456, recursive => 1 );
         is $result->request->method, 'GET', 'HTTP method';
-        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/git/trees/456?recursive=1&per_page=30';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/git/trees/456?recursive=1&per_page=100';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }

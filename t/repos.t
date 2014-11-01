@@ -340,13 +340,13 @@ BEGIN {
     {
         my $result = $obj->get( params => { ref => 'bla' } );
         is $result->request->method, 'GET', 'HTTP method';
-        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/contents?ref=bla&per_page=30';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/contents?ref=bla&per_page=100';
     }
 
     {
         my $result = $obj->get( path => 'bla/fasel/file.pm', params => { ref => 'bla' } );
         is $result->request->method, 'GET', 'HTTP method';
-        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/contents/bla/fasel/file.pm?ref=bla&per_page=30';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/contents/bla/fasel/file.pm?ref=bla&per_page=100';
     }
 }
 
@@ -359,7 +359,7 @@ BEGIN {
     {
         my $result = $obj->readme( params => { ref => 'bla' } );
         is $result->request->method, 'GET', 'HTTP method';
-        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/readme?ref=bla&per_page=30';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/readme?ref=bla&per_page=100';
     }
 }
 
