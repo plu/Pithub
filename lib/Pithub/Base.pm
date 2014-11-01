@@ -11,6 +11,8 @@ use LWP::UserAgent;
 use Pithub::Result;
 use URI;
 
+with 'Pithub::Result::SharedCache';
+
 =head1 DESCRIPTION
 
 All L<Pithub> L<modules|Pithub/MODULES> inherit from
@@ -673,7 +675,8 @@ sub request {
         my %query = ( $request->uri->query_form, %$params );
         $request->uri->query_form(%query);
     }
-    my $response = $self->ua->request($request);
+
+    my $response = $self->_make_request($request);
 
     return Pithub::Result->new(
         auto_pagination => $self->auto_pagination,
@@ -681,6 +684,31 @@ sub request {
         _request        => sub { $self->request(@_) },
     );
 }
+
+
+sub _make_request {
+    my($self, $request) = @_;
+
+    if( my $cached_response = $self->shared_cache->get($request->uri) ) {
+        # Add the If-None-Match header from the cache's ETag
+        # and make the request
+        $request->header( "If-None-Match" => $cached_response->header("ETag") );
+        my $response = $self->ua->request($request);
+
+        # Got 304 Not Modified, cache is still valid
+        return $cached_response if ($response->code || 0) == 304;
+
+        # The response changed, cache it and return it.
+        $self->shared_cache->set( $request->uri, $response );
+        return $response;
+    }
+    else {
+        my $response = $self->ua->request($request);
+        $self->shared_cache->set( $request->uri, $response );
+        return $response;
+    }
+}
+
 
 =method has_token (?$request)
 
