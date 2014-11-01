@@ -14,6 +14,7 @@ BEGIN {
 # Pithub::Users->get
 {
     my $obj = Pithub::Test->create('Pithub::Users');
+    $obj->ua->add_response('users/plu.GET');
 
     isa_ok $obj, 'Pithub::Users';
 
@@ -167,6 +168,7 @@ BEGIN {
 # Pithub::Users::Followers->is_following
 {
     my $obj = Pithub::Test->create('Pithub::Users::Followers');
+    $obj->ua->add_response('user/following/rafl.GET');
 
     isa_ok $obj, 'Pithub::Users::Followers';
 

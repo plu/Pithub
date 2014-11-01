@@ -392,6 +392,7 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create('Pithub');
+    $p->ua->add_response('error/notfound.GET');
     my $result = $p->request( method => 'GET', path => '/error/notfound' );
 
     is $result->code,    404, 'HTTP status is 404';
@@ -410,6 +411,7 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create('Pithub');
+    $p->ua->add_response('users/miyagawa/followers.GET');
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
     is $result->count,          30,                                                        'Count accessor';
@@ -429,6 +431,8 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create('Pithub');
+    $p->ua->add_response('users/miyagawa/followers.GET');
+    $p->ua->add_response('users/miyagawa/followers.GET.page-3');
     my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(3);
 
     is $result->first_page_uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page link on third page';
@@ -444,6 +448,8 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create('Pithub');
+    $p->ua->add_response('users/miyagawa/followers.GET');
+    $p->ua->add_response('users/miyagawa/followers.GET.page-26');
     my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(26);
 
     is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
@@ -457,6 +463,7 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create( 'Pithub', per_page => 1 );
+    $p->ua->add_response('users/miyagawa/followers.GET.per_page-1');
     my $result = $p->users->followers->list( user => 'miyagawa' );
 
     eq_or_diff { $result->next_page->request->uri->query_form }, { page => 2,   per_page => 1 }, 'Next page call';
@@ -470,6 +477,7 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create('Pithub');
+    $p->ua->add_response('users/plu.GET');
     my $result = $p->users->get( user => 'plu' );
 
     is $result->first_page, undef, 'First page call';
@@ -489,6 +497,7 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create('Pithub');
+    $p->ua->add_response('orgs/CPAN-API/repos.GET');
     my $result = $p->request( method => 'GET', path => '/orgs/CPAN-API/repos' );
 
     my @expectations = (
@@ -508,6 +517,7 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create('Pithub');
+    $p->ua->add_response('users/plu.GET');
     my $result = $p->request( method => 'GET', path => '/users/plu' );
 
     my $row = $result->next;
@@ -520,6 +530,10 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create( 'Pithub', per_page => 15 );
+    $p->ua->add_response('users/plu/followers.GET.per_page-15');
+    $p->ua->add_response('users/plu/followers.GET.page-2.per_page-15');
+    $p->ua->add_response('users/plu/followers.GET.page-3.per_page-15');
+    $p->ua->add_response('users/plu/followers.GET.page-4.per_page-15');
     my $result = $p->users->followers->list( user => 'plu' );
     $result->auto_pagination(1);
     my @followers = ();
@@ -531,6 +545,10 @@ sub validate_tree {
 
 {
     my $p = Pithub::Test->create( 'Pithub', per_page => 15, auto_pagination => 1 );
+    $p->ua->add_response('users/plu/followers.GET.per_page-15');
+    $p->ua->add_response('users/plu/followers.GET.page-2.per_page-15');
+    $p->ua->add_response('users/plu/followers.GET.page-3.per_page-15');
+    $p->ua->add_response('users/plu/followers.GET.page-4.per_page-15');
     my $result = $p->users->followers->list( user => 'plu' );
     my @followers = ();
     while ( my $row = $result->next ) {

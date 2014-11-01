@@ -69,6 +69,8 @@ BEGIN {
 # Pithub::Repos->list
 {
     my $obj = Pithub::Test->create('Pithub::Repos');
+    $obj->ua->add_response('users/plu/repos.GET');
+    $obj->ua->add_response('orgs/CPAN-API/repos.GET');
 
     isa_ok $obj, 'Pithub::Repos';
 
@@ -427,6 +429,7 @@ BEGIN {
 # Pithub::Repos::Downloads->upload
 {
     my $obj = Pithub::Test->create( 'Pithub::Repos::Downloads', user => 'foo', repo => 'bar' );
+    $obj->ua->add_response('repos/foo/bar/downloads.POST');
 
     isa_ok $obj, 'Pithub::Repos::Downloads';
 
