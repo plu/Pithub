@@ -107,7 +107,7 @@ my @tests = (
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->pull_requests->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->pull_requests->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/pulls',
     tests => \@tests,
@@ -116,7 +116,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::PullRequests', %$c_args )->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::PullRequests', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/pulls',
     tests => \@tests,
@@ -125,7 +125,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->collaborators->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->collaborators->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/collaborators',
     tests => \@tests,
@@ -134,7 +134,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->collaborators->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->collaborators->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/collaborators',
     tests => \@tests,
@@ -143,7 +143,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos::Collaborators', %$c_args )->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos::Collaborators', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/collaborators',
     tests => \@tests,
@@ -152,7 +152,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->commits->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->commits->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/commits',
     tests => \@tests,
@@ -161,7 +161,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->commits->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->commits->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/commits',
     tests => \@tests,
@@ -170,7 +170,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos::Commits', %$c_args )->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos::Commits', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/commits',
     tests => \@tests,
@@ -179,7 +179,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->downloads->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->downloads->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/downloads',
     tests => \@tests,
@@ -188,7 +188,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->downloads->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->downloads->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/downloads',
     tests => \@tests,
@@ -197,7 +197,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos::Downloads', %$c_args )->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos::Downloads', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/downloads',
     tests => \@tests,
@@ -206,7 +206,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->forks->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->forks->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/forks',
     tests => \@tests,
@@ -215,7 +215,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->forks->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->forks->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/forks',
     tests => \@tests,
@@ -224,7 +224,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos::Forks', %$c_args )->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos::Forks', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/forks',
     tests => \@tests,
@@ -233,7 +233,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->keys->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->keys->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/keys',
     tests => \@tests,
@@ -242,7 +242,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->keys->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->keys->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/keys',
     tests => \@tests,
@@ -251,7 +251,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos::Keys', %$c_args )->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos::Keys', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/keys',
     tests => \@tests,
@@ -260,7 +260,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->watching->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->watching->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/watchers',
     tests => \@tests,
@@ -269,7 +269,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->watching->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->watching->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/watchers',
     tests => \@tests,
@@ -278,7 +278,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos::Watching', %$c_args )->list(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos::Watching', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/watchers',
     tests => \@tests,
@@ -287,7 +287,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->branches(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->branches(%$m_args);
     },
     path  => '/repos/plu/Pithub/branches',
     tests => \@tests,
@@ -296,7 +296,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->branches(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->branches(%$m_args);
     },
     path  => '/repos/plu/Pithub/branches',
     tests => \@tests,
@@ -305,7 +305,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->contributors(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->contributors(%$m_args);
     },
     path  => '/repos/plu/Pithub/contributors',
     tests => \@tests,
@@ -314,7 +314,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->contributors(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->contributors(%$m_args);
     },
     path  => '/repos/plu/Pithub/contributors',
     tests => \@tests,
@@ -323,7 +323,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->languages(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->languages(%$m_args);
     },
     path  => '/repos/plu/Pithub/languages',
     tests => \@tests,
@@ -332,7 +332,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->languages(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->languages(%$m_args);
     },
     path  => '/repos/plu/Pithub/languages',
     tests => \@tests,
@@ -341,7 +341,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->tags(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->tags(%$m_args);
     },
     path  => '/repos/plu/Pithub/tags',
     tests => \@tests,
@@ -350,7 +350,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->tags(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->tags(%$m_args);
     },
     path  => '/repos/plu/Pithub/tags',
     tests => \@tests,
@@ -359,7 +359,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub', %$c_args )->repos->teams(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->teams(%$m_args);
     },
     path  => '/repos/plu/Pithub/teams',
     tests => \@tests,
@@ -368,7 +368,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory::Factory->create( 'Pithub::Repos', %$c_args )->teams(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->teams(%$m_args);
     },
     path  => '/repos/plu/Pithub/teams',
     tests => \@tests,

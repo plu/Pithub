@@ -8,7 +8,7 @@ BEGIN {
 }
 
 {
-    my $obj = Pithub::Test::Factory::Factory->create( 'Pithub::Events', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory->create( 'Pithub::Events', user => 'foo', repo => 'bar' );
 
     isa_ok $obj, 'Pithub::Events';
 

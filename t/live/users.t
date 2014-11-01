@@ -29,10 +29,10 @@ SKIP: {
 SKIP: {
     skip 'PITHUB_TEST_TOKEN required to run this test - DO NOT DO THIS UNLESS YOU KNOW WHAT YOU ARE DOING', 1 unless $ENV{PITHUB_TEST_TOKEN};
 
-    my $org      = Pithub::Test::Factory::Factory->test_account->{org};
-    my $org_repo = Pithub::Test::Factory::Factory->test_account->{org_repo};
-    my $repo     = Pithub::Test::Factory::Factory->test_account->{repo};
-    my $user     = Pithub::Test::Factory::Factory->test_account->{user};
+    my $org      = Pithub::Test::Factory->test_account->{org};
+    my $org_repo = Pithub::Test::Factory->test_account->{org_repo};
+    my $repo     = Pithub::Test::Factory->test_account->{repo};
+    my $user     = Pithub::Test::Factory->test_account->{user};
     my $p        = Pithub->new(
         user  => $user,
         repo  => $repo,
