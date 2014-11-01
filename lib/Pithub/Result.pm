@@ -372,6 +372,17 @@ sub prev_page {
     return $self->_paginate( $self->prev_page_uri );
 }
 
+=method etag
+
+Returns the value of the C<< ETag >> http header.
+
+=cut
+
+sub etag {
+    my ($self) = @_;
+    return $self->response->header('ETag');
+}
+
 =method ratelimit
 
 Returns the value of the C<< X-Ratelimit-Limit >> http header.
