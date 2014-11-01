@@ -193,6 +193,7 @@ has 'per_page' => (
     clearer   => 'clear_per_page',
     is        => 'rw',
     predicate => 'has_per_page',
+    default   => 30,
     required  => 0,
 );
 

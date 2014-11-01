@@ -3,7 +3,7 @@ use lib "$FindBin::Bin/lib";
 use JSON;
 use Pithub::Test::Factory;
 use Pithub::Test::UA;
-use Test::Most;
+use Pithub::Test;
 
 BEGIN {
     use_ok('Pithub');
@@ -422,10 +422,10 @@ sub validate_tree {
 
     is $result->first_page, undef, 'We are on first page already';
     is $result->prev_page,  undef, 'No prev page on the first page';
-    is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2',  'Next page call';
-    is $result->last_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=26', 'Last page call';
+    uri_is $result->next_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=2&per_page=30',  'Next page call';
+    uri_is $result->last_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=26&per_page=30', 'Last page call';
 
-    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42',
+    uri_is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42&per_page=30',
       'URI for get_page is generated, no matter if it exists or not';
 }
 
@@ -440,10 +440,10 @@ sub validate_tree {
     is $result->next_page_uri,  'https://api.github.com/users/miyagawa/followers?page=4',  'Next page link no third page';
     is $result->last_page_uri,  'https://api.github.com/users/miyagawa/followers?page=26', 'Last page link no third page';
 
-    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
-    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=2',  'Prev page call';
-    is $result->next_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=4',  'Next page call';
-    is $result->last_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=26', 'Last page call';
+    uri_is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1&per_page=30',  'First page call';
+    uri_is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=2&per_page=30',  'Prev page call';
+    uri_is $result->next_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=4&per_page=30',  'Next page call';
+    uri_is $result->last_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=26&per_page=30', 'Last page call';
 }
 
 {
@@ -452,12 +452,12 @@ sub validate_tree {
     $p->ua->add_response('users/miyagawa/followers.GET.page-26');
     my $result = $p->users->followers->list( user => 'miyagawa' )->get_page(26);
 
-    is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1',  'First page call';
-    is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=25', 'Prev page call';
+    uri_is $result->first_page->request->uri, 'https://api.github.com/users/miyagawa/followers?page=1&per_page=30',  'First page call';
+    uri_is $result->prev_page->request->uri,  'https://api.github.com/users/miyagawa/followers?page=25&per_page=30', 'Prev page call';
     is $result->next_page, undef, 'No next page on the last page';
     is $result->last_page, undef, 'We are on last page already';
 
-    is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42',
+    uri_is $result->get_page(42)->request->uri, 'https://api.github.com/users/miyagawa/followers?page=42&per_page=30',
       'URI for get_page is generated, no matter if it exists or not';
 }
 
@@ -492,7 +492,7 @@ sub validate_tree {
 {
     my $p = Pithub::Test::Factory->create( 'Pithub', jsonp_callback => 'foo' );
     my $result = $p->request( method => 'GET', path => '/foo' );
-    is $result->request->uri->query, 'callback=foo', 'The callback parameter was set';
+    eq_or_diff {$result->request->uri->query_form}, { callback => 'foo', per_page => 30 }, 'The callback parameter was set';
 }
 
 {
@@ -592,7 +592,7 @@ sub validate_tree {
 
     my $result = $p->users->get( user => 'foo', params => { direction => 'asc' } );
     my %query = $result->request->uri->query_form;
-    eq_or_diff \%query, { direction => 'asc' }, 'The params were set';
+    eq_or_diff \%query, { direction => 'asc', per_page => 30 }, 'The params were set';
 }
 
 done_testing;

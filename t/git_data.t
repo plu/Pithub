@@ -2,7 +2,7 @@ use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
 use Pithub::Test::Factory;
-use Test::Most;
+use Pithub::Test;
 
 BEGIN {
     use_ok('Pithub::GitData::Blobs');
@@ -246,8 +246,7 @@ BEGIN {
     {
         my $result = $obj->get( sha => 456, recursive => 1 );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/git/trees/456', 'HTTP path';
-        is $result->request->uri->query, 'recursive=1', 'HTTP GET parameters';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/git/trees/456?recursive=1&per_page=30';
         my $http_request = $result->request;
         is $http_request->content, '', 'HTTP body';
     }

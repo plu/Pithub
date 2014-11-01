@@ -2,7 +2,7 @@ use FindBin;
 use lib "$FindBin::Bin/lib";
 use JSON;
 use Pithub::Test::Factory;
-use Test::Most;
+use Pithub::Test;
 
 BEGIN {
     use_ok('Pithub::Repos');
@@ -340,15 +340,13 @@ BEGIN {
     {
         my $result = $obj->get( params => { ref => 'bla' } );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/contents', 'HTTP path';
-        is $result->request->uri->query, 'ref=bla', 'HTTP query params';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/contents?ref=bla&per_page=30';
     }
 
     {
         my $result = $obj->get( path => 'bla/fasel/file.pm', params => { ref => 'bla' } );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/contents/bla/fasel/file.pm', 'HTTP path';
-        is $result->request->uri->query, 'ref=bla', 'HTTP query params';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/contents/bla/fasel/file.pm?ref=bla&per_page=30';
     }
 }
 
@@ -361,8 +359,7 @@ BEGIN {
     {
         my $result = $obj->readme( params => { ref => 'bla' } );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/readme', 'HTTP path';
-        is $result->request->uri->query, 'ref=bla', 'HTTP query params';
+        uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/readme?ref=bla&per_page=30';
     }
 }
 
