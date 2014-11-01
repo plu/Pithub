@@ -242,15 +242,6 @@ SKIP: {
         # Pithub::Repos::Keys->list
         is $p->repos->keys->list->first->{title}, 'someone@somewhere', 'Pithub::Repos::Keys->list title attribute';
 
-        # Pithub::Repos::Keys->update
-        ok $p->repos->keys->update(
-            key_id => $key_id,
-            data   => { title => 'someone@somewhereelse' }
-        )->success, 'Pithub::Repos::Keys->update successful';
-
-        # Pithub::Repos::Keys->get
-        is $p->repos->keys->get( key_id => $key_id )->content->{title}, 'someone@somewhereelse', 'Pithub::Repos::Keys->get title attribute after update';
-
         # Pithub::Repos::Keys->delete
         ok $p->repos->keys->delete( key_id => $key_id )->success, 'Pithub::Repos::Keys->delete successful';
 

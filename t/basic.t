@@ -159,7 +159,7 @@ my @tree = (
             {
                 accessor => 'keys',
                 isa      => 'Pithub::Repos::Keys',
-                methods  => [qw(create delete get list update)],
+                methods  => [qw(create delete get list)],
             },
             {
                 accessor => 'releases',
@@ -213,7 +213,7 @@ my @tree = (
             {
                 accessor => 'keys',
                 isa      => 'Pithub::Users::Keys',
-                methods  => [qw(create delete get list update)],
+                methods  => [qw(create delete get list)],
             },
         ],
     },

@@ -554,31 +554,6 @@ BEGIN {
     }
 }
 
-# Pithub::Repos::Keys->update
-{
-    my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Keys', user => 'foo', repo => 'bar' );
-
-    isa_ok $obj, 'Pithub::Repos::Keys';
-
-    throws_ok { $obj->update } qr{Missing key in parameters: key_id}, 'No parameters';
-    throws_ok { $obj->update( key_id => 123 ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
-    throws_ok {
-        $obj->update( key_id => 123, data => { title => 'some key' } );
-    }
-    qr{Access token required for: PATCH /repos/foo/bar/keys/123}, 'Token required';
-
-    ok $obj->token(123), 'Token set';
-
-    {
-        my $json = JSON->new;
-        my $result = $obj->update( key_id => 123, data => { title => 'some key' } );
-        is $result->request->method, 'PATCH', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/keys/123', 'HTTP path';
-        my $http_request = $result->request;
-        eq_or_diff $json->decode( $http_request->content ), { 'title' => 'some key' }, 'HTTP body';
-    }
-}
-
 # Pithub::Repos::Releases->list
 {
     my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Releases', user => 'foo', repo => 'bar' );

@@ -143,40 +143,4 @@ sub list {
     );
 }
 
-=method update
-
-=over
-
-=item *
-
-Edit
-
-    PATCH /repos/:user/:repo/keys/:id
-
-Examples:
-
-    my $k = Pithub::Repos::Keys->new;
-    my $result = $k->update(
-        user   => 'plu',
-        repo   => 'Pithub',
-        key_id => 1,
-        data   => { title => 'some new title' },
-    );
-
-=back
-
-=cut
-
-sub update {
-    my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: key_id' unless $args{key_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
-    $self->_validate_user_repo_args( \%args );
-    return $self->request(
-        method => 'PATCH',
-        path   => sprintf( '/repos/%s/%s/keys/%s', delete $args{user}, delete $args{repo}, delete $args{key_id} ),
-        %args,
-    );
-}
-
 1;

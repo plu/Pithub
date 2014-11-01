@@ -55,15 +55,6 @@ SKIP: {
         # Pithub::Users::Keys->list
         is $p->users->keys->list->first->{title}, 'someone@somewhere', 'Pithub::Users::Keys->list title attribute';
 
-        # Pithub::Users::Keys->update
-        ok $p->users->keys->update(
-            key_id => $key_id,
-            data   => { title => 'someone@somewhereelse' }
-        )->success, 'Pithub::Users::Keys->update successful';
-
-        # Pithub::Users::Keys->get
-        is $p->users->keys->get( key_id => $key_id )->content->{title}, 'someone@somewhereelse', 'Pithub::Users::Keys->get title attribute after update';
-
         # Pithub::Users::Keys->delete
         ok $p->users->keys->delete( key_id => $key_id )->success, 'Pithub::Users::Keys->delete successful';
 
