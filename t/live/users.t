@@ -68,7 +68,7 @@ SKIP: {
         ok $p->users->emails->add( data => ['johannes@plunien.name'] )->success, 'Pithub::Users::Emails->add successful';
 
         # Pithub::Users::Emails->list
-        is $p->users->emails->list->content->[-1], 'johannes@plunien.name', 'Pithub::Users::Emails->list recently added email address';
+        is $p->users->emails->list->content->[0]->{email}, 'johannes@plunien.name', 'Pithub::Users::Emails->list recently added email address';
 
         # Pithub::Users::Emails->delete
         ok $p->users->emails->delete( data => ['johannes@plunien.name'] )->success, 'Pithub::Users::Emails->delete successful';
