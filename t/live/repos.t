@@ -19,7 +19,8 @@ SKIP: {
         my $result = $p->repos->branches( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Repos->branches successful';
         ok $result->count > 0, 'Pithub::Repos->branches has some rows';
-        is $result->content->[0]{name}, 'master', 'Pithub::Repos->branches: Attribute name'
+        ok $result->content->[0]{name};
+        like $result->content->[0]{commit}{sha}, qr{^[a-f0-9]+$};
     }
 
     # Pithub::Repos->contributors
