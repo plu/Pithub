@@ -7,8 +7,7 @@ perl:
   - "5.10"
 env: PERL_CPANM_OPT="--notest --force --skip-satisfied"
 before_install:
-  - "cpanm Dist::Zilla"
-  - "cpanm Test::Pod"
+  - "cpanm Dist::Zilla Test::Pod Devel::Cover::Report::Coveralls Dist::Zilla::App::Command::cover"
   - "dzil authordeps | xargs cpanm"
 install: "dzil listdeps | xargs cpanm"
-script: "dzil test --release"
+script: "RELEASE_TESTING=1 dzil cover -report coveralls -outputdir $PWD/cover_db"
