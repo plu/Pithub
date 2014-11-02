@@ -54,7 +54,7 @@ Provides access to L<Pithub::Repos::Collaborators>.
 =cut
 
 sub collaborators {
-    return shift->_create_instance('Pithub::Repos::Collaborators');
+    return shift->_create_instance('Pithub::Repos::Collaborators', @_);
 }
 
 =method commits
@@ -64,7 +64,7 @@ Provides access to L<Pithub::Repos::Commits>.
 =cut
 
 sub commits {
-    return shift->_create_instance('Pithub::Repos::Commits');
+    return shift->_create_instance('Pithub::Repos::Commits', @_);
 }
 
 =method contents
@@ -74,7 +74,7 @@ Provides access to L<Pithub::Repos::Contents>.
 =cut
 
 sub contents {
-    return shift->_create_instance('Pithub::Repos::Contents');
+    return shift->_create_instance('Pithub::Repos::Contents', @_);
 }
 
 =method contributors
@@ -184,7 +184,7 @@ Provides access to L<Pithub::Repos::Downloads>.
 =cut
 
 sub downloads {
-    return shift->_create_instance('Pithub::Repos::Downloads');
+    return shift->_create_instance('Pithub::Repos::Downloads', @_);
 }
 
 =method forks
@@ -194,7 +194,7 @@ Provides access to L<Pithub::Repos::Forks>.
 =cut
 
 sub forks {
-    return shift->_create_instance('Pithub::Repos::Forks');
+    return shift->_create_instance('Pithub::Repos::Forks', @_);
 }
 
 =method get
@@ -233,7 +233,7 @@ Provides access to L<Pithub::Repos::Hooks>.
 =cut
 
 sub hooks {
-    return shift->_create_instance('Pithub::Repos::Hooks');
+    return shift->_create_instance('Pithub::Repos::Hooks', @_);
 }
 
 =method keys
@@ -243,7 +243,7 @@ Provides access to L<Pithub::Repos::Keys>.
 =cut
 
 sub keys {
-    return shift->_create_instance('Pithub::Repos::Keys');
+    return shift->_create_instance('Pithub::Repos::Keys', @_);
 }
 
 =method languages
@@ -348,7 +348,7 @@ Provides access to L<Pithub::Repos::Releases>.
 =cut
 
 sub releases {
-    return shift->_create_instance('Pithub::Repos::Releases');
+    return shift->_create_instance('Pithub::Repos::Releases', @_);
 }
 
 =method starring
@@ -358,7 +358,7 @@ Provides access to L<Pithub::Repos::Starring>.
 =cut
 
 sub starring {
-    return shift->_create_instance('Pithub::Repos::Starring');
+    return shift->_create_instance('Pithub::Repos::Starring', @_);
 }
 
 =method stats
@@ -368,7 +368,7 @@ Provide access to L<Pithub::Repos::Stats>.
 =cut
 
 sub stats {
-    return shift->_create_instance('Pithub::Repos::Stats');
+    return shift->_create_instance('Pithub::Repos::Stats', @_);
 }
 
 =method statuses
@@ -378,7 +378,7 @@ Provide access to L<Pithub::Repos::Statuses>.
 =cut
 
 sub statuses {
-    return shift->_create_instance('Pithub::Repos::Statuses');
+    return shift->_create_instance('Pithub::Repos::Statuses', @_);
 }
 
 =method tags
@@ -480,7 +480,7 @@ Provides access to L<Pithub::Repos::Watching>.
 =cut
 
 sub watching {
-    return shift->_create_instance('Pithub::Repos::Watching');
+    return shift->_create_instance('Pithub::Repos::Watching', @_);
 }
 
 1;

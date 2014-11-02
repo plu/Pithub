@@ -16,7 +16,7 @@ Provides access to L<Pithub::Users::Emails>.
 =cut
 
 sub emails {
-    return shift->_create_instance('Pithub::Users::Emails');
+    return shift->_create_instance('Pithub::Users::Emails', @_);
 }
 
 =method followers
@@ -26,7 +26,7 @@ Provides access to L<Pithub::Users::Followers>.
 =cut
 
 sub followers {
-    return shift->_create_instance('Pithub::Users::Followers');
+    return shift->_create_instance('Pithub::Users::Followers', @_);
 }
 
 =method get
@@ -82,7 +82,7 @@ Provides access to L<Pithub::Users::Keys>.
 =cut
 
 sub keys {
-    return shift->_create_instance('Pithub::Users::Keys');
+    return shift->_create_instance('Pithub::Users::Keys', @_);
 }
 
 =method update

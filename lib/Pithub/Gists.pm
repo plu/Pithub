@@ -14,7 +14,7 @@ Provides access to L<Pithub::Gists::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance('Pithub::Gists::Comments');
+    return shift->_create_instance('Pithub::Gists::Comments', @_);
 }
 
 =method create
