@@ -77,6 +77,29 @@ subtest "Pithub::Repos->delete" => sub {
     }
 }
 
+
+subtest "Pithub::Repos->branch" => sub {
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::Repos',
+        user => 'foo',
+        repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::Repos';
+
+    subtest "too few arguments" => sub {
+        throws_ok { $obj->branch } qr/^Missing key in parameters: branch/;
+    };
+
+    subtest "basic get branch" => sub {
+        my $result = $obj->branch( branch => "master" );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/branches/master', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    };
+};
+
 # Pithub::Repos->list
 {
     my $obj = Pithub::Test::Factory->create('Pithub::Repos');
