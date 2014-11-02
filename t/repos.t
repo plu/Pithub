@@ -59,7 +59,7 @@ subtest "Pithub::Repos->delete" => sub {
 
     my $result = $obj->delete( user => "foobarorg", repo => "blahblah" );
     is $result->request->method, "DELETE";
-    is $result->request->uri, "https://api.github.com/repos/foobarorg/blahblah";
+    is $result->request->uri, "https://api.github.com/repos/foobarorg/blahblah?per_page=100";
 };
 
 # Pithub::Repos->get
