@@ -54,9 +54,14 @@ BEGIN {
 
 subtest "Pithub::Repos->delete" => sub {
     my $obj = Pithub::Test::Factory->create('Pithub::Repos');
-    throws_ok { $obj->delete }                         qr{^Missing key in parameters: user};
-    throws_ok { $obj->delete( user => "foobarorg" ); } qr{^Missing key in parameters: repo};
+    throws_ok { $obj->delete }
+      qr{^Missing key in parameters: user};
+    throws_ok { $obj->delete( user => "foobarorg" ); }
+      qr{^Missing key in parameters: repo};
+    throws_ok { $obj->delete( user => "foobarorg", repo => "blahblah" ); }
+      qr{^Access token required for: DELETE /repos/foobarorg/blahblah};
 
+    $obj->token(123);
     my $result = $obj->delete( user => "foobarorg", repo => "blahblah" );
     is $result->request->method, "DELETE";
     uri_is $result->request->uri, "https://api.github.com/repos/foobarorg/blahblah?per_page=100";
