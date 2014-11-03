@@ -20,8 +20,8 @@ L<Pithub::Base>, even L<Pithub> itself. So all
 L<attributes|/ATTRIBUTES> listed here can either be set in the
 constructor or via the setter on the objects.
 
-If any attribute is set on a L<Pithub> object, it gets
-automatically set on objects, that get created by a method call on
+If any attribute is set on a L<Pithub> object it gets
+automatically set on objects that get created by a method call on
 the L<Pithub> object. This is very convenient for attributes like
 the L</token> or the L</user> and L</repo> attributes.
 
