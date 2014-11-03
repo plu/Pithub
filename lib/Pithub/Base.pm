@@ -68,6 +68,8 @@ Examples:
 
 =attr auto_pagination
 
+Off by default.
+
 See also: L<Pithub::Result/auto_pagination>.
 
 =cut
