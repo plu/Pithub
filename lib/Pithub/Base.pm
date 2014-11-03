@@ -170,17 +170,22 @@ has 'jsonp_callback' => (
 
 =attr per_page
 
-By default undef, so it defaults to Github's default. See also:
-L<http://developer.github.com/v3/#pagination>.
+Controls how many items are fetched per API call, aka "page".  See
+also: L<http://developer.github.com/v3/#pagination> and
+L</auto_pagination>.
+
+To minimize the number of API calls to get a complete listing, this
+defaults to the maximum allowed by Github, which is currently 100.
+This may change in the future if Github changes their maximum.
 
 Examples:
 
-    my $users = Pithub::Users->new( per_page => 100 );
+    my $users = Pithub::Users->new( per_page => 30 );
 
     # ... is the same as ...
 
     my $users = Pithub::Users->new;
-    $users->per_page(100);
+    $users->per_page(30);
 
 There are two helper methods:
 
