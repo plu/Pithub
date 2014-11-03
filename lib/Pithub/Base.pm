@@ -33,6 +33,13 @@ object of L<Pithub::Repos> where you set the L</user> and L</repo>
 attribute in the constructor, this will also be set once you
 get to the L<Pithub::Repos::Keys> object via the C<< keys >> method.
 
+Attributes passed along from the parent can be changed in the method
+call.
+
+    my $p = Pithub->new( per_page => 50 );
+    my $r1 = $p->repos;                         # $r->per_page == 50
+    my $r2 = $p->repos( per_page => 100 );      # $r->per_page == 100
+
 Examples:
 
     # just to demonstrate the "magic"
