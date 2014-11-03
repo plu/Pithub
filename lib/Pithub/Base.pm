@@ -783,12 +783,18 @@ sub _request_for {
     return $request;
 }
 
+my %TOKEN_REQUIRED = map { ($_ => 1) } @TOKEN_REQUIRED;
 sub _token_required {
     my ( $self, $method, $path ) = @_;
-    return 1 if grep $_ eq "${method} ${path}", @TOKEN_REQUIRED;
+
+    my $key = "${method} ${path}";
+
+    return 1 if $TOKEN_REQUIRED{$key};
+
     foreach my $regexp (@TOKEN_REQUIRED_REGEXP) {
-        return 1 if "${method} ${path}" =~ /$regexp/;
+        return 1 if $key =~ /$regexp/;
     }
+
     return 0;
 }
 
