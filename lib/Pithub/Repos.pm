@@ -18,6 +18,39 @@ use Pithub::Repos::Statuses;
 use Pithub::Repos::Watching;
 extends 'Pithub::Base';
 
+=method branch
+
+Get information about a single branch.
+
+    GET /repos/:owner/:repo/branches/:branch
+
+Example:
+
+    my $result = Pithub->new->branch(
+        user => 'plu',
+        repo => 'Pithub',
+        branch => "master"
+    );
+
+See also L<branches> to get a list of all branches.
+
+=cut
+
+sub branch {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: branch (string)' unless defined $args{branch};
+    $self->_validate_user_repo_args( \%args );
+    return $self->request(
+        method => 'GET',
+        path   => sprintf(
+            '/repos/%s/%s/branches/%s', delete $args{user},
+                                        delete $args{repo},
+                                        delete $args{branch},
+        ),
+        %args,
+    );
+}
+
 =method branches
 
 =over
@@ -32,6 +65,8 @@ Examples:
 
     my $repos  = Pithub::Repos->new;
     my $result = $repos->branches( user => 'plu', repo => 'Pithub' );
+
+See also L<branch> to get information about a single branch.
 
 =back
 

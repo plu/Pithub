@@ -38,6 +38,17 @@ SKIP: {
         is $result->content->{owner}{login}, 'plu', 'Pithub::Repos->get: Attribute owner.login';
     }
 
+    subtest "Pithub::Repos->branch" => sub {
+        my $result = $p->repos->branch(
+            user        => 'plu',
+            repo        => 'Pithub',
+            branch      => 'master'
+        );
+        ok $result->success;
+        is $result->content->{name}, 'master';
+        like $result->content->{commit}{sha}, qr{^[a-f0-9]+$};
+    };
+
     # Pithub::Repos->languages
     {
         my $result = $p->repos->languages( user => 'plu', repo => 'Pithub' );
