@@ -2,6 +2,8 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.01026   2014-11-04 10:28:22-08:00 America/Los_Angeles
+
 0.01025   2014-05-18 16:16:38+02:00 Europe/Berlin
           - Fix #159 - forking repo into organization
 
