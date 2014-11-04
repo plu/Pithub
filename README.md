@@ -1,11 +1,13 @@
-# <a name="title"></a> Pithub [![Build Status](https://api.travis-ci.org/plu/Pithub.png)](https://travis-ci.org/plu/Pithub) [![Coverage Status](https://coveralls.io/repos/plu/Pithub/badge.png?branch=master)](https://coveralls.io/r/plu/Pithub?branch=master)
+[![Build Status](https://travis-ci.org/plu/Pithub.svg?branch=master)](https://travis-ci.org/plu/Pithub)
+[![Coverage Status](https://coveralls.io/repos/plu/Pithub/badge.png?branch=master)](https://coveralls.io/r/plu/Pithub?branch=master)
+
 # NAME
 
 Pithub - Github v3 API
 
 # VERSION
 
-version 0.01025
+version 0.01026
 
 # SYNOPSIS
 
@@ -144,6 +146,7 @@ use it.
                 my $comments = Pithub->new->gists->comments;
                 my $comments = Pithub::Gists->new->comments;
                 my $comments = Pithub::Gists::Comments->new;
+
     - [Pithub::GitData](https://metacpan.org/pod/Pithub::GitData)
 
         See also: [http://developer.github.com/v3/git/](http://developer.github.com/v3/git/)
@@ -190,6 +193,7 @@ use it.
                 my $trees = Pithub->new->git_data->trees;
                 my $trees = Pithub::GitData->new->trees;
                 my $trees = Pithub::GitData::Trees->new;
+
     - [Pithub::Issues](https://metacpan.org/pod/Pithub::Issues)
 
         See also: [http://developer.github.com/v3/issues/](http://developer.github.com/v3/issues/)
@@ -236,6 +240,7 @@ use it.
                 my $milestones = Pithub->new->issues->milestones;
                 my $milestones = Pithub::Issues->new->milestones;
                 my $milestones = Pithub::Issues::Milestones->new;
+
     - [Pithub::Orgs](https://metacpan.org/pod/Pithub::Orgs)
 
         See also: [http://developer.github.com/v3/orgs/](http://developer.github.com/v3/orgs/)
@@ -258,6 +263,7 @@ use it.
                 my $teams = Pithub->new->orgs->teams;
                 my $teams = Pithub::Orgs->new->teams;
                 my $teams = Pithub::Orgs::Teams->new;
+
     - [Pithub::PullRequests](https://metacpan.org/pod/Pithub::PullRequests)
 
         See also: [http://developer.github.com/v3/pulls/](http://developer.github.com/v3/pulls/)
@@ -272,6 +278,7 @@ use it.
                 my $comments = Pithub->new->pull_requests->comments;
                 my $comments = Pithub::PullRequests->new->comments;
                 my $comments = Pithub::PullRequests::Comments->new;
+
     - [Pithub::Repos](https://metacpan.org/pod/Pithub::Repos)
 
         See also: [http://developer.github.com/v3/repos/](http://developer.github.com/v3/repos/)
@@ -371,6 +378,7 @@ use it.
                 my $watching = Pithub->new->repos->watching;
                 my $watching = Pithub::Repos->new->watching;
                 my $watching = Pithub::Repos::Watching->new;
+
     - [Pithub::Users](https://metacpan.org/pod/Pithub::Users)
 
         See also: [http://developer.github.com/v3/users/](http://developer.github.com/v3/users/)
