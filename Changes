@@ -1,8 +1,25 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Forgot to update the change log last release.
 
 0.01026   2014-11-04 10:28:22-08:00 America/Los_Angeles
+          - #173 Document Pithub::Result->code, raw_content, request,
+            etag and success.
+          - #171 Add Pithub::Repos->branch to get information about a
+            branch.
+          - #169 Add Pithub::Repos->delete to delete a repository.
+          - #168 Allow inherited attributes to be changed when making
+            a sub-object.  $p->repos( per_page => 100 )
+          - #163 The default per_page is now 100, the maximum allowed
+            by Github, for more efficient pagination.
+          - #162 Requests are now cached (aka Conditional Requests)
+            for more efficient use of the API.
+          - Pithub::Repos::Keys->update and Pithub::Users::Keys->update
+            have been removed.  Deploy and public keys are immutable.
+            removed.  If you need to update a key, remove it and create
+            a new one.
+          - Gist comments have been fixed.
 
 0.01025   2014-05-18 16:16:38+02:00 Europe/Berlin
           - Fix #159 - forking repo into organization
