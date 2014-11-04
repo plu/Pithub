@@ -67,6 +67,11 @@ has 'content' => (
     lazy    => 1,
 );
 
+=method raw_content
+
+Returns the content of the API response as a string, it will probably
+be JSON.
+
 =attr first_page_uri
 
 The extracted value from the C<< Link >> header for the first page.
@@ -140,6 +145,20 @@ has 'response' => (
     isa      => sub { die 'must be a HTTP::Response, but is ' . ref $_[0] unless ref $_[0] eq 'HTTP::Response' },
     required => 1,
 );
+
+=method request
+
+Returns the L<HTTP::Request> object used to make the API call.
+
+=method code
+
+Returns the HTTP code from the API call.
+
+=method success
+
+Returns whether the API call was successful.
+
+=cut
 
 # required for next_page etc
 has '_request' => (
