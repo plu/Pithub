@@ -6,6 +6,16 @@ use Moo;
 use Array::Iterator;
 use JSON;
 use URI;
+use Carp;
+
+sub _isa_isa_maker {
+    my $class = shift;
+    return sub {
+        confess "must be an instance of $class but isn't a reference" if !ref $_[0];
+        confess "must be an instance of $class, but is a ".ref $_[0]
+          unless eval { $_[0]->isa($class) };
+    };
+}
 
 =head1 DESCRIPTION
 
@@ -142,7 +152,7 @@ has 'response' => (
         success     => 'is_success',
     },
     is       => 'ro',
-    isa      => sub { die 'must be a HTTP::Response, but is ' . ref $_[0] unless ref $_[0] eq 'HTTP::Response' },
+    isa      => _isa_isa_maker('HTTP::Response'),
     required => 1,
 );
 
@@ -163,7 +173,9 @@ Returns whether the API call was successful.
 # required for next_page etc
 has '_request' => (
     is       => 'ro',
-    isa      => sub { die 'must be a coderef, but is ' . ref $_[0] unless ref $_[0] eq 'CODE' },
+    isa      => sub {
+        croak 'must be a coderef, but is ' . ref $_[0] unless ref $_[0] eq 'CODE'
+    },
     required => 1,
 );
 
@@ -172,14 +184,14 @@ has '_iterator' => (
     builder => '_build__iterator',
     clearer => '_clear_iterator',
     is      => 'ro',
-    isa     => sub { die 'must be a Array::Iterator, but is ' . ref $_[0] unless ref $_[0] eq 'Array::Iterator' },
+    isa     => _isa_isa_maker('Array::Iterator'),
     lazy    => 1,
 );
 
 has '_json' => (
     builder => '_build__json',
     is      => 'ro',
-    isa     => sub { die 'must be a JSON, but is ' . ref $_[0] unless ref $_[0] eq 'JSON' },
+    isa     => _isa_isa_maker('JSON'),
     lazy    => 1,
 );
 
