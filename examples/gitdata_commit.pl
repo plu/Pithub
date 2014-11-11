@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use File::Slurp;
+use Path::Tiny;
 use Pithub::GitData;
 
 my $git = Pithub::GitData->new(
@@ -10,7 +10,7 @@ my $git = Pithub::GitData->new(
     user  => 'plu',
 );
 
-my $content = File::Slurp::read_file(__FILE__);
+my $content = path(__FILE__)->slurp;
 
 # the encoding can also be 'base64', if necessary
 my $blob = $git->blobs->create(
