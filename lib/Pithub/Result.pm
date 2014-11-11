@@ -4,7 +4,7 @@ package Pithub::Result;
 
 use Moo;
 use Array::Iterator;
-use JSON;
+use JSON::MaybeXS;
 use URI;
 use Carp;
 
@@ -191,7 +191,10 @@ has '_iterator' => (
 has '_json' => (
     builder => '_build__json',
     is      => 'ro',
-    isa     => _isa_isa_maker('JSON'),
+    isa     => sub {
+        confess "$_[0] is not a suitable JSON object"
+          unless eval { $_[0]->can("decode") };
+    },
     lazy    => 1,
 );
 

@@ -2,7 +2,7 @@ use FindBin;
 use lib "$FindBin::Bin/../lib";
 use Pithub::Test::Factory;
 use Test::Most;
-require JSON::PP;
+use JSON::MaybeXS;
 
 BEGIN {
     use_ok('Pithub');
@@ -147,7 +147,7 @@ c3QgcmVsZWFzZQo=
                 }
             ],
             'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7331484696162bf7b5c97de488fd2c1289fd175c',
-            truncated => JSON::PP::false(),
+            truncated => JSON->false,
           },
           'Pithub::GitData::Trees->get content';
 
@@ -189,7 +189,7 @@ c3QgcmVsZWFzZQo=
                     'url'  => 'https://api.github.com/repos/plu/Pithub/git/blobs/b493b43e8016b86550c065fcf83df537052ad371'
                 }
             ],
-            truncated => JSON::PP::false(),
+            truncated => JSON->false,
             'url' => 'https://api.github.com/repos/plu/Pithub/git/trees/7331484696162bf7b5c97de488fd2c1289fd175c'
           },
           'Pithub::GitData::Trees->get content recursive';
