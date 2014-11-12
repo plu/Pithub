@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON;
+use JSON::MaybeXS;
 use Pithub::Test::Factory;
 use Pithub::Test::UA;
 use Pithub::Test;

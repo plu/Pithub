@@ -6,7 +6,7 @@ use Moo;
 use Carp qw(croak);
 use HTTP::Headers;
 use HTTP::Request;
-use JSON;
+use JSON::MaybeXS;
 use LWP::UserAgent;
 use Pithub::Result;
 use URI;
