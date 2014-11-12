@@ -206,13 +206,11 @@ SKIP: {
     }
 
     {
-        require File::Basename;
-
         # Pithub::Repos::Downloads->create
         my $result = $p->repos->downloads->create(
             data => {
-                name         => File::Basename::basename(__FILE__),
-                size         => ( stat(__FILE__) )[7],
+                name         => path(__FILE__)->basename,
+                size         => -s __FILE__,
                 description  => 'This test (t/live.t)',
                 content_type => 'text/plain',
             },

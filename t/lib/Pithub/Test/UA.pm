@@ -2,8 +2,7 @@ package    # hide from PAUSE
   Pithub::Test::UA;
 
 use Moo;
-use File::Basename qw(dirname);
-use File::Slurp qw(read_file);
+use Path::Tiny;
 use HTTP::Response;
 use Test::More;
 
@@ -11,8 +10,8 @@ my @responses;
 
 sub add_response {
     my ( $self, $path ) = @_;
-    my $full_path = sprintf '%s/http_response/api.github.com/%s', dirname(__FILE__), $path;
-    my $response_string = read_file($full_path);
+    my $full_path = sprintf '%s/http_response/api.github.com/%s', path(__FILE__)->dirname, $path;
+    my $response_string = path($full_path)->slurp;
     my $response = HTTP::Response->parse($response_string);
     push @responses, $response;
 }
