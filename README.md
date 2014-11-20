@@ -7,7 +7,7 @@ Pithub - Github v3 API
 
 # VERSION
 
-version 0.01027
+version 0.01028
 
 # SYNOPSIS
 
