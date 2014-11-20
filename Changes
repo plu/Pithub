@@ -1,6 +1,12 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - #178 Fixed the minimum version of Moo.
+          - #176 Using JSON::MaybeXS instead of JSON to allow
+            alternatives to JSON::XS such as CPanel::JSON::XS.
+          - #177 Using Path::Tiny instead of File::Slurp to simplify file
+            access and avoid File::Slurp unicode bugs.
+          - #175 Now using Github for issue tracking.
 
 0.01027   2014-11-04 10:55:03-08:00 America/Los_Angeles
           - Forgot to update the change log last release.
