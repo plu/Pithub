@@ -713,7 +713,7 @@ sub has_token {
 
     # If we have one specified in the object, return true
     return 1 if $self->_has_token;
-    # If no reqest object here, we don't have a token
+    # If no request object here, we don't have a token
     return 0  unless $request;
 
     return 1 if $request->header('Authorization');
