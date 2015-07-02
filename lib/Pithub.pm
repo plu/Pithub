@@ -41,6 +41,11 @@ L<Pithub> supports all API calls so far, but only for v3.
         printf "%s\n", $row->{name};
     }
 
+    # Connect to your local GitHub Enterprise instance
+    my $p = Pithub->new(
+        api_uri => 'https://github.yourdomain.com/api/v3/'
+    );
+
 =head1 DOCUMENTATION
 
 Quite a lot of the L<Pithub> documentation has been taken directly
