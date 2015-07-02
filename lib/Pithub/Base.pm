@@ -81,7 +81,8 @@ has 'auto_pagination' => (
 
 =attr api_uri
 
-Defaults to L<https://api.github.com>.
+Defaults to L<https://api.github.com>.  For GitHub Enterprise, you'll likely
+need an URL like L<https://github.yourdomain.com/api/v3/>.
 
 Examples:
 

@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Documents the URL required for connecting to a GitHub Enterprise
+            instance.
 
 0.01028   2014-11-19 16:50:32-08:00 America/Los_Angeles
           - #178 Fixed the minimum version of Moo.
