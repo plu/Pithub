@@ -535,6 +535,17 @@ sub _validate_search_api {
         unless exists $search_apis{$_[0]};
 }
 
+=attr search_api
+
+    my $p = Pithub->new({ search_api => 'v3' });
+    my $search = $p->search; # $search->isa('Pithub::SearchV3');
+
+This attribute allows the default for the API to use for searches to be
+specified. The two accepted values are C<v3> and C<legacy>. For compatibility
+reasons the default is C<legacy>.
+
+=cut
+
 has search_api => (
     is  => 'ro',
     isa => \&_validate_search_api,
@@ -623,7 +634,13 @@ sub repos {
 
 =method search
 
-Provides access to L<Pithub::Search>.
+  my $legacy_search  = $p->search(search_api => 'legacy');
+  my $v3_search      = $p->search(search_api => 'v3');
+  my $default_search = $p->search;
+
+Provides access to L<Pithub::Search> and L<Pithub::SearchV3>. When no
+C<search_api> option is given, the value provided by the C<search_api>
+attribute is used.
 
 =cut
 
