@@ -11,7 +11,9 @@ use Pithub::Orgs;
 use Pithub::PullRequests;
 use Pithub::Repos;
 use Pithub::Search;
+use Pithub::SearchV3;
 use Pithub::Users;
+use Carp 'croak';
 extends 'Pithub::Base';
 
 =head1 DESCRIPTION
@@ -527,6 +529,28 @@ See also: L<http://developer.github.com/v3/users/keys/>
 
 =cut
 
+sub _validate_search_api {
+    my %search_apis = map { $_ => 1 } qw(legacy v3);
+    croak "unknown search api '$_[0]'"
+        unless exists $search_apis{$_[0]};
+}
+
+has search_api => (
+    is  => 'ro',
+    isa => \&_validate_search_api,
+    default => 'legacy',
+);
+
+sub _search_class {
+    my ($self, $search_api) = @_;
+
+    _validate_search_api($search_api);
+
+    return $search_api eq 'legacy'
+        ? 'Pithub::Search'
+        : 'Pithub::SearchV3';
+}
+
 =method events
 
 Provides access to L<Pithub::Events>.
@@ -604,7 +628,13 @@ Provides access to L<Pithub::Search>.
 =cut
 
 sub search {
-    return shift->_create_instance('Pithub::Search', @_);
+    my ($self, %args) = @_;
+    my $class = $self->_search_class(
+        exists $args{search_api}
+            ? delete $args{search_api}
+            : $self->search_api,
+    );
+    return shift->_create_instance($class, @_);
 }
 
 =method users
