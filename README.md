@@ -28,6 +28,11 @@ version 0.01028
         printf "%s\n", $row->{name};
     }
 
+    # Connect to your local GitHub Enterprise instance
+    my $p = Pithub->new(
+        api_uri => 'https://github.yourdomain.com/api/v3/'
+    );
+
 # DESCRIPTION
 
 [Pithub](https://metacpan.org/pod/Pithub) provides a set of modules to access the
@@ -35,6 +40,17 @@ version 0.01028
 oriented way. There is also [Net::GitHub](https://metacpan.org/pod/Net::GitHub) which does the same for
 all the versions (v1, v2, v3) of the Github API.
 [Pithub](https://metacpan.org/pod/Pithub) supports all API calls so far, but only for v3.
+
+# ATTRIBUTES
+
+## search\_api
+
+    my $p = Pithub->new({ search_api => 'v3' });
+    my $search = $p->search; # $search->isa('Pithub::SearchV3');
+
+This attribute allows the default for the API to use for searches to be
+specified. The two accepted values are `v3` and `legacy`. For compatibility
+reasons the default is `legacy`.
 
 # METHODS
 
@@ -68,7 +84,13 @@ Provides access to [Pithub::Repos](https://metacpan.org/pod/Pithub::Repos).
 
 ## search
 
-Provides access to [Pithub::Search](https://metacpan.org/pod/Pithub::Search).
+    my $legacy_search  = $p->search(search_api => 'legacy');
+    my $v3_search      = $p->search(search_api => 'v3');
+    my $default_search = $p->search;
+
+Provides access to [Pithub::Search](https://metacpan.org/pod/Pithub::Search) and [Pithub::SearchV3](https://metacpan.org/pod/Pithub::SearchV3). When no
+`search_api` option is given, the value provided by the `search_api`
+attribute is used.
 
 ## users
 
@@ -414,6 +436,7 @@ use it.
 
 - Andreas Marienborg
 - Alessandro Ghedini
+- Michael G Schwern
 
 # AUTHOR
 
