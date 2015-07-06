@@ -236,7 +236,7 @@ sub validate_tree {
         $tests->( $node, $obj );
         validate_tree(
             tree  => $node->{subtree},
-            obj   => $obj->$accessor,
+            obj   => $obj->$accessor(@{ $node->{args} || [] }),
             tests => $tests,
         ) if $node->{subtree};
     }
@@ -266,8 +266,9 @@ sub validate_tree {
             my $methods  = $node->{methods};
 
             can_ok $obj, $accessor;
-            isa_ok $obj->$accessor, $node->{isa};
-            can_ok $obj->$accessor, @$methods if @{ $methods || [] };
+            my $val = $obj->$accessor(@{ $node->{args} || [] });
+            isa_ok $val, $node->{isa};
+            can_ok $val, @$methods if @{ $methods || [] };
 
             foreach my $attr ( keys %attributes ) {
                 is $obj->$attr, $attributes{$attr}, "Attribute ${attr} was curried to ${obj}";
@@ -287,7 +288,7 @@ sub validate_tree {
                   or ( $node->{isa} eq 'Pithub::Issues::Labels' and grep $_ eq $method, qw(add replace) );
 
                 lives_ok {
-                    $result = $obj->$accessor->$method(
+                    $result = $val->$method(
                         archive_format => 'tarball',
                         asset_id       => 1,
                         assignee       => 'john',
