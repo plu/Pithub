@@ -222,6 +222,18 @@ my @tree = (
         isa      => 'Pithub::Search',
         methods  => [qw(email issues repos users)],
     },
+    {
+        accessor => 'search',
+        args     => [search_api => 'legacy'],
+        isa      => 'Pithub::Search',
+        methods  => [qw(email issues repos users)],
+    },
+    {
+        accessor => 'search',
+        args     => [search_api => 'v3'],
+        isa      => 'Pithub::SearchV3',
+        methods  => [qw(issues repos users)],
+    },
 );
 
 sub validate_tree {
@@ -304,6 +316,7 @@ sub validate_tree {
                         issue_id       => 1,
                         key_id         => 1,
                         keyword        => 'foo',
+                        q              => 'foo',
                         label          => 1,
                         milestone_id   => 1,
                         name           => 'foo',
