@@ -11,7 +11,9 @@ use Pithub::Orgs;
 use Pithub::PullRequests;
 use Pithub::Repos;
 use Pithub::Search;
+use Pithub::SearchV3;
 use Pithub::Users;
+use Carp 'croak';
 extends 'Pithub::Base';
 
 =head1 DESCRIPTION
@@ -527,6 +529,39 @@ See also: L<http://developer.github.com/v3/users/keys/>
 
 =cut
 
+sub _validate_search_api {
+    my %search_apis = map { $_ => 1 } qw(legacy v3);
+    croak "unknown search api '$_[0]'"
+        unless exists $search_apis{$_[0]};
+}
+
+=attr search_api
+
+    my $p = Pithub->new({ search_api => 'v3' });
+    my $search = $p->search; # $search->isa('Pithub::SearchV3');
+
+This attribute allows the default for the API to use for searches to be
+specified. The two accepted values are C<v3> and C<legacy>. For compatibility
+reasons the default is C<legacy>.
+
+=cut
+
+has search_api => (
+    is  => 'ro',
+    isa => \&_validate_search_api,
+    default => 'legacy',
+);
+
+sub _search_class {
+    my ($self, $search_api) = @_;
+
+    _validate_search_api($search_api);
+
+    return $search_api eq 'legacy'
+        ? 'Pithub::Search'
+        : 'Pithub::SearchV3';
+}
+
 =method events
 
 Provides access to L<Pithub::Events>.
@@ -599,12 +634,24 @@ sub repos {
 
 =method search
 
-Provides access to L<Pithub::Search>.
+  my $legacy_search  = $p->search(search_api => 'legacy');
+  my $v3_search      = $p->search(search_api => 'v3');
+  my $default_search = $p->search;
+
+Provides access to L<Pithub::Search> and L<Pithub::SearchV3>. When no
+C<search_api> option is given, the value provided by the C<search_api>
+attribute is used.
 
 =cut
 
 sub search {
-    return shift->_create_instance('Pithub::Search', @_);
+    my ($self, %args) = @_;
+    my $class = $self->_search_class(
+        exists $args{search_api}
+            ? delete $args{search_api}
+            : $self->search_api,
+    );
+    return shift->_create_instance($class, @_);
 }
 
 =method users

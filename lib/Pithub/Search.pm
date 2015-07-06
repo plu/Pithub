@@ -1,6 +1,6 @@
 package Pithub::Search;
 
-# ABSTRACT: Github v3 Search API
+# ABSTRACT: Github legacy Search API
 
 use Moo;
 use Carp qw(croak);
