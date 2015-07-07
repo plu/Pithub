@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01029   2015-07-07 10:35:24-04:00 America/Toronto
           - Document the URL required for connecting to a GitHub Enterprise
             instance.
           - Add Pithub::SearchV3, which gives you the option to use the v3
