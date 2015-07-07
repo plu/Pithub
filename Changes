@@ -1,8 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
-          - Documents the URL required for connecting to a GitHub Enterprise
+          - Document the URL required for connecting to a GitHub Enterprise
             instance.
+          - Add Pithub::SearchV3, which gives you the option to use the v3
+            search rather than the current default of legacy (Florian Ragwitz)
 
 0.01028   2014-11-19 16:50:32-08:00 America/Los_Angeles
           - #178 Fixed the minimum version of Moo.
