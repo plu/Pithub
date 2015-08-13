@@ -76,7 +76,7 @@ Examples:
     my $result   = $statuses->create( user => 'plu', repo => 'Pithub',
         sha => '0123456', 
         data => {
-            status => 'error',
+            state => 'error',
             description => 'Build failed',
             target_url => 'https://travis-ci.org/some/url/0123456',
         },
