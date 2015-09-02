@@ -276,6 +276,28 @@ BEGIN {
     }
 }
 
+# Pithub::Orgs::Teams->add_membership
+{
+    my $obj = Pithub::Test::Factory->create('Pithub::Orgs::Teams');
+
+    isa_ok $obj, 'Pithub::Orgs::Teams';
+
+    throws_ok { $obj->add_membership } qr{Missing key in parameters: team_id}, 'No parameters';
+    throws_ok { $obj->add_membership( team_id => 123 ) } qr{Missing key in parameters: user}, 'No user parameter';
+    throws_ok { $obj->add_membership( team_id => 123, user => 'bar' ) } qr{Missing key in parameters: data}, 'No user parameter';
+    throws_ok { $obj->add_membership( team_id => 123, user => 'bar', data => { role => 'member' } ); } qr{Access token required for: PUT /teams/123/memberships/bar\s+}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->add_membership( team_id => 123, user => 'bar', data => { role => 'member' } );
+        is $result->request->method, 'PUT', 'HTTP method';
+        is $result->request->uri->path, '/teams/123/memberships/bar', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '{"role":"member"}', 'HTTP body';
+    }
+}
+
 # Pithub::Orgs::Teams->add_repo
 {
     my $obj = Pithub::Test::Factory->create('Pithub::Orgs::Teams');
