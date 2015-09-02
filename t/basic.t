@@ -105,7 +105,7 @@ my @tree = (
             {
                 accessor => 'teams',
                 isa      => 'Pithub::Orgs::Teams',
-                methods  => [qw(add_member add_repo create delete get has_repo is_member list list_members list_repos remove_member remove_repo update)],
+                methods  => [qw(add_member add_membership add_repo create delete get has_repo is_member list list_members list_repos remove_member remove_membership remove_repo update)],
             },
         ],
     },
