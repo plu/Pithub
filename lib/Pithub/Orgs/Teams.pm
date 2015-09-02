@@ -359,6 +359,11 @@ sub list_repos {
 
 =over
 
+The "Remove team member" API (described below) is deprecated and
+is scheduled for removal in the next major version of the API. We
+recommend using the Remove team membership API instead. It allows
+you to remove both active and pending memberships.
+
 In order to remove a user from a team, the authenticated user must
 have 'admin' permissions to the team or be an owner of the org that
 the team is associated with. NOTE: This does not delete the user,
@@ -385,6 +390,41 @@ sub remove_member {
     return $self->request(
         method => 'DELETE',
         path   => sprintf( '/teams/%s/members/%s', delete $args{team_id}, delete $args{user} ),
+        %args,
+    );
+}
+
+=method remove_membership
+
+=over
+
+In order to remove a membership between a user and a team,
+the authenticated user must have 'admin' permissions to
+the team or be an owner of the organization that the team
+is associated with. NOTE: This does not delete the user,
+it just removes their membership from the team.
+
+    DELETE /teams/:id/memberships/:user
+
+Examples:
+
+    my $t = Pithub::Orgs::Teams->new;
+    my $result = $t->remove_membership(
+        team_id => 1,
+        user    => 'plu',
+    );
+
+=back
+
+=cut
+
+sub remove_membership {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: team_id' unless $args{team_id};
+    croak 'Missing key in parameters: user'    unless $args{user};
+    return $self->request(
+        method => 'DELETE',
+        path   => sprintf( '/teams/%s/memberships/%s', delete $args{team_id}, delete $args{user} ),
         %args,
     );
 }
