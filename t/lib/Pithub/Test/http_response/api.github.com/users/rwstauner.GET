@@ -1,0 +1,45 @@
+HTTP/1.1 200 OK
+Server: GitHub.com
+Date: Sun, 04 Oct 2015 18:33:53 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 1311
+Status: 200 OK
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 57
+X-RateLimit-Reset: 1443985395
+Cache-Control: public, max-age=60, s-maxage=60
+Last-Modified: Sun, 04 Oct 2015 18:33:46 GMT
+X-GitHub-Media-Type: github.v3
+
+{
+  "login": "rwstauner",
+  "id": 142719,
+  "avatar_url": "https://avatars.githubusercontent.com/u/142719?v=3",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/rwstauner",
+  "html_url": "https://github.com/rwstauner",
+  "followers_url": "https://api.github.com/users/rwstauner/followers",
+  "following_url": "https://api.github.com/users/rwstauner/following{/other_user}",
+  "gists_url": "https://api.github.com/users/rwstauner/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/rwstauner/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/rwstauner/subscriptions",
+  "organizations_url": "https://api.github.com/users/rwstauner/orgs",
+  "repos_url": "https://api.github.com/users/rwstauner/repos",
+  "events_url": "https://api.github.com/users/rwstauner/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/rwstauner/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "Randy Stauner",
+  "company": null,
+  "blog": "",
+  "location": "Mesa, AZ",
+  "email": "randy@magnificent-tears.com",
+  "hireable": true,
+  "bio": "⛰",
+  "public_repos": 183,
+  "public_gists": 14,
+  "followers": 41,
+  "following": 32,
+  "created_at": "2009-10-21T15:58:36Z",
+  "updated_at": "2015-10-04T18:33:46Z"
+}

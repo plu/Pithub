@@ -472,7 +472,7 @@ sub _build_prev_page_uri {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON->new;
+    return JSON->new->utf8;
 }
 
 sub _get_link_header {
