@@ -724,7 +724,7 @@ sub has_token {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON->new;
+    return JSON->new->utf8;
 }
 
 sub _build_ua {
