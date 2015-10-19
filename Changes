@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add add/remove team membership API (SUZUKI Masashi)
+          - Handle unicode when en/de-coding json (Randy Stauner)
 
 0.01029   2015-07-07 10:35:24-04:00 America/Toronto
           - Document the URL required for connecting to a GitHub Enterprise
