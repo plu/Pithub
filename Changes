@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01030   2015-10-18 21:32:29-04:00 America/Toronto
           - Add add/remove team membership API (SUZUKI Masashi)
           - Handle unicode when en/de-coding json (Randy Stauner)
 
