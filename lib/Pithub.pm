@@ -18,7 +18,7 @@ extends 'Pithub::Base';
 
 =head1 DESCRIPTION
 
-L<Pithub> provides a set of modules to access the
+L<Pithub> (B<P>erl + GB<ithub>) provides a set of modules to access the
 L<Github v3 API|http://developer.github.com/v3/> in an object
 oriented way. There is also L<Net::GitHub> which does the same for
 all the versions (v1, v2, v3) of the Github API.
@@ -48,6 +48,16 @@ L<Pithub> supports all API calls so far, but only for v3.
         api_uri => 'https://github.yourdomain.com/api/v3/'
     );
 
+    # No need to provide user/repo to each module:
+    my $pit = Pithub->new(
+      user  => $user,
+      repo  => $repo,
+      token => $oauth_token,
+    );
+
+    $pit->repos->get;
+    $pit->repos->commits->list;
+
 =head1 DOCUMENTATION
 
 Quite a lot of the L<Pithub> documentation has been taken directly
@@ -55,6 +65,9 @@ from the great API documentation at
 L<Github|http://developer.github.com/v3/>. Please also read the
 documentation there, since it might be more complete and more
 up-to-date.
+
+L<Pithub::Base> contains documentation for attributes inherited by all
+Pithub modules.
 
 =head1 WARNING
 
