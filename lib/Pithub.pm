@@ -30,6 +30,7 @@ L<Pithub> supports all API calls so far, but only for v3.
     use Data::Dumper;
 
     my $p = Pithub->new;
+    # my $p = Pithub->new->utf8(0); # enable compatibility options for version 0.01029 or lower
     my $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
 
     # $result->content is either an arrayref or an hashref

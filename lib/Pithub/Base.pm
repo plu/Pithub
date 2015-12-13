@@ -66,6 +66,11 @@ Examples:
     my $repo = Pithub::Repos->new( user => 'plu', repo => 'Pithub' );
     print $repo->watching->list->first->{login};
 
+    # encoding options
+    my $p = Pithub->new->utf8(0); # disable utf8 en/de-coding
+    my $p = Pithub->new->utf8(1); # enable utf8 en/de-coding (default)
+    $enabled = $p->get_utf8;
+
 =attr auto_pagination
 
 Off by default.
@@ -675,7 +680,7 @@ sub request {
         auto_pagination => $self->auto_pagination,
         response        => $response,
         _request        => sub { $self->request(@_) },
-    );
+    )->utf8($self->get_utf8);
 }
 
 
@@ -725,6 +730,17 @@ sub has_token {
 sub _build__json {
     my ($self) = @_;
     return JSON->new->utf8;
+}
+
+sub utf8 {
+    my $self = shift;
+    $self->_json->utf8(@_);
+    return $self;
+}
+
+sub get_utf8 {
+    my $self = shift;
+    return $self->_json->get_utf8(@_);
 }
 
 sub _build_ua {

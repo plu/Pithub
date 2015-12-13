@@ -475,6 +475,17 @@ sub _build__json {
     return JSON->new->utf8;
 }
 
+sub utf8 {
+    my $self = shift;
+    $self->_json->utf8(@_);
+    return $self;
+}
+
+sub get_utf8 {
+    my $self = shift;
+    return $self->_json->get_utf8(@_);
+}
+
 sub _get_link_header {
     my ( $self, $type ) = @_;
     return $self->{_get_link_header}{$type} if $self->{_get_link_header}{$type};
