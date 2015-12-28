@@ -128,8 +128,8 @@ L<Pithub::Events>
 
 See also: L<http://developer.github.com/v3/events/>
 
-    my $gists = Pithub->new->events;
-    my $gists = Pithub::Events->new;
+    my $events = Pithub->new->events;
+    my $events = Pithub::Events->new;
 
 =item *
 

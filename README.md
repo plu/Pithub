@@ -151,8 +151,8 @@ use it.
 
         See also: [http://developer.github.com/v3/events/](http://developer.github.com/v3/events/)
 
-            my $gists = Pithub->new->events;
-            my $gists = Pithub::Events->new;
+            my $events = Pithub->new->events;
+            my $events = Pithub::Events->new;
 
     - [Pithub::Gists](https://metacpan.org/pod/Pithub::Gists)
 
