@@ -11,14 +11,14 @@ BEGIN {
 
 {
     my $obj = Pithub::Test::Factory->create('Pithub::Users');
-    ok $obj->get_utf8, 'enabled en/de-conding json';
+    ok $obj->utf8, 'enabled en/de-conding json';
     $obj->ua->add_response('users/rwstauner.GET');
 
     isa_ok $obj, 'Pithub::Users';
 
     {
         my $result = $obj->get( user => 'rwstauner' );
-        ok $result->get_utf8, 'enabled en/de-conding json';
+        ok $result->utf8, 'enabled en/de-conding json';
 
         my $string = $result->content->{bio};
         is $string, "\x{26F0}", 'Attribute exists';
@@ -33,7 +33,7 @@ BEGIN {
 {
     my $json = JSON->new->utf8;
     my $p    = Pithub::Test::Factory->create('Pithub');
-    ok $p->get_utf8, 'enabled en/de-conding json';
+    ok $p->utf8, 'enabled en/deconding json';
     $p->token('123');
     my $request = $p->request( method => 'POST', path => '/foo', data => { some => "bullet \x{2022}" } )->request;
     like $request->content, qr/bullet \xe2\x80\xa2/, 'character string utf-8 encoded in request';
@@ -41,15 +41,15 @@ BEGIN {
 }
 
 {
-    my $obj = Pithub::Test::Factory->create('Pithub::Users')->utf8(0); # disable en/decoding
-    ok !$obj->get_utf8, 'disabled en/de-conding json';
+    my $obj = Pithub::Test::Factory->create('Pithub::Users', utf8 => 0); # disable en/decoding
+    ok !$obj->utf8, 'disabled en/deconding json';
     $obj->ua->add_response('users/rwstauner.GET');
 
     isa_ok $obj, 'Pithub::Users';
 
     {
         my $result = $obj->get( user => 'rwstauner' );
-        ok !$result->get_utf8, 'disabled en/de-conding json';
+        ok !$result->utf8, 'disabled en/de-conding json';
 
         my $string = $result->content->{bio};
         is $string, "\xe2\x9b\xb0", 'Attribute exists';
@@ -63,8 +63,8 @@ BEGIN {
 
 {
     my $json = JSON->new;
-    my $p    = Pithub::Test::Factory->create('Pithub')->utf8(0); # disable en/decoding
-    ok !$p->get_utf8, 'disabled en/de-conding json';
+    my $p    = Pithub::Test::Factory->create('Pithub', utf8 => 0); # disable en/decoding
+    ok !$p->utf8, 'disabled en/de-conding json';
     $p->token('123');
     my $request = $p->request( method => 'POST', path => '/foo', data => { some => "bullet \xe2\x80\xa2" } )->request;
     like $request->content, qr/bullet \xe2\x80\xa2/, 'character string utf-8 encoded in request';
