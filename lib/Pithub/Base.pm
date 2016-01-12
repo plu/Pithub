@@ -763,6 +763,7 @@ sub _create_instance {
         api_uri         => $self->api_uri,
         auto_pagination => $self->auto_pagination,
         ua              => $self->ua,
+        utf8            => $self->utf8,
         @args
     );
 
