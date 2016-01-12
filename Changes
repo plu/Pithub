@@ -11,7 +11,7 @@ Revision history for {{$dist->name}}
 0.01028   2014-11-19 16:50:32-08:00 America/Los_Angeles
           - #178 Fixed the minimum version of Moo.
           - #176 Using JSON::MaybeXS instead of JSON to allow
-            alternatives to JSON::XS such as CPanel::JSON::XS.
+            alternatives to JSON::XS such as Cpanel::JSON::XS.
           - #177 Using Path::Tiny instead of File::Slurp to simplify file
             access and avoid File::Slurp unicode bugs.
           - #175 Now using Github for issue tracking.
