@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/plu/Pithub.svg?branch=master)](https://travis-ci.org/plu/Pithub)
-[![Coverage Status](https://coveralls.io/repos/plu/Pithub/badge.png?branch=master)](https://coveralls.io/r/plu/Pithub?branch=master)
+[![Coverage Status](https://coveralls.io/repos/plu/Pithub/badge.svg?branch=master)](https://coveralls.io/r/plu/Pithub?branch=master)
 
 # NAME
 
@@ -7,7 +7,7 @@ Pithub - Github v3 API
 
 # VERSION
 
-version 0.01029
+version 0.01031
 
 # SYNOPSIS
 
@@ -15,6 +15,7 @@ version 0.01029
     use Data::Dumper;
 
     my $p = Pithub->new;
+    # my $p = Pithub->new(utf8 => 0); # enable compatibility options for version 0.01029 or lower
     my $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
 
     # $result->content is either an arrayref or an hashref
@@ -33,9 +34,19 @@ version 0.01029
         api_uri => 'https://github.yourdomain.com/api/v3/'
     );
 
+    # No need to provide user/repo to each module:
+    my $pit = Pithub->new(
+      user  => $user,
+      repo  => $repo,
+      token => $oauth_token,
+    );
+
+    $pit->repos->get;
+    $pit->repos->commits->list;
+
 # DESCRIPTION
 
-[Pithub](https://metacpan.org/pod/Pithub) provides a set of modules to access the
+[Pithub](https://metacpan.org/pod/Pithub) (**P**erl + G**ithub**) provides a set of modules to access the
 [Github v3 API](http://developer.github.com/v3/) in an object
 oriented way. There is also [Net::GitHub](https://metacpan.org/pod/Net::GitHub) which does the same for
 all the versions (v1, v2, v3) of the Github API.
@@ -103,6 +114,9 @@ from the great API documentation at
 [Github](http://developer.github.com/v3/). Please also read the
 documentation there, since it might be more complete and more
 up-to-date.
+
+[Pithub::Base](https://metacpan.org/pod/Pithub::Base) contains documentation for attributes inherited by all
+Pithub modules.
 
 # WARNING
 
@@ -440,7 +454,7 @@ use it.
 
 # AUTHOR
 
-Johannes Plunien <plu@cpan.org>
+Johannes Plunien &lt;plu@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
