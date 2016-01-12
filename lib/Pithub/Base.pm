@@ -382,6 +382,22 @@ has 'user' => (
     required  => 0,
 );
 
+=attr utf8
+
+This can set utf8 flag.
+
+Examples:
+
+    my $p = Pithub->new(utf8 => 0); # disable utf8 en/decoding
+    my $p = Pithub->new(utf8 => 1); # enable utf8 en/decoding (default)
+
+=cut
+
+has 'utf8' => (
+    is      => 'ro',
+    default => 1,
+);
+
 has '_json' => (
     builder => '_build__json',
     is      => 'ro',
@@ -674,6 +690,7 @@ sub request {
     return Pithub::Result->new(
         auto_pagination => $self->auto_pagination,
         response        => $response,
+        utf8            => $self->utf8,
         _request        => sub { $self->request(@_) },
     );
 }
@@ -724,7 +741,7 @@ sub has_token {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON->new->utf8;
+    return JSON->new->utf8($self->utf8);
 }
 
 sub _build_ua {

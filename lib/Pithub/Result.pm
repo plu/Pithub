@@ -188,6 +188,17 @@ has '_iterator' => (
     lazy    => 1,
 );
 
+=attr utf8
+
+This can set utf8 flag.
+
+=cut
+
+has 'utf8' => (
+    is      => 'ro',
+    default => 1,
+);
+
 has '_json' => (
     builder => '_build__json',
     is      => 'ro',
@@ -472,7 +483,7 @@ sub _build_prev_page_uri {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON->new->utf8;
+    return JSON->new->utf8($self->utf8);
 }
 
 sub _get_link_header {
