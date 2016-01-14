@@ -1,9 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Pass utf8 option to child instances (Ichinose Shogo)
 
 0.01031   2016-01-11 23:35:23-05:00 America/Toronto
-          - Add disabling utf8 as a constructor option
+          - Add disabling utf8 as a constructor option (Ichinose Shogo)
           - Pod fixes (Ivan Bessarabov and Zoffix Znet)
 
 0.01030   2015-10-18 21:32:29-04:00 America/Toronto
