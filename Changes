@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.01033   2016-01-22 17:54:52-05:00 America/Toronto
           - Bump minimum version of JSON::MaybeXS to 1.003003 (Slaven Rezić and
             Zoffix Znet)
 
