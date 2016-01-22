@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Bump minimum version of JSON::MaybeXS to 1.003003 (Slaven Rezić and
+            Zoffix Znet)
 
 0.01032   2016-01-13 22:21:12-05:00 America/Toronto
           - Pass utf8 option to child instances (Ichinose Shogo)
