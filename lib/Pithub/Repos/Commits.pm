@@ -22,7 +22,7 @@ Examples:
     my $result = $c->compare(
         user => 'plu',
         repo => 'Pithub',
-        base => 'v0.01008,
+        base => 'v0.01008',
         head => ' master ',
     );
 
