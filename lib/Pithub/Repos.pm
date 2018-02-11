@@ -5,6 +5,7 @@ package Pithub::Repos;
 use Moo;
 use Carp qw(croak);
 use Pithub::Issues;
+use Pithub::PullRequests;
 use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
 use Pithub::Repos::Contents;
@@ -385,6 +386,16 @@ sub list {
             %args,
         );
     }
+}
+
+=method pull_requests
+
+Provides access to L<Pithub::PullRequests>.
+
+=cut
+
+sub pull_requests {
+    return shift->_create_instance('Pithub::PullRequests', @_);
 }
 
 =method releases
