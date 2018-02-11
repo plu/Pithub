@@ -157,6 +157,11 @@ my @tree = (
                 methods  => [qw(create delete get list update test)],
             },
             {
+                accessor => 'issues',
+                isa      => 'Pithub::Issues',
+                methods  => [qw(create get list update)],
+            },
+            {
                 accessor => 'keys',
                 isa      => 'Pithub::Repos::Keys',
                 methods  => [qw(create delete get list)],

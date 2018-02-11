@@ -4,6 +4,7 @@ package Pithub::Repos;
 
 use Moo;
 use Carp qw(croak);
+use Pithub::Issues;
 use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
 use Pithub::Repos::Contents;
@@ -269,6 +270,16 @@ Provides access to L<Pithub::Repos::Hooks>.
 
 sub hooks {
     return shift->_create_instance('Pithub::Repos::Hooks', @_);
+}
+
+=method issues
+
+Provides access to L<Pithub::Issues> for this repo.
+
+=cut
+
+sub issues {
+    return shift->_create_instance('Pithub::Issues', @_);
 }
 
 =method keys
