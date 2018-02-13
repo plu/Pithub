@@ -172,6 +172,11 @@ my @tree = (
                 methods  => [qw(create delete get list)],
             },
             {
+                accessor => 'markdown',
+                isa      => 'Pithub::Markdown',
+                methods  => [qw(render)],
+            },
+            {
                 accessor => 'pull_requests',
                 isa      => 'Pithub::PullRequests',
                 methods  => [qw(commits create files get is_merged list merge update)],

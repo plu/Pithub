@@ -6,6 +6,8 @@ use Moo;
 use Carp qw(croak);
 extends 'Pithub::Base';
 
+has [qw( mode context )] => ( is => 'rw' );
+
 =method render
 
 Render an arbitrary Markdown document
@@ -30,6 +32,11 @@ Example:
 sub render {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: data (hashref)' unless defined $args{data};
+
+    for (qw( context mode )) {
+        $args{data}{$_} = $self->$_ if !exists $args{data}{$_} and $self->$_;
+    }
+
     return $self->request(
         method => 'POST',
         path   => '/markdown',
