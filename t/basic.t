@@ -281,6 +281,7 @@ sub validate_tree {
             my $val = $obj->$accessor(@{ $node->{args} || [] });
             isa_ok $val, $node->{isa};
             can_ok $val, @$methods if @{ $methods || [] };
+            can_ok $val, 'rate_limit';
 
             foreach my $attr ( keys %attributes ) {
                 is $obj->$attr, $attributes{$attr}, "Attribute ${attr} was curried to ${obj}";

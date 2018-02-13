@@ -739,6 +739,16 @@ sub has_token {
     return 0;
 }
 
+=method rate_limit
+
+Query the rate limit for the current object and authentication method.
+
+=cut
+
+sub rate_limit {
+    return shift->request( method => 'GET', path => '/rate_limit' );
+}
+
 sub _build__json {
     my ($self) = @_;
     return JSON->new->utf8($self->utf8);
