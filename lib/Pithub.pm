@@ -616,6 +616,16 @@ sub issues {
     return shift->_create_instance('Pithub::Issues', @_);
 }
 
+=method markdown
+
+Provides access to L<Pithub::Markdown>.
+
+=cut
+
+sub markdown {
+    return shift->_create_instance('Pithub::Markdown', @_);
+}
+
 =method orgs
 
 Provides access to L<Pithub::Orgs>.

@@ -93,6 +93,11 @@ my @tree = (
         ],
     },
     {
+        accessor => 'markdown',
+        isa      => 'Pithub::Markdown',
+        methods  => [qw(render)],
+    },
+    {
         accessor => 'orgs',
         isa      => 'Pithub::Orgs',
         methods  => [qw(get list update)],
