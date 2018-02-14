@@ -21,10 +21,8 @@ before_install:
 install:
   - cpanm App::cpm
   - cpm install -g --with-develop --with-suggests
-  - dzil authordeps --missing | xargs cpm install -g
-  - dzil listdeps --missing | xargs cpm install -g
 cache:
   directories:
     - ~/perl5
 script:
-  - dzil test
+  - prove -lr -j$(test-jobs) t
