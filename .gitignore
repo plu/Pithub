@@ -1,14 +1,13 @@
-/*.db
-/*.tar.gz
-/.build
-/.llrc
-/.lwpcookies
-/.project
 /blib*
+/_build*
+/.build
 /Build
 /cover_db
+/*.db
 /inc
+/.llrc
 /log/*.log
+/.lwpcookies
 /Makefile
 /Makefile.old
 /MANIFEST
@@ -16,4 +15,6 @@
 /META.yml
 /Pithub-*/
 /pm_to_blib*
-/_build*
+/.project
+/*.tar.gz
+.tidyall.d
