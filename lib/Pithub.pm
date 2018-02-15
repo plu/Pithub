@@ -51,9 +51,9 @@ L<Pithub> supports all API calls so far, but only for v3.
 
     # No need to provide user/repo to each module:
     my $pit = Pithub->new(
-      user  => $user,
-      repo  => $repo,
-      token => $oauth_token,
+      user  => 'plu',
+      repo  => 'pithub',
+      token => 'my_oauth_token',
     );
 
     $pit->repos->get;

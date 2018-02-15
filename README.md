@@ -5,9 +5,11 @@
 
 Pithub - Github v3 API
 
+[![Build Status](https://travis-ci.org/plu/Pithub.png?branch=master)](https://travis-ci.org/plu/Pithub)
+
 # VERSION
 
-version 0.01033
+version 0.01034
 
 # SYNOPSIS
 
@@ -454,7 +456,7 @@ use it.
 
 # AUTHOR
 
-Johannes Plunien &lt;plu@cpan.org>
+Johannes Plunien <plu@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
