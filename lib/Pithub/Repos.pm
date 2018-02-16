@@ -4,6 +4,8 @@ package Pithub::Repos;
 
 use Moo;
 use Carp qw(croak);
+use Pithub::Issues;
+use Pithub::PullRequests;
 use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
 use Pithub::Repos::Contents;
@@ -271,6 +273,16 @@ sub hooks {
     return shift->_create_instance('Pithub::Repos::Hooks', @_);
 }
 
+=method issues
+
+Provides access to L<Pithub::Issues> for this repo.
+
+=cut
+
+sub issues {
+    return shift->_create_instance('Pithub::Issues', @_);
+}
+
 =method keys
 
 Provides access to L<Pithub::Repos::Keys>.
@@ -374,6 +386,16 @@ sub list {
             %args,
         );
     }
+}
+
+=method pull_requests
+
+Provides access to L<Pithub::PullRequests>.
+
+=cut
+
+sub pull_requests {
+    return shift->_create_instance('Pithub::PullRequests', @_);
 }
 
 =method releases
