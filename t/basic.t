@@ -93,6 +93,11 @@ my @tree = (
         ],
     },
     {
+        accessor => 'markdown',
+        isa      => 'Pithub::Markdown',
+        methods  => [qw(render)],
+    },
+    {
         accessor => 'orgs',
         isa      => 'Pithub::Orgs',
         methods  => [qw(get list update)],
@@ -165,6 +170,11 @@ my @tree = (
                 accessor => 'keys',
                 isa      => 'Pithub::Repos::Keys',
                 methods  => [qw(create delete get list)],
+            },
+            {
+                accessor => 'markdown',
+                isa      => 'Pithub::Markdown',
+                methods  => [qw(render)],
             },
             {
                 accessor => 'pull_requests',

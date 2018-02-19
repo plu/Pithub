@@ -5,6 +5,7 @@ package Pithub::Repos;
 use Moo;
 use Carp qw(croak);
 use Pithub::Issues;
+use Pithub::Markdown;
 use Pithub::PullRequests;
 use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
@@ -386,6 +387,20 @@ sub list {
             %args,
         );
     }
+}
+
+=method markdown
+
+Provides access to L<Pithub::Markdown> setting the current repository as the
+default context. This also sets the mode to default to 'gfm'.
+
+=cut
+
+sub markdown {
+    my $self = shift;
+    return $self->_create_instance('Pithub::Markdown',
+        mode => 'gfm', context => sprintf( '%s/%s', $self->user, $self->repo ),
+        @_);
 }
 
 =method pull_requests

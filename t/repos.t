@@ -151,6 +151,17 @@ subtest "Pithub::Repos->branch" => sub {
     }
 }
 
+# Pithub::Repos->markdown
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::Repos', user => 'foo', repo => 'bar' );
+
+    {
+        my $md = $obj->markdown;
+        is $md->mode, 'gfm', 'Markdown sets default mode to gfm';
+        is $md->context, 'foo/bar', 'Markdown sets default context to repo';
+    }
+}
+
 # Pithub::Repos->update
 {
     my $obj = Pithub::Test::Factory->create( 'Pithub::Repos', user => 'foo', repo => 'bar' );
