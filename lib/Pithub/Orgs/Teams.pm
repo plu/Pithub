@@ -1,5 +1,5 @@
 package Pithub::Orgs::Teams;
-
+our $VERSION = '0.01035';
 # ABSTRACT: Github v3 Org Teams API
 
 use Moo;

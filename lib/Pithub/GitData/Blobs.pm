@@ -1,5 +1,5 @@
 package Pithub::GitData::Blobs;
-
+our $VERSION = '0.01035';
 # ABSTRACT: Github v3 Git Data Blobs API
 
 use Moo;

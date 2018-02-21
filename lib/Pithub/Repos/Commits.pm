@@ -1,5 +1,5 @@
 package Pithub::Repos::Commits;
-
+our $VERSION = '0.01035';
 # ABSTRACT: Github v3 Repo Commits API
 
 use Moo;

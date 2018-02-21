@@ -1,5 +1,5 @@
 package Pithub::Base;
-
+our $VERSION = '0.01035';
 # ABSTRACT: Github v3 base class for all Pithub modules
 
 use Moo;

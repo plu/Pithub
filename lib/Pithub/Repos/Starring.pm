@@ -1,5 +1,5 @@
 package Pithub::Repos::Starring;
-
+our $VERSION = '0.01035';
 # ABSTRACT: Github v3 Repo Starring API
 
 use Moo;

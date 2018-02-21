@@ -1,5 +1,5 @@
 package Pithub::Repos::Statuses;
-
+our $VERSION = '0.01035';
 # ABSTRACT:  Github v3 repos / statuses API
 
 use Moo;

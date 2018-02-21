@@ -1,5 +1,5 @@
 package Pithub::Markdown;
-
+our $VERSION = '0.01035';
 # ABSTRACT: Github v3 Markdown API
 
 use Moo;
