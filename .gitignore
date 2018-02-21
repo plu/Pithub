@@ -16,5 +16,6 @@
 /Pithub-*/
 /pm_to_blib*
 /.project
+/*.sw*
 /*.tar.gz
 .tidyall.d
