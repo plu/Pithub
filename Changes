@@ -1,6 +1,6 @@
-Revision history for {{$dist->name}}
+Revision history for Pithub
 
-{{$NEXT}}
+0.01034   2018-02-21 16:03:21Z
           - Add support for the Github markdown API (GH#205) (JosJoaqu Atria)
           - Add .mailmap file (GH#206) (JosJoaqu Atria)
           - Add issues() and pull_requestions() methods to Pithub::Repos.

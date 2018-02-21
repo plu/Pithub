@@ -33,12 +33,9 @@
          },
          "requires" : {
             "Pod::Coverage::TrustPod" : "0",
-            "Pod::Wordlist" : "0",
             "Test::CPAN::Changes" : "0.19",
-            "Test::Code::TidyAll" : "0.50",
             "Test::More" : "0.96",
             "Test::Pod::Coverage" : "1.08",
-            "Test::Spelling" : "0.12",
             "Test::Synopsis" : "0",
             "strict" : "0",
             "warnings" : "0"
@@ -225,25 +222,6 @@
             "version" : "6.011"
          },
          {
-            "class" : "Dist::Zilla::Plugin::Test::PodSpelling",
-            "config" : {
-               "Dist::Zilla::Plugin::Test::PodSpelling" : {
-                  "directories" : [
-                     "bin",
-                     "lib"
-                  ],
-                  "spell_cmd" : "",
-                  "stopwords" : [
-                     "Alders",
-                     "Alders'"
-                  ],
-                  "wordlist" : "Pod::Wordlist"
-               }
-            },
-            "name" : "@Author::OALDERS/Test::PodSpelling",
-            "version" : "2.007005"
-         },
-         {
             "class" : "Dist::Zilla::Plugin::PodCoverageTests",
             "name" : "@Author::OALDERS/PodCoverageTests",
             "version" : "6.011"
@@ -272,11 +250,6 @@
             "class" : "Dist::Zilla::Plugin::Test::Synopsis",
             "name" : "@Author::OALDERS/Test::Synopsis",
             "version" : "2.000007"
-         },
-         {
-            "class" : "Dist::Zilla::Plugin::Test::TidyAll",
-            "name" : "@Author::OALDERS/Test::TidyAll",
-            "version" : "0.04"
          },
          {
             "class" : "Dist::Zilla::Plugin::RunExtraTests",
@@ -703,7 +676,7 @@
          {
             "class" : "Dist::Zilla::Plugin::GitHubREADME::Badge",
             "name" : "GitHubREADME::Badge",
-            "version" : "0.22"
+            "version" : "0.23"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
@@ -768,21 +741,18 @@
    "x_contributors" : [
       "Alessandro Ghedini <alessandro@ghedini.me>",
       "Andreas Marienborg <andreas.marienborg@gmail.com>",
-      "Andreas Marienborg <omega@palle.net>",
       "Corey Farwell <coreyf@rwell.org>",
       "Florian Ragwitz <rafl@debian.org>",
       "Ichinose Shogo <shogo82148@gmail.com>",
       "Ivan Bessarabov <ivan@bessarabov.ru>",
-      "Johannes Plunien <johannes.plunien@metaquark.de>",
-      "Johannes Plunien <johannes.plunien@xing.com>",
       "Johannes Plunien <plu@pqpq.de>",
+      "Jos\u00e9 Joaqu\u00edn Atria <jjatria@cpan.org>",
       "Konboi <ryosuke.yabuki@gmail.com>",
       "Michael G. Schwern <schwern@pobox.com>",
       "Olaf Alders <olaf@wundersolutions.com>",
       "Randy Stauner <randy@magnificent-tears.com>",
       "SUZUKI Masashi <m15.suzuki.masashi@gmail.com>",
-      "Zoffix Znet <cpan@zoffix.com>",
-      "Zoffix Znet <zoffixznet@users.noreply.github.com>"
+      "Zoffix Znet <cpan@zoffix.com>"
    ],
    "x_serialization_backend" : "Cpanel::JSON::XS version 3.0239"
 }

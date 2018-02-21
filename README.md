@@ -38,9 +38,9 @@ version 0.01034
 
     # No need to provide user/repo to each module:
     my $pit = Pithub->new(
-      user  => $user,
-      repo  => $repo,
-      token => $oauth_token,
+      user  => 'plu',
+      repo  => 'pithub',
+      token => 'my_oauth_token',
     );
 
     $pit->repos->get;
@@ -82,6 +82,10 @@ Provides access to [Pithub::GitData](https://metacpan.org/pod/Pithub::GitData).
 ## issues
 
 Provides access to [Pithub::Issues](https://metacpan.org/pod/Pithub::Issues).
+
+## markdown
+
+Provides access to [Pithub::Markdown](https://metacpan.org/pod/Pithub::Markdown).
 
 ## orgs
 
