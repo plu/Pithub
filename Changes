@@ -1,6 +1,12 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add support for the Github markdown API (GH#205) (JosJoaqu Atria)
+          - Add .mailmap file (GH#206) (JosJoaqu Atria)
+          - Add issues() and pull_requestions() methods to Pithub::Repos.
+            (GH#201) (JosJoaqu Atria)
+          - Add a rate_limit method to base (GH#204) (JosJoaqu Atria)
+          - CPANTS fixes (PRC) (GH#200) (JosJoaqu Atria)
 
 0.01033   2016-01-22 17:54:52-05:00 America/Toronto
           - Bump minimum version of JSON::MaybeXS to 1.003003 (Slaven Rezić and
