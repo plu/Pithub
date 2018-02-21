@@ -156,6 +156,8 @@ B<clear_jsonp_callback>: reset the jsonp_callback attribute
 
 =item *
 
+=for Pod::Coverage has_jsonp_callback
+
 B<has_jsonp_callback>: check if the jsonp_callback attribute is set
 
 =back
@@ -198,6 +200,8 @@ B<clear_per_page>: reset the per_page attribute
 
 =item *
 
+=for Pod::Coverage has_per_page
+
 B<has_per_page>: check if the per_page attribute is set
 
 =back
@@ -211,6 +215,8 @@ has 'per_page' => (
     default   => 100,
     required  => 0,
 );
+
+=for Pod::Coverage has_prepare_request
 
 =attr prepare_request
 
@@ -299,6 +305,8 @@ B<clear_repo>: reset the repo attribute
 
 =item *
 
+=for Pod::Coverage has_repo
+
 B<has_repo>: check if the repo attribute is set
 
 =back
@@ -361,6 +369,8 @@ There are two helper methods:
 B<clear_user>: reset the user attribute
 
 =item *
+
+=for Pod::Coverage has_user
 
 B<has_user>: check if the user attribute is set
 
