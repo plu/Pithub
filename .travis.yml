@@ -1,40 +1,57 @@
-sudo: false
+---
+addons:
+  apt:
+    packages:
+      - aspell
+      - aspell-en
 language: perl
+perl:
+  - blead
+  - '5.28'
+  - '5.24'
+  - '5.22'
+  - '5.20'
+  - '5.18'
+  - '5.16'
+  - '5.14'
+cache:
+  directories:
+    - '~/perl5'
 matrix:
+  allow_failures:
+    - perl: blead
+  fast_finish: 1
   include:
-  - perl: "5.26"
-    env: AUTHOR_TESTING=1
-  - perl: "5.24"
-    env: COVERAGE=1
-  - perl: "5.22"
-  - perl: "5.20"
-  - perl: "5.18"
-  - perl: "5.16"
-  - perl: "5.14"
-  - perl: "5.12"
-  - perl: "5.10"
-notifications:
-  email:
-    recipients:
-      - olaf@wundersolutions.com
-    on_success: always
-    on_failure: always
+    - env: AUTHOR_TESTING=1 RELEASE_TESTING=1
+      perl: '5.26'
+    - env: COVERAGE=1
+      perl: '5.28'
+env:
+  global:
+    - AUTHOR_TESTING=0
+    - COVERAGE=0
 before_install:
-  - eval $(curl https://travis-perl.github.io/init) --perl
+  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+  - source ~/travis-perl-helpers/init
 install:
   - cpanm App::cpm
   - cpm install -g --with-develop --with-suggests
-  - cpan-install --coverage   # installs coverage prereqs, if enabled
-cache:
-  directories:
-    - ~/perl5
+  - cpan-install --coverage
 before_script:
   - coverage-setup
 script:
   - prove -lr -j$(test-jobs) t
 after_success:
   - coverage-report
-env:
-  global:
-    - AUTHOR_TESTING=0
-    - COVERAGE=0
+notifications:
+  email:
+    on_failure: always
+    on_success: always
+    recipients:
+      - olaf@wundersolutions.com
+### __app_cisetup__
+# ---
+# force_threaded_perls: 0
+# perl_caching: 1
+
+### __app_cisetup__
