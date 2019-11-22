@@ -40,7 +40,9 @@ Render an arbitrary Markdown document
 
 Example:
 
-    my $response = Pithub::Markdown->render(
+    use Pithub::Markdown;
+
+    my $response = Pithub::Markdown->new->render(
         data => {
             text => "Hello world github/linguist#1 **cool**, and #1!",
             context => "github/gollum",
