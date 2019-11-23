@@ -1,6 +1,7 @@
-Revision history for {{$dist->name}}
+Revision history for Pithub
 
-{{$NEXT}}
+0.01035   2019-11-23 16:59:49Z
+          - fix error in example (GH#211) (Graham✈️✈️)
 
 0.01034   2018-02-21 16:03:21Z
           - Add support for the Github markdown API (GH#205) (JosJoaqu Atria)
