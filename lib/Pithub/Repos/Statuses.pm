@@ -74,7 +74,7 @@ Examples:
 
     my $statuses = Pithub::Repos::Statuses->new;
     my $result   = $statuses->create( user => 'plu', repo => 'Pithub',
-        sha => '0123456', 
+        sha => '0123456',
         data => {
             state => 'error',
             description => 'Build failed',
