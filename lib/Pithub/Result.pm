@@ -1,5 +1,5 @@
 package Pithub::Result;
-our $VERSION = '0.01035';
+our $VERSION = '0.01036';
 # ABSTRACT: Github v3 result object
 
 use Moo;

@@ -1,4 +1,6 @@
-Revision history for Pithub
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.01035   2019-11-23 16:59:49Z
           - fix error in example (GH#211) (Graham✈️✈️)
