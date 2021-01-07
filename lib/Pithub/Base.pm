@@ -3,13 +3,13 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 base class for all Pithub modules
 
 use Moo;
-use Carp qw(croak);
+use Carp qw( croak );
 use HTTP::Headers;
 use HTTP::Request;
-use JSON::MaybeXS;
-use LWP::UserAgent;
+use JSON::MaybeXS qw( JSON );
+use LWP::UserAgent ();
 use Pithub::Result;
-use URI;
+use URI ();
 
 with 'Pithub::Result::SharedCache';
 

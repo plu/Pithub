@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Repo Releases API
 
 use Moo;
-use Carp qw(croak);
+use Carp qw( croak );
 use Pithub::Repos::Releases::Assets;
 extends 'Pithub::Base';
 

@@ -1,6 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use Pithub::Test;
+use Pithub::Test qw( uri_is );
 
 subtest "Test::Most imported" => sub {
     pass("Loaded test functions");

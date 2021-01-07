@@ -1,8 +1,8 @@
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 use Pithub;
-use Scalar::Util qw(refaddr);
-use Test::Most;
+use Scalar::Util qw( refaddr );
+use Test::Most import => [ qw( done_testing is isnt note plan subtest ) ];
 
 plan skip_all => 'Set PITHUB_TEST_LIVE to true to run these tests' unless $ENV{PITHUB_TEST_LIVE};
 

@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 use Pithub::Test::Factory;
-use Test::Most;
+use Test::Most import => [ qw( code done_testing eq_or_diff is isnt like ok skip subtest use_ok ) ];
 
 BEGIN {
     use_ok('Pithub');
