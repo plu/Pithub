@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 User Followers API
 
 use Moo;
-use Carp qw(croak);
+use Carp qw( croak );
 extends 'Pithub::Base';
 
 =method follow

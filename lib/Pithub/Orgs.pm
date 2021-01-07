@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Orgs API
 
 use Moo;
-use Carp qw(croak);
+use Carp qw( croak );
 use Pithub::Orgs::Members;
 use Pithub::Orgs::Teams;
 extends 'Pithub::Base';

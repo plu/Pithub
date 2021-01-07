@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Gists API
 
 use Moo;
-use Carp qw(croak);
+use Carp qw( croak );
 use Pithub::Gists::Comments
 extends 'Pithub::Base';
 

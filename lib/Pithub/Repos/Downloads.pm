@@ -3,8 +3,8 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Repo Downloads API
 
 use Moo;
-use Carp qw(croak);
-use HTTP::Request::Common qw(POST);
+use Carp qw( croak );
+use HTTP::Request::Common qw( POST );
 extends 'Pithub::Base';
 
 =head1 NOTE

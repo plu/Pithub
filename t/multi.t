@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use Pithub::Test::Factory;
-use Test::Most;
+use Test::Most import => [ qw( code done_testing is throws_ok use_ok ) ];
 
 # branches.t
 # collaborators/list.t

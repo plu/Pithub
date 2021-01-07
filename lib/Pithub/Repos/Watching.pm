@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Repo Watching API
 
 use Moo;
-use Carp qw(croak);
+use Carp ();
 extends 'Pithub::Base';
 
 =method is_watching

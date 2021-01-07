@@ -1,8 +1,8 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::MaybeXS;
+use JSON::MaybeXS qw( JSON );
 use Pithub::Test::Factory;
-use Test::Most;
+use Test::Most import => [ qw( done_testing eq_or_diff is isa_ok like ok use_ok ) ];
 
 BEGIN {
     use_ok('Pithub');

@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Git Data API
 
 use Moo;
-use Carp qw(croak);
+use Carp ();
 use Pithub::GitData::Blobs;
 use Pithub::GitData::Commits;
 use Pithub::GitData::References;

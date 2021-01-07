@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Org Teams API
 
 use Moo;
-use Carp qw(croak carp);
+use Carp qw( carp croak );
 extends 'Pithub::Base';
 
 =method add_member

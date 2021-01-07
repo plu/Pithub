@@ -3,7 +3,7 @@ our $VERSION = '0.01036';
 # ABSTRACT: Github v3 Users API
 
 use Moo;
-use Carp qw(croak);
+use Carp qw( croak );
 use Pithub::Users::Emails;
 use Pithub::Users::Followers;
 use Pithub::Users::Keys;

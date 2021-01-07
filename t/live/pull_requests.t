@@ -1,7 +1,7 @@
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 use Pithub::Test::Factory;
-use Test::Most;
+use Test::Most import => [ qw( done_testing is like ok skip use_ok ) ];
 
 BEGIN {
     use_ok('Pithub');

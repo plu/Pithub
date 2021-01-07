@@ -1,9 +1,9 @@
 use FindBin;
 use lib "$FindBin::Bin/lib";
-use JSON::MaybeXS;
+use JSON::MaybeXS qw( JSON );
 use Pithub::Test::Factory;
 use Pithub::Test::UA;
-use Pithub::Test;
+use Pithub::Test qw( uri_is );
 
 BEGIN {
     use_ok('Pithub');

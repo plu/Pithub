@@ -4,9 +4,9 @@ our $VERSION = '0.01036';
 
 use Moo;
 use Array::Iterator;
-use JSON::MaybeXS;
-use URI;
-use Carp;
+use JSON::MaybeXS qw( JSON );
+use URI ();
+use Carp qw( confess croak );
 
 sub _isa_isa_maker {
     my $class = shift;

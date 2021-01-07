@@ -13,7 +13,7 @@ use Pithub::Repos;
 use Pithub::Search;
 use Pithub::SearchV3;
 use Pithub::Users;
-use Carp 'croak';
+use Carp qw( croak );
 extends 'Pithub::Base';
 
 =head1 DESCRIPTION
