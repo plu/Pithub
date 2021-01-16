@@ -4,7 +4,7 @@ our $VERSION = '0.01036';
 
 use Moo;
 use Carp qw( croak );
-use Pithub::Gists::Comments
+use Pithub::Gists::Comments;
 extends 'Pithub::Base';
 
 =method comments
