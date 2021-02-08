@@ -351,6 +351,16 @@ See also: L<http://developer.github.com/v3/pulls/comments/>
     my $comments = Pithub::PullRequests->new->comments;
     my $comments = Pithub::PullRequests::Comments->new;
 
+=item *
+
+L<Pithub::PullRequests::Reviewers>
+
+See also: L<https://docs.github.com/en/rest/reference/pulls#review-requests>
+
+    my $reviewers = Pithub->new->pull_requests->reviewers;
+    my $reviewers = Pithub::PullRequests->new->reviewers;
+    my $reviewers = Pithub::PullRequests::Reviewers->new;
+
 =back
 
 =back

@@ -7,6 +7,7 @@ use Test::Most import => [ qw( done_testing eq_or_diff is isa_ok ok throws_ok us
 BEGIN {
     use_ok('Pithub::PullRequests');
     use_ok('Pithub::PullRequests::Comments');
+    use_ok('Pithub::PullRequests::Reviewers');
 }
 
 # Pithub::PullRequests->commits
@@ -260,6 +261,69 @@ BEGIN {
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/123', 'HTTP path';
         my $http_request = $result->request;
         eq_or_diff $json->decode( $http_request->content ), { 'body' => 'some comment' }, 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviewers->delete
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::PullRequests::Reviewers', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviewers';
+
+    throws_ok { $obj->delete } qr{Missing key in parameters: pull_request_id}, 'No parameters';
+    throws_ok { $obj->delete( pull_request_id => 123 ); } qr{Access token required for: DELETE /repos/foo/bar/pulls/123/requested_reviewers}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->delete( pull_request_id => 456 );
+        is $result->request->method, 'DELETE', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/456/requested_reviewers', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviewers->list
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::PullRequests::Reviewers', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviewers';
+
+    throws_ok { $obj->list } qr{Missing key in parameters: pull_request_id}, 'No parameters';
+
+    {
+        my $result = $obj->list( pull_request_id => 456 );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/456/requested_reviewers', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, '', 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviewers->update
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::PullRequests::Reviewers', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviewers';
+
+    throws_ok { $obj->update } qr{Missing key in parameters: pull_request_id}, 'No parameters';
+    throws_ok { $obj->update( pull_request_id => 123 ) } qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok { $obj->update( pull_request_id => 123, data => 5 ) } qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok {
+        $obj->update( pull_request_id => 123, data => { reviewers => ['bar'] } );
+    }
+    qr{Access token required for: POST /repos/foo/bar/pulls/123/requested_reviewers}, 'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $json = JSON->new;
+        my $result = $obj->update( pull_request_id => 123, data => { reviewers => ['baz'] } );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/123/requested_reviewers', 'HTTP path';
+        my $http_request = $result->request;
+        eq_or_diff $json->decode( $http_request->content ), { 'reviewers' => ['baz'] }, 'HTTP body';
     }
 }
 

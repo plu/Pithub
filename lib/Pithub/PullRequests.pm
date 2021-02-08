@@ -5,6 +5,7 @@ our $VERSION = '0.01036';
 use Moo;
 use Carp qw( croak );
 use Pithub::PullRequests::Comments;
+use Pithub::PullRequests::Reviewers;
 extends 'Pithub::Base';
 
 =method comments
@@ -15,6 +16,16 @@ Provides access to L<Pithub::PullRequests::Comments>.
 
 sub comments {
     return shift->_create_instance('Pithub::PullRequests::Comments', @_);
+}
+
+=method reviewers
+
+Provides access to L<Pithub::PullRequests::Reviewers>.
+
+=cut
+
+sub reviewers {
+    return shift->_create_instance('Pithub::PullRequests::Reviewers', @_);
 }
 
 =method commits
