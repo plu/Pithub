@@ -1,5 +1,5 @@
 package Pithub::Gists::Comments;
-our $VERSION = '0.01036';
+our $VERSION = '0.01037';
 # ABSTRACT: Github v3 Gist Comments API
 
 use Moo;

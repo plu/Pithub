@@ -1,5 +1,5 @@
 package Pithub::Result::SharedCache;
-our $VERSION = '0.01036';
+our $VERSION = '0.01037';
 # ABSTRACT: A role to share the LRU cache with all Pithub objects
 
 use Moo::Role;

@@ -1,5 +1,5 @@
 package Pithub::PullRequests::Reviewers;
-our $VERSION = '0.01036';
+our $VERSION = '0.01037';
 # ABSTRACT: Github v3 Pull Request Review Requests API
 
 use Moo;

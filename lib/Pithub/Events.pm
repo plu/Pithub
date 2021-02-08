@@ -1,5 +1,5 @@
 package Pithub::Events;
-our $VERSION = '0.01036';
+our $VERSION = '0.01037';
 # ABSTRACT: Github v3 Events API
 
 use Moo;
