@@ -1,6 +1,6 @@
-Revision history for {{$dist->name}}
+Revision history for Pithub
 
-{{$NEXT}}
+0.01036   2021-02-08 02:47:17Z
           - Add pull request review requests (GH#217) (Shigeki SUGAI)
           - Tidy module imports (GH#216) (Olaf Alders)
 
