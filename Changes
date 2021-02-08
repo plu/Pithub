@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add pull request review requests (GH#217) (Shigeki SUGAI)
+          - Tidy module imports (GH#216) (Olaf Alders)
 
 0.01035   2019-11-23 16:59:49Z
           - fix error in example (GH#211) (Graham✈️✈️)
