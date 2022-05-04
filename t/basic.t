@@ -1,9 +1,15 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
+#!perl
+
+use strict;
+use warnings;
+
 use JSON::MaybeXS qw( JSON );
-use Pithub::Test::Factory;
-use Pithub::Test::UA;
+use Pithub ();
+
+use lib 't/lib';
 use Pithub::Test qw( uri_is );
+use Pithub::Test::Factory ();
+use Pithub::Test::UA ();
 
 BEGIN {
     use_ok('Pithub');

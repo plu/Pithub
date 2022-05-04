@@ -1,5 +1,9 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
+#!perl
+
+use strict;
+use warnings;
+
+use lib 't/lib';
 use Pithub::Test qw( uri_is );
 
 subtest "Test::Most imported" => sub {
