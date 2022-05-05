@@ -1,6 +1,11 @@
+#!perl
+
+use strict;
+use warnings;
+
 use FindBin;
 use lib "$FindBin::Bin/../lib";
-use Pithub;
+use Pithub ();
 use Scalar::Util qw( refaddr );
 use Test::Most import => [ qw( done_testing is isnt note plan subtest ) ];
 

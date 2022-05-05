@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Tidy some tests (GH#218) (Olaf Alders)
 
 0.01036   2021-02-08 02:47:17Z
           - Add pull request review requests (GH#217) (Shigeki SUGAI)

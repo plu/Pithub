@@ -1,9 +1,13 @@
 package Pithub::Test;
 
+use Test::Most; # strict and warnings
+
+use Exporter qw( import );
 use Import::Into;
-use Test::Most;
+use Test::Builder;
 
 BEGIN {
+    ## no critic (ClassHierarchies::ProhibitExplicitISA, Modules::ProhibitAutomaticExportation)
     require Exporter;
     our @ISA    = qw(Exporter);
     our @EXPORT = qw(uri_is);
@@ -47,7 +51,7 @@ sub uri_is {
 sub _make_uri {
     my $uri = shift;
 
-    return $uri if ref $uri && $uri->isa("URI");
+    return $uri if ref $uri && $uri->isa('URI');
 
     require URI;
     return URI->new($uri);
