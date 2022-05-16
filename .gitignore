@@ -19,3 +19,4 @@
 *.sw*
 /*.tar.gz
 .tidyall.d
+MYMETA.*

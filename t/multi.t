@@ -23,6 +23,7 @@ BEGIN {
     use_ok('Pithub::Repos');
     use_ok('Pithub::Repos::Collaborators');
     use_ok('Pithub::Repos::Commits');
+    use_ok('Pithub::Repos::Branches');
     use_ok('Pithub::Repos::Downloads');
     use_ok('Pithub::Repos::Forks');
     use_ok('Pithub::Repos::Keys');
@@ -287,16 +288,7 @@ test(
 test(
     code => sub {
         my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory->create( 'Pithub', %$c_args )->repos->branches(%$m_args);
-    },
-    path  => '/repos/plu/Pithub/branches',
-    tests => \@tests,
-);
-
-test(
-    code => sub {
-        my ( $c_args, $m_args ) = @_;
-        return Pithub::Test::Factory->create( 'Pithub::Repos', %$c_args )->branches(%$m_args);
+        return Pithub::Test::Factory->create( 'Pithub::Repos::Branches', %$c_args )->list(%$m_args);
     },
     path  => '/repos/plu/Pithub/branches',
     tests => \@tests,

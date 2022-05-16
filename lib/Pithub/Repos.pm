@@ -9,6 +9,7 @@ use Pithub::Markdown;
 use Pithub::PullRequests;
 use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
+use Pithub::Repos::Branches;
 use Pithub::Repos::Contents;
 use Pithub::Repos::Downloads;
 use Pithub::Repos::Forks;
@@ -21,68 +22,14 @@ use Pithub::Repos::Statuses;
 use Pithub::Repos::Watching;
 extends 'Pithub::Base';
 
-=method branch
-
-Get information about a single branch.
-
-    GET /repos/:owner/:repo/branches/:branch
-
-Example:
-
-    my $result = Pithub->new->branch(
-        user => 'plu',
-        repo => 'Pithub',
-        branch => "master"
-    );
-
-See also L<branches> to get a list of all branches.
-
-=cut
-
-sub branch {
-    my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: branch (string)' unless defined $args{branch};
-    $self->_validate_user_repo_args( \%args );
-    return $self->request(
-        method => 'GET',
-        path   => sprintf(
-            '/repos/%s/%s/branches/%s', delete $args{user},
-                                        delete $args{repo},
-                                        delete $args{branch},
-        ),
-        %args,
-    );
-}
-
 =method branches
 
-=over
-
-=item *
-
-List Branches
-
-    GET /repos/:user/:repo/branches
-
-Examples:
-
-    my $repos  = Pithub::Repos->new;
-    my $result = $repos->branches( user => 'plu', repo => 'Pithub' );
-
-See also L<branch> to get information about a single branch.
-
-=back
+Provides access to L<Pithub::Repos::Branches>.
 
 =cut
 
 sub branches {
-    my ( $self, %args ) = @_;
-    $self->_validate_user_repo_args( \%args );
-    return $self->request(
-        method => 'GET',
-        path   => sprintf( '/repos/%s/%s/branches', delete $args{user}, delete $args{repo} ),
-        %args,
-    );
+    return shift->_create_instance('Pithub::Repos::Branches', @_);
 }
 
 =method collaborators

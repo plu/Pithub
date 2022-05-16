@@ -135,13 +135,19 @@ my @tree = (
     {
         accessor => 'repos',
         isa      => 'Pithub::Repos',
-        methods  => [qw(branches contributors create get languages list tags teams update)],
+        methods  => [qw(contributors create get languages list tags teams update)],
         subtree  => [
             {
                 accessor => 'collaborators',
                 isa      => 'Pithub::Repos::Collaborators',
                 methods  => [qw(add is_collaborator list remove)],
             },
+            {
+                accessor => 'branches',
+                isa      => 'Pithub::Repos::Branches',
+                methods  => [qw(get list rename merge)],
+            },
+
             {
                 accessor => 'commits',
                 isa      => 'Pithub::Repos::Commits',
@@ -319,7 +325,7 @@ sub validate_tree {
                 next if $node->{isa} eq 'Pithub::Repos::Downloads' and $method eq 'upload';
 
                 my $result;
-                my $data = {state => 'pending'};
+                my $data = {state => 'pending', branch => 'master', base => 'master', head => 'another_branch', new_name => 'new_name'};
 
                 # unfortunately the API expects arrayrefs on a very few calls
                 $data = []
@@ -331,6 +337,8 @@ sub validate_tree {
                         archive_format => 'tarball',
                         asset_id       => 1,
                         assignee       => 'john',
+                        base           => 'master',
+                        branch         => 'master',
                         collaborator   => 1,
                         comment_id     => 1,
                         content_type   => 'text/plain',
@@ -339,14 +347,15 @@ sub validate_tree {
                         email          => 'foo',
                         event_id       => 1,
                         gist_id        => 1,
+                        head           => 'branch',
                         hook_id        => 1,
                         issue_id       => 1,
                         key_id         => 1,
                         keyword        => 'foo',
-                        q              => 'foo',
                         label          => 1,
                         milestone_id   => 1,
                         name           => 'foo',
+                        new_name       => 'new',
                         options        => {
                             prepare_request => sub {
                                 shift->header( 'Accept' => 'foo.bar' );
@@ -354,6 +363,7 @@ sub validate_tree {
                         },
                         org             => 1,
                         pull_request_id => 1,
+                        q              => 'foo',
                         ref             => 1,
                         release_id      => 1,
                         repo            => 1,

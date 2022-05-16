@@ -13,6 +13,7 @@ BEGIN {
     use_ok('Pithub::Repos');
     use_ok('Pithub::Repos::Collaborators');
     use_ok('Pithub::Repos::Commits');
+    use_ok('Pithub::Repos::Branches');
     use_ok('Pithub::Repos::Downloads');
     use_ok('Pithub::Repos::Forks');
     use_ok('Pithub::Repos::Hooks');
@@ -87,28 +88,59 @@ subtest "Pithub::Repos->delete" => sub {
     }
 }
 
+# Pithub::Repos::Branches->get
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Branches', user => 'foo', repo => 'bar' );
 
-subtest "Pithub::Repos->branch" => sub {
-    my $obj = Pithub::Test::Factory->create(
-        'Pithub::Repos',
-        user => 'foo',
-        repo => 'bar'
-    );
+    isa_ok $obj, 'Pithub::Repos::Branches';
 
-    isa_ok $obj, 'Pithub::Repos';
+    throws_ok { $obj->get } qr{Missing key in parameters: branch}, 'No parameters';
 
-    subtest "too few arguments" => sub {
-        throws_ok { $obj->branch } qr/^Missing key in parameters: branch/;
-    };
-
-    subtest "basic get branch" => sub {
-        my $result = $obj->branch( branch => "master" );
+    {
+        my $result = $obj->get( branch => 'mybranch' );
         is $result->request->method, 'GET', 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/branches/master', 'HTTP path';
-        my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
-    };
-};
+        is $result->request->uri->path, '/repos/foo/bar/branches/mybranch', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Branches->list
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Branches', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Branches';
+
+    {
+        my $result = $obj->list;
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/branches', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Branches->rename
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Branches', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Branches';
+
+    {
+        my $result = $obj->rename( data => { branch => 'old', new_name => 'new' } );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/branches/old/rename', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Branches->merge
+{
+    my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Branches', user => 'foo', repo => 'bar' );
+
+    isa_ok $obj, 'Pithub::Repos::Branches';
+
+    {
+        my $result = $obj->merge(data => { base => 'base', head => 'head' } );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/merges', 'HTTP path';
+    }
+}
 
 # Pithub::Repos->list
 {
