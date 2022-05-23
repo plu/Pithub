@@ -85,6 +85,76 @@ sub branches {
     );
 }
 
+=method rename_branch
+
+=over
+
+=item *
+
+Rename a branch
+
+    POST /repos/:user/:repo/branches/:branch/rename
+
+Examples:
+
+    my $b = Pithub::Repos->new;
+    my $result = $b->rename_branch(
+        user => 'plu',
+        repo => 'Pithub',
+        branch  => 'travis',
+        data => { new_name => 'travis-ci' }
+    );
+
+=back
+
+=cut
+
+sub rename_branch {
+    my ( $self, %args ) = @_;
+    croak 'Missing parameters: branch' unless $args{branch};
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/branches/%s/rename', delete $args{user}, delete $args{repo}, delete $args{branch} ),
+        %args,
+    );
+}
+
+=method merge_branch
+
+=over
+
+=item *
+
+Merge a branch
+
+    POST /repos/:user/:repo/merges
+
+Examples:
+
+    my $b = Pithub::Repos->new;
+    my $result = $b->rename_branch(
+        user => 'plu',
+        repo => 'Pithub',
+        data => { base => 'master', head => 'travis', message => 'My commit message' }
+    );
+
+=back
+
+=cut
+
+sub merge_branch {
+    my ( $self, %args ) = @_;
+    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    $self->_validate_user_repo_args( \%args );
+    return $self->request(
+        method => 'POST',
+        path   => sprintf( '/repos/%s/%s/merges', delete $args{user}, delete $args{repo} ),
+        %args,
+    );
+}
+
 =method collaborators
 
 Provides access to L<Pithub::Repos::Collaborators>.
