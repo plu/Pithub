@@ -110,6 +110,40 @@ subtest "Pithub::Repos->branch" => sub {
     };
 };
 
+# Pithub::Repos::Branches->rename
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::Repos',
+        user => 'foo',
+        repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::Repos';
+
+    {
+        my $result = $obj->rename_branch( branch => 'old', data => { new_name => 'new' } );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/branches/old/rename', 'HTTP path';
+    }
+}
+
+# Pithub::Repos::Branches->merge
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::Repos',
+        user => 'foo',
+        repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::Repos';
+
+    {
+        my $result = $obj->merge_branch(data => { base => 'base', head => 'head' } );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/merges', 'HTTP path';
+    }
+}
+
 # Pithub::Repos->list
 {
     my $obj = Pithub::Test::Factory->create('Pithub::Repos');

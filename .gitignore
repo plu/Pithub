@@ -13,6 +13,7 @@
 /MANIFEST
 /MANIFEST.bak
 /META.yml
+/MYMETA*
 /Pithub-*/
 /pm_to_blib*
 /.project
