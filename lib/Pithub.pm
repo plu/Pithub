@@ -26,8 +26,7 @@ L<Pithub> supports all API calls so far, but only for v3.
 
 =head1 SYNOPSIS
 
-    use Pithub;
-    use Data::Dumper;
+    use Pithub ();
 
     my $p = Pithub->new;
     # my $p = Pithub->new(utf8 => 0); # enable compatibility options for version 0.01029 or lower
