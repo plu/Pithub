@@ -1,5 +1,5 @@
 package Pithub::Issues;
-our $VERSION = '0.01037';
+our $VERSION = '0.01038';
 # ABSTRACT: Github v3 Issues API
 
 use Moo;

@@ -1,5 +1,5 @@
 package Pithub::PullRequests::Comments;
-our $VERSION = '0.01037';
+our $VERSION = '0.01038';
 # ABSTRACT: Github v3 Pull Request Comments API
 
 use Moo;

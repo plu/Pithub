@@ -1,5 +1,5 @@
 package Pithub::Issues::Comments;
-our $VERSION = '0.01037';
+our $VERSION = '0.01038';
 # ABSTRACT: Github v3 Issue Comments API
 
 use Moo;
