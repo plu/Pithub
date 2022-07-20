@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add rename_branch() and merge_branch() branch to Repos class
+            (GH#220) (thibaultduponchelle)
           - Tidy some tests (GH#218) (Olaf Alders)
 
 0.01036   2021-02-08 02:47:17Z
