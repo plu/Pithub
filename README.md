@@ -1,5 +1,9 @@
-[![Build Status](https://travis-ci.org/plu/Pithub.svg?branch=master)](https://travis-ci.org/plu/Pithub)
-[![Coverage Status](https://coveralls.io/repos/plu/Pithub/badge.svg?branch=master)](https://coveralls.io/r/plu/Pithub?branch=master)
+[![codecov](https://codecov.io/gh/plu/Pithub/branch/master/graph/badge.svg)](https://codecov.io/gh/plu/Pithub)
+[![CPAN Cover Status](https://cpancoverbadge.perl-services.de/Pithub-0.01037)](https://cpancoverbadge.perl-services.de/Pithub-0.01037)
+[![Kwalitee status](https://cpants.cpanauthors.org/dist/Pithub.png)](https://cpants.cpanauthors.org/dist/Pithub)
+[![Actions Status](https://github.com/plu/Pithub/actions/workflows/test.yml/badge.svg)](https://github.com/plu/Pithub/actions)
+[![Cpan license](https://img.shields.io/cpan/l/Pithub.svg)](https://metacpan.org/release/Pithub)
+[![Cpan version](https://img.shields.io/cpan/v/Pithub.svg)](https://metacpan.org/release/Pithub)
 
 # NAME
 
@@ -7,7 +11,7 @@ Pithub - Github v3 API
 
 # VERSION
 
-version 0.01036
+version 0.01037
 
 # SYNOPSIS
 
@@ -470,7 +474,7 @@ Johannes Plunien <plu@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011-2019 by Johannes Plunien.
+This software is copyright (c) 2011 by Johannes Plunien.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
