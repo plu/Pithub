@@ -1,9 +1,11 @@
 package Pithub::Result;
-our $VERSION = '0.01038';
 # ABSTRACT: Github v3 result object
 
 use Moo;
-use Array::Iterator;
+
+our $VERSION = '0.01038';
+
+use Pithub::ResultSet ();
 use JSON::MaybeXS qw( JSON );
 use URI ();
 use Carp qw( confess croak );
@@ -184,7 +186,7 @@ has '_iterator' => (
     builder => '_build__iterator',
     clearer => '_clear_iterator',
     is      => 'ro',
-    isa     => _isa_isa_maker('Array::Iterator'),
+    isa     => _isa_isa_maker(Pithub::ResultSet::),
     lazy    => 1,
 );
 
@@ -466,7 +468,7 @@ sub _build__iterator {
     my ($self) = @_;
     my $content = $self->content;
     $content = [$content] unless ref $content eq 'ARRAY';
-    return Array::Iterator->new($content);
+    return Pithub::ResultSet->new($content);
 }
 
 sub _build_last_page_uri {
