@@ -54,7 +54,6 @@
       },
       "runtime" : {
          "requires" : {
-            "Array::Iterator" : "0",
             "Cache::LRU" : "0",
             "Carp" : "0",
             "HTTP::Headers" : "0",
@@ -104,7 +103,7 @@
          "web" : "https://github.com/plu/Pithub"
       }
    },
-   "version" : "0.01037",
+   "version" : "0.01038",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.036000"

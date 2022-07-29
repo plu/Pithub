@@ -17,7 +17,6 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.010",
   "NAME" => "Pithub",
   "PREREQ_PM" => {
-    "Array::Iterator" => 0,
     "Cache::LRU" => 0,
     "Carp" => 0,
     "HTTP::Headers" => 0,
