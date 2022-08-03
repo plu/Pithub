@@ -1,6 +1,6 @@
-Revision history for {{$dist->name}}
+Revision history for Pithub
 
-{{$NEXT}}
+0.01038   2022-08-03 17:26:08Z
           - Replace external Array::Iterator with internal Pithub::ResultSet
             (GH#222) (H.Merijn Brand and Olaf Alders)
           - Internal stylistic changes (GH#223) (Olaf Alders)

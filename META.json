@@ -47,14 +47,11 @@
             "Test::Pod::Coverage" : "1.08",
             "Test::Synopsis" : "0",
             "Test::Vars" : "0.014",
-            "Test::Version" : "1",
-            "strict" : "0",
-            "warnings" : "0"
+            "Test::Version" : "1"
          }
       },
       "runtime" : {
          "requires" : {
-            "Array::Iterator" : "0",
             "Cache::LRU" : "0",
             "Carp" : "0",
             "HTTP::Headers" : "0",
@@ -65,7 +62,9 @@
             "Moo" : "0",
             "Moo::Role" : "0",
             "URI" : "0",
-            "perl" : "5.010"
+            "perl" : "5.010",
+            "strict" : "0",
+            "warnings" : "0"
          }
       },
       "test" : {
@@ -86,9 +85,7 @@
             "Test::More" : "0",
             "Test::Most" : "0",
             "lib" : "0",
-            "perl" : "5.010",
-            "strict" : "0",
-            "warnings" : "0"
+            "perl" : "5.010"
          }
       }
    },
@@ -104,7 +101,7 @@
          "web" : "https://github.com/plu/Pithub"
       }
    },
-   "version" : "0.01037",
+   "version" : "0.01038",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.036000"
@@ -623,7 +620,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "v0.01037",
+                  "tag" : "v0.01038",
                   "tag_format" : "v%V",
                   "tag_message" : "v%V"
                },
@@ -782,6 +779,7 @@
       "Corey Farwell <coreyf@rwell.org>",
       "Florian Ragwitz <rafl@debian.org>",
       "Graham Ollis <plicease@cpan.org>",
+      "H.Merijn Brand - Tux <linux@tux.freedom.nl>",
       "Ichinose Shogo <shogo82148@gmail.com>",
       "Ivan Bessarabov <ivan@bessarabov.ru>",
       "Johannes Plunien <plu@pqpq.de>",

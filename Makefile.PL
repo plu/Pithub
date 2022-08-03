@@ -17,7 +17,6 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.010",
   "NAME" => "Pithub",
   "PREREQ_PM" => {
-    "Array::Iterator" => 0,
     "Cache::LRU" => 0,
     "Carp" => 0,
     "HTTP::Headers" => 0,
@@ -27,7 +26,9 @@ my %WriteMakefileArgs = (
     "LWP::UserAgent" => 0,
     "Moo" => 0,
     "Moo::Role" => 0,
-    "URI" => 0
+    "URI" => 0,
+    "strict" => 0,
+    "warnings" => 0
   },
   "TEST_REQUIRES" => {
     "Exporter" => 0,
@@ -42,9 +43,7 @@ my %WriteMakefileArgs = (
     "Test::Builder" => 0,
     "Test::More" => 0,
     "Test::Most" => 0,
-    "lib" => 0,
-    "strict" => 0,
-    "warnings" => 0
+    "lib" => 0
   },
   "VERSION" => "0.01038",
   "test" => {
@@ -54,7 +53,6 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
-  "Array::Iterator" => 0,
   "Cache::LRU" => 0,
   "Carp" => 0,
   "Exporter" => 0,
