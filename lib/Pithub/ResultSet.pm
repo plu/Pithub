@@ -5,64 +5,60 @@ package Pithub::ResultSet;
 use strict;
 use warnings;
 
-our $AUTHORITY = "cpan:PLU";
-our $DATE      = "2022-07-29";
-our $DIST      = "Pithub-ResultSet";
-our $VERSION   = "0.001";
+our $VERSION = '0.01038';
 
 sub new {
-    my ($class, @array) = @_;
+    my ( $class, @array ) = @_;
     my $_array   = $array[0];
     my $iterator = {
-	_current_index => 0,
-	_length        => 0,
-	_iteratee      => [],
-	_iterated      => 0,
-	};
+        _current_index => 0,
+        _length        => 0,
+        _iteratee      => [],
+        _iterated      => 0,
+    };
     bless $iterator => $class;
-    $iterator->_init (scalar @{$_array}, $_array);
+    $iterator->_init( scalar @{$_array}, $_array );
     return $iterator;
-    } # new
+}
 
 sub _init {
-    my ($self, $length, $iteratee) = @_;
+    my ( $self, $length, $iteratee ) = @_;
     $self->{_current_index} = 0;
     $self->{_length}        = $length;
     $self->{_iteratee}      = $iteratee;
-    } # _init
+}
 
-sub _getItem {
-    my ($self, $iteratee, $index) = @_;
+sub get_item {
+    my ( $self, $iteratee, $index ) = @_;
     return $iteratee->[$index];
-    } # _getItem
+}
 
+## no critic (NamingConventions::Capitalization)
 sub getNext {
     my $self = shift;
     $self->{_iterated} = 1;
     $self->{_current_index} < $self->{_length} or return undef;
-    return $self->_getItem ($self->{_iteratee}, $self->{_current_index}++);
-    } # getNext
+    return $self->get_item( $self->{_iteratee}, $self->{_current_index}++ );
+}
 
 sub getLength {
     my $self = shift;
     return $self->{_length};
-    } # getLength
+}
 
 1;
 
 __END__
 
+# ABSTRACT: Iterate over the results
+
 =pod
 
 =encoding UTF-8
 
-=head1 NAME
-
-Pithub::ResultSet - Iterate over the results
-
 =head1 SYNOPSIS
 
-  use Pithub::ResultSet;
+  use Pithub::ResultSet ();
 
   see L<Pithub::Result>
 
