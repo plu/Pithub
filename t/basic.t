@@ -414,7 +414,7 @@ sub validate_tree {
     isa_ok $response,     'HTTP::Response';
     isa_ok $http_request, 'HTTP::Request';
 
-    is $http_request->content, '', 'The data hashref is undef';
+    is $http_request->content, q{}, 'The data hashref is undef';
 
     is $http_request->uri->path, '/bar', 'The HTTP path was set in the HTTP::Request object';
     is $http_request->header('Authorization'), undef, 'Authorization header was not set in the HTTP::Request object';
@@ -441,7 +441,7 @@ sub validate_tree {
     my $result = $p->request( method => 'GET', path => '/error/notfound' );
 
     is $result->code,    404, 'HTTP status is 404';
-    is $result->success, '',  'Unsuccessful response';
+    is $result->success, q{},  'Unsuccessful response';
 
     ok $result->raw_content, 'Has raw JSON content';
     is ref( $result->content ), 'HASH', 'Has decoded JSON hashref';
@@ -640,14 +640,14 @@ sub validate_tree {
     eq_or_diff \%query, { direction => 'asc', per_page => 100 }, 'The params were set';
 }
 
-subtest "_create_instance passes attributes" => sub {
-    my $p = Pithub::Test::Factory->create("Pithub", per_page => 10);
+subtest '_create_instance passes attributes' => sub {
+    my $p = Pithub::Test::Factory->create('Pithub', per_page => 10);
 
     is $p->repos->per_page, 10;
     is $p->repos( per_page => 5 )->per_page, 5;
     is $p->issues->comments( per_page => 3 )->per_page, 3;
 
-    is $p->repos( per_page => undef )->per_page, undef, "undef is allowed";
+    is $p->repos( per_page => undef )->per_page, undef, 'undef is allowed';
 };
 
 done_testing;

@@ -51,7 +51,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/gists/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -68,7 +68,7 @@ BEGIN {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/gists/123/forks', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -85,7 +85,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -105,7 +105,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/123/star', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -120,7 +120,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/users/foo/gists', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -130,7 +130,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/starred', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
         ok $obj->clear_token, 'Token removed';
     }
 
@@ -139,7 +139,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/public', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -147,7 +147,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -167,7 +167,7 @@ BEGIN {
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/gists/123/star', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -187,7 +187,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/gists/123/star', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -262,7 +262,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/gists/c0ff33/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -280,7 +280,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/c0ff33/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -297,7 +297,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/gists/123/comments', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 

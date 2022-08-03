@@ -57,19 +57,19 @@ BEGIN {
 }
 
 
-subtest "Pithub::Repos->delete" => sub {
+subtest 'Pithub::Repos->delete' => sub {
     my $obj = Pithub::Test::Factory->create('Pithub::Repos');
     throws_ok { $obj->delete }
       qr{^Missing key in parameters: user};
-    throws_ok { $obj->delete( user => "foobarorg" ); }
+    throws_ok { $obj->delete( user => 'foobarorg' ); }
       qr{^Missing key in parameters: repo};
-    throws_ok { $obj->delete( user => "foobarorg", repo => "blahblah" ); }
+    throws_ok { $obj->delete( user => 'foobarorg', repo => 'blahblah' ); }
       qr{^Access token required for: DELETE /repos/foobarorg/blahblah};
 
     $obj->token(123);
-    my $result = $obj->delete( user => "foobarorg", repo => "blahblah" );
-    is $result->request->method, "DELETE";
-    uri_is $result->request->uri, "https://api.github.com/repos/foobarorg/blahblah?per_page=100";
+    my $result = $obj->delete( user => 'foobarorg', repo => 'blahblah' );
+    is $result->request->method, 'DELETE';
+    uri_is $result->request->uri, 'https://api.github.com/repos/foobarorg/blahblah?per_page=100';
 };
 
 # Pithub::Repos->get
@@ -83,12 +83,12 @@ subtest "Pithub::Repos->delete" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
 
-subtest "Pithub::Repos->branch" => sub {
+subtest 'Pithub::Repos->branch' => sub {
     my $obj = Pithub::Test::Factory->create(
         'Pithub::Repos',
         user => 'foo',
@@ -97,16 +97,16 @@ subtest "Pithub::Repos->branch" => sub {
 
     isa_ok $obj, 'Pithub::Repos';
 
-    subtest "too few arguments" => sub {
+    subtest 'too few arguments' => sub {
         throws_ok { $obj->branch } qr/^Missing key in parameters: branch/;
     };
 
-    subtest "basic get branch" => sub {
-        my $result = $obj->branch( branch => "master" );
+    subtest 'basic get branch' => sub {
+        my $result = $obj->branch( branch => 'master' );
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/branches/master', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     };
 };
 
@@ -563,7 +563,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/forks', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -616,7 +616,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/keys/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -636,7 +636,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/keys/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -651,7 +651,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/releases', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -668,7 +668,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/releases/1', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -731,7 +731,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/releases/1', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -774,7 +774,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/releases/assets/1', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -792,7 +792,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/releases/assets/51', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -809,7 +809,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/releases/51/assets', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -850,7 +850,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/user/starred/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -865,7 +865,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/users/bla/starred', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -874,7 +874,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/user/starred', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -893,7 +893,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/user/starred/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -912,7 +912,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/starred/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -931,7 +931,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/user/watched/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -948,7 +948,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/users/bla/watched', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -957,7 +957,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/user/watched', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -976,7 +976,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/user/watched/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -995,7 +995,7 @@ subtest "Pithub::Repos->branch" => sub {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/user/watched/foo/bar', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -1125,14 +1125,14 @@ subtest "Pithub::Repos->branch" => sub {
 {
     my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Stats', user => 'foo', repo => 'bar' );
 
-    isa_ok $obj, "Pithub::Repos::Stats";
+    isa_ok $obj, 'Pithub::Repos::Stats';
 
     {
         my $result = $obj->contributors;
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/stats/contributors', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -1142,20 +1142,20 @@ subtest "Pithub::Repos->branch" => sub {
 #
 {
     my $obj = Pithub::Test::Factory->create( 'Pithub::Repos::Statuses', user => 'foo', repo => 'bar' );
-    isa_ok $obj, "Pithub::Repos::Statuses";
+    isa_ok $obj, 'Pithub::Repos::Statuses';
 
     {
         my $result = $obj->list( ref => 'abcdef' );
-        is $result->request->method, "GET", 'HTTP method';
-        is $result->request->uri->path, '/repos/foo/bar/statuses/abcdef', "HTTP Path";
-        is $result->request->content, '', 'HTTP body';
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/statuses/abcdef', 'HTTP Path';
+        is $result->request->content, q{}, 'HTTP body';
     }
     {
         my $json = JSON->new;
         my $result = $obj->create( sha => '0123456', data => {
                 state => 'error', description => 'testing'
             },);
-        is $result->request->method, "POST", "HTTP method";
+        is $result->request->method, 'POST', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/statuses/0123456', 'HTTP path';
         eq_or_diff $json->decode( $result->request->content ), { 'description' => 'testing', 'state' => 'error' }, 'HTTP body';
     }

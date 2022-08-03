@@ -52,7 +52,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/blobs/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -91,7 +91,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/commits/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -108,7 +108,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs/heads/sc/featureA', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -145,7 +145,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -153,7 +153,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/refs/tags', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -193,7 +193,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/tags/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -240,7 +240,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/git/trees/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -248,7 +248,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         uri_is $result->request->uri, 'https://api.github.com/repos/foo/bar/git/trees/456?recursive=1&per_page=100';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 

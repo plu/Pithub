@@ -30,7 +30,7 @@ BEGIN {
         my $result = $obj->create(
             data => {
                 assignee  => 'octocat',
-                body      => "I'm having a problem with this.",
+                body      => q{I'm having a problem with this.},
                 labels    => [ 'Label1', 'Label2' ],
                 milestone => 1,
                 title     => 'Found a bug'
@@ -64,7 +64,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -77,7 +77,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '',    'HTTP body';
+        is $http_request->content, q{},    'HTTP body';
         is $result->prev_page_uri, undef, 'No prev link header set';
     }
 
@@ -90,7 +90,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/issues', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -113,7 +113,7 @@ BEGIN {
             issue_id => 123,
             data     => {
                 assignee  => 'octocat',
-                body      => "I'm having a problem with this.",
+                body      => q{I'm having a problem with this.},
                 labels    => [ 'Label1', 'Label2' ],
                 milestone => 1,
                 state     => 'open',
@@ -149,7 +149,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/assignees/plu', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -164,7 +164,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/assignees', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -211,7 +211,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -228,7 +228,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/comments/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -245,7 +245,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/comments', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -288,7 +288,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/events/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -303,7 +303,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/events', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -311,7 +311,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/events', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -386,7 +386,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -403,7 +403,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels/bug', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -418,7 +418,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/labels', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -426,7 +426,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -434,7 +434,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123/labels', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -456,7 +456,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 
     {
@@ -464,7 +464,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/issues/123/labels/456', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -570,7 +570,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -587,7 +587,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones/123', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -602,7 +602,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/milestones', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 

@@ -29,8 +29,8 @@ BEGIN {
         is $result->success, 1,   'Successful';
 
         is $result->content->{bio},          undef,                              'Attribute exists: bio';
-        is $result->content->{blog},         '',                                 'Attribute exists: blog';
-        is $result->content->{company},      '',                                 'Attribute exists: company';
+        is $result->content->{blog},         q{},                                 'Attribute exists: blog';
+        is $result->content->{company},      q{},                                 'Attribute exists: company';
         is $result->content->{created_at},   '2008-10-29T09:03:04Z',             'Attribute exists: created_at';
         is $result->content->{email},        'plu@pqpq.de',                      'Attribute exists: email';
         is $result->content->{followers},    54,                                 'Attribute exists: followers';
@@ -184,7 +184,7 @@ BEGIN {
 
         is $result->code,        204, 'HTTP status';
         is $result->success,     1,   'Successful';
-        is $result->raw_content, '',  'HTTP body is empty';
+        is $result->raw_content, q{},  'HTTP body is empty';
         is $result->count,       0,   'Empty HTTP body return zero';
         eq_or_diff $result->content, {}, 'Empty HTTP body generates empty hashref';
     }

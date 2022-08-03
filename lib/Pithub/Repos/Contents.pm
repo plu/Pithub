@@ -53,7 +53,7 @@ sub archive {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/%s/%s', delete $args{user}, delete $args{repo}, delete $args{archive_format}, delete $args{ref} || '' ),
+        path   => sprintf( '/repos/%s/%s/%s/%s', delete $args{user}, delete $args{repo}, delete $args{archive_format}, delete $args{ref} || q{} ),
         %args,
     );
 }

@@ -68,7 +68,7 @@ BEGIN {
         my $result = $obj->$method(@params);
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, $path, 'HTTP path';
-        is $result->request->content, '', 'HTTP body';
+        is $result->request->content, q{}, 'HTTP body';
     }
 
     is $obj->user_performed( user => 'foo', public => 1 )->request->uri->path, '/users/foo/events/public', 'HTTP path';

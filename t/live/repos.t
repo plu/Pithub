@@ -38,7 +38,7 @@ SKIP: {
         is $result->content->{owner}{login}, 'plu', 'Pithub::Repos->get: Attribute owner.login';
     }
 
-    subtest "Pithub::Repos->branch" => sub {
+    subtest 'Pithub::Repos->branch' => sub {
         my $result = $p->repos->branch(
             user        => 'plu',
             repo        => 'Pithub',
@@ -146,7 +146,7 @@ SKIP: {
     {
         my $result = $p->repos->watching->list( user => 'plu', repo => 'Pithub' );
         is $result->success, 1, 'Pithub::Repos::Watching->list successful';
-        like $result->content->[0]{id}, qr{^\d+$}, "Pithub::Repos::Watching->list: Attribute id";
+        like $result->content->[0]{id}, qr{^\d+$}, 'Pithub::Repos::Watching->list: Attribute id';
     }
 }
 
@@ -242,7 +242,7 @@ SKIP: {
         my $key_id = $p->repos->keys->create(
             data => {
                 title => 'someone@somewhere',
-                key   => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFkRr3GEn06UrbFEUbDFy+N0rcGyqcSVFa0FfSGXWK52143U7zTyFW0fLEhVHiD585sn8oRCOn44xfUeEHgiC6S0oto/2XELWjTO9O0nBcfxeDjvZN+8tN/w4iz0tYLOejy5FnQWJbk537TOu17v3cYgOMU1+eSLzxpxHIg3qk4dSMqdL3mI8EQ8esMu2c584BkEd6UkCNpU+3Zbq0bGzLOgKHCisvSmI0rDTtGXv3vPYyxxJ1gbRCL6MjGaGqWzJsl6cqutlhw/QCHKGnupsmiiIb58E162rg63/gugogWRi4tfmh6IlSgIx6jdTHf/20cjIcjKcyL8OFTgpA3o3V",
+                key   => 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFkRr3GEn06UrbFEUbDFy+N0rcGyqcSVFa0FfSGXWK52143U7zTyFW0fLEhVHiD585sn8oRCOn44xfUeEHgiC6S0oto/2XELWjTO9O0nBcfxeDjvZN+8tN/w4iz0tYLOejy5FnQWJbk537TOu17v3cYgOMU1+eSLzxpxHIg3qk4dSMqdL3mI8EQ8esMu2c584BkEd6UkCNpU+3Zbq0bGzLOgKHCisvSmI0rDTtGXv3vPYyxxJ1gbRCL6MjGaGqWzJsl6cqutlhw/QCHKGnupsmiiIb58E162rg63/gugogWRi4tfmh6IlSgIx6jdTHf/20cjIcjKcyL8OFTgpA3o3V',
             }
         )->content->{id};
 
