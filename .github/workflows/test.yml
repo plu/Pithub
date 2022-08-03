@@ -20,6 +20,12 @@ jobs:
       image: perldocker/perl-tester:5.36
     steps:
       - uses: actions/checkout@v3
+      - name: Install Cache::LRU for RELEASE_TESTING
+        uses: perl-actions/install-with-cpm@stable
+        with:
+          install: |
+            Cache::LRU
+          sudo: false
       - name: Run Tests
         env:
           AUTHOR_TESTING: 1
