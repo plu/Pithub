@@ -330,6 +330,7 @@ Examples:
 
 =cut
 
+## no critic (Subroutines::ProhibitBuiltinHomonyms)
 sub next {
     my ($self) = @_;
     my $row = $self->_iterator->getNext;
@@ -343,6 +344,7 @@ sub next {
     }
     return;
 }
+## use critic
 
 =method next_page
 
