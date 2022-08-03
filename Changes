@@ -3,6 +3,7 @@ Revision history for {{$dist->name}}
 {{$NEXT}}
           - Replace external Array::Iterator with internal Pithub::ResultSet
             (GH#222) (H.Merijn Brand and Olaf Alders)
+          - Internal stylistic changes (GH#223) (Olaf Alders)
 
 0.01037   2022-07-20 01:12:07Z
           - Add rename_branch() and merge_branch() branch to Repos class
