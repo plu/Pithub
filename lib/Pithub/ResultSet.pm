@@ -28,7 +28,7 @@ sub _init {
     $self->{_iteratee}      = $iteratee;
 }
 
-sub get_item {
+sub _get_item {
     my ( $self, $iteratee, $index ) = @_;
     return $iteratee->[$index];
 }
@@ -38,7 +38,7 @@ sub getNext {
     my $self = shift;
     $self->{_iterated} = 1;
     $self->{_current_index} < $self->{_length} or return undef;
-    return $self->get_item( $self->{_iteratee}, $self->{_current_index}++ );
+    return $self->_get_item( $self->{_iteratee}, $self->{_current_index}++ );
 }
 
 sub getLength {

@@ -23,7 +23,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1/commits', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -69,7 +69,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1/files', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -86,7 +86,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -103,7 +103,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/1/merge', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -123,7 +123,7 @@ BEGIN {
         is $result->request->method, 'PUT', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/123/merge', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -200,7 +200,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/456', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -217,7 +217,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/comments/456', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -234,7 +234,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/456/comments', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -280,7 +280,7 @@ BEGIN {
         is $result->request->method, 'DELETE', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/456/requested_reviewers', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 
@@ -297,7 +297,7 @@ BEGIN {
         is $result->request->method, 'GET', 'HTTP method';
         is $result->request->uri->path, '/repos/foo/bar/pulls/456/requested_reviewers', 'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '', 'HTTP body';
+        is $http_request->content, q{}, 'HTTP body';
     }
 }
 

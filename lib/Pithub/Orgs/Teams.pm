@@ -35,7 +35,7 @@ Examples:
 
 sub add_member {
     my ( $self, %args ) = @_;
-    carp '"Add team member" API is deprecated. Use add_membership method.';
+    carp q{"Add team member" API is deprecated. Use add_membership method.};
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: user'    unless $args{user};
     return $self->request(
@@ -386,7 +386,7 @@ Examples:
 
 sub remove_member {
     my ( $self, %args ) = @_;
-    carp '"Remove team member" API is deprecated. Use remove_membership method.';
+    carp q{"Remove team member" API is deprecated. Use remove_membership method.};
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: user'    unless $args{user};
     return $self->request(

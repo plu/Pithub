@@ -206,7 +206,7 @@ has '_json' => (
     is      => 'ro',
     isa     => sub {
         confess "$_[0] is not a suitable JSON object"
-          unless eval { $_[0]->can("decode") };
+          unless eval { $_[0]->can('decode') };
     },
     lazy    => 1,
 );
@@ -330,6 +330,7 @@ Examples:
 
 =cut
 
+## no critic (Subroutines::ProhibitBuiltinHomonyms)
 sub next {
     my ($self) = @_;
     my $row = $self->_iterator->getNext;
@@ -343,6 +344,7 @@ sub next {
     }
     return;
 }
+## use critic
 
 =method next_page
 

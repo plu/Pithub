@@ -11,7 +11,7 @@ use Test::Most import => [ qw( done_testing is isnt note plan subtest ) ];
 
 plan skip_all => 'Set PITHUB_TEST_LIVE to true to run these tests' unless $ENV{PITHUB_TEST_LIVE};
 
-subtest "cached result" => sub {
+subtest 'cached result' => sub {
     my $p = Pithub->new;
     my $result1 = $p->request(
         method  => 'GET',
@@ -28,7 +28,7 @@ subtest "cached result" => sub {
 };
 
 
-subtest "lru" => sub {
+subtest 'lru' => sub {
     my $p = Pithub->new;
 
     # Reduce the cache size to just two elements for easier testing

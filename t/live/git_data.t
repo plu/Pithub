@@ -49,7 +49,7 @@ c3QgcmVsZWFzZQo=
                 'email' => 'plu@pqpq.de',
                 'name'  => 'Johannes Plunien'
             },
-            'message' => "Add Changes file.",
+            'message' => 'Add Changes file.',
             'html_url' => 'https://github.com/plu/Pithub/commit/20f946f933a911253e480eb0e9feced1e36dbd45',
             'parents' => [
                 {

@@ -18,9 +18,9 @@ SKIP: {
     {
         my $result = $p->users->get( user => 'plu' );
         is $result->success, 1, 'Pithub::Users->get successful';
-        is $result->content->{id},    '31597',            "Pithub::Users->get: Attribute id";
-        is $result->content->{login}, 'plu',              "Pithub::Users->get: Attribute login";
-        is $result->content->{name},  'Johannes Plunien', "Pithub::Users->get: Attribute name";
+        is $result->content->{id},    '31597',            'Pithub::Users->get: Attribute id';
+        is $result->content->{login}, 'plu',              'Pithub::Users->get: Attribute login';
+        is $result->content->{name},  'Johannes Plunien', 'Pithub::Users->get: Attribute name';
     }
 }
 
@@ -45,7 +45,7 @@ SKIP: {
         my $key_id = $p->users->keys->create(
             data => {
                 title => 'someone@somewhere',
-                key   => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuK40Ng6C0NfMrrVuE+6mkUyj90JcvPdwrqFi/tv4g5Ncny5FCkEMATmYA0NtByAS+2p+jwClbVI9dav077+DxHJbwDwcecXXqjUA4gnZM+03kksPbTjfuYql9nC8PdhgZ3kiftop7AVZZnhSKF5stLwa0hkCZkXVeaajQzaG1pCnJJNOcnaRPcuEkTToTnkw8y3Q3fpuMmRjz3NCayh/gJgcj/EtrextqnNpDT4j4r3IeCGvCMEtmUvepKG6sTdnh1EDX5U163is9Qnwfdo3D7CVUh2rhJ8pM6RnAbqbzWqQ+gbhWoXQ7T1Qdq1GXKN7lMMbjz9M7cPK3Vs0p5yl1",
+                key   => 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuK40Ng6C0NfMrrVuE+6mkUyj90JcvPdwrqFi/tv4g5Ncny5FCkEMATmYA0NtByAS+2p+jwClbVI9dav077+DxHJbwDwcecXXqjUA4gnZM+03kksPbTjfuYql9nC8PdhgZ3kiftop7AVZZnhSKF5stLwa0hkCZkXVeaajQzaG1pCnJJNOcnaRPcuEkTToTnkw8y3Q3fpuMmRjz3NCayh/gJgcj/EtrextqnNpDT4j4r3IeCGvCMEtmUvepKG6sTdnh1EDX5U163is9Qnwfdo3D7CVUh2rhJ8pM6RnAbqbzWqQ+gbhWoXQ7T1Qdq1GXKN7lMMbjz9M7cPK3Vs0p5yl1',
             }
         )->content->{id};
 

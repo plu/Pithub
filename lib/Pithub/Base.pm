@@ -678,7 +678,7 @@ sub request {
     }
 
     if ( $self->_token_required( $method, $path ) && !$self->has_token($request) ) {
-        croak sprintf "Access token required for: %s %s (%s)", $method, $path, $uri;
+        croak sprintf 'Access token required for: %s %s (%s)', $method, $path, $uri;
     }
 
     if ($options) {
@@ -713,7 +713,7 @@ sub _make_request {
     if( my $cached_response = $self->shared_cache->get($request->uri) ) {
         # Add the If-None-Match header from the cache's ETag
         # and make the request
-        $request->header( "If-None-Match" => $cached_response->header("ETag") );
+        $request->header( 'If-None-Match' => $cached_response->header('ETag') );
         my $response = $self->ua->request($request);
 
         # Got 304 Not Modified, cache is still valid
