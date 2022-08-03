@@ -60,10 +60,10 @@ severity = 3
 add_packages = Test::Builder
 
 [TestingAndDebugging::RequireUseStrict]
-equivalent_modules = Test::Most
+equivalent_modules = Moo Test::Most
 
 [TestingAndDebugging::RequireUseWarnings]
-equivalent_modules = Test::Most
+equivalent_modules = Moo Test::Most
 
 [-ControlStructures::ProhibitCascadingIfElse]
 
