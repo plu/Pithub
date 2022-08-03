@@ -2,7 +2,7 @@ package Pithub::Test;
 
 use Test::Most; # strict and warnings
 
-use Exporter qw( import );
+use Exporter ();
 use Import::Into;
 use Test::Builder;
 
