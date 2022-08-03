@@ -1,5 +1,5 @@
 package Pithub::Users::Keys;
-our $VERSION = '0.01038';
+our $VERSION = '0.01039';
 # ABSTRACT: Github v3 User Keys API
 
 use Moo;

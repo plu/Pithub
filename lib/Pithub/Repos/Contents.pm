@@ -1,5 +1,5 @@
 package Pithub::Repos::Contents;
-our $VERSION = '0.01038';
+our $VERSION = '0.01039';
 # ABSTRACT: Github v3 Repo Contents API
 
 use Moo;

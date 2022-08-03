@@ -1,5 +1,5 @@
 package Pithub::Search;
-our $VERSION = '0.01038';
+our $VERSION = '0.01039';
 # ABSTRACT: Github legacy Search API
 
 use Moo;
