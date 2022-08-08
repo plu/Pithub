@@ -1,13 +1,16 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
-use JSON::MaybeXS qw( JSON );
-use Pithub::Test::Factory;
-use Test::Most import => [ qw( done_testing eq_or_diff is isa_ok like ok use_ok ) ];
+#!/usr/bin/env perl
 
-BEGIN {
-    use_ok('Pithub');
-    use_ok('Pithub::Users');
-}
+use strict;
+use warnings;
+
+use JSON::MaybeXS     qw( JSON );
+use Pithub            ();
+use Pithub::Users     ();
+use Test::Differences qw( eq_or_diff );
+use Test::More import => [qw( done_testing is isa_ok like ok )];
+
+use lib 't/lib';
+use Pithub::Test::Factory ();
 
 {
     my $obj = Pithub::Test::Factory->create('Pithub::Users');

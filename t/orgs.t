@@ -1,15 +1,17 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
-use JSON::MaybeXS qw( JSON );
-use Pithub::Test::Factory;
-use Test::Most import => [ qw( done_testing eq_or_diff is isa_ok ok throws_ok use_ok ) ];
-use MIME::Base64 ();
+#!perl
 
-BEGIN {
-    use_ok('Pithub::Orgs');
-    use_ok('Pithub::Orgs::Members');
-    use_ok('Pithub::Orgs::Teams');
-}
+use strict;
+use warnings;
+
+use JSON::MaybeXS qw( JSON );
+use MIME::Base64 ();
+use Pithub::Orgs ();
+use Test::Differences qw( eq_or_diff );
+use Test::Exception; # throws_ok
+use Test::More import => [qw( done_testing is isa_ok ok use_ok )];
+
+use lib 't/lib';
+use Pithub::Test::Factory ();
 
 # Pithub::Orgs->get
 {

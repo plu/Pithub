@@ -1,10 +1,12 @@
 package Pithub::Test;
 
-use Test::Most; # strict and warnings
+use strict;
+use warnings;
 
-use Exporter ();
 use Import::Into;
-use Test::Builder;
+use Test::Builder ();
+use Test::Differences qw( eq_or_diff );
+use Test::More import => [ qw( diag is ) ];
 
 BEGIN {
     ## no critic (ClassHierarchies::ProhibitExplicitISA, Modules::ProhibitAutomaticExportation)
