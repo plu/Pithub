@@ -47,7 +47,7 @@ L<Pithub> supports all API calls so far, but only for v3.
     }
 
     # Connect to your local GitHub Enterprise instance
-    my $p = Pithub->new(
+    my $ghe_p = Pithub->new(
         api_uri => 'https://github.yourdomain.com/api/v3/'
     );
 
@@ -60,6 +60,24 @@ L<Pithub> supports all API calls so far, but only for v3.
 
     $pit->repos->get;
     $pit->repos->commits->list;
+
+    # Use a caching UserAgent
+    use CHI                    ();
+    use Pithub::Repos          ();
+    use WWW::Mechanize::Cached ();
+
+    my $cache = CHI->new(
+        driver   => 'File',
+        root_dir => '/tmp/pithub-example'
+    );
+
+    my $mech = WWW::Mechanize::Cached->new( cache => $cache );
+
+    my $cached_pithub = Pithub::Repos->new(
+        auto_pagination => 1,
+        per_page        => 100,
+        ua              => $mech,
+    );
 
 =head1 DOCUMENTATION
 
