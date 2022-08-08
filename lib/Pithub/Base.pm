@@ -341,8 +341,10 @@ has 'token' => (
 
 =attr ua
 
-By default a L<LWP::UserAgent> object, but it can be anything that
-implements the same interface.
+By default a L<LWP::UserAgent> object, but it can be anything that implements
+the same interface. For example, you could also use L<WWW::Mechanize::Cached>
+to cache requests on disk, so that subsequent runs of your app can run faster
+and be less likely to exceed rate limits.
 
 =cut
 
