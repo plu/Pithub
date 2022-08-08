@@ -1,4 +1,6 @@
-Revision history for Pithub
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.01039   2022-08-08 21:00:15Z
           - Use CHI for caching (GH#224) (Olaf Alders)

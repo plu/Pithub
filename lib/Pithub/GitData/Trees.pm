@@ -1,5 +1,5 @@
 package Pithub::GitData::Trees;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 # ABSTRACT: Github v3 Git Data Trees API
 
 use Moo;

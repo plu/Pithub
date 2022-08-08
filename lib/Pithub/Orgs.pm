@@ -2,7 +2,7 @@ package Pithub::Orgs;
 # ABSTRACT: Github v3 Orgs API
 
 use Moo;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 
 use Carp qw( croak );
 use Pithub::Orgs::Members;

@@ -1,5 +1,5 @@
 package Pithub::GitData::Tags;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 # ABSTRACT: Github v3 Git Data Tags API
 
 use Moo;

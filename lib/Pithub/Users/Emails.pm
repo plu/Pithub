@@ -1,5 +1,5 @@
 package Pithub::Users::Emails;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 # ABSTRACT: Github v3 User Emails API
 
 use Moo;

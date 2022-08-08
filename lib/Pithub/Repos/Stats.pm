@@ -1,5 +1,5 @@
 package Pithub::Repos::Stats;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 # ABSTRACT: Github v3 repos / stats API
 
 use Moo;

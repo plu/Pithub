@@ -3,7 +3,7 @@ package Pithub::Orgs::Teams;
 
 use Moo;
 
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 
 use Carp qw( carp croak );
 

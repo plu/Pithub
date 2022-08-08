@@ -3,7 +3,7 @@ package Pithub::Result;
 
 use Moo;
 
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 
 use Pithub::ResultSet ();
 use JSON::MaybeXS qw( JSON );

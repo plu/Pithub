@@ -1,5 +1,5 @@
 package Pithub::Repos::Forks;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 # ABSTRACT: Github v3 Repo Forks API
 
 use Moo;

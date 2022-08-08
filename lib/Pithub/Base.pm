@@ -3,7 +3,7 @@ package Pithub::Base;
 
 use Moo;
 
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 
 use Carp qw( croak );
 use HTTP::Headers ();

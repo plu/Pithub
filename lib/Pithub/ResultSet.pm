@@ -5,7 +5,7 @@ package Pithub::ResultSet;
 use strict;
 use warnings;
 
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 
 sub new {
     my ( $class, @array ) = @_;

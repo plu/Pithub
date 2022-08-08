@@ -1,5 +1,5 @@
 package Pithub::Repos::Releases::Assets;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 # ABSTRACT: Github v3 Repo Releases Assets API
 
 use Moo;

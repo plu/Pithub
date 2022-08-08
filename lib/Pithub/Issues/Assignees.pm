@@ -1,5 +1,5 @@
 package Pithub::Issues::Assignees;
-our $VERSION = '0.01039';
+our $VERSION = '0.01040';
 # ABSTRACT: Github v3 Issue Assignees API
 
 use Moo;
