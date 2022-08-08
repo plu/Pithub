@@ -33,16 +33,16 @@ L<Pithub> supports all API calls so far, but only for v3.
 
     my $p = Pithub->new;
     # my $p = Pithub->new(utf8 => 0); # enable compatibility options for version 0.01029 or lower
-    my $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
+    my $repo = $p->repos->get( user => 'plu', repo => 'Pithub' );
 
-    # $result->content is either an arrayref or an hashref
+    # $repo->content is either an arrayref or an hashref
     # depending on the API call that has been made
-    printf "%s\n", $result->content->{html_url};     # prints https://github.com/plu/Pithub
-    printf "%s\n", $result->content->{clone_url};    # prints https://github.com/plu/Pithub.git
+    printf "%s\n", $repo->content->{html_url};     # prints https://github.com/plu/Pithub
+    printf "%s\n", $repo->content->{clone_url};    # prints https://github.com/plu/Pithub.git
 
     # if the result is an arrayref, you can use the result iterator
-    my $result = $p->repos->list( user => 'plu' );
-    while ( my $row = $result->next ) {
+    my $repos = $p->repos->list( user => 'plu' );
+    while ( my $row = $repos->next ) {
         printf "%s\n", $row->{name};
     }
 
