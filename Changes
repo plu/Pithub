@@ -1,6 +1,6 @@
-Revision history for {{$dist->name}}
+Revision history for Pithub
 
-{{$NEXT}}
+0.01039   2022-08-08 21:00:15Z
           - Use CHI for caching (GH#224) (Olaf Alders)
           - Update docs, tidy imports and make Perl::Critic happier (GH#226)
             (Olaf Alders)

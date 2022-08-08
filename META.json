@@ -52,7 +52,7 @@
       },
       "runtime" : {
          "requires" : {
-            "Cache::LRU" : "0",
+            "CHI" : "0",
             "Carp" : "0",
             "HTTP::Headers" : "0",
             "HTTP::Request" : "0",
@@ -82,8 +82,11 @@
             "Path::Tiny" : "0",
             "Scalar::Util" : "0",
             "Test::Builder" : "0",
+            "Test::Differences" : "0",
+            "Test::Exception" : "0",
             "Test::More" : "0",
             "Test::Most" : "0",
+            "Test::Needs" : "0",
             "lib" : "0",
             "perl" : "5.010"
          }
@@ -101,7 +104,7 @@
          "web" : "https://github.com/plu/Pithub"
       }
    },
-   "version" : "0.01038",
+   "version" : "0.01039",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.036000"
@@ -620,7 +623,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "v0.01038",
+                  "tag" : "v0.01039",
                   "tag_format" : "v%V",
                   "tag_message" : "v%V"
                },

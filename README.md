@@ -1,5 +1,5 @@
 [![codecov](https://codecov.io/gh/plu/Pithub/branch/master/graph/badge.svg)](https://codecov.io/gh/plu/Pithub)
-[![CPAN Cover Status](https://cpancoverbadge.perl-services.de/Pithub-0.01038)](https://cpancoverbadge.perl-services.de/Pithub-0.01038)
+[![CPAN Cover Status](https://cpancoverbadge.perl-services.de/Pithub-0.01039)](https://cpancoverbadge.perl-services.de/Pithub-0.01039)
 [![Kwalitee status](https://cpants.cpanauthors.org/dist/Pithub.png)](https://cpants.cpanauthors.org/dist/Pithub)
 [![Actions Status](https://github.com/plu/Pithub/actions/workflows/test.yml/badge.svg)](https://github.com/plu/Pithub/actions)
 [![Cpan license](https://img.shields.io/cpan/l/Pithub.svg)](https://metacpan.org/release/Pithub)
@@ -11,7 +11,7 @@ Pithub - Github v3 API
 
 # VERSION
 
-version 0.01038
+version 0.01039
 
 # SYNOPSIS
 
@@ -19,21 +19,21 @@ version 0.01038
 
     my $p = Pithub->new;
     # my $p = Pithub->new(utf8 => 0); # enable compatibility options for version 0.01029 or lower
-    my $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
+    my $repo = $p->repos->get( user => 'plu', repo => 'Pithub' );
 
-    # $result->content is either an arrayref or an hashref
+    # $repo->content is either an arrayref or an hashref
     # depending on the API call that has been made
-    printf "%s\n", $result->content->{html_url};     # prints https://github.com/plu/Pithub
-    printf "%s\n", $result->content->{clone_url};    # prints https://github.com/plu/Pithub.git
+    printf "%s\n", $repo->content->{html_url};     # prints https://github.com/plu/Pithub
+    printf "%s\n", $repo->content->{clone_url};    # prints https://github.com/plu/Pithub.git
 
     # if the result is an arrayref, you can use the result iterator
-    my $result = $p->repos->list( user => 'plu' );
-    while ( my $row = $result->next ) {
+    my $repos = $p->repos->list( user => 'plu' );
+    while ( my $row = $repos->next ) {
         printf "%s\n", $row->{name};
     }
 
     # Connect to your local GitHub Enterprise instance
-    my $p = Pithub->new(
+    my $ghe_p = Pithub->new(
         api_uri => 'https://github.yourdomain.com/api/v3/'
     );
 
@@ -46,6 +46,24 @@ version 0.01038
 
     $pit->repos->get;
     $pit->repos->commits->list;
+
+    # Use a caching UserAgent
+    use CHI                    ();
+    use Pithub::Repos          ();
+    use WWW::Mechanize::Cached ();
+
+    my $cache = CHI->new(
+        driver   => 'File',
+        root_dir => '/tmp/pithub-example'
+    );
+
+    my $mech = WWW::Mechanize::Cached->new( cache => $cache );
+
+    my $cached_pithub = Pithub::Repos->new(
+        auto_pagination => 1,
+        per_page        => 100,
+        ua              => $mech,
+    );
 
 # DESCRIPTION
 
