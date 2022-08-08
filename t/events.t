@@ -1,26 +1,39 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
-use Pithub::Test::Factory;
-use Test::Most import => [ qw( done_testing is isa_ok ok throws_ok use_ok ) ];
+#!perl
 
-BEGIN {
-    use_ok('Pithub::Events');
-}
+use strict;
+use warnings;
+
+use Pithub::Events ();
+use Test::Exception;    # throws_ok
+use Test::Most import => [qw( done_testing is isa_ok ok )];
+
+use lib 't/lib';
+use Pithub::Test::Factory ();
 
 {
-    my $obj = Pithub::Test::Factory->create( 'Pithub::Events', user => 'foo', repo => 'bar' );
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::Events', user => 'foo',
+        repo => 'bar'
+    );
 
     isa_ok $obj, 'Pithub::Events';
 
-    throws_ok { $obj->org_for_user( user => 'foo', org => 'bar' ) } qr{Access token required for: GET /users/foo/events/orgs/bar\s+}, 'Token required';
+    throws_ok { $obj->org_for_user( user => 'foo', org => 'bar' ) }
+    qr{Access token required for: GET /users/foo/events/orgs/bar\s+},
+        'Token required';
 
     ok $obj->token(123), 'Token set';
 
-    throws_ok { $obj->org } qr{Missing key in parameters: org},          'No parameters';
-    throws_ok { $obj->org_for_user } qr{Missing key in parameters: org}, 'No parameters';
-    throws_ok { $obj->org_for_user( org => 'foo' ) } qr{Missing key in parameters: user}, 'No parameters';
-    throws_ok { $obj->user_performed } qr{Missing key in parameters: user}, 'No parameters';
-    throws_ok { $obj->user_received } qr{Missing key in parameters: user},  'No parameters';
+    throws_ok { $obj->org } qr{Missing key in parameters: org},
+        'No parameters';
+    throws_ok { $obj->org_for_user } qr{Missing key in parameters: org},
+        'No parameters';
+    throws_ok { $obj->org_for_user( org => 'foo' ) }
+    qr{Missing key in parameters: user}, 'No parameters';
+    throws_ok { $obj->user_performed } qr{Missing key in parameters: user},
+        'No parameters';
+    throws_ok { $obj->user_received } qr{Missing key in parameters: user},
+        'No parameters';
 
     my @tests = (
         {
@@ -66,13 +79,15 @@ BEGIN {
         my $path   = $test->{path};
         my @params = @{ $test->{params} || [] };
         my $result = $obj->$method(@params);
-        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->method,    'GET', 'HTTP method';
         is $result->request->uri->path, $path, 'HTTP path';
-        is $result->request->content, q{}, 'HTTP body';
+        is $result->request->content,   q{},   'HTTP body';
     }
 
-    is $obj->user_performed( user => 'foo', public => 1 )->request->uri->path, '/users/foo/events/public', 'HTTP path';
-    is $obj->user_received( user => 'foo', public => 1 )->request->uri->path, '/users/foo/received_events/public', 'HTTP path';
+    is $obj->user_performed( user => 'foo', public => 1 )->request->uri->path,
+        '/users/foo/events/public', 'HTTP path';
+    is $obj->user_received( user => 'foo', public => 1 )->request->uri->path,
+        '/users/foo/received_events/public', 'HTTP path';
 }
 
 done_testing;

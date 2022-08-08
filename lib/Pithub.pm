@@ -1,19 +1,22 @@
 package Pithub;
-our $VERSION = '0.01039';
 # ABSTRACT: Github v3 API
 
 use Moo;
-use Pithub::Events;
-use Pithub::Gists;
-use Pithub::GitData;
-use Pithub::Issues;
-use Pithub::Orgs;
-use Pithub::PullRequests;
-use Pithub::Repos;
-use Pithub::Search;
-use Pithub::SearchV3;
-use Pithub::Users;
-use Carp qw( croak );
+
+our $VERSION = '0.01039';
+
+use Carp                 qw( croak );
+use Pithub::Events       ();
+use Pithub::Gists        ();
+use Pithub::GitData      ();
+use Pithub::Issues       ();
+use Pithub::Orgs         ();
+use Pithub::PullRequests ();
+use Pithub::Repos        ();
+use Pithub::Search       ();
+use Pithub::SearchV3     ();
+use Pithub::Users        ();
+
 extends 'Pithub::Base';
 
 =head1 DESCRIPTION
@@ -30,21 +33,21 @@ L<Pithub> supports all API calls so far, but only for v3.
 
     my $p = Pithub->new;
     # my $p = Pithub->new(utf8 => 0); # enable compatibility options for version 0.01029 or lower
-    my $result = $p->repos->get( user => 'plu', repo => 'Pithub' );
+    my $repo = $p->repos->get( user => 'plu', repo => 'Pithub' );
 
-    # $result->content is either an arrayref or an hashref
+    # $repo->content is either an arrayref or an hashref
     # depending on the API call that has been made
-    printf "%s\n", $result->content->{html_url};     # prints https://github.com/plu/Pithub
-    printf "%s\n", $result->content->{clone_url};    # prints https://github.com/plu/Pithub.git
+    printf "%s\n", $repo->content->{html_url};     # prints https://github.com/plu/Pithub
+    printf "%s\n", $repo->content->{clone_url};    # prints https://github.com/plu/Pithub.git
 
     # if the result is an arrayref, you can use the result iterator
-    my $result = $p->repos->list( user => 'plu' );
-    while ( my $row = $result->next ) {
+    my $repos = $p->repos->list( user => 'plu' );
+    while ( my $row = $repos->next ) {
         printf "%s\n", $row->{name};
     }
 
     # Connect to your local GitHub Enterprise instance
-    my $p = Pithub->new(
+    my $ghe_p = Pithub->new(
         api_uri => 'https://github.yourdomain.com/api/v3/'
     );
 
@@ -57,6 +60,24 @@ L<Pithub> supports all API calls so far, but only for v3.
 
     $pit->repos->get;
     $pit->repos->commits->list;
+
+    # Use a caching UserAgent
+    use CHI                    ();
+    use Pithub::Repos          ();
+    use WWW::Mechanize::Cached ();
+
+    my $cache = CHI->new(
+        driver   => 'File',
+        root_dir => '/tmp/pithub-example'
+    );
+
+    my $mech = WWW::Mechanize::Cached->new( cache => $cache );
+
+    my $cached_pithub = Pithub::Repos->new(
+        auto_pagination => 1,
+        per_page        => 100,
+        ua              => $mech,
+    );
 
 =head1 DOCUMENTATION
 
@@ -581,8 +602,8 @@ sub _search_class {
     _validate_search_api($search_api);
 
     return $search_api eq 'legacy'
-        ? 'Pithub::Search'
-        : 'Pithub::SearchV3';
+        ? Pithub::Search::
+        : Pithub::SearchV3::;
 }
 
 =method events
@@ -592,7 +613,7 @@ Provides access to L<Pithub::Events>.
 =cut
 
 sub events {
-    return shift->_create_instance('Pithub::Events', @_);
+    return shift->_create_instance(Pithub::Events::, @_);
 }
 
 =method gists
@@ -602,7 +623,7 @@ Provides access to L<Pithub::Gists>.
 =cut
 
 sub gists {
-    return shift->_create_instance('Pithub::Gists', @_);
+    return shift->_create_instance(Pithub::Gists::, @_);
 }
 
 =method git_data
@@ -612,7 +633,7 @@ Provides access to L<Pithub::GitData>.
 =cut
 
 sub git_data {
-    return shift->_create_instance('Pithub::GitData', @_);
+    return shift->_create_instance(Pithub::GitData::, @_);
 }
 
 =method issues
@@ -622,7 +643,7 @@ Provides access to L<Pithub::Issues>.
 =cut
 
 sub issues {
-    return shift->_create_instance('Pithub::Issues', @_);
+    return shift->_create_instance(Pithub::Issues::, @_);
 }
 
 =method markdown
@@ -632,7 +653,7 @@ Provides access to L<Pithub::Markdown>.
 =cut
 
 sub markdown {
-    return shift->_create_instance('Pithub::Markdown', @_);
+    return shift->_create_instance(Pithub::Markdown::, @_);
 }
 
 =method orgs
@@ -642,7 +663,7 @@ Provides access to L<Pithub::Orgs>.
 =cut
 
 sub orgs {
-    return shift->_create_instance('Pithub::Orgs', @_);
+    return shift->_create_instance(Pithub::Orgs::, @_);
 }
 
 =method pull_requests
@@ -652,7 +673,7 @@ Provides access to L<Pithub::PullRequests>.
 =cut
 
 sub pull_requests {
-    return shift->_create_instance('Pithub::PullRequests', @_);
+    return shift->_create_instance(Pithub::PullRequests::, @_);
 }
 
 =method repos
@@ -662,7 +683,7 @@ Provides access to L<Pithub::Repos>.
 =cut
 
 sub repos {
-    return shift->_create_instance('Pithub::Repos', @_);
+    return shift->_create_instance(Pithub::Repos::, @_);
 }
 
 =method search
@@ -694,7 +715,7 @@ Provides access to L<Pithub::Users>.
 =cut
 
 sub users {
-    return shift->_create_instance('Pithub::Users', @_);
+    return shift->_create_instance(Pithub::Users::, @_);
 }
 
 =head1 CONTRIBUTORS

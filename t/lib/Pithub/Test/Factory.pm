@@ -3,7 +3,7 @@ package    # hide from PAUSE
 
 use strict;
 use warnings;
-use Pithub::Test::UA;
+use Pithub::Test::UA ();
 
 sub create {
     my ( $self, $class, %args ) = @_;

@@ -1,11 +1,15 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
-use Pithub::Test::Factory;
-use Test::Most import => [ qw( done_testing eq_or_diff is isa_ok throws_ok use_ok ) ];
+#!perl
 
-BEGIN {
-    use_ok('Pithub::Search');
-}
+use strict;
+use warnings;
+
+use Test::Differences qw( eq_or_diff );
+use Test::Exception;    # throws_ok
+use Test::More import => [qw( done_testing is isa_ok )];
+
+use lib 't/lib';
+use Pithub::Search        ();
+use Pithub::Test::Factory ();
 
 # Pithub::Search->email
 {

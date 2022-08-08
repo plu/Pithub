@@ -1,15 +1,17 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
-use JSON::MaybeXS qw( JSON );
-use Pithub::Test::Factory;
-use Test::Most import => [ qw( done_testing eq_or_diff is isa_ok ok throws_ok use_ok ) ];
-use MIME::Base64 ();
+#!perl
 
-BEGIN {
-    use_ok('Pithub::Orgs');
-    use_ok('Pithub::Orgs::Members');
-    use_ok('Pithub::Orgs::Teams');
-}
+use strict;
+use warnings;
+
+use JSON::MaybeXS qw( JSON );
+use MIME::Base64 ();
+use Pithub::Orgs ();
+use Test::Differences qw( eq_or_diff );
+use Test::Exception; # throws_ok
+use Test::More import => [qw( done_testing fail is isa_ok ok )];
+
+use lib 't/lib';
+use Pithub::Test::Factory ();
 
 # Pithub::Orgs->get
 {
@@ -258,6 +260,8 @@ BEGIN {
 # Pithub::Orgs::Teams->add_member
 {
     my $obj = Pithub::Test::Factory->create('Pithub::Orgs::Teams');
+    local $SIG{__WARN__}
+        = sub { fail( $_[0] ) unless $_[0] =~ m{is deprecated} };
 
     isa_ok $obj, 'Pithub::Orgs::Teams';
 
@@ -500,6 +504,8 @@ BEGIN {
 
     throws_ok { $obj->remove_member } qr{Missing key in parameters: team_id}, 'No parameters';
     throws_ok { $obj->remove_member( team_id => 123 ) } qr{Missing key in parameters: user}, 'No user parameter';
+    local $SIG{__WARN__}
+        = sub { fail( $_[0] ) unless $_[0] =~ m{is deprecated} };
     throws_ok { $obj->remove_member( team_id => 123, user => 'bar' ); } qr{Access token required for: DELETE /teams/123/members/bar\s+}, 'Token required';
 
     ok $obj->token(123), 'Token set';

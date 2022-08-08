@@ -5,6 +5,8 @@ use warnings;
 
 use JSON::MaybeXS qw( JSON );
 use Pithub ();
+use Test::More import =>
+  [qw( can_ok done_testing fail is isa_ok isnt ok subtest use_ok )];
 
 use lib 't/lib';
 use Pithub::Test qw( uri_is );
@@ -293,6 +295,9 @@ sub validate_tree {
         ua              => Pithub::Test::UA->new,
         user            => 'plu',
     );
+
+    local $SIG{__WARN__}
+        = sub { fail( $_[0] ) unless $_[0] =~ m{is deprecated} };
 
     validate_tree(
         tree  => \@tree,
