@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Use CHI for caching (GH#224) (Olaf Alders)
+          - Update docs, tidy imports and make Perl::Critic happier (GH#226)
+            (Olaf Alders)
 
 0.01038   2022-08-03 17:26:08Z
           - Replace external Array::Iterator with internal Pithub::ResultSet
