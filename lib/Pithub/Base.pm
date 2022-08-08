@@ -1,14 +1,16 @@
 package Pithub::Base;
-our $VERSION = '0.01039';
 # ABSTRACT: Github v3 base class for all Pithub modules
 
 use Moo;
+
+our $VERSION = '0.01039';
+
 use Carp qw( croak );
-use HTTP::Headers;
-use HTTP::Request;
+use HTTP::Headers ();
+use HTTP::Request ();
 use JSON::MaybeXS qw( JSON );
 use LWP::UserAgent ();
-use Pithub::Result;
+use Pithub::Result ();
 use URI ();
 
 with 'Pithub::Result::SharedCache';
@@ -710,7 +712,8 @@ sub request {
 sub _make_request {
     my($self, $request) = @_;
 
-    if( my $cached_response = $self->shared_cache->get($request->uri) ) {
+    my $cache_key = $request->uri->as_string;
+    if( my $cached_response = $self->shared_cache->get($cache_key) ) {
         # Add the If-None-Match header from the cache's ETag
         # and make the request
         $request->header( 'If-None-Match' => $cached_response->header('ETag') );
@@ -720,14 +723,13 @@ sub _make_request {
         return $cached_response if ($response->code || 0) == 304;
 
         # The response changed, cache it and return it.
-        $self->shared_cache->set( $request->uri, $response );
+        $self->shared_cache->set( $cache_key, $response );
         return $response;
     }
-    else {
-        my $response = $self->ua->request($request);
-        $self->shared_cache->set( $request->uri, $response );
-        return $response;
-    }
+
+    my $response = $self->ua->request($request);
+    $self->shared_cache->set( $cache_key, $response );
+    return $response;
 }
 
 
@@ -785,7 +787,7 @@ sub _create_instance {
         auto_pagination => $self->auto_pagination,
         ua              => $self->ua,
         utf8            => $self->utf8,
-        @args
+        @args,
     );
 
     for my $attr (qw(repo token user per_page jsonp_callback prepare_request)) {
