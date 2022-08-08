@@ -177,6 +177,7 @@ Examples:
 
 =cut
 
+## no critic (Subroutines::ProhibitBuiltinHomonyms)
 sub delete {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
@@ -186,6 +187,7 @@ sub delete {
         %args,
     );
 }
+## use critic
 
 =method get
 
