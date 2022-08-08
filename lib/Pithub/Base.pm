@@ -779,6 +779,7 @@ sub _get_user_repo_args {
     return $args;
 }
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
 sub _create_instance {
     my ( $self, $class, @args ) = @_;
 
@@ -800,6 +801,7 @@ sub _create_instance {
 
     return $class->new(%args);
 }
+## use critic
 
 sub _request_for {
     my ( $self, $method, $uri, $data ) = @_;
@@ -865,11 +867,13 @@ sub _uri_for {
     return $uri;
 }
 
+## no critic (Subroutines::ProhibitUnusedPrivateSubroutines)
 sub _validate_user_repo_args {
     my ( $self, $args ) = @_;
     $args = $self->_get_user_repo_args($args);
     croak 'Missing key in parameters: user' unless $args->{user};
     croak 'Missing key in parameters: repo' unless $args->{repo};
 }
+## use critic
 
 1;
