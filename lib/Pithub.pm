@@ -1,19 +1,22 @@
 package Pithub;
-our $VERSION = '0.01039';
 # ABSTRACT: Github v3 API
 
 use Moo;
-use Pithub::Events;
-use Pithub::Gists;
-use Pithub::GitData;
-use Pithub::Issues;
-use Pithub::Orgs;
-use Pithub::PullRequests;
-use Pithub::Repos;
-use Pithub::Search;
-use Pithub::SearchV3;
-use Pithub::Users;
-use Carp qw( croak );
+
+our $VERSION = '0.01039';
+
+use Carp                 qw( croak );
+use Pithub::Events       ();
+use Pithub::Gists        ();
+use Pithub::GitData      ();
+use Pithub::Issues       ();
+use Pithub::Orgs         ();
+use Pithub::PullRequests ();
+use Pithub::Repos        ();
+use Pithub::Search       ();
+use Pithub::SearchV3     ();
+use Pithub::Users        ();
+
 extends 'Pithub::Base';
 
 =head1 DESCRIPTION
@@ -581,8 +584,8 @@ sub _search_class {
     _validate_search_api($search_api);
 
     return $search_api eq 'legacy'
-        ? 'Pithub::Search'
-        : 'Pithub::SearchV3';
+        ? Pithub::Search::
+        : Pithub::SearchV3::;
 }
 
 =method events
@@ -592,7 +595,7 @@ Provides access to L<Pithub::Events>.
 =cut
 
 sub events {
-    return shift->_create_instance('Pithub::Events', @_);
+    return shift->_create_instance(Pithub::Events::, @_);
 }
 
 =method gists
@@ -602,7 +605,7 @@ Provides access to L<Pithub::Gists>.
 =cut
 
 sub gists {
-    return shift->_create_instance('Pithub::Gists', @_);
+    return shift->_create_instance(Pithub::Gists::, @_);
 }
 
 =method git_data
@@ -612,7 +615,7 @@ Provides access to L<Pithub::GitData>.
 =cut
 
 sub git_data {
-    return shift->_create_instance('Pithub::GitData', @_);
+    return shift->_create_instance(Pithub::GitData::, @_);
 }
 
 =method issues
@@ -622,7 +625,7 @@ Provides access to L<Pithub::Issues>.
 =cut
 
 sub issues {
-    return shift->_create_instance('Pithub::Issues', @_);
+    return shift->_create_instance(Pithub::Issues::, @_);
 }
 
 =method markdown
@@ -632,7 +635,7 @@ Provides access to L<Pithub::Markdown>.
 =cut
 
 sub markdown {
-    return shift->_create_instance('Pithub::Markdown', @_);
+    return shift->_create_instance(Pithub::Markdown::, @_);
 }
 
 =method orgs
@@ -642,7 +645,7 @@ Provides access to L<Pithub::Orgs>.
 =cut
 
 sub orgs {
-    return shift->_create_instance('Pithub::Orgs', @_);
+    return shift->_create_instance(Pithub::Orgs::, @_);
 }
 
 =method pull_requests
@@ -652,7 +655,7 @@ Provides access to L<Pithub::PullRequests>.
 =cut
 
 sub pull_requests {
-    return shift->_create_instance('Pithub::PullRequests', @_);
+    return shift->_create_instance(Pithub::PullRequests::, @_);
 }
 
 =method repos
@@ -662,7 +665,7 @@ Provides access to L<Pithub::Repos>.
 =cut
 
 sub repos {
-    return shift->_create_instance('Pithub::Repos', @_);
+    return shift->_create_instance(Pithub::Repos::, @_);
 }
 
 =method search
@@ -694,7 +697,7 @@ Provides access to L<Pithub::Users>.
 =cut
 
 sub users {
-    return shift->_create_instance('Pithub::Users', @_);
+    return shift->_create_instance(Pithub::Users::, @_);
 }
 
 =head1 CONTRIBUTORS
