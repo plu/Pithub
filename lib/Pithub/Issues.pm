@@ -4,12 +4,12 @@ our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Issues API
 
 use Moo;
-use Carp qw( croak );
-use Pithub::Issues::Assignees;
-use Pithub::Issues::Comments;
-use Pithub::Issues::Events;
-use Pithub::Issues::Labels;
-use Pithub::Issues::Milestones;
+use Carp                       qw( croak );
+use Pithub::Issues::Assignees  ();
+use Pithub::Issues::Comments   ();
+use Pithub::Issues::Events     ();
+use Pithub::Issues::Labels     ();
+use Pithub::Issues::Milestones ();
 extends 'Pithub::Base';
 
 =method assignees
@@ -19,7 +19,7 @@ Provides access to L<Pithub::Issues::Assignees>.
 =cut
 
 sub assignees {
-    return shift->_create_instance( 'Pithub::Issues::Assignees', @_ );
+    return shift->_create_instance( Pithub::Issues::Assignees::, @_ );
 }
 
 =method comments
@@ -29,7 +29,7 @@ Provides access to L<Pithub::Issues::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance( 'Pithub::Issues::Comments', @_ );
+    return shift->_create_instance( Pithub::Issues::Comments::, @_ );
 }
 
 =method create
@@ -183,7 +183,7 @@ Provides access to L<Pithub::Issues::Events>.
 =cut
 
 sub events {
-    return shift->_create_instance( 'Pithub::Issues::Events', @_ );
+    return shift->_create_instance( Pithub::Issues::Events::, @_ );
 }
 
 =method get
@@ -304,7 +304,7 @@ Provides access to L<Pithub::Issues::Labels>.
 =cut
 
 sub labels {
-    return shift->_create_instance( 'Pithub::Issues::Labels', @_ );
+    return shift->_create_instance( Pithub::Issues::Labels::, @_ );
 }
 
 =method list
@@ -715,7 +715,7 @@ Provides access to L<Pithub::Issues::Milestones>.
 =cut
 
 sub milestones {
-    return shift->_create_instance( 'Pithub::Issues::Milestones', @_ );
+    return shift->_create_instance( Pithub::Issues::Milestones::, @_ );
 }
 
 =method update

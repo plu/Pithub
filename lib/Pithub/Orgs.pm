@@ -5,9 +5,9 @@ package Pithub::Orgs;
 use Moo;
 our $VERSION = '0.01041';
 
-use Carp qw( croak );
-use Pithub::Orgs::Members;
-use Pithub::Orgs::Teams;
+use Carp                  qw( croak );
+use Pithub::Orgs::Members ();
+use Pithub::Orgs::Teams   ();
 extends 'Pithub::Base';
 
 =method get
@@ -92,7 +92,7 @@ Provides access to L<Pithub::Orgs::Members>.
 =cut
 
 sub members {
-    return shift->_create_instance( 'Pithub::Orgs::Members', @_ );
+    return shift->_create_instance( Pithub::Orgs::Members::, @_ );
 }
 
 =method teams
@@ -102,7 +102,7 @@ Provides access to L<Pithub::Orgs::Teams>.
 =cut
 
 sub teams {
-    return shift->_create_instance( 'Pithub::Orgs::Teams', @_ );
+    return shift->_create_instance( Pithub::Orgs::Teams::, @_ );
 }
 
 =method update

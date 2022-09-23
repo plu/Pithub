@@ -4,8 +4,8 @@ our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Gists API
 
 use Moo;
-use Carp qw( croak );
-use Pithub::Gists::Comments;
+use Carp                    qw( croak );
+use Pithub::Gists::Comments ();
 extends 'Pithub::Base';
 
 =method comments
@@ -15,7 +15,7 @@ Provides access to L<Pithub::Gists::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance( 'Pithub::Gists::Comments', @_ );
+    return shift->_create_instance( Pithub::Gists::Comments::, @_ );
 }
 
 =method create

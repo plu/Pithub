@@ -13,6 +13,7 @@ use Pithub::GitData      ();
 use Pithub::Issues       ();
 use Pithub::Orgs         ();
 use Pithub::PullRequests ();
+use Pithub::Markdown     ();
 use Pithub::Repos        ();
 use Pithub::Search       ();
 use Pithub::SearchV3     ();

@@ -4,9 +4,9 @@ our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Pull Requests API
 
 use Moo;
-use Carp qw( croak );
-use Pithub::PullRequests::Comments;
-use Pithub::PullRequests::Reviewers;
+use Carp                            qw( croak );
+use Pithub::PullRequests::Comments  ();
+use Pithub::PullRequests::Reviewers ();
 extends 'Pithub::Base';
 
 =method comments
@@ -16,7 +16,7 @@ Provides access to L<Pithub::PullRequests::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance( 'Pithub::PullRequests::Comments', @_ );
+    return shift->_create_instance( Pithub::PullRequests::Comments::, @_ );
 }
 
 =method reviewers
@@ -26,7 +26,7 @@ Provides access to L<Pithub::PullRequests::Reviewers>.
 =cut
 
 sub reviewers {
-    return shift->_create_instance( 'Pithub::PullRequests::Reviewers', @_ );
+    return shift->_create_instance( Pithub::PullRequests::Reviewers::, @_ );
 }
 
 =method commits

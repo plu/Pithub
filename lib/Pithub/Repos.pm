@@ -6,23 +6,23 @@ use Moo;
 
 our $VERSION = '0.01041';
 
-use Carp qw( croak );
-use Pithub::Issues;
-use Pithub::Markdown;
-use Pithub::PullRequests;
-use Pithub::Repos::Actions ();
-use Pithub::Repos::Collaborators;
-use Pithub::Repos::Commits;
-use Pithub::Repos::Contents;
-use Pithub::Repos::Downloads;
-use Pithub::Repos::Forks;
-use Pithub::Repos::Hooks;
-use Pithub::Repos::Keys;
-use Pithub::Repos::Releases;
-use Pithub::Repos::Starring;
-use Pithub::Repos::Stats;
-use Pithub::Repos::Statuses;
-use Pithub::Repos::Watching;
+use Carp                         qw( croak );
+use Pithub::Issues               ();
+use Pithub::Markdown             ();
+use Pithub::PullRequests         ();
+use Pithub::Repos::Actions       ();
+use Pithub::Repos::Collaborators ();
+use Pithub::Repos::Commits       ();
+use Pithub::Repos::Contents      ();
+use Pithub::Repos::Downloads     ();
+use Pithub::Repos::Forks         ();
+use Pithub::Repos::Hooks         ();
+use Pithub::Repos::Keys          ();
+use Pithub::Repos::Releases      ();
+use Pithub::Repos::Starring      ();
+use Pithub::Repos::Stats         ();
+use Pithub::Repos::Statuses      ();
+use Pithub::Repos::Watching      ();
 
 extends 'Pithub::Base';
 
@@ -187,7 +187,7 @@ Provides access to L<Pithub::Repos::Collaborators>.
 =cut
 
 sub collaborators {
-    return shift->_create_instance( 'Pithub::Repos::Collaborators', @_ );
+    return shift->_create_instance( Pithub::Repos::Collaborators::, @_ );
 }
 
 =method commits
@@ -197,7 +197,7 @@ Provides access to L<Pithub::Repos::Commits>.
 =cut
 
 sub commits {
-    return shift->_create_instance( 'Pithub::Repos::Commits', @_ );
+    return shift->_create_instance( Pithub::Repos::Commits::, @_ );
 }
 
 =method contents
@@ -207,7 +207,7 @@ Provides access to L<Pithub::Repos::Contents>.
 =cut
 
 sub contents {
-    return shift->_create_instance( 'Pithub::Repos::Contents', @_ );
+    return shift->_create_instance( Pithub::Repos::Contents::, @_ );
 }
 
 =method contributors
@@ -322,7 +322,7 @@ Provides access to L<Pithub::Repos::Downloads>.
 =cut
 
 sub downloads {
-    return shift->_create_instance( 'Pithub::Repos::Downloads', @_ );
+    return shift->_create_instance( Pithub::Repos::Downloads::, @_ );
 }
 
 =method forks
@@ -332,7 +332,7 @@ Provides access to L<Pithub::Repos::Forks>.
 =cut
 
 sub forks {
-    return shift->_create_instance( 'Pithub::Repos::Forks', @_ );
+    return shift->_create_instance( Pithub::Repos::Forks::, @_ );
 }
 
 =method get
@@ -372,7 +372,7 @@ Provides access to L<Pithub::Repos::Hooks>.
 =cut
 
 sub hooks {
-    return shift->_create_instance( 'Pithub::Repos::Hooks', @_ );
+    return shift->_create_instance( Pithub::Repos::Hooks::, @_ );
 }
 
 =method issues
@@ -382,7 +382,7 @@ Provides access to L<Pithub::Issues> for this repo.
 =cut
 
 sub issues {
-    return shift->_create_instance( 'Pithub::Issues', @_ );
+    return shift->_create_instance( Pithub::Issues::, @_ );
 }
 
 =method keys
@@ -392,7 +392,7 @@ Provides access to L<Pithub::Repos::Keys>.
 =cut
 
 sub keys {
-    return shift->_create_instance( 'Pithub::Repos::Keys', @_ );
+    return shift->_create_instance( Pithub::Repos::Keys::, @_ );
 }
 
 =method languages
@@ -502,7 +502,7 @@ default context. This also sets the mode to default to 'gfm'.
 sub markdown {
     my $self = shift;
     return $self->_create_instance(
-        'Pithub::Markdown',
+        Pithub::Markdown::,
         mode    => 'gfm',
         context => sprintf( '%s/%s', $self->user, $self->repo ),
         @_
@@ -516,7 +516,7 @@ Provides access to L<Pithub::PullRequests>.
 =cut
 
 sub pull_requests {
-    return shift->_create_instance( 'Pithub::PullRequests', @_ );
+    return shift->_create_instance( Pithub::PullRequests::, @_ );
 }
 
 =method releases
@@ -526,7 +526,7 @@ Provides access to L<Pithub::Repos::Releases>.
 =cut
 
 sub releases {
-    return shift->_create_instance( 'Pithub::Repos::Releases', @_ );
+    return shift->_create_instance( Pithub::Repos::Releases::, @_ );
 }
 
 =method starring
@@ -536,7 +536,7 @@ Provides access to L<Pithub::Repos::Starring>.
 =cut
 
 sub starring {
-    return shift->_create_instance( 'Pithub::Repos::Starring', @_ );
+    return shift->_create_instance( Pithub::Repos::Starring::, @_ );
 }
 
 =method stats
@@ -546,7 +546,7 @@ Provide access to L<Pithub::Repos::Stats>.
 =cut
 
 sub stats {
-    return shift->_create_instance( 'Pithub::Repos::Stats', @_ );
+    return shift->_create_instance( Pithub::Repos::Stats::, @_ );
 }
 
 =method statuses
@@ -556,7 +556,7 @@ Provide access to L<Pithub::Repos::Statuses>.
 =cut
 
 sub statuses {
-    return shift->_create_instance( 'Pithub::Repos::Statuses', @_ );
+    return shift->_create_instance( Pithub::Repos::Statuses::, @_ );
 }
 
 =method tags
@@ -664,7 +664,7 @@ Provides access to L<Pithub::Repos::Watching>.
 =cut
 
 sub watching {
-    return shift->_create_instance( 'Pithub::Repos::Watching', @_ );
+    return shift->_create_instance( Pithub::Repos::Watching::, @_ );
 }
 
 1;

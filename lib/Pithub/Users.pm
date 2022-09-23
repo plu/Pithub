@@ -4,10 +4,10 @@ our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Users API
 
 use Moo;
-use Carp qw( croak );
-use Pithub::Users::Emails;
-use Pithub::Users::Followers;
-use Pithub::Users::Keys;
+use Carp                     qw( croak );
+use Pithub::Users::Emails    ();
+use Pithub::Users::Followers ();
+use Pithub::Users::Keys      ();
 extends 'Pithub::Base';
 
 =method emails
@@ -17,7 +17,7 @@ Provides access to L<Pithub::Users::Emails>.
 =cut
 
 sub emails {
-    return shift->_create_instance( 'Pithub::Users::Emails', @_ );
+    return shift->_create_instance( Pithub::Users::Emails::, @_ );
 }
 
 =method followers
@@ -27,7 +27,7 @@ Provides access to L<Pithub::Users::Followers>.
 =cut
 
 sub followers {
-    return shift->_create_instance( 'Pithub::Users::Followers', @_ );
+    return shift->_create_instance( Pithub::Users::Followers::, @_ );
 }
 
 =method get
@@ -83,7 +83,7 @@ Provides access to L<Pithub::Users::Keys>.
 =cut
 
 sub keys {
-    return shift->_create_instance( 'Pithub::Users::Keys', @_ );
+    return shift->_create_instance( Pithub::Users::Keys::, @_ );
 }
 
 =method update

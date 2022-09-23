@@ -4,8 +4,8 @@ our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Repo Releases API
 
 use Moo;
-use Carp qw( croak );
-use Pithub::Repos::Releases::Assets;
+use Carp                            qw( croak );
+use Pithub::Repos::Releases::Assets ();
 extends 'Pithub::Base';
 
 =method assets
@@ -15,7 +15,7 @@ Provides access to L<Pithub::Repos::Releases::Assets>.
 =cut
 
 sub assets {
-    return shift->_create_instance( 'Pithub::Repos::Releases::Assets', @_ );
+    return shift->_create_instance( Pithub::Repos::Releases::Assets::, @_ );
 }
 
 =method list
