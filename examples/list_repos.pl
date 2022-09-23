@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Pithub::Repos;
+use Pithub::Repos ();
 
 my $r = Pithub::Repos->new(
     per_page        => 100,

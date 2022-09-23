@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Path::Tiny;
-use Pithub::GitData;
+use Path::Tiny      qw( path );
+use Pithub::GitData ();
 
 my $git = Pithub::GitData->new(
     repo  => 'Pithub',

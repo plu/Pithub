@@ -15,10 +15,10 @@ use strict;
 use warnings;
 use feature qw( say );
 
-use Git::Raw::Config;
+use Git::Raw::Config                  ();
 use LWP::ConsoleLogger::Easy 0.000029 qw( debug_ua );
-use LWP::UserAgent;
-use Pithub::Repos::Collaborators;
+use LWP::UserAgent                    ();
+use Pithub::Repos::Collaborators      ();
 
 # WWW::Mechanize accepts gzip by default but then doesn't actually decode it
 # for you. See https://github.com/kentnl/HTTP-Tiny-Mech/pull/2 for a detailed

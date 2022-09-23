@@ -1,8 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Pithub::Repos::Releases;
-use Data::Dumper;
+use Pithub::Repos::Releases ();
 
 # https://api.github.com/repos/Graylog2/graylog2-server/releases
 my $input = $ARGV[0] || 'Graylog2/graylog2-server';
