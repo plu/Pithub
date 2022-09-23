@@ -4,7 +4,6 @@ our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Repo Starring API
 
 use Moo;
-use Carp ();
 extends 'Pithub::Base';
 
 =method has_starred
