@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - Add Pithub::Repos::Actions::Workflows class which has methods to
+            get and list repository workflows (GH#227) (Olaf Alders)
 
 0.01039   2022-08-08 21:00:15Z
           - Use CHI for caching (GH#224) (Olaf Alders)
