@@ -4,7 +4,7 @@ package Pithub::Repos::Actions::Workflows;
 
 use Moo;
 
-our $VERSION = '0.01040';
+our $VERSION = '0.01041';
 
 use Carp qw( croak );
 extends 'Pithub::Base';

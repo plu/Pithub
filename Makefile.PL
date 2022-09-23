@@ -48,7 +48,7 @@ my %WriteMakefileArgs = (
     "Test::Needs" => 0,
     "lib" => 0
   },
-  "VERSION" => "0.01040",
+  "VERSION" => "0.01041",
   "test" => {
     "TESTS" => "t/*.t t/live/*.t t/live/repos/actions/*.t"
   }

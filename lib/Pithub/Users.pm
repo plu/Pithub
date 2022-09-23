@@ -1,5 +1,5 @@
 package Pithub::Users;
-our $VERSION = '0.01040';
+our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Users API
 
 use Moo;

@@ -1,5 +1,5 @@
 package Pithub::Repos::Hooks;
-our $VERSION = '0.01040';
+our $VERSION = '0.01041';
 # ABSTRACT: Github v3 Repo Hooks API
 
 use Moo;
