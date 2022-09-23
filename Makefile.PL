@@ -50,7 +50,7 @@ my %WriteMakefileArgs = (
   },
   "VERSION" => "0.01040",
   "test" => {
-    "TESTS" => "t/*.t t/live/*.t"
+    "TESTS" => "t/*.t t/live/*.t t/live/repos/actions/*.t"
   }
 );
 

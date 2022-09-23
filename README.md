@@ -1,5 +1,5 @@
 [![codecov](https://codecov.io/gh/plu/Pithub/branch/master/graph/badge.svg)](https://codecov.io/gh/plu/Pithub)
-[![CPAN Cover Status](https://cpancoverbadge.perl-services.de/Pithub-0.01039)](https://cpancoverbadge.perl-services.de/Pithub-0.01039)
+[![CPAN Cover Status](https://cpancoverbadge.perl-services.de/Pithub-0.01040)](https://cpancoverbadge.perl-services.de/Pithub-0.01040)
 [![Kwalitee status](https://cpants.cpanauthors.org/dist/Pithub.png)](https://cpants.cpanauthors.org/dist/Pithub)
 [![Actions Status](https://github.com/plu/Pithub/actions/workflows/test.yml/badge.svg)](https://github.com/plu/Pithub/actions)
 [![Cpan license](https://img.shields.io/cpan/l/Pithub.svg)](https://metacpan.org/release/Pithub)
@@ -11,7 +11,7 @@ Pithub - Github v3 API
 
 # VERSION
 
-version 0.01039
+version 0.01040
 
 # SYNOPSIS
 
@@ -161,7 +161,7 @@ the HTTP requests that are created by the method calls, without
 actually sending them. The second one is sending real requests to
 the Github API. If you want to contribute to this project, I highly
 recommend to run the live tests on a test account, because it will
-generate a lof of activity.
+generate a lot of activity.
 
 # MODULES
 
