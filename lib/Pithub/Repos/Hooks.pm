@@ -53,7 +53,7 @@ public - Any time a Repository changes from private to public.
 
 =item *
 
-pull_request - Any time a Pull Request is opend, closed, or
+pull_request - Any time a Pull Request is opened, closed, or
 synchronized (updated due to a new push in the branch that
 the pull request is tracking).
 

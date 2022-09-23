@@ -12,7 +12,7 @@ extends 'Pithub::Base';
 
 =item *
 
-Create a fork for the authenicated user.
+Create a fork for the authenticated user.
 
     POST /repos/:user/:repo/forks
 

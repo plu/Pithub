@@ -134,7 +134,7 @@ Examples:
 
 =item *
 
-List who the authenicated user is following:
+List who the authenticated user is following:
 
     GET /user/following
 
