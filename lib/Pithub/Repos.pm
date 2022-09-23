@@ -1,12 +1,16 @@
 package Pithub::Repos;
-our $VERSION = '0.01040';
+
 # ABSTRACT: Github v3 Repos API
 
 use Moo;
+
+our $VERSION = '0.01040';
+
 use Carp qw( croak );
 use Pithub::Issues;
 use Pithub::Markdown;
 use Pithub::PullRequests;
+use Pithub::Repos::Actions ();
 use Pithub::Repos::Collaborators;
 use Pithub::Repos::Commits;
 use Pithub::Repos::Contents;
@@ -19,7 +23,18 @@ use Pithub::Repos::Starring;
 use Pithub::Repos::Stats;
 use Pithub::Repos::Statuses;
 use Pithub::Repos::Watching;
+
 extends 'Pithub::Base';
+
+=method actions
+
+Provides access to L<Pithub::Repos::Actions>.
+
+=cut
+
+sub actions {
+    return shift->_create_instance( Pithub::Repos::Actions::, @_ );
+}
 
 =method branch
 

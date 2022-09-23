@@ -1,11 +1,14 @@
-use FindBin;
-use lib "$FindBin::Bin/../lib";
-use Pithub::Test::Factory;
-use Test::Most import => [ qw( code done_testing eq_or_diff is isnt like ok skip subtest use_ok ) ];
+#!perl
 
-BEGIN {
-    use_ok('Pithub');
-}
+use strict;
+use warnings;
+
+use Pithub                ();
+use Test::Differences     qw( eq_or_diff );
+use Test::More import => [qw( done_testing is isnt like ok skip subtest )];
+
+use lib 't/lib';
+use Pithub::Test::Factory ();
 
 # These tests may break very easily because data on Github can and will change, of course.
 # And they also might fail once the ratelimit has been reached.

@@ -11,6 +11,7 @@ use Pithub::Test::Factory ();
 
 BEGIN {
     use_ok('Pithub::Repos');
+    use_ok('Pithub::Repos::Actions');
     use_ok('Pithub::Repos::Collaborators');
     use_ok('Pithub::Repos::Commits');
     use_ok('Pithub::Repos::Downloads');
@@ -1160,5 +1161,22 @@ subtest 'Pithub::Repos->branch' => sub {
         eq_or_diff $json->decode( $result->request->content ), { 'description' => 'testing', 'state' => 'error' }, 'HTTP body';
     }
 }
+
+subtest actions => sub {
+    my $repos = Pithub::Test::Factory->create(
+        Pithub::Repos::,
+        user => 'foo',
+        repo => 'bar',
+    );
+    isa_ok( $repos, 'Pithub::Repos', 'repos' );
+    my $actions = $repos->actions;
+    isa_ok( $actions, 'Pithub::Repos::Actions', 'actions' );
+    my $workflows = $actions->workflows();
+    isa_ok( $workflows, 'Pithub::Repos::Actions::Workflows', 'workflows' );
+
+    throws_ok { $workflows->get() }
+    qr{Missing key in parameters: workflow_id},
+        'Missing workflow_id parameter';
+};
 
 done_testing;
