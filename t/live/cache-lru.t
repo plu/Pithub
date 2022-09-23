@@ -5,7 +5,7 @@ use warnings;
 
 use Pithub       ();
 use Scalar::Util qw( refaddr );
-use Test::Most import => [qw( done_testing is isnt note plan subtest )];
+use Test::Most import => [qw( done_testing isnt plan )];
 use Test::Needs qw( Cache::LRU );
 
 plan skip_all => 'Set PITHUB_TEST_LIVE to true to run these tests'
