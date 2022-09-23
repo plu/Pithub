@@ -20,19 +20,19 @@ my $blob = $git->blobs->create(
     }
 );
 
-die "Could not create blob" unless $blob->success;
+die 'Could not create blob' unless $blob->success;
 
 # we need the current master reference, actually just its SHA
 my $master = $git->references->get( ref => 'heads/master' );
 
-die "Could not get the heads/master reference" unless $master->success;
+die 'Could not get the heads/master reference' unless $master->success;
 
 # and we need the full commit of this SHA. Later we will
 # extract the tree SHA this commit belongs to.
 my $base_commit
     = $git->commits->get( sha => $master->content->{object}{sha} );
 
-die "Could not get the base commit" unless $base_commit->success;
+die 'Could not get the base commit' unless $base_commit->success;
 
 # create a new tree, based on the old one, that adds the new blob
 my $tree = $git->trees->create(
@@ -49,7 +49,7 @@ my $tree = $git->trees->create(
     }
 );
 
-die "Could not create the new tree" unless $tree->success;
+die 'Could not create the new tree' unless $tree->success;
 
 # create a new commit based on the new tree and
 # having the current master as a parent
@@ -61,7 +61,7 @@ my $commit = $git->commits->create(
     }
 );
 
-die "Could not create the commit" unless $commit->success;
+die 'Could not create the commit' unless $commit->success;
 
 # finally point the master branch to the new commit
 my $reference = $git->references->update(
@@ -69,6 +69,6 @@ my $reference = $git->references->update(
     data => { sha => $commit->content->{sha} }
 );
 
-die "Could not update the heads/master reference" unless $reference->success;
+die 'Could not update the heads/master reference' unless $reference->success;
 
 print "Done.\n";

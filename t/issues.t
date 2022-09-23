@@ -1,9 +1,14 @@
-use FindBin;
-use lib "$FindBin::Bin/lib";
+#!perl
+
+use strict;
+use warnings;
+
 use JSON::MaybeXS qw( JSON );
-use Pithub::Test::Factory;
 use Test::Most import =>
     [qw( done_testing eq_or_diff is isa_ok ok throws_ok use_ok )];
+
+use lib 't/lib';
+use Pithub::Test::Factory ();
 
 BEGIN {
     use_ok('Pithub::Issues');
@@ -49,7 +54,7 @@ BEGIN {
         my $http_request = $result->request;
         eq_or_diff $json->decode( $http_request->content ),
             {
-            'body'      => 'I\'m having a problem with this.',
+            'body'      => q{I'm having a problem with this.},
             'assignee'  => 'octocat',
             'milestone' => 1,
             'title'     => 'Found a bug',
@@ -151,7 +156,7 @@ BEGIN {
         my $http_request = $result->request;
         eq_or_diff $json->decode( $http_request->content ),
             {
-            'body'      => 'I\'m having a problem with this.',
+            'body'      => q{I'm having a problem with this.},
             'assignee'  => 'octocat',
             'milestone' => 1,
             'title'     => 'Found a bug',

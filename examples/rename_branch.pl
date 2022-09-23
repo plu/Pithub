@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Pithub::Repos ();
 
-my $b = Pithub::Repos->new( token => "ghp_YoUrTokeN" );
+my $b = Pithub::Repos->new( token => 'ghp_YoUrTokeN' );
 
 # Rename branch
 my $result = $b->rename_branch(

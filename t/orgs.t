@@ -359,7 +359,7 @@ use Pithub::Test::Factory ();
         is $result->request->uri->path, '/teams/123/memberships/bar',
             'HTTP path';
         my $http_request = $result->request;
-        is $http_request->content, '{"role":"member"}', 'HTTP body';
+        is $http_request->content, q[{"role":"member"}], 'HTTP body';
     }
 }
 
