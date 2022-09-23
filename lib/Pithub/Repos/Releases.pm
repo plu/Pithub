@@ -1,5 +1,6 @@
 package Pithub::Repos::Releases;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Repo Releases API
 
 use Moo;
@@ -14,7 +15,7 @@ Provides access to L<Pithub::Repos::Releases::Assets>.
 =cut
 
 sub assets {
-    return shift->_create_instance('Pithub::Repos::Releases::Assets', @_);
+    return shift->_create_instance( 'Pithub::Repos::Releases::Assets', @_ );
 }
 
 =method list
@@ -44,7 +45,9 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/releases', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/releases', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -78,7 +81,10 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/releases/%d', delete $args{user}, delete $args{repo}, delete $args{release_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/releases/%d', delete $args{user},
+            delete $args{repo},         delete $args{release_id}
+        ),
         %args,
     );
 }
@@ -115,11 +121,14 @@ Examples:
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/releases', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/releases', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -158,11 +167,15 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: release_id' unless $args{release_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'PATCH',
-        path   => sprintf( '/repos/%s/%s/releases/%d', delete $args{user}, delete $args{repo}, delete $args{release_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/releases/%d', delete $args{user},
+            delete $args{repo},         delete $args{release_id}
+        ),
         %args,
     );
 }
@@ -196,7 +209,10 @@ sub delete {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/repos/%s/%s/releases/%d', delete $args{user}, delete $args{repo}, delete $args{release_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/releases/%d', delete $args{user},
+            delete $args{repo},         delete $args{release_id}
+        ),
         %args,
     );
 }

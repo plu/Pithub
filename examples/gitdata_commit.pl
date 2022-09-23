@@ -29,7 +29,8 @@ die "Could not get the heads/master reference" unless $master->success;
 
 # and we need the full commit of this SHA. Later we will
 # extract the tree SHA this commit belongs to.
-my $base_commit = $git->commits->get( sha => $master->content->{object}{sha} );
+my $base_commit
+    = $git->commits->get( sha => $master->content->{object}{sha} );
 
 die "Could not get the base commit" unless $base_commit->success;
 

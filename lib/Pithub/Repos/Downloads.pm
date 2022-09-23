@@ -1,9 +1,10 @@
 package Pithub::Repos::Downloads;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Repo Downloads API
 
 use Moo;
-use Carp qw( croak );
+use Carp                  qw( croak );
 use HTTP::Request::Common qw( POST );
 extends 'Pithub::Base';
 
@@ -51,11 +52,14 @@ Examples:
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/downloads', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/downloads', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -89,7 +93,10 @@ sub delete {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/repos/%s/%s/downloads/%s', delete $args{user}, delete $args{repo}, delete $args{download_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/downloads/%s', delete $args{user},
+            delete $args{repo},          delete $args{download_id}
+        ),
         %args,
     );
 }
@@ -123,7 +130,10 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/downloads/%s', delete $args{user}, delete $args{repo}, delete $args{download_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/downloads/%s', delete $args{user},
+            delete $args{repo},          delete $args{download_id}
+        ),
         %args,
     );
 }
@@ -155,7 +165,9 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/downloads', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/downloads', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -180,11 +192,14 @@ upload was successful the status will be C<< 201 >>.
 
 sub upload {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: result (Pithub::Result object)' unless ref $args{result} eq 'Pithub::Result';
+    croak 'Missing key in parameters: result (Pithub::Result object)'
+        unless ref $args{result} eq 'Pithub::Result';
     croak 'Missing key in parameters: file' unless $args{file};
     my $result = $args{result}->content;
-    foreach my $key (qw(path acl name accesskeyid policy signature mime_type)) {
-        croak "Missing key in Pithub::Result content: ${key}" unless grep $_ eq $key, keys %$result;
+    foreach
+        my $key (qw(path acl name accesskeyid policy signature mime_type)) {
+        croak "Missing key in Pithub::Result content: ${key}"
+            unless grep $_ eq $key, keys %$result;
     }
     my %data = (
         Content_Type => 'form-data',

@@ -1,5 +1,6 @@
 package Pithub::Markdown;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Markdown API
 
 use Moo;
@@ -57,7 +58,8 @@ Example:
 
 sub render {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless defined $args{data};
+    croak 'Missing key in parameters: data (hashref)'
+        unless defined $args{data};
 
     for (qw( context mode )) {
         $args{data}{$_} = $self->$_ if !exists $args{data}{$_} and $self->$_;

@@ -56,14 +56,15 @@ See also L<branches> to get a list of all branches.
 
 sub branch {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: branch (string)' unless defined $args{branch};
+    croak 'Missing key in parameters: branch (string)'
+        unless defined $args{branch};
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
         path   => sprintf(
             '/repos/%s/%s/branches/%s', delete $args{user},
-                                        delete $args{repo},
-                                        delete $args{branch},
+            delete $args{repo},
+            delete $args{branch},
         ),
         %args,
     );
@@ -95,7 +96,9 @@ sub branches {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/branches', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/branches', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -127,11 +130,15 @@ Examples:
 sub rename_branch {
     my ( $self, %args ) = @_;
     croak 'Missing parameters: branch' unless $args{branch};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/branches/%s/rename', delete $args{user}, delete $args{repo}, delete $args{branch} ),
+        path   => sprintf(
+            '/repos/%s/%s/branches/%s/rename', delete $args{user},
+            delete $args{repo},                delete $args{branch}
+        ),
         %args,
     );
 }
@@ -161,11 +168,14 @@ Examples:
 
 sub merge_branch {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/merges', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/merges', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -177,7 +187,7 @@ Provides access to L<Pithub::Repos::Collaborators>.
 =cut
 
 sub collaborators {
-    return shift->_create_instance('Pithub::Repos::Collaborators', @_);
+    return shift->_create_instance( 'Pithub::Repos::Collaborators', @_ );
 }
 
 =method commits
@@ -187,7 +197,7 @@ Provides access to L<Pithub::Repos::Commits>.
 =cut
 
 sub commits {
-    return shift->_create_instance('Pithub::Repos::Commits', @_);
+    return shift->_create_instance( 'Pithub::Repos::Commits', @_ );
 }
 
 =method contents
@@ -197,7 +207,7 @@ Provides access to L<Pithub::Repos::Contents>.
 =cut
 
 sub contents {
-    return shift->_create_instance('Pithub::Repos::Contents', @_);
+    return shift->_create_instance( 'Pithub::Repos::Contents', @_ );
 }
 
 =method contributors
@@ -224,7 +234,10 @@ sub contributors {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/contributors', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/contributors', delete $args{user},
+            delete $args{repo}
+        ),
         %args,
     );
 }
@@ -265,7 +278,8 @@ Examples:
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     if ( my $org = delete $args{org} ) {
         return $self->request(
             method => 'POST',
@@ -291,11 +305,12 @@ Delete a repository.
 =cut
 
 sub delete {
-    my( $self, %args ) = @_;
+    my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
+        path   =>
+            sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
         %args,
     );
 }
@@ -307,7 +322,7 @@ Provides access to L<Pithub::Repos::Downloads>.
 =cut
 
 sub downloads {
-    return shift->_create_instance('Pithub::Repos::Downloads', @_);
+    return shift->_create_instance( 'Pithub::Repos::Downloads', @_ );
 }
 
 =method forks
@@ -317,7 +332,7 @@ Provides access to L<Pithub::Repos::Forks>.
 =cut
 
 sub forks {
-    return shift->_create_instance('Pithub::Repos::Forks', @_);
+    return shift->_create_instance( 'Pithub::Repos::Forks', @_ );
 }
 
 =method get
@@ -344,7 +359,8 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
+        path   =>
+            sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
         %args,
     );
 }
@@ -356,7 +372,7 @@ Provides access to L<Pithub::Repos::Hooks>.
 =cut
 
 sub hooks {
-    return shift->_create_instance('Pithub::Repos::Hooks', @_);
+    return shift->_create_instance( 'Pithub::Repos::Hooks', @_ );
 }
 
 =method issues
@@ -366,7 +382,7 @@ Provides access to L<Pithub::Issues> for this repo.
 =cut
 
 sub issues {
-    return shift->_create_instance('Pithub::Issues', @_);
+    return shift->_create_instance( 'Pithub::Issues', @_ );
 }
 
 =method keys
@@ -376,7 +392,7 @@ Provides access to L<Pithub::Repos::Keys>.
 =cut
 
 sub keys {
-    return shift->_create_instance('Pithub::Repos::Keys', @_);
+    return shift->_create_instance( 'Pithub::Repos::Keys', @_ );
 }
 
 =method languages
@@ -403,7 +419,9 @@ sub languages {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/languages', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/languages', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -483,9 +501,12 @@ default context. This also sets the mode to default to 'gfm'.
 
 sub markdown {
     my $self = shift;
-    return $self->_create_instance('Pithub::Markdown',
-        mode => 'gfm', context => sprintf( '%s/%s', $self->user, $self->repo ),
-        @_);
+    return $self->_create_instance(
+        'Pithub::Markdown',
+        mode    => 'gfm',
+        context => sprintf( '%s/%s', $self->user, $self->repo ),
+        @_
+    );
 }
 
 =method pull_requests
@@ -495,7 +516,7 @@ Provides access to L<Pithub::PullRequests>.
 =cut
 
 sub pull_requests {
-    return shift->_create_instance('Pithub::PullRequests', @_);
+    return shift->_create_instance( 'Pithub::PullRequests', @_ );
 }
 
 =method releases
@@ -505,7 +526,7 @@ Provides access to L<Pithub::Repos::Releases>.
 =cut
 
 sub releases {
-    return shift->_create_instance('Pithub::Repos::Releases', @_);
+    return shift->_create_instance( 'Pithub::Repos::Releases', @_ );
 }
 
 =method starring
@@ -515,7 +536,7 @@ Provides access to L<Pithub::Repos::Starring>.
 =cut
 
 sub starring {
-    return shift->_create_instance('Pithub::Repos::Starring', @_);
+    return shift->_create_instance( 'Pithub::Repos::Starring', @_ );
 }
 
 =method stats
@@ -525,7 +546,7 @@ Provide access to L<Pithub::Repos::Stats>.
 =cut
 
 sub stats {
-    return shift->_create_instance('Pithub::Repos::Stats', @_);
+    return shift->_create_instance( 'Pithub::Repos::Stats', @_ );
 }
 
 =method statuses
@@ -535,7 +556,7 @@ Provide access to L<Pithub::Repos::Statuses>.
 =cut
 
 sub statuses {
-    return shift->_create_instance('Pithub::Repos::Statuses', @_);
+    return shift->_create_instance( 'Pithub::Repos::Statuses', @_ );
 }
 
 =method tags
@@ -562,7 +583,9 @@ sub tags {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/tags', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/tags', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -591,7 +614,9 @@ sub teams {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/teams', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/teams', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -621,11 +646,13 @@ Examples:
 
 sub update {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'PATCH',
-        path   => sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
+        path   =>
+            sprintf( '/repos/%s/%s', delete $args{user}, delete $args{repo} ),
         %args,
     );
 }
@@ -637,7 +664,7 @@ Provides access to L<Pithub::Repos::Watching>.
 =cut
 
 sub watching {
-    return shift->_create_instance('Pithub::Repos::Watching', @_);
+    return shift->_create_instance( 'Pithub::Repos::Watching', @_ );
 }
 
 1;

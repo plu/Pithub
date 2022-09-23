@@ -1,5 +1,6 @@
 package Pithub::Users::Keys;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 User Keys API
 
 use Moo;
@@ -32,7 +33,8 @@ Examples:
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     return $self->request(
         method => 'POST',
         path   => '/user/keys',

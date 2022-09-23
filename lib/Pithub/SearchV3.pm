@@ -1,5 +1,6 @@
 package Pithub::SearchV3;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Search API
 
 use Moo;
@@ -29,7 +30,7 @@ Examples:
 
 sub issues {
     my $self = shift;
-    return $self->_search('issues', @_);
+    return $self->_search( 'issues', @_ );
 }
 
 =method repos
@@ -55,7 +56,7 @@ Examples:
 
 sub repos {
     my $self = shift;
-    return $self->_search('repositories', @_);
+    return $self->_search( 'repositories', @_ );
 }
 
 =method users
@@ -81,7 +82,7 @@ Examples:
 
 sub users {
     my $self = shift;
-    return $self->_search('users', @_);
+    return $self->_search( 'users', @_ );
 }
 
 =method code
@@ -107,7 +108,7 @@ Examples:
 
 sub code {
     my $self = shift;
-    return $self->_search('code', @_);
+    return $self->_search( 'code', @_ );
 }
 
 sub _search {
@@ -116,10 +117,10 @@ sub _search {
     return $self->request(
         method => 'GET',
         path   => '/search/' . $thing_to_search,
-        query => {
+        query  => {
             q => delete $args{q},
-            (exists $args{sort}  ? (sort  => delete $args{sort})  : ()),
-            (exists $args{order} ? (order => delete $args{order}) : ()),
+            ( exists $args{sort}  ? ( sort  => delete $args{sort} )  : () ),
+            ( exists $args{order} ? ( order => delete $args{order} ) : () ),
         },
         %args,
     );

@@ -38,13 +38,20 @@ use Pithub::Test::Factory ();
     my $p    = Pithub::Test::Factory->create('Pithub');
     ok $p->utf8, 'enabled en/decoding json';
     $p->token('123');
-    my $request = $p->request( method => 'POST', path => '/foo', data => { some => "bullet \x{2022}" } )->request;
-    like $request->content, qr/bullet \xe2\x80\xa2/, 'character string utf-8 encoded in request';
-    eq_or_diff $json->decode( $request->content ), { some => "bullet \x{2022}" }, 'character strings preserved in json round-trip';
+    my $request = $p->request(
+        method => 'POST', path => '/foo',
+        data   => { some => "bullet \x{2022}" }
+    )->request;
+    like $request->content, qr/bullet \xe2\x80\xa2/,
+        'character string utf-8 encoded in request';
+    eq_or_diff $json->decode( $request->content ),
+        { some => "bullet \x{2022}" },
+        'character strings preserved in json round-trip';
 }
 
 {
-    my $obj = Pithub::Test::Factory->create('Pithub::Users', utf8 => 0); # disable en/decoding
+    my $obj = Pithub::Test::Factory->create( 'Pithub::Users', utf8 => 0 )
+        ;    # disable en/decoding
     ok !$obj->utf8, 'disabled en/decoding json';
     $obj->ua->add_response('users/rwstauner.GET');
 
@@ -66,12 +73,19 @@ use Pithub::Test::Factory ();
 
 {
     my $json = JSON->new;
-    my $p    = Pithub::Test::Factory->create('Pithub', utf8 => 0); # disable en/decoding
+    my $p    = Pithub::Test::Factory->create( 'Pithub', utf8 => 0 )
+        ;    # disable en/decoding
     ok !$p->utf8, 'disabled en/decoding json';
     $p->token('123');
-    my $request = $p->request( method => 'POST', path => '/foo', data => { some => "bullet \xe2\x80\xa2" } )->request;
-    like $request->content, qr/bullet \xe2\x80\xa2/, 'character string utf-8 encoded in request';
-    eq_or_diff $json->decode( $request->content ), { some => "bullet \xe2\x80\xa2" }, 'character strings preserved in json round-trip';
+    my $request = $p->request(
+        method => 'POST', path => '/foo',
+        data   => { some => "bullet \xe2\x80\xa2" }
+    )->request;
+    like $request->content, qr/bullet \xe2\x80\xa2/,
+        'character string utf-8 encoded in request';
+    eq_or_diff $json->decode( $request->content ),
+        { some => "bullet \xe2\x80\xa2" },
+        'character strings preserved in json round-trip';
 }
 
 done_testing;

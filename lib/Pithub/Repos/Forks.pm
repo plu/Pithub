@@ -1,5 +1,6 @@
 package Pithub::Repos::Forks;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Repo Forks API
 
 use Moo;
@@ -41,14 +42,18 @@ sub create {
     if ( my $org = delete $args{org} ) {
         return $self->request(
             method => 'POST',
-            path   => sprintf( '/repos/%s/%s/forks', delete $args{user}, delete $args{repo} ),
+            path   => sprintf(
+                '/repos/%s/%s/forks', delete $args{user}, delete $args{repo}
+            ),
             data => { organization => $org },
             %args,
         );
     }
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/forks', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/forks', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -80,7 +85,9 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/forks', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/forks', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }

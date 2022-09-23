@@ -1,4 +1,5 @@
 package Pithub::Result;
+
 # ABSTRACT: Github v3 result object
 
 use Moo;
@@ -6,16 +7,17 @@ use Moo;
 our $VERSION = '0.01041';
 
 use Pithub::ResultSet ();
-use JSON::MaybeXS qw( JSON );
-use URI ();
-use Carp qw( confess croak );
+use JSON::MaybeXS     qw( JSON );
+use URI               ();
+use Carp              qw( confess croak );
 
 sub _isa_isa_maker {
     my $class = shift;
     return sub {
-        confess "must be an instance of $class but isn't a reference" if !ref $_[0];
-        confess "must be an instance of $class, but is a ".ref $_[0]
-          unless eval { $_[0]->isa($class) };
+        confess "must be an instance of $class but isn't a reference"
+            if !ref $_[0];
+        confess "must be an instance of $class, but is a " . ref $_[0]
+            unless eval { $_[0]->isa($class) };
     };
 }
 
@@ -174,9 +176,10 @@ Returns whether the API call was successful.
 
 # required for next_page etc
 has '_request' => (
-    is       => 'ro',
-    isa      => sub {
-        croak 'must be a coderef, but is ' . ref $_[0] unless ref $_[0] eq 'CODE'
+    is  => 'ro',
+    isa => sub {
+        croak 'must be a coderef, but is ' . ref $_[0]
+            unless ref $_[0] eq 'CODE';
     },
     required => 1,
 );
@@ -206,9 +209,9 @@ has '_json' => (
     is      => 'ro',
     isa     => sub {
         confess "$_[0] is not a suitable JSON object"
-          unless eval { $_[0]->can('decode') };
+            unless eval { $_[0]->can('decode') };
     },
-    lazy    => 1,
+    lazy => 1,
 );
 
 =method count
@@ -487,12 +490,13 @@ sub _build_prev_page_uri {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON->new->utf8($self->utf8);
+    return JSON->new->utf8( $self->utf8 );
 }
 
 sub _get_link_header {
     my ( $self, $type ) = @_;
-    return $self->{_get_link_header}{$type} if $self->{_get_link_header}{$type};
+    return $self->{_get_link_header}{$type}
+        if $self->{_get_link_header}{$type};
     my $link = $self->response->header('Link');
     return unless $link;
     return unless $link =~ /(next|first|last|prev)/;

@@ -1,5 +1,6 @@
 package Pithub::Orgs::Members;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Org Members API
 
 use Moo;
@@ -34,7 +35,10 @@ sub conceal {
     croak 'Missing key in parameters: user' unless $args{user};
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/orgs/%s/public_members/%s', delete $args{org}, delete $args{user} ),
+        path   => sprintf(
+            '/orgs/%s/public_members/%s', delete $args{org},
+            delete $args{user}
+        ),
         %args,
     );
 }
@@ -69,7 +73,9 @@ sub delete {
     croak 'Missing key in parameters: user' unless $args{user};
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/orgs/%s/members/%s', delete $args{org}, delete $args{user} ),
+        path   => sprintf(
+            '/orgs/%s/members/%s', delete $args{org}, delete $args{user}
+        ),
         %args,
     );
 }
@@ -102,7 +108,9 @@ sub is_member {
     croak 'Missing key in parameters: user' unless $args{user};
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/orgs/%s/members/%s', delete $args{org}, delete $args{user} ),
+        path   => sprintf(
+            '/orgs/%s/members/%s', delete $args{org}, delete $args{user}
+        ),
         %args,
     );
 }
@@ -135,7 +143,10 @@ sub is_public {
     croak 'Missing key in parameters: user' unless $args{user};
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/orgs/%s/public_members/%s', delete $args{org}, delete $args{user} ),
+        path   => sprintf(
+            '/orgs/%s/public_members/%s', delete $args{org},
+            delete $args{user}
+        ),
         %args,
     );
 }
@@ -231,7 +242,10 @@ sub publicize {
     croak 'Missing key in parameters: user' unless $args{user};
     return $self->request(
         method => 'PUT',
-        path   => sprintf( '/orgs/%s/public_members/%s', delete $args{org}, delete $args{user} ),
+        path   => sprintf(
+            '/orgs/%s/public_members/%s', delete $args{org},
+            delete $args{user}
+        ),
         %args,
     );
 }
