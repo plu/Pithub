@@ -52,7 +52,7 @@ sub add_member {
 
 =over
 
-If the user is already a member of the team’s organization, this
+If the user is already a member of the team's organization, this
 endpoint will add the user to the team. In order to add a membership
 between an organization member and a team, the authenticated user
 must be an organization owner or a maintainer of the team.

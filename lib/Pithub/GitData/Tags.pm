@@ -56,7 +56,7 @@ B<message>: mandatory string of the tag message
 
 =item *
 
-B<object>: mandatory stringof the SHA of the git object this is tagging
+B<object>: mandatory string of the SHA of the git object this is tagging
 
 =item *
 
