@@ -1,5 +1,6 @@
 package Pithub::Repos::Collaborators;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Repo Collaborators API
 
 use Moo;
@@ -31,11 +32,15 @@ Examples:
 
 sub add {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: collaborator' unless $args{collaborator};
+    croak 'Missing key in parameters: collaborator'
+        unless $args{collaborator};
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'PUT',
-        path   => sprintf( '/repos/%s/%s/collaborators/%s', delete $args{user}, delete $args{repo}, delete $args{collaborator} ),
+        path   => sprintf(
+            '/repos/%s/%s/collaborators/%s', delete $args{user},
+            delete $args{repo},              delete $args{collaborator}
+        ),
         %args,
     );
 }
@@ -72,11 +77,15 @@ Examples:
 
 sub is_collaborator {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: collaborator' unless $args{collaborator};
+    croak 'Missing key in parameters: collaborator'
+        unless $args{collaborator};
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/collaborators/%s', delete $args{user}, delete $args{repo}, delete $args{collaborator} ),
+        path   => sprintf(
+            '/repos/%s/%s/collaborators/%s', delete $args{user},
+            delete $args{repo},              delete $args{collaborator}
+        ),
         %args,
     );
 }
@@ -108,7 +117,10 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/collaborators', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/collaborators', delete $args{user},
+            delete $args{repo}
+        ),
         %args,
     );
 }
@@ -138,11 +150,15 @@ Examples:
 
 sub remove {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: collaborator' unless $args{collaborator};
+    croak 'Missing key in parameters: collaborator'
+        unless $args{collaborator};
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/repos/%s/%s/collaborators/%s', delete $args{user}, delete $args{repo}, delete $args{collaborator} ),
+        path   => sprintf(
+            '/repos/%s/%s/collaborators/%s', delete $args{user},
+            delete $args{repo},              delete $args{collaborator}
+        ),
         %args
     );
 }

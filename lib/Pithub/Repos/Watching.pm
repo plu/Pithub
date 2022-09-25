@@ -1,9 +1,9 @@
 package Pithub::Repos::Watching;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Repo Watching API
 
 use Moo;
-use Carp ();
 extends 'Pithub::Base';
 
 =method is_watching
@@ -33,7 +33,9 @@ sub is_watching {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/user/watched/%s/%s', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/user/watched/%s/%s', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -111,7 +113,9 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/watchers', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/watchers', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -143,7 +147,9 @@ sub start_watching {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'PUT',
-        path   => sprintf( '/user/watched/%s/%s', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/user/watched/%s/%s', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -175,7 +181,9 @@ sub stop_watching {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/user/watched/%s/%s', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/user/watched/%s/%s', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }

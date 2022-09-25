@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Data::Dumper;
-use Pithub::Repos::Releases;
+use Data::Dumper            qw( Dumper );
+use Pithub::Repos::Releases ();
 
 my $releases = Pithub::Repos::Releases->new(
     repo  => 'buhtip-repo',

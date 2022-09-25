@@ -1,5 +1,6 @@
 package Pithub::Repos::Stats;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 repos / stats API
 
 use Moo;
@@ -33,30 +34,27 @@ Examples:
 
 sub contributors {
     my ( $self, %args ) = @_;
+
     # The default is to not wait for 200
     my $sleep = delete $args{wait_for_200} || 0;
     $self->_validate_user_repo_args( \%args );
     my $req = {
         method => 'GET',
-        path => sprintf(
+        path   => sprintf(
             '/repos/%s/%s/stats/contributors',
             delete $args{user}, delete $args{repo}
         ),
         %args
     };
-    my $res = $self->request(
-        %$req
-    );
+    my $res = $self->request(%$req);
 
     if ($sleep) {
-        while ($res->response->code == 202) {
+        while ( $res->response->code == 202 ) {
             sleep $sleep;
             $res = $self->request(%$req);
         }
     }
     return $res;
 }
-
-
 
 1;

@@ -1,5 +1,6 @@
 package Pithub::Repos::Keys;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Repo Keys API
 
 use Moo;
@@ -34,11 +35,14 @@ Examples:
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/keys', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/keys', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -72,7 +76,10 @@ sub delete {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/repos/%s/%s/keys/%s', delete $args{user}, delete $args{repo}, delete $args{key_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/keys/%s', delete $args{user}, delete $args{repo},
+            delete $args{key_id}
+        ),
         %args,
     );
 }
@@ -106,7 +113,10 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/keys/%s', delete $args{user}, delete $args{repo}, delete $args{key_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/keys/%s', delete $args{user}, delete $args{repo},
+            delete $args{key_id}
+        ),
         %args,
     );
 }
@@ -138,7 +148,9 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/keys', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/keys', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }

@@ -4,9 +4,9 @@ use strict;
 use warnings;
 
 use Import::Into;
-use Test::Builder ();
+use Test::Builder     ();
 use Test::Differences qw( eq_or_diff );
-use Test::More import => [ qw( diag is ) ];
+use Test::More import => [qw( diag is )];
 
 BEGIN {
     ## no critic (ClassHierarchies::ProhibitExplicitISA, Modules::ProhibitAutomaticExportation)
@@ -21,11 +21,11 @@ sub import {
 
     Test::Most->import::into($caller);
 
-    $class->export_to_level(1, @_);
+    $class->export_to_level( 1, @_ );
 }
 
 sub uri_is {
-    my($have, $want, $name) = @_;
+    my ( $have, $want, $name ) = @_;
 
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
@@ -37,17 +37,16 @@ sub uri_is {
         my $want_val = $want->$method;
 
         next if !defined $have_val && !defined $want_val;
-        if( (defined $have_val xor defined $want_val) ||
-            ($have_val ne $want_val)
-        ) {
+        if (   ( defined $have_val xor defined $want_val )
+            || ( $have_val ne $want_val ) ) {
             return is( $have, $want, $name ) || diag "$method does not match";
         }
     }
 
     my %have_queries = $have->query_form;
     my %want_queries = $want->query_form;
-    return eq_or_diff( \%have_queries, \%want_queries, $name ) ||
-             diag "$have ne $want, queries do not match";
+    return eq_or_diff( \%have_queries, \%want_queries, $name )
+        || diag "$have ne $want, queries do not match";
 }
 
 sub _make_uri {

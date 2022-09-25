@@ -1,5 +1,6 @@
 package Pithub::Repos::Hooks;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Repo Hooks API
 
 use Moo;
@@ -100,11 +101,14 @@ Examples:
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/hooks', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/hooks', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -138,7 +142,10 @@ sub delete {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/repos/%s/%s/hooks/%d', delete $args{user}, delete $args{repo}, delete $args{hook_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/hooks/%d', delete $args{user}, delete $args{repo},
+            delete $args{hook_id}
+        ),
         %args,
     );
 }
@@ -172,7 +179,10 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/hooks/%d', delete $args{user}, delete $args{repo}, delete $args{hook_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/hooks/%d', delete $args{user}, delete $args{repo},
+            delete $args{hook_id}
+        ),
         %args,
     );
 }
@@ -201,7 +211,9 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/hooks', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/hooks', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -235,7 +247,10 @@ sub test {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/hooks/%d/test', delete $args{user}, delete $args{repo}, delete $args{hook_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/hooks/%d/test', delete $args{user},
+            delete $args{repo},           delete $args{hook_id}
+        ),
         %args,
     );
 }
@@ -275,11 +290,15 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: hook_id' unless $args{hook_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'PATCH',
-        path   => sprintf( '/repos/%s/%s/hooks/%d', delete $args{user}, delete $args{repo}, delete $args{hook_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/hooks/%d', delete $args{user}, delete $args{repo},
+            delete $args{hook_id}
+        ),
         %args,
     );
 }

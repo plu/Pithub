@@ -1,5 +1,6 @@
 package Pithub::GitData::Tags;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Git Data Tags API
 
 use Moo;
@@ -132,11 +133,14 @@ Response: B<Status: 201 Created>
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/git/tags', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/git/tags', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -207,7 +211,10 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/git/tags/%s', delete $args{user}, delete $args{repo}, delete $args{sha} ),
+        path   => sprintf(
+            '/repos/%s/%s/git/tags/%s', delete $args{user},
+            delete $args{repo},         delete $args{sha}
+        ),
         %args,
     );
 }

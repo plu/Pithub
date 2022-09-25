@@ -1,17 +1,18 @@
 package Pithub::Base;
+
 # ABSTRACT: Github v3 base class for all Pithub modules
 
 use Moo;
 
 our $VERSION = '0.01041';
 
-use Carp qw( croak );
-use HTTP::Headers ();
-use HTTP::Request ();
-use JSON::MaybeXS qw( JSON );
+use Carp           qw( croak );
+use HTTP::Headers  ();
+use HTTP::Request  ();
+use JSON::MaybeXS  qw( JSON );
 use LWP::UserAgent ();
 use Pithub::Result ();
-use URI ();
+use URI            ();
 
 with 'Pithub::Result::SharedCache';
 
@@ -655,39 +656,48 @@ This method always returns a L<Pithub::Result> object.
 sub request {
     my ( $self, %args ) = @_;
 
-    my $method  = delete $args{method} || croak 'Missing mandatory key in parameters: method';
-    my $path    = delete $args{path}   || croak 'Missing mandatory key in parameters: path';
+    my $method = delete $args{method}
+        || croak 'Missing mandatory key in parameters: method';
+    my $path = delete $args{path}
+        || croak 'Missing mandatory key in parameters: path';
     my $data    = delete $args{data};
     my $options = delete $args{options};
     my $params  = delete $args{params};
 
-    croak "Invalid method: $method" unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
+    croak "Invalid method: $method"
+        unless grep $_ eq $method, qw(DELETE GET PATCH POST PUT);
 
     my $uri = $self->_uri_for($path);
 
-    if (my $host = delete $args{host}) {
+    if ( my $host = delete $args{host} ) {
         $uri->host($host);
     }
 
-    if (my $query = delete $args{query}) {
+    if ( my $query = delete $args{query} ) {
         $uri->query_form(%$query);
     }
 
     my $request = $self->_request_for( $method, $uri, $data );
 
-    if (my $headers = delete $args{headers}) {
-        foreach my $header (keys %$headers) {
-            $request->header($header, $headers->{$header});
+    if ( my $headers = delete $args{headers} ) {
+        foreach my $header ( keys %$headers ) {
+            $request->header( $header, $headers->{$header} );
         }
     }
 
-    if ( $self->_token_required( $method, $path ) && !$self->has_token($request) ) {
-        croak sprintf 'Access token required for: %s %s (%s)', $method, $path, $uri;
+    if ( $self->_token_required( $method, $path )
+        && !$self->has_token($request) ) {
+        croak sprintf 'Access token required for: %s %s (%s)', $method,
+            $path, $uri;
     }
 
     if ($options) {
-        croak 'The key options must be a hashref' unless ref $options eq 'HASH';
-        croak 'The key prepare_request in the options hashref must be a coderef' if $options->{prepare_request} && ref $options->{prepare_request} ne 'CODE';
+        croak 'The key options must be a hashref'
+            unless ref $options eq 'HASH';
+        croak
+            'The key prepare_request in the options hashref must be a coderef'
+            if $options->{prepare_request}
+            && ref $options->{prepare_request} ne 'CODE';
 
         if ( $options->{prepare_request} ) {
             $options->{prepare_request}->($request);
@@ -710,19 +720,20 @@ sub request {
     );
 }
 
-
 sub _make_request {
-    my($self, $request) = @_;
+    my ( $self, $request ) = @_;
 
     my $cache_key = $request->uri->as_string;
-    if( my $cached_response = $self->shared_cache->get($cache_key) ) {
+    if ( my $cached_response = $self->shared_cache->get($cache_key) ) {
+
         # Add the If-None-Match header from the cache's ETag
         # and make the request
-        $request->header( 'If-None-Match' => $cached_response->header('ETag') );
+        $request->header(
+            'If-None-Match' => $cached_response->header('ETag') );
         my $response = $self->ua->request($request);
 
         # Got 304 Not Modified, cache is still valid
-        return $cached_response if ($response->code || 0) == 304;
+        return $cached_response if ( $response->code || 0 ) == 304;
 
         # The response changed, cache it and return it.
         $self->shared_cache->set( $cache_key, $response );
@@ -734,7 +745,6 @@ sub _make_request {
     return $response;
 }
 
-
 =method has_token (?$request)
 
 This method checks if a token has been specified, or if not, and a request
@@ -743,12 +753,13 @@ object is passed, then it looks for an Authorization header in the request.
 =cut
 
 sub has_token {
-    my ($self, $request) = @_;
+    my ( $self, $request ) = @_;
 
     # If we have one specified in the object, return true
     return 1 if $self->_has_token;
+
     # If no request object here, we don't have a token
-    return 0  unless $request;
+    return 0 unless $request;
 
     return 1 if $request->header('Authorization');
     return 0;
@@ -766,7 +777,7 @@ sub rate_limit {
 
 sub _build__json {
     my ($self) = @_;
-    return JSON->new->utf8($self->utf8);
+    return JSON->new->utf8( $self->utf8 );
 }
 
 sub _build_ua {
@@ -793,7 +804,8 @@ sub _create_instance {
         @args,
     );
 
-    for my $attr (qw(repo token user per_page jsonp_callback prepare_request)) {
+    for my $attr (qw(repo token user per_page jsonp_callback prepare_request))
+    {
         # Allow overrides to set attributes to undef
         next if exists $args{$attr};
 
@@ -811,7 +823,8 @@ sub _request_for {
     my $headers = HTTP::Headers->new;
 
     if ( $self->has_token ) {
-        $headers->header( 'Authorization' => sprintf( 'token %s', $self->token ) );
+        $headers->header(
+            'Authorization' => sprintf( 'token %s', $self->token ) );
     }
 
     my $request = HTTP::Request->new( $method, $uri, $headers );
@@ -830,7 +843,8 @@ sub _request_for {
     return $request;
 }
 
-my %TOKEN_REQUIRED = map { ($_ => 1) } @TOKEN_REQUIRED;
+my %TOKEN_REQUIRED = map { ( $_ => 1 ) } @TOKEN_REQUIRED;
+
 sub _token_required {
     my ( $self, $method, $path ) = @_;
 
@@ -848,13 +862,13 @@ sub _token_required {
 sub _uri_for {
     my ( $self, $path ) = @_;
 
-    my $uri = $self->api_uri->clone;
+    my $uri       = $self->api_uri->clone;
     my $base_path = $uri->path;
     $path =~ s/^$base_path//;
     my @parts;
     push @parts, split qr{/+}, $uri->path;
     push @parts, split qr{/+}, $path;
-    $uri->path( join '/',  grep { $_ } @parts );
+    $uri->path( join '/', grep { $_ } @parts );
 
     if ( $self->has_per_page ) {
         my %query = ( $uri->query_form, per_page => $self->per_page );

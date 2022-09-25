@@ -1,5 +1,6 @@
 package Pithub::Issues::Comments;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Issue Comments API
 
 use Moo;
@@ -33,11 +34,15 @@ Examples:
 sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/issues/%s/comments', delete $args{user}, delete $args{repo}, delete $args{issue_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues/%s/comments', delete $args{user},
+            delete $args{repo},                delete $args{issue_id}
+        ),
         %args,
     );
 }
@@ -71,7 +76,10 @@ sub delete {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/repos/%s/%s/issues/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues/comments/%s', delete $args{user},
+            delete $args{repo},                delete $args{comment_id}
+        ),
         %args,
     );
 }
@@ -105,7 +113,10 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/issues/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues/comments/%s', delete $args{user},
+            delete $args{repo},                delete $args{comment_id}
+        ),
         %args,
     );
 }
@@ -139,7 +150,10 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/issues/%s/comments', delete $args{user}, delete $args{repo}, delete $args{issue_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues/%s/comments', delete $args{user},
+            delete $args{repo},                delete $args{issue_id}
+        ),
         %args,
     );
 }
@@ -171,11 +185,15 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: comment_id' unless $args{comment_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'PATCH',
-        path   => sprintf( '/repos/%s/%s/issues/comments/%s', delete $args{user}, delete $args{repo}, delete $args{comment_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues/comments/%s', delete $args{user},
+            delete $args{repo},                delete $args{comment_id}
+        ),
         %args,
     );
 }

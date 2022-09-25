@@ -1,5 +1,6 @@
 package Pithub::GitData::Trees;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Git Data Trees API
 
 use Moo;
@@ -122,11 +123,14 @@ Response: B<Status: 201 Created>
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/git/trees', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/git/trees', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -267,7 +271,10 @@ sub get {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: sha' unless $args{sha};
     $self->_validate_user_repo_args( \%args );
-    my $path = sprintf( '/repos/%s/%s/git/trees/%s', $args{user}, $args{repo}, $args{sha} );
+    my $path = sprintf(
+        '/repos/%s/%s/git/trees/%s', $args{user}, $args{repo},
+        $args{sha}
+    );
     my %params = ();
     if ( $args{recursive} ) {
         $params{recursive} = 1;

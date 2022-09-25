@@ -1,12 +1,13 @@
 package Pithub::Orgs;
+
 # ABSTRACT: Github v3 Orgs API
 
 use Moo;
 our $VERSION = '0.01041';
 
-use Carp qw( croak );
-use Pithub::Orgs::Members;
-use Pithub::Orgs::Teams;
+use Carp                  qw( croak );
+use Pithub::Orgs::Members ();
+use Pithub::Orgs::Teams   ();
 extends 'Pithub::Base';
 
 =method get
@@ -91,7 +92,7 @@ Provides access to L<Pithub::Orgs::Members>.
 =cut
 
 sub members {
-    return shift->_create_instance('Pithub::Orgs::Members', @_);
+    return shift->_create_instance( Pithub::Orgs::Members::, @_ );
 }
 
 =method teams
@@ -101,7 +102,7 @@ Provides access to L<Pithub::Orgs::Teams>.
 =cut
 
 sub teams {
-    return shift->_create_instance('Pithub::Orgs::Teams', @_);
+    return shift->_create_instance( Pithub::Orgs::Teams::, @_ );
 }
 
 =method update
@@ -136,7 +137,8 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org' unless $args{org};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     return $self->request(
         method => 'PATCH',
         path   => sprintf( '/orgs/%s', delete $args{org} ),

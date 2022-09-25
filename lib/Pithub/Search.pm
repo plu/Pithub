@@ -1,5 +1,6 @@
 package Pithub::Search;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github legacy Search API
 
 use Moo;
@@ -65,11 +66,14 @@ Examples:
 sub issues {
     my ( $self, %args ) = @_;
     $self->_validate_user_repo_args( \%args );
-    croak 'Missing key in parameters: state' unless $args{state};
+    croak 'Missing key in parameters: state'   unless $args{state};
     croak 'Missing key in parameters: keyword' unless $args{keyword};
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/legacy/issues/search/%s/%s/%s/%s', delete $args{user}, delete $args{repo}, delete $args{state}, delete $args{keyword} ),
+        path   => sprintf(
+            '/legacy/issues/search/%s/%s/%s/%s', delete $args{user},
+            delete $args{repo}, delete $args{state}, delete $args{keyword}
+        ),
         %args,
     );
 }

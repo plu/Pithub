@@ -1,5 +1,6 @@
 package Pithub::Issues::Assignees;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Issue Assignees API
 
 use Moo;
@@ -41,7 +42,10 @@ sub check {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/assignees/%s', delete $args{user}, delete $args{repo}, delete $args{assignee} ),
+        path   => sprintf(
+            '/repos/%s/%s/assignees/%s', delete $args{user},
+            delete $args{repo},          delete $args{assignee}
+        ),
         %args,
     );
 }
@@ -74,7 +78,9 @@ sub list {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/assignees', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/assignees', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }

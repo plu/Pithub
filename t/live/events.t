@@ -1,7 +1,7 @@
-use FindBin;
+use FindBin ();
 use lib "$FindBin::Bin/../lib";
-use Pithub::Test::Factory;
-use Test::Most import => [ qw( done_testing is ok skip use_ok ) ];
+use Pithub::Test::Factory ();
+use Test::Most import => [qw( done_testing is ok skip use_ok )];
 
 BEGIN {
     use_ok('Pithub');
@@ -10,7 +10,8 @@ BEGIN {
 # These tests may break very easily because data on Github can and will change, of course.
 # And they also might fail once the ratelimit has been reached.
 SKIP: {
-    skip 'Set PITHUB_TEST_LIVE_DATA to true to run these tests', 1 unless $ENV{PITHUB_TEST_LIVE_DATA};
+    skip 'Set PITHUB_TEST_LIVE_DATA to true to run these tests', 1
+        unless $ENV{PITHUB_TEST_LIVE_DATA};
 
     my $p = Pithub->new;
 
@@ -40,7 +41,8 @@ SKIP: {
         my $result = $p->events->public;
         is $result->success, 1, 'Pithub::Events->public successful';
         ok $result->count > 0, 'Pithub::Events->public has some rows';
-        ok $result->content->[0]{public}, 'Pithub::Events->public: Attribute public'
+        ok $result->content->[0]{public},
+            'Pithub::Events->public: Attribute public'
     }
 
     # Pithub::Events->repos
@@ -68,7 +70,10 @@ SKIP: {
 # Following tests require a token and should only be run on a test
 # account since they will create a lot of activity in that account.
 SKIP: {
-    skip 'PITHUB_TEST_TOKEN required to run this test - DO NOT DO THIS UNLESS YOU KNOW WHAT YOU ARE DOING', 1 unless $ENV{PITHUB_TEST_TOKEN};
+    skip
+        'PITHUB_TEST_TOKEN required to run this test - DO NOT DO THIS UNLESS YOU KNOW WHAT YOU ARE DOING',
+        1
+        unless $ENV{PITHUB_TEST_TOKEN};
 
     my $org      = Pithub::Test::Factory->test_account->{org};
     my $org_repo = Pithub::Test::Factory->test_account->{org_repo};

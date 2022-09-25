@@ -1,10 +1,11 @@
 package Pithub::Gists;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Gists API
 
 use Moo;
-use Carp qw( croak );
-use Pithub::Gists::Comments;
+use Carp                    qw( croak );
+use Pithub::Gists::Comments ();
 extends 'Pithub::Base';
 
 =method comments
@@ -14,7 +15,7 @@ Provides access to L<Pithub::Gists::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance('Pithub::Gists::Comments', @_);
+    return shift->_create_instance( Pithub::Gists::Comments::, @_ );
 }
 
 =method create
@@ -130,7 +131,8 @@ Response: B<Status: 201 Created>
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     return $self->request(
         method => 'POST',
         path   => '/gists',
@@ -747,7 +749,8 @@ Response: B<Status: 200 OK>
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: gist_id' unless $args{gist_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     return $self->request(
         method => 'PATCH',
         path   => sprintf( '/gists/%s', delete $args{gist_id} ),

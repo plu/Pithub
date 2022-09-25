@@ -1,8 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Data::Dumper;
-use Pithub::Repos::Forks;
+use Pithub::Repos::Forks ();
 
 my $fork = Pithub::Repos::Forks->new(
     token => $ENV{GITHUB_TOKEN},

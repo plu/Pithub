@@ -1,4 +1,5 @@
 package Pithub::Orgs::Teams;
+
 # ABSTRACT: Github v3 Org Teams API
 
 use Moo;
@@ -43,7 +44,9 @@ sub add_member {
     carp q{"Add team member" API is deprecated. Use add_membership method.};
     return $self->request(
         method => 'PUT',
-        path   => sprintf( '/teams/%s/members/%s', delete $args{team_id}, delete $args{user} ),
+        path   => sprintf(
+            '/teams/%s/members/%s', delete $args{team_id}, delete $args{user}
+        ),
         %args,
     );
 }
@@ -81,7 +84,10 @@ sub add_membership {
     croak 'Missing key in parameters: data'    unless $args{data};
     return $self->request(
         method => 'PUT',
-        path   => sprintf( '/teams/%s/memberships/%s', delete $args{team_id}, delete $args{user} ),
+        path   => sprintf(
+            '/teams/%s/memberships/%s', delete $args{team_id},
+            delete $args{user}
+        ),
         %args,
     );
 }
@@ -115,10 +121,12 @@ sub add_repo {
     croak 'Missing key in parameters: org'     unless $args{org};
     return $self->request(
         method => 'PUT',
-        path   => sprintf( '/teams/%s/repos/%s/%s',
+        path   => sprintf(
+            '/teams/%s/repos/%s/%s',
             delete $args{team_id},
             delete $args{org},
-            delete $args{repo} ),
+            delete $args{repo}
+        ),
         %args,
     );
 }
@@ -151,7 +159,8 @@ Examples:
 sub create {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: org' unless $args{org};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     return $self->request(
         method => 'POST',
         path   => sprintf( '/orgs/%s/teams', delete $args{org} ),
@@ -242,7 +251,9 @@ sub has_repo {
     croak 'Missing key in parameters: repo'    unless $args{repo};
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo} ),
+        path   => sprintf(
+            '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -274,7 +285,9 @@ sub is_member {
     croak 'Missing key in parameters: user'    unless $args{user};
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/teams/%s/members/%s', delete $args{team_id}, delete $args{user} ),
+        path   => sprintf(
+            '/teams/%s/members/%s', delete $args{team_id}, delete $args{user}
+        ),
         %args,
     );
 }
@@ -393,10 +406,13 @@ sub remove_member {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
     croak 'Missing key in parameters: user'    unless $args{user};
-    carp q{"Remove team member" API is deprecated. Use remove_membership method.};
+    carp
+        q{"Remove team member" API is deprecated. Use remove_membership method.};
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/teams/%s/members/%s', delete $args{team_id}, delete $args{user} ),
+        path   => sprintf(
+            '/teams/%s/members/%s', delete $args{team_id}, delete $args{user}
+        ),
         %args,
     );
 }
@@ -431,7 +447,10 @@ sub remove_membership {
     croak 'Missing key in parameters: user'    unless $args{user};
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/teams/%s/memberships/%s', delete $args{team_id}, delete $args{user} ),
+        path   => sprintf(
+            '/teams/%s/memberships/%s', delete $args{team_id},
+            delete $args{user}
+        ),
         %args,
     );
 }
@@ -463,7 +482,9 @@ sub remove_repo {
     croak 'Missing key in parameters: repo'    unless $args{repo};
     return $self->request(
         method => 'DELETE',
-        path   => sprintf( '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo} ),
+        path   => sprintf(
+            '/teams/%s/repos/%s', delete $args{team_id}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -495,7 +516,8 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: team_id' unless $args{team_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     return $self->request(
         method => 'PATCH',
         path   => sprintf( '/teams/%s', delete $args{team_id} ),

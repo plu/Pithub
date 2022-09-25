@@ -1,14 +1,15 @@
 package Pithub::Issues;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 Issues API
 
 use Moo;
-use Carp qw( croak );
-use Pithub::Issues::Assignees;
-use Pithub::Issues::Comments;
-use Pithub::Issues::Events;
-use Pithub::Issues::Labels;
-use Pithub::Issues::Milestones;
+use Carp                       qw( croak );
+use Pithub::Issues::Assignees  ();
+use Pithub::Issues::Comments   ();
+use Pithub::Issues::Events     ();
+use Pithub::Issues::Labels     ();
+use Pithub::Issues::Milestones ();
 extends 'Pithub::Base';
 
 =method assignees
@@ -18,7 +19,7 @@ Provides access to L<Pithub::Issues::Assignees>.
 =cut
 
 sub assignees {
-    return shift->_create_instance('Pithub::Issues::Assignees', @_);
+    return shift->_create_instance( Pithub::Issues::Assignees::, @_ );
 }
 
 =method comments
@@ -28,7 +29,7 @@ Provides access to L<Pithub::Issues::Comments>.
 =cut
 
 sub comments {
-    return shift->_create_instance('Pithub::Issues::Comments', @_);
+    return shift->_create_instance( Pithub::Issues::Comments::, @_ );
 }
 
 =method create
@@ -163,11 +164,14 @@ Response: B<Status: 201 Created>
 
 sub create {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'POST',
-        path   => sprintf( '/repos/%s/%s/issues', delete $args{user}, delete $args{repo} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues', delete $args{user}, delete $args{repo}
+        ),
         %args,
     );
 }
@@ -179,7 +183,7 @@ Provides access to L<Pithub::Issues::Events>.
 =cut
 
 sub events {
-    return shift->_create_instance('Pithub::Issues::Events', @_);
+    return shift->_create_instance( Pithub::Issues::Events::, @_ );
 }
 
 =method get
@@ -285,7 +289,10 @@ sub get {
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'GET',
-        path   => sprintf( '/repos/%s/%s/issues/%s', delete $args{user}, delete $args{repo}, delete $args{issue_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues/%s', delete $args{user}, delete $args{repo},
+            delete $args{issue_id}
+        ),
         %args,
     );
 }
@@ -297,7 +304,7 @@ Provides access to L<Pithub::Issues::Labels>.
 =cut
 
 sub labels {
-    return shift->_create_instance('Pithub::Issues::Labels', @_);
+    return shift->_create_instance( Pithub::Issues::Labels::, @_ );
 }
 
 =method list
@@ -688,7 +695,9 @@ sub list {
     if ( $args{user} && $args{repo} ) {
         return $self->request(
             method => 'GET',
-            path   => sprintf( '/repos/%s/%s/issues', delete $args{user}, delete $args{repo} ),
+            path   => sprintf(
+                '/repos/%s/%s/issues', delete $args{user}, delete $args{repo}
+            ),
             %args,
         );
     }
@@ -706,7 +715,7 @@ Provides access to L<Pithub::Issues::Milestones>.
 =cut
 
 sub milestones {
-    return shift->_create_instance('Pithub::Issues::Milestones', @_);
+    return shift->_create_instance( Pithub::Issues::Milestones::, @_ );
 }
 
 =method update
@@ -790,11 +799,15 @@ Examples:
 sub update {
     my ( $self, %args ) = @_;
     croak 'Missing key in parameters: issue_id' unless $args{issue_id};
-    croak 'Missing key in parameters: data (hashref)' unless ref $args{data} eq 'HASH';
+    croak 'Missing key in parameters: data (hashref)'
+        unless ref $args{data} eq 'HASH';
     $self->_validate_user_repo_args( \%args );
     return $self->request(
         method => 'PATCH',
-        path   => sprintf( '/repos/%s/%s/issues/%s', delete $args{user}, delete $args{repo}, delete $args{issue_id} ),
+        path   => sprintf(
+            '/repos/%s/%s/issues/%s', delete $args{user}, delete $args{repo},
+            delete $args{issue_id}
+        ),
         %args,
     );
 }

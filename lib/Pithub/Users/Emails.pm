@@ -1,5 +1,6 @@
 package Pithub::Users::Emails;
 our $VERSION = '0.01041';
+
 # ABSTRACT: Github v3 User Emails API
 
 use Moo;
@@ -27,7 +28,8 @@ Examples:
 
 sub add {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
+    croak 'Missing key in parameters: data (arrayref)'
+        unless ref $args{data} eq 'ARRAY';
     return $self->request(
         method => 'POST',
         path   => '/user/emails',
@@ -56,7 +58,8 @@ Examples:
 
 sub delete {
     my ( $self, %args ) = @_;
-    croak 'Missing key in parameters: data (arrayref)' unless ref $args{data} eq 'ARRAY';
+    croak 'Missing key in parameters: data (arrayref)'
+        unless ref $args{data} eq 'ARRAY';
     return $self->request(
         method => 'DELETE',
         path   => '/user/emails',

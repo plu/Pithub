@@ -19,4 +19,3 @@ while ( my $row = $result->next ) {
     printf "%s\n", $row->{name};
 }
 
-
