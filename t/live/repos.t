@@ -467,6 +467,41 @@ SKIP: {
             'Pithub::Repos::Hooks->hook_id not successful after delete';
 
     }
+    {
+        # Pithub::Repos::Releases->create
+        # Using true/false constants
+        use constant false => \0;
+        sub true () { return \1 } # note the empty prototype
+
+        my $result = $p->repos->releases->create(
+            data => {
+                tag_name         => "v0.01000",
+                target_commitish => "master",
+                name             => "This is a test release of v0.01000",
+                body             => "Here be notes",
+                draft            => false,
+                prerelease       => false,
+                generate_release_notes => true,
+            }
+        );
+        ok $result->success, 'Pithub::Repos::Releases->create true/false constants succeeded';
+
+        # Pithub::Repos::Releases->create
+        # Using zero/one as false/true
+        my $result = $p->repos->releases->create(
+            data => {
+                tag_name         => "v0.01000",
+                target_commitish => "master",
+                name             => "This is a test release of v0.01000",
+                body             => "Here be notes",
+                draft            => 0,
+                prerelease       => 0,
+                generate_release_notes => 1,
+            }
+        );
+        ok $result->success, 'Pithub::Repos::Releases->create zero and one Succeeded';
+
+    }
 }
 
 done_testing;
