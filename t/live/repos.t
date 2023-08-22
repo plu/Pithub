@@ -467,6 +467,39 @@ SKIP: {
             'Pithub::Repos::Hooks->hook_id not successful after delete';
 
     }
+    {
+        # Pithub::Repos::Releases->create
+        # Using JSON true/false values
+        require JSON::MaybeXS;
+        my $result = $p->repos->releases->create(
+            data => {
+                tag_name         => "v0.01000",
+                target_commitish => "master",
+                name             => "This is a test release of v0.01000",
+                body             => "Here be notes",
+                draft            => JSON::MaybeXS::false(),
+                prerelease       => JSON::MaybeXS::false(),
+                generate_release_notes => JSON::MaybeXS::true(),
+            }
+        );
+        ok $result->success, 'Pithub::Repos::Releases->create true/false constants succeeded';
+
+        # Pithub::Repos::Releases->create
+        # Using zero/one as false/true
+        $result = $p->repos->releases->create(
+            data => {
+                tag_name         => "v0.01000",
+                target_commitish => "master",
+                name             => "This is a test release of v0.01000",
+                body             => "Here be notes",
+                draft            => 0,
+                prerelease       => 0,
+                generate_release_notes => 1,
+            }
+        );
+        ok ! $result->success, 'Pithub::Repos::Releases->create zero and one Failed as expected';
+
+    }
 }
 
 done_testing;
