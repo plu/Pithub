@@ -110,10 +110,56 @@ Examples:
             target_commitish => 'master',
             name             => 'v1.0.0',
             body             => 'Description of the release',
-            draft            => 0,
-            prerelease       => 0,
+            draft            => JSON::MaybeXS::false(),           # or alternative below
+            prerelease       => JSON::MaybeXS::false(),           # or alternative below
+            generate_release_notes => JSON::MaybeXS::false(),     # or alternative below
         }
     );
+
+Booleans:
+
+Several of the attributes B<require> boolean values in the request that is sent
+to GitHub.  Zero (0) and one (1) are integers and will not be encoded correctly
+in the JSON encoded request.
+
+There are numerous options for your call to Pithub::Repos::Releases->create.
+
+=over
+
+=item JSON::MaybeXS
+
+Add the following to your code before the call to Pithub::Repos::Releases->create.
+
+    require JSON::MaybeXS;
+
+Then use the following values for the booleans:
+
+    JSON::MaybeXS::true()
+    JSON::MaybeXS::false()
+
+=item Cpanel::JSON::XS
+
+Add the following to your code before the call to Pithub::Repos::Releases->create.
+
+    require Cpanel::JSON::XS;
+
+Then use the following values for the booleans:
+
+    Cpanel::JSON::XS::true
+    Cpanel::JSON::XS::false
+
+=item JSON::PP
+
+Add the following to your code before the call to Pithub::Repos::Releases->create.
+
+    require JSON::PP;
+
+Then use the following values for the booleans:
+
+    $JSON::PP::true
+    $JSON::PP::false
+
+=back
 
 =back
 

@@ -10,11 +10,13 @@ my $releases = Pithub::Repos::Releases->new(
     user  => 'buhtip',
 );
 
+require JSON::MaybeXS;
 my $release = $releases->create(
     data => {
         name              => "v1.0.$$",
         tag_name          => "v1.0.$$",
         target_commitisih => 'master',
+        draft             => JSON::MaybeXS::false();
     }
 );
 
