@@ -1,5 +1,5 @@
 [![codecov](https://codecov.io/gh/plu/Pithub/branch/master/graph/badge.svg)](https://codecov.io/gh/plu/Pithub)
-[![CPAN Cover Status](https://cpancoverbadge.perl-services.de/Pithub-0.01040)](https://cpancoverbadge.perl-services.de/Pithub-0.01040)
+[![CPAN Cover Status](https://cpancoverbadge.perl-services.de/Pithub-0.01041)](https://cpancoverbadge.perl-services.de/Pithub-0.01041)
 [![Kwalitee status](https://cpants.cpanauthors.org/dist/Pithub.png)](https://cpants.cpanauthors.org/dist/Pithub)
 [![Actions Status](https://github.com/plu/Pithub/actions/workflows/test.yml/badge.svg)](https://github.com/plu/Pithub/actions)
 [![Cpan license](https://img.shields.io/cpan/l/Pithub.svg)](https://metacpan.org/release/Pithub)
@@ -11,7 +11,7 @@ Pithub - Github v3 API
 
 # VERSION
 
-version 0.01040
+version 0.01041
 
 # SYNOPSIS
 
@@ -414,6 +414,9 @@ use it.
                 my $releases = Pithub->new->repos->releases;
                 my $releases = Pithub::Repos->new->releases;
                 my $releases = Pithub::Repos::Releases->new;
+
+            Note that Pithub::Repos::Releases requires Boolean values for some calls.
+            See Pithub::Repos::Releases for details.
 
             - [Pithub::Repos::Releases::Assets](https://metacpan.org/pod/Pithub%3A%3ARepos%3A%3AReleases%3A%3AAssets)
 
