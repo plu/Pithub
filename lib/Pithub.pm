@@ -475,6 +475,9 @@ See also: L<http://developer.github.com/v3/repos/releases/>
     my $releases = Pithub::Repos->new->releases;
     my $releases = Pithub::Repos::Releases->new;
 
+Note that Pithub::Repos::Releases requires Boolean values for some calls.
+See Pithub::Repos::Releases for details.
+
 =over
 
 =item *
