@@ -1,5 +1,5 @@
 package Pithub::Users::Keys;
-our $VERSION = '0.01041';
+our $VERSION = '0.01042';
 
 # ABSTRACT: Github v3 User Keys API
 

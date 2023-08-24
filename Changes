@@ -1,4 +1,6 @@
-Revision history for Pithub
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.01041   2023-08-24 18:12:33Z
           - Boolean documentation updates (GH#233) (Timothy Legge)
