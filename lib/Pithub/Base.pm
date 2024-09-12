@@ -674,7 +674,8 @@ sub request {
     }
 
     if ( my $query = delete $args{query} ) {
-        $uri->query_form(%$query);
+        my %orig_query = $uri->query_form;
+        $uri->query_form(%orig_query, %$query);
     }
 
     my $request = $self->_request_for( $method, $uri, $data );

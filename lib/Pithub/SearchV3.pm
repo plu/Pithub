@@ -121,6 +121,7 @@ sub _search {
             q => delete $args{q},
             ( exists $args{sort}  ? ( sort  => delete $args{sort} )  : () ),
             ( exists $args{order} ? ( order => delete $args{order} ) : () ),
+            ( exists $args{per_page} ? ( per_page => delete $args{per_page} ) : () ),
         },
         %args,
     );
