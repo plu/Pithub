@@ -253,6 +253,10 @@ sub list {
         path   => sprintf(
             '/repos/%s/%s/pulls', delete $args{user}, delete $args{repo}
         ),
+        params => {
+            per_page => 100,
+            page     => delete $args{page},
+        },
         %args,
     );
 }
