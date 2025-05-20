@@ -238,7 +238,9 @@ Examples:
     my $p = Pithub::PullRequests->new;
     my $result = $p->list(
         user => 'plu',
-        repo => 'Pithub'
+        repo => 'Pithub',
+        page => 2,
+            # Defaults to page 1, and defaults to a limit of 100 results
     );
 
 =back
