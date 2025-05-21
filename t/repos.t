@@ -989,7 +989,7 @@ subtest 'Pithub::Repos->branch' => sub {
         is $result->request->uri->path, '/repos/foo/bar/releases/1/assets',
             'HTTP path';
         is $result->request->uri->host,  'uploads.github.com', 'HTTP host';
-        is $result->request->uri->query, 'name=foo',           'HTTP query';
+        is $result->request->uri->query, 'per_page=100&name=foo',           'HTTP query';
         is $result->request->content,    'data',               'HTTP body';
         is $result->request->header('Content-Type'), 'text/plain',
             'HTTP content type header';
