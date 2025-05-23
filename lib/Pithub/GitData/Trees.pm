@@ -1,5 +1,5 @@
 package Pithub::GitData::Trees;
-our $VERSION = '0.01042';
+our $VERSION = '0.01043';
 
 # ABSTRACT: Github v3 Git Data Trees API
 

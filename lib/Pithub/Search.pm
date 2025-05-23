@@ -1,5 +1,5 @@
 package Pithub::Search;
-our $VERSION = '0.01042';
+our $VERSION = '0.01043';
 
 # ABSTRACT: Github legacy Search API
 

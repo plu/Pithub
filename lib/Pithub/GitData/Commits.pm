@@ -1,5 +1,5 @@
 package Pithub::GitData::Commits;
-our $VERSION = '0.01042';
+our $VERSION = '0.01043';
 
 # ABSTRACT: Github v3 Git Data Commits API
 

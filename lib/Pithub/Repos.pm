@@ -4,7 +4,7 @@ package Pithub::Repos;
 
 use Moo;
 
-our $VERSION = '0.01042';
+our $VERSION = '0.01043';
 
 use Carp                         qw( croak );
 use Pithub::Issues               ();
