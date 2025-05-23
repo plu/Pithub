@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+    - Allow fetching additional pages of pull requests (GH#236) (Rich Bowen)
+    - Fix that `per_page` parameter is sent if a query_form is set (GH#230)
+      (Roland Hu)
 
 0.01041   2023-08-24 18:12:33Z
           - Boolean documentation updates (GH#233) (Timothy Legge)
