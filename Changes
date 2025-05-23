@@ -1,6 +1,6 @@
-Revision history for {{$dist->name}}
+Revision history for Pithub
 
-{{$NEXT}}
+0.01042   2025-05-23 12:06:16Z
     - Allow fetching additional pages of pull requests (GH#236) (Rich Bowen)
     - Fix that `per_page` parameter is sent if a query_form is set (GH#230)
       (Roland Hu)
