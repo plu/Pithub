@@ -4,7 +4,7 @@ package Pithub::Repos::Actions;
 
 use Moo;
 
-our $VERSION = '0.01043';
+our $VERSION = '0.01044';
 
 use Pithub::Repos::Actions::Workflows ();
 

@@ -4,7 +4,7 @@ package Pithub::Orgs::Teams;
 
 use Moo;
 
-our $VERSION = '0.01043';
+our $VERSION = '0.01044';
 
 use Carp qw( carp croak );
 

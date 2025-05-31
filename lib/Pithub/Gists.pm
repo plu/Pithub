@@ -1,5 +1,5 @@
 package Pithub::Gists;
-our $VERSION = '0.01043';
+our $VERSION = '0.01044';
 
 # ABSTRACT: Github v3 Gists API
 

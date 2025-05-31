@@ -1,4 +1,6 @@
-Revision history for Pithub
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.01043   2025-05-31 02:50:21Z
     - Allow fetching closed PRs as well. (GH#238) (Rich Bowen)
