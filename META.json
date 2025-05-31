@@ -106,7 +106,7 @@
          "web" : "https://github.com/plu/Pithub"
       }
    },
-   "version" : "0.01042",
+   "version" : "0.01043",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.040000"
@@ -684,7 +684,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "v0.01042",
+                  "tag" : "v0.01043",
                   "tag_format" : "v%V",
                   "tag_message" : "v%V"
                },
