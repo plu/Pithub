@@ -17,7 +17,7 @@ jobs:
     container:
       image: perldocker/perl-tester:5.40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install modules required for RELEASE_TESTING
         uses: perl-actions/install-with-cpm@stable
         with:
@@ -42,7 +42,7 @@ jobs:
     container:
       image: perldocker/perl-tester:5.40
     steps:
-      - uses: actions/checkout@v4 # codecov wants to be inside a Git repository
+      - uses: actions/checkout@v5 # codecov wants to be inside a Git repository
       - uses: actions/download-artifact@v4
         with:
           name: build_dir
