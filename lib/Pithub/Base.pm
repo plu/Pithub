@@ -159,11 +159,11 @@ B<clear_jsonp_callback>: reset the jsonp_callback attribute
 
 =item *
 
-=for Pod::Coverage has_jsonp_callback
-
 B<has_jsonp_callback>: check if the jsonp_callback attribute is set
 
 =back
+
+=for Pod::Coverage has_jsonp_callback
 
 =cut
 
@@ -203,11 +203,11 @@ B<clear_per_page>: reset the per_page attribute
 
 =item *
 
-=for Pod::Coverage has_per_page
-
 B<has_per_page>: check if the per_page attribute is set
 
 =back
+
+=for Pod::Coverage has_per_page
 
 =cut
 
@@ -308,11 +308,11 @@ B<clear_repo>: reset the repo attribute
 
 =item *
 
-=for Pod::Coverage has_repo
-
 B<has_repo>: check if the repo attribute is set
 
 =back
+
+=for Pod::Coverage has_repo
 
 =cut
 
@@ -375,11 +375,11 @@ B<clear_user>: reset the user attribute
 
 =item *
 
-=for Pod::Coverage has_user
-
 B<has_user>: check if the user attribute is set
 
 =back
+
+=for Pod::Coverage has_user
 
 It might make sense to use this together with the repo attribute:
 
