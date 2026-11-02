@@ -7,6 +7,7 @@ use Moo;
 use Carp                            qw( croak );
 use Pithub::PullRequests::Comments  ();
 use Pithub::PullRequests::Reviewers ();
+use Pithub::PullRequests::Reviews   ();
 extends 'Pithub::Base';
 
 =method comments
@@ -27,6 +28,16 @@ Provides access to L<Pithub::PullRequests::Reviewers>.
 
 sub reviewers {
     return shift->_create_instance( Pithub::PullRequests::Reviewers::, @_ );
+}
+
+=method reviews
+
+Provides access to L<Pithub::PullRequests::Reviews>.
+
+=cut
+
+sub reviews {
+    return shift->_create_instance( Pithub::PullRequests::Reviews::, @_ );
 }
 
 =method commits
