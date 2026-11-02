@@ -6,18 +6,19 @@ use Moo;
 
 our $VERSION = '0.01044';
 
-use Carp                 qw( croak );
-use Pithub::Events       ();
-use Pithub::Gists        ();
-use Pithub::GitData      ();
-use Pithub::Issues       ();
-use Pithub::Orgs         ();
-use Pithub::PullRequests ();
-use Pithub::Markdown     ();
-use Pithub::Repos        ();
-use Pithub::Search       ();
-use Pithub::SearchV3     ();
-use Pithub::Users        ();
+use Carp                  qw( croak );
+use Pithub::Events        ();
+use Pithub::Gists         ();
+use Pithub::GitData       ();
+use Pithub::Issues        ();
+use Pithub::Orgs          ();
+use Pithub::PullRequests  ();
+use Pithub::Markdown      ();
+use Pithub::Notifications ();
+use Pithub::Repos         ();
+use Pithub::Search        ();
+use Pithub::SearchV3      ();
+use Pithub::Users         ();
 
 extends 'Pithub::Base';
 
@@ -310,6 +311,19 @@ See also: L<http://developer.github.com/v3/issues/milestones/>
     my $milestones = Pithub::Issues::Milestones->new;
 
 =back
+
+=back
+
+=over
+
+=item *
+
+L<Pithub::Notifications>
+
+See also: L<https://docs.github.com/en/rest/activity/notifications>
+
+    my $notifications = Pithub->new->notifications;
+    my $notifications = Pithub::Notifications->new;
 
 =back
 
@@ -659,6 +673,16 @@ Provides access to L<Pithub::Markdown>.
 
 sub markdown {
     return shift->_create_instance( Pithub::Markdown::, @_ );
+}
+
+=method notifications
+
+Provides access to L<Pithub::Notifications>.
+
+=cut
+
+sub notifications {
+    return shift->_create_instance( Pithub::Notifications::, @_ );
 }
 
 =method orgs

@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Fri, 02 Jan 2026 00:00:30 GMT
+Content-Type: application/json; charset=utf-8
+Last-Modified: Fri, 02 Jan 2026 00:00:00 GMT
+X-Poll-Interval: 60
+Content-Length: 2
+
+[]
