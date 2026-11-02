@@ -449,4 +449,305 @@ use Pithub::Test::Factory ();
     }
 }
 
+# Pithub::PullRequests->reviews
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests',
+        user => 'foo', repo => 'bar'
+    );
+    isa_ok $obj->reviews, 'Pithub::PullRequests::Reviews';
+}
+
+# Pithub::PullRequests::Reviews->create
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->create } qr{Missing key in parameters: pull_request_id},
+        'No parameters';
+    throws_ok { $obj->create( pull_request_id => 123 ) }
+    qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok { $obj->create( pull_request_id => 123, data => 5 ) }
+    qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok {
+        $obj->create(
+            pull_request_id => 123,
+            data            => { event => 'COMMENT' }
+        );
+    }
+    qr{Access token required for: POST /repos/foo/bar/pulls/123/reviews},
+        'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $json = JSON->new;
+        my $data = {
+            commit_id => 'ecdd80bb57125d7ba9641ffaa4d7d2c19d3f3091',
+            body      => 'Looks good',
+            event     => 'REQUEST_CHANGES',
+            comments  => [
+                {
+                    path => 'lib/Pithub.pm',
+                    line => 4,
+                    side => 'RIGHT',
+                    body => 'Typo',
+                },
+            ],
+        };
+        my $result = $obj->create( pull_request_id => 123, data => $data );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/123/reviews',
+            'HTTP path';
+        my $http_request = $result->request;
+        eq_or_diff $json->decode( $http_request->content ), $data,
+            'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviews->delete
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->delete } qr{Missing key in parameters: pull_request_id},
+        'No parameters';
+    throws_ok { $obj->delete( pull_request_id => 123 ) }
+    qr{Missing key in parameters: review_id}, 'No review_id parameter';
+    throws_ok { $obj->delete( pull_request_id => 123, review_id => 7 ) }
+    qr{Access token required for: DELETE /repos/foo/bar/pulls/123/reviews/7},
+        'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $result = $obj->delete( pull_request_id => 456, review_id => 7 );
+        is $result->request->method, 'DELETE', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/456/reviews/7',
+            'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, q{}, 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviews->dismiss
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->dismiss }
+    qr{Missing key in parameters: pull_request_id}, 'No parameters';
+    throws_ok { $obj->dismiss( pull_request_id => 123 ) }
+    qr{Missing key in parameters: review_id}, 'No review_id parameter';
+    throws_ok { $obj->dismiss( pull_request_id => 123, review_id => 7 ) }
+    qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok {
+        $obj->dismiss( pull_request_id => 123, review_id => 7, data => 5 );
+    }
+    qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok {
+        $obj->dismiss(
+            pull_request_id => 123,
+            review_id       => 7,
+            data            => { message => 'stale' }
+        );
+    }
+    qr{Access token required for: PUT /repos/foo/bar/pulls/123/reviews/7/dismissals},
+        'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $json   = JSON->new;
+        my $result = $obj->dismiss(
+            pull_request_id => 123,
+            review_id       => 7,
+            data            => { message => 'stale', event => 'DISMISS' }
+        );
+        is $result->request->method, 'PUT', 'HTTP method';
+        is $result->request->uri->path,
+            '/repos/foo/bar/pulls/123/reviews/7/dismissals', 'HTTP path';
+        my $http_request = $result->request;
+        eq_or_diff $json->decode( $http_request->content ),
+            { message => 'stale', event => 'DISMISS' }, 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviews->get
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->get } qr{Missing key in parameters: pull_request_id},
+        'No parameters';
+    throws_ok { $obj->get( pull_request_id => 123 ) }
+    qr{Missing key in parameters: review_id}, 'No review_id parameter';
+
+    {
+        my $result = $obj->get( pull_request_id => 456, review_id => 7 );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/456/reviews/7',
+            'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, q{}, 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviews->list
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->list } qr{Missing key in parameters: pull_request_id},
+        'No parameters';
+
+    {
+        my $result = $obj->list( pull_request_id => 456 );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/456/reviews',
+            'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, q{}, 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviews->list_comments
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->list_comments }
+    qr{Missing key in parameters: pull_request_id}, 'No parameters';
+    throws_ok { $obj->list_comments( pull_request_id => 123 ) }
+    qr{Missing key in parameters: review_id}, 'No review_id parameter';
+
+    {
+        my $result
+            = $obj->list_comments( pull_request_id => 456, review_id => 7 );
+        is $result->request->method, 'GET', 'HTTP method';
+        is $result->request->uri->path,
+            '/repos/foo/bar/pulls/456/reviews/7/comments', 'HTTP path';
+        my $http_request = $result->request;
+        is $http_request->content, q{}, 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviews->submit
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->submit } qr{Missing key in parameters: pull_request_id},
+        'No parameters';
+    throws_ok { $obj->submit( pull_request_id => 123 ) }
+    qr{Missing key in parameters: review_id}, 'No review_id parameter';
+    throws_ok { $obj->submit( pull_request_id => 123, review_id => 7 ) }
+    qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok {
+        $obj->submit( pull_request_id => 123, review_id => 7, data => 5 );
+    }
+    qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok {
+        $obj->submit(
+            pull_request_id => 123,
+            review_id       => 7,
+            data            => { event => 'APPROVE' }
+        );
+    }
+    qr{Access token required for: POST /repos/foo/bar/pulls/123/reviews/7/events},
+        'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $json   = JSON->new;
+        my $result = $obj->submit(
+            pull_request_id => 123,
+            review_id       => 7,
+            data            => { event => 'APPROVE', body => 'Ship it' }
+        );
+        is $result->request->method, 'POST', 'HTTP method';
+        is $result->request->uri->path,
+            '/repos/foo/bar/pulls/123/reviews/7/events', 'HTTP path';
+        my $http_request = $result->request;
+        eq_or_diff $json->decode( $http_request->content ),
+            { event => 'APPROVE', body => 'Ship it' }, 'HTTP body';
+    }
+}
+
+# Pithub::PullRequests::Reviews->update
+{
+    my $obj = Pithub::Test::Factory->create(
+        'Pithub::PullRequests::Reviews',
+        user => 'foo', repo => 'bar'
+    );
+
+    isa_ok $obj, 'Pithub::PullRequests::Reviews';
+
+    throws_ok { $obj->update } qr{Missing key in parameters: pull_request_id},
+        'No parameters';
+    throws_ok { $obj->update( pull_request_id => 123 ) }
+    qr{Missing key in parameters: review_id}, 'No review_id parameter';
+    throws_ok { $obj->update( pull_request_id => 123, review_id => 7 ) }
+    qr{Missing key in parameters: data \(hashref\)}, 'No data parameter';
+    throws_ok {
+        $obj->update( pull_request_id => 123, review_id => 7, data => 5 );
+    }
+    qr{Missing key in parameters: data \(hashref\)}, 'Wrong type';
+    throws_ok {
+        $obj->update(
+            pull_request_id => 123,
+            review_id       => 7,
+            data            => { body => 'edited' }
+        );
+    }
+    qr{Access token required for: PUT /repos/foo/bar/pulls/123/reviews/7},
+        'Token required';
+
+    ok $obj->token(123), 'Token set';
+
+    {
+        my $json   = JSON->new;
+        my $result = $obj->update(
+            pull_request_id => 123,
+            review_id       => 7,
+            data            => { body => 'edited' }
+        );
+        is $result->request->method, 'PUT', 'HTTP method';
+        is $result->request->uri->path, '/repos/foo/bar/pulls/123/reviews/7',
+            'HTTP path';
+        my $http_request = $result->request;
+        eq_or_diff $json->decode( $http_request->content ),
+            { body => 'edited' }, 'HTTP body';
+    }
+}
+
 done_testing;

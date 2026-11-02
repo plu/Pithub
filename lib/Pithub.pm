@@ -383,6 +383,16 @@ See also: L<https://docs.github.com/en/rest/reference/pulls#review-requests>
     my $reviewers = Pithub::PullRequests->new->reviewers;
     my $reviewers = Pithub::PullRequests::Reviewers->new;
 
+=item *
+
+L<Pithub::PullRequests::Reviews>
+
+See also: L<https://docs.github.com/en/rest/pulls/reviews>
+
+    my $reviews = Pithub->new->pull_requests->reviews;
+    my $reviews = Pithub::PullRequests->new->reviews;
+    my $reviews = Pithub::PullRequests::Reviews->new;
+
 =back
 
 =back
