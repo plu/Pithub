@@ -110,6 +110,13 @@ my @tree = (
         methods  => [qw(render)],
     },
     {
+        accessor => 'notifications',
+        isa      => 'Pithub::Notifications',
+        methods  => [
+            qw(delete_thread_subscription get get_thread_subscription list mark_as_read mark_thread_as_done mark_thread_as_read set_thread_subscription)
+        ],
+    },
+    {
         accessor => 'orgs',
         isa      => 'Pithub::Orgs',
         methods  => [qw(get list update)],
@@ -394,6 +401,7 @@ sub validate_tree {
                         sha             => 1,
                         state           => 'open',
                         team_id         => 1,
+                        thread_id       => 1,
                         user            => 1,
                     );
                 }
