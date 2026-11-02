@@ -143,6 +143,14 @@ my @tree = (
         ],
     },
     {
+        accessor => 'reactions',
+        isa      => 'Pithub::Reactions',
+        methods  => [
+            map { ( "create_for_$_", "delete_for_$_", "list_for_$_" ) }
+                qw(commit_comment issue issue_comment pull_request_comment release)
+        ],
+    },
+    {
         accessor => 'repos',
         isa      => 'Pithub::Repos',
         methods  => [
@@ -344,6 +352,7 @@ sub validate_tree {
 
                 my $result;
                 my $data = {
+                    content  => '+1',
                     state    => 'pending', branch => 'master',
                     base     => 'master',  head   => 'another_branch',
                     new_name => 'new_name'
@@ -388,6 +397,7 @@ sub validate_tree {
                         org             => 1,
                         pull_request_id => 1,
                         q               => 'foo',
+                        reaction_id     => 1,
                         ref             => 1,
                         release_id      => 1,
                         repo            => 1,

@@ -14,6 +14,7 @@ use Pithub::Issues       ();
 use Pithub::Orgs         ();
 use Pithub::PullRequests ();
 use Pithub::Markdown     ();
+use Pithub::Reactions    ();
 use Pithub::Repos        ();
 use Pithub::Search       ();
 use Pithub::SearchV3     ();
@@ -391,6 +392,19 @@ See also: L<https://docs.github.com/en/rest/reference/pulls#review-requests>
 
 =item *
 
+L<Pithub::Reactions>
+
+See also: L<https://docs.github.com/en/rest/reactions/reactions>
+
+    my $reactions = Pithub->new->reactions;
+    my $reactions = Pithub::Reactions->new;
+
+=back
+
+=over
+
+=item *
+
 L<Pithub::Repos>
 
 See also: L<http://developer.github.com/v3/repos/>
@@ -679,6 +693,16 @@ Provides access to L<Pithub::PullRequests>.
 
 sub pull_requests {
     return shift->_create_instance( Pithub::PullRequests::, @_ );
+}
+
+=method reactions
+
+Provides access to L<Pithub::Reactions>.
+
+=cut
+
+sub reactions {
+    return shift->_create_instance( Pithub::Reactions::, @_ );
 }
 
 =method repos
